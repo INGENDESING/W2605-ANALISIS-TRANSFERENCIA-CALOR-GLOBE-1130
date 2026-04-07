@@ -1,0 +1,67 @@
+\section{Conclusiones}
+
+A partir del análisis independiente de transferencia de calor y el análisis estructural del tanque de almacenamiento de glucosa Globe 1130, se establecen las siguientes conclusiones técnicas.
+
+\subsection{Parte I: Transferencia de Calor}
+
+Los hallazgos principales del análisis térmico demuestran que el sistema de calentamiento está gobernado por la resistencia convectiva del producto. La Tabla~\ref{tab:conclusiones_termicas} resume las conclusiones fundamentales de esta sección.
+
+\begin{table}[H]
+	\centering
+	\caption{Conclusiones del análisis de transferencia de calor.}
+	\label{tab:conclusiones_termicas}
+	\setcounter{itemcount}{0}
+	\begin{tabularx}{\textwidth}{@{}lX@{}}
+		\toprule
+		\textbf{Parámetro} & \textbf{Conclusión Técnica} \\
+		\midrule
+		Mecanismo Limitante & La convección natural de la glucosa representa entre el 97.7\% y el 98.8\% de la resistencia térmica total debido a su elevada viscosidad ($>212,000$ cP). \\
+		Eficacia del Sistema & El coeficiente global $U$ se sitúa en el rango de 18 a 36 W/m$^2\cdot$°C. La ausencia de agitación mecánica es el factor restrictivo primordial, no la capacidad de la chaqueta. \\
+		Optimización de Gradiente & El uso de agua a 75°C reduce el tiempo de preparación logística en un 46\% frente a la operación a 65°C, permitiendo alcanzar los 57°C operativos en 415.2 horas (Escenario 3). \\
+		Eficiencia Energética & El aislamiento de lana mineral de 2'' reduce las pérdidas al ambiente en un 91\%, garantizando una temperatura superficial de seguridad de 30.8°C. \\
+		Validación CFD & La simulación en COMSOL Multiphysics 6.4 validó el modelo analítico con una concordancia del 89\% ($U_{CFD} = 40.2$ W/m$^2\cdot$°C), confirmando la precisión de las estimaciones transitorias. \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+Los resultados primarios referentes a los tiempos de calentamiento requeridos para la disponibilidad operativa del fluido se consolidan en la Tabla~\ref{tab:resumen_tiempos}.
+
+\begin{table}[H]
+	\centering
+	\caption{Consolidado de resultados operacionales por escenario limitados a $<60.0^\circ\mathrm{C}$.}
+	\label{tab:resumen_tiempos}
+	\setcounter{itemcount}{0}
+	\begin{tabularx}{\textwidth}{@{}lccccX@{}}
+		\toprule
+		\textbf{Escenario} & \textbf{Llenado} & \textbf{T$_{agua}$ [°C]} & \textbf{T$_{fin}$ [°C]} & \textbf{Tiempo Total} & \textbf{Comportamiento de Descarga} \\
+		\midrule
+		\textbf{Escenario 1} & 24 m$^3$ (7.6\%) & 65 & 60 & 132.0 h & Incremento ligero (+0.2°C) durante descarga de 1.5h. \\
+		\textbf{Escenario 2} & 178 m$^3$ (80\%) & 65 & 57 & 772.8 h & Durante ciclo log\'istico, T topa l\'imite al modelar la restricci\'on On/Off a 60.0°C. \\
+		\textbf{Escenario 3} & 178 m$^3$ (80\%) & 75 & 57 & 415.2 h & Reducci\'on del 46\% vs.\ Escenario~2; la recomendaci\'on termost\'atica se activa a las 472.8~horas. \\
+		\textbf{Escenario 4} & 136 m$^3$ (192 ton) & 75 & 57 & 37.5 h (ciclo full) & Recalentamiento inicial de 25.5h; descargas subsecuentes \textbf{sin} requerir parada. \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\subsection{Parte II: Análisis Estructural}
+
+La evaluación de integridad mecánica bajo normativas internacionales permite establecer los límites operativos seguros del activo. La Tabla~\ref{tab:conclusiones_estructurales} sintetiza los resultados del análisis estructural.
+
+\begin{table}[H]
+	\centering
+	\caption{Conclusiones del análisis de integridad estructural.}
+	\label{tab:conclusiones_estructurales}
+	\setcounter{itemcount}{0}
+	\begin{tabularx}{\textwidth}{@{}lX@{}}
+		\toprule
+		\textbf{Componente} & \textbf{Conclusión Técnica} \\
+		\midrule
+		Cuerpo Cilíndrico & Cumple integralmente con API 650 (espesor evaluado 6.0 mm). Se garantiza un mínimo de 16.3 años remanentes de vida útil estructural bajo la tasa de corrosión actual. \\
+		Fondo Toriesférico & Presenta una vida útil proyectada limitada a \textbf{6.0 años} bajo el criterio del 10\% de margen de diseño. La degradación está gobernada por el fenómeno de **Corrosión-Fatiga** inducido por la acidez de la glucosa, la temperatura de 75°C y la alta ciclicidad operativa (2,920 ciclos/año). \\
+		Estabilidad Lateral & La carga sísmica (NSR-10, Cali) es el factor dominante de diseño lateral, con una fuerza horizontal de 993.5 kN y un momento basal de 5,434 kN$\cdot$m. \\
+		Integridad FEA & Las simulaciones en ANSYS identificaron un factor de seguridad de 0.71 en el nudillo al 100\% de llenado, validando la restricción operativa mandatoria al 90\%. \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\newpage

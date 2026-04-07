@@ -1,0 +1,33 @@
+% ===================== RESTAURAR ESTILO ANTES DEL FRONTMATTER =====================
+\pagestyle{corporativo}
+
+% ===================== FRONTMATTER CON MEMBRETE FORZADO =====================
+\begin{frontmatter}
+
+	\title{\projecttitle}
+
+	\author[inst1]{J. Arboleda\corref{cor1}}
+	\ead{proyectos2@dmlsas.com}
+
+	\author[inst1]{H. Rosero}
+	\ead{herminsul.rosero@dmlsas.com}
+
+	\cortext[cor1]{Autor correspondiente}
+	\address[inst1]{DML Ingenieros Consultores S.A.S., Cali, Colombia}
+
+	% ===================== ABSTRACT CON MEMBRETE GARANTIZADO =====================
+	\begin{abstract}
+		\thispagestyle{corporativo}
+		El presente estudio técnico evalúa el comportamiento termodinámico y la integridad estructural de un tanque de almacenamiento de glucosa Globe 1130 (222.8 m$^3$, acero inoxidable SS316L) operado por Ingredion S.A. en Cali, Colombia. La investigación se centra en la optimización de un sistema de calentamiento mediante chaqueta de media caña en espiral y la validación mecánica de un fondo toriesférico de reemplazo, considerando un cuerpo cilíndrico con 20 años de servicio. El análisis de transferencia de calor transitorio revela que el proceso está limitado por la elevada viscosidad del jarabe (212,000 cP a 20°C, reduciéndose a 74,000 cP a 26.7°C [80°F] según ficha técnica), resultando en coeficientes globales ($U$) de 18 a 36 W/m$^2\cdot$°C. Simulaciones mediante Dinámica de Fluidos Computacional (CFD) en COMSOL Multiphysics validaron el modelo analítico con una concordancia del 89\%, confirmando la dominancia de la resistencia térmica del lado del producto. Se determinó que el incremento de la temperatura del fluido de servicio a 75°C reduce el tiempo de preparación logística en un 46\% (de 772.8 a 415.2 horas para un llenado del 80\%). La integridad estructural, analizada bajo API 650 y ASME VIII Div. 1, indica una vida útil remanente de 16.3 años para el cuerpo cilíndrico. No obstante, el nuevo fondo toriesférico presenta una vida útil proyectada limitada a 7.5 años bajo el criterio del 10\% de margen de diseño, debido a la degradación por corrosión-fatiga inducida por la operación a 75°C y la alta ciclicidad (8 cargas/día) con una tasa ajustada de 0.12 mm/año. Además, simulaciones por elementos finitos (FEA) identificaron una zona crítica de sobreesfuerzo en el nudillo fondo-cilindro con un factor de seguridad de 0.71 bajo carga hidrostática al 100\% de llenado, fundamentando la restricción operativa mandatoria al 90\%. Se recomienda la implementación de un circuito térmico multi-ramal, refuerzos estructurales en zonas con FS < 1.5 y aislamiento de lana mineral de 50.8 mm para optimizar la eficiencia energética y la seguridad industrial del activo.
+	\end{abstract}
+
+	\begin{keyword}
+		glucosa \sep transferencia de calor \sep media ca\~na \sep tanque toriesf\'erico \sep API 650 \sep ASME VIII \sep SS316L \sep convecci\'on natural \sep COMSOL \sep ANSYS
+	\end{keyword}
+
+\end{frontmatter}
+
+% ===================== RESTAURAR ESTILO DESPU\'ES DEL FRONTMATTER =====================
+\pagestyle{corporativo}
+% Forzar en la p\'agina actual tambi\'en
+\thispagestyle{corporativo}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motor de Cálculos — Ingeniería Química</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <header>
+        <h1>Motor de Cálculos de Ingeniería Química</h1>
+        <p>API Python (Flask) + Frontend JavaScript</p>
+    </header>
+
+    <main>
+        <!-- Número de Reynolds -->
+        <section class="card">
+            <h2>Número de Reynolds</h2>
+            <div class="form-grid">
+                <label>Densidad ρ [kg/m³] <input id="re-rho" type="number" value="1000" /></label>
+                <label>Velocidad v [m/s]  <input id="re-v"   type="number" value="2" /></label>
+                <label>Diámetro D [m]     <input id="re-D"   type="number" value="0.05" /></label>
+                <label>Viscosidad μ [Pa·s] <input id="re-mu"  type="number" value="0.001" step="0.0001" /></label>
+            </div>
+            <button onclick="calcReynolds()">Calcular</button>
+            <div class="result" id="re-result"></div>
+        </section>
+
+        <!-- LMTD -->
+        <section class="card">
+            <h2>LMTD — Intercambiador de Calor</h2>
+            <div class="form-grid">
+                <label>T_hot_in  [K] <input id="lm-Thi" type="number" value="400" /></label>
+                <label>T_hot_out [K] <input id="lm-Tho" type="number" value="350" /></label>
+                <label>T_cold_in  [K] <input id="lm-Tci" type="number" value="300" /></label>
+                <label>T_cold_out [K] <input id="lm-Tco" type="number" value="340" /></label>
+            </div>
+            <button onclick="calcLMTD()">Calcular</button>
+            <div class="result" id="lm-result"></div>
+        </section>
+
+        <!-- Factor de fricción -->
+        <section class="card">
+            <h2>Factor de Fricción (Colebrook-White)</h2>
+            <div class="form-grid">
+                <label>Reynolds Re      <input id="fr-Re"  type="number" value="50000" /></label>
+                <label>Rugosidad ε/D    <input id="fr-eD"  type="number" value="0.0001" step="0.00001" /></label>
+            </div>
+            <button onclick="calcFriction()">Calcular</button>
+            <div class="result" id="fr-result"></div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

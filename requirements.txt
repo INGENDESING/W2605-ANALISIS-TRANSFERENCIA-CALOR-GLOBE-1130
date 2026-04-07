@@ -1,0 +1,20 @@
+# Dependencias del Proyecto P2611 - Análisis de Tanque de Glucosa
+# Python 3.12+ compatible
+
+# Núcleo de cálculo científico (REQUERIDO)
+numpy==2.4.3            # Arrays, operaciones matemáticas, funciones numéricas
+scipy==1.17.1           # Integración numérica (solve_ivp), optimización, interpolación
+matplotlib==3.10.8      # Generación de gráficas y visualización de resultados
+
+# Opcionales - Mencionados en AGENTS.md pero no utilizados actualmente
+# Descomentar si se necesitan en futuras extensiones:
+# pandas>=2.0.0          # Procesamiento de datos tabulares (no usado actualmente)
+# thermo>=0.2.0          # Propiedades termofísicas (implementación propia en propiedades_glucosa.py)
+# CoolProp>=6.4.0        # Propiedades de fluidos (implementación propia en propiedades_glucosa.py)
+
+# Notas de instalación:
+# pip install -r requirements.txt
+
+# Para desarrollo (opcional):
+# pip install pytest              # Si se implementan pruebas unitarias
+# pip install jupyter             # Si se usan notebooks
