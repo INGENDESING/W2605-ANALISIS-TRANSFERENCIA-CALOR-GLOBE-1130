@@ -19,7 +19,7 @@ Los hallazgos principales del análisis térmico demuestran que el sistema de ca
 		Eficacia del Sistema & El coeficiente global $U$ se sitúa en el rango de 18 a 36 W/m$^2\cdot$°C. La ausencia de agitación mecánica es el factor restrictivo primordial, no la capacidad de la chaqueta. \\
 		Optimización de Gradiente & El uso de agua a 75°C reduce el tiempo de preparación logística en un 46\% frente a la operación a 65°C, permitiendo alcanzar los 57°C operativos en 415.2 horas (Escenario 3). \\
 		Eficiencia Energética & El aislamiento de lana mineral de 2'' reduce las pérdidas al ambiente en un 91\%, garantizando una temperatura superficial de seguridad de 30.8°C. \\
-		Validación CFD & La simulación en COMSOL Multiphysics 6.4 validó el modelo analítico con una concordancia del 89\% ($U_{CFD} = 40.2$ W/m$^2\cdot$°C), confirmando la precisión de las estimaciones transitorias. \\
+		Validación CFD & La simulación en COMSOL Multiphysics 6.4 validó el modelo analítico con una concordancia del 95\% ($U_{CFD} = 38$ W/m$^2\cdot$°C vs.\ $U_{anal} = 36.2$ W/m$^2\cdot$°C), confirmando la precisión de las estimaciones transitorias. \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -43,6 +43,32 @@ Los resultados primarios referentes a los tiempos de calentamiento requeridos pa
 	\end{tabularx}
 \end{table}
 
+\subsubsection{Comparativa de Configuraciones de Chaqueta}
+
+El análisis comparativo entre la chaqueta dimple actual ($A_{actual} = 28$\,m\textsuperscript{2}) y la media caña propuesta ($A_{prop} = 13$\,m\textsuperscript{2}) establece con precisión cuantitativa el impacto de la reducción de área sobre la capacidad de calentamiento del sistema. La Tabla~\ref{tab:conclusiones_chaquetas} consolida los hallazgos principales.
+
+\begin{table}[H]
+    \centering
+    \caption{Conclusiones de la comparativa de configuraciones de chaqueta ($T_w = 75$\,°C, $v = 2.5$\,m/s, tanque al 80\,\%).}
+    \label{tab:conclusiones_chaquetas}
+    \setcounter{itemcount}{0}
+    \begin{tabularx}{\textwidth}{@{}lX@{}}
+        \toprule
+        \textbf{Parámetro} & \textbf{Conclusión} \\
+        \midrule
+        Invarianza de $U$ & El coeficiente global $U$ es idéntico para ambas configuraciones ($\Delta U / U < 0.3$\,\%); la resistencia del lado de la glucosa concentra el 97.7–98.8\,\% de $R_{total}$, con independencia de la geometría de la chaqueta. \\
+        \midrule
+        Ratio de capacidad batch & $t_{prop}/t_{actual} = 2.153 \approx A_{actual}/A_{prop} = 2.154$. La reducción del 54\,\% en el área conlleva una reducción en la misma proporción del calentamiento batch. Calentamiento 25–57\,°C: actual 170.7\,h vs.\ propuesta 367.5\,h. Calentamiento 55–57\,°C: actual 15.5\,h vs.\ propuesta 33.2\,h. \\
+        \midrule
+        Flujo continuo desde 55\,°C & Chaqueta actual: flujo máximo $> 16$\,ton/h. Chaqueta propuesta: flujo máximo 7.54\,ton/h. Para operación de mantenimiento a flujos superiores a 7.5\,ton/h, la chaqueta propuesta resulta insuficiente. \\
+        \midrule
+        Flujo continuo desde 25\,°C & Ambas configuraciones son insuficientes para flujos industriales: la chaqueta actual alcanza solo 1.47\,ton/h y la propuesta solo 0.69\,ton/h. El calentamiento desde frío en modo continuo requiere agitación mecánica para ser viable a escala industrial. \\
+        \midrule
+        Palanca de optimización & La selección del tipo de chaqueta (dimple vs.\ media caña) es irrelevante para el coeficiente $U$. La única palanca en el lado de la chaqueta es el área. La mejora sustancial requiere actuar sobre $h_o$ mediante agitación mecánica. \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
 \subsection{Parte II: Análisis Estructural}
 
 La evaluación de integridad mecánica bajo normativas internacionales permite establecer los límites operativos seguros del activo. La Tabla~\ref{tab:conclusiones_estructurales} sintetiza los resultados del análisis estructural.
@@ -57,7 +83,7 @@ La evaluación de integridad mecánica bajo normativas internacionales permite e
 		\textbf{Componente} & \textbf{Conclusión Técnica} \\
 		\midrule
 		Cuerpo Cilíndrico & Cumple integralmente con API 650 (espesor evaluado 6.0 mm). Se garantiza un mínimo de 16.3 años remanentes de vida útil estructural bajo la tasa de corrosión actual. \\
-		Fondo Toriesférico & Presenta una vida útil proyectada limitada a \textbf{6.0 años} bajo el criterio del 10\% de margen de diseño. La degradación está gobernada por el fenómeno de **Corrosión-Fatiga** inducido por la acidez de la glucosa, la temperatura de 75°C y la alta ciclicidad operativa (2,920 ciclos/año). \\
+		Fondo Toriesférico & Presenta una vida útil proyectada limitada a \textbf{7.5 años} bajo el criterio del 10\% de margen de diseño, considerando una tasa de corrosión de 0.12~mm/año determinada mediante análisis de espesores en campo. La degradación está gobernada por la sinergia entre la acidez de la glucosa, la temperatura de 75°C y la alta ciclicidad operativa (2\,920 ciclos/año). \\
 		Estabilidad Lateral & La carga sísmica (NSR-10, Cali) es el factor dominante de diseño lateral, con una fuerza horizontal de 993.5 kN y un momento basal de 5,434 kN$\cdot$m. \\
 		Integridad FEA & Las simulaciones en ANSYS identificaron un factor de seguridad de 0.71 en el nudillo al 100\% de llenado, validando la restricción operativa mandatoria al 90\%. \\
 		\bottomrule

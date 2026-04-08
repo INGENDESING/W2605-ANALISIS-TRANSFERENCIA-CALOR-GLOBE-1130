@@ -4,7 +4,7 @@
 
 **Elaborado por:** Auditoría técnica independiente  
 **Fecha:** 2026-04-07  
-**Versión:** 1.0  
+**Versión:** 2.0 (Post-correcciones)  
 **Clasificación:** Documento técnico de revisión interna  
 
 ---
@@ -29,29 +29,25 @@ La presente auditoría (auditoría) cubre la validación técnica integral del i
 
 **Ubicación:** `09_resultados.tex`, Tabla `tab:cfd_U` (línea 394); `02_resumen.tex` (línea 51); `10_analisis.tex` (línea 50); `11_conclusiones.tex` (línea 22)
 
-**Hallazgo:** El informe reporta U_CFD = 40.2 W/m²·°C como resultado de la simulación CFD en COMSOL Multiphysics 6.4. Sin embargo, el valor correcto obtenido de la simulación es **U_CFD = 38 W/m²·°C**.
+**Hallazgo:** El informe reportaba U_CFD = 40.2 W/m²·°C. El valor correcto de la simulación es **U_CFD = 38 W/m²·°C**.
 
-**Impacto:** La desviación entre el modelo analítico (U = 36.2 W/m²·°C a T_g = 60°C) y el CFD pasa del 11% reportado al **5%** real, lo cual es una concordancia **más favorable** y fortalece la validación.
+**Impacto:** La desviación entre el modelo analítico (U = 36.2 W/m²·°C a T_g = 60°C) y el CFD pasa del 11% reportado al **5%** real.
 
-**Acciones correctivas:**
-- Actualizar Tabla `tab:cfd_U`: U_CFD de 40.2 → **38** W/m²·°C
-- Actualizar porcentaje de diferencia: de +11% → **+5%**
-- Actualizar texto en `09_resultados.tex` línea 381 y 400
-- Actualizar `10_analisis.tex` línea 50
-- Actualizar `02_resumen.tex` línea 51
-- Actualizar `11_conclusiones.tex` línea 22: "concordancia del 89%" → "concordancia del 95%"
+**Estado:** ✅ **CORREGIDO** en archivos: `09_resultados.tex`, `10_analisis.tex`, `02_resumen.tex`, `11_conclusiones.tex`
 
 ---
 
-### HC-2: Tasa de Corrosión de 0.12 mm/año — Sustento Bibliográfico Insuficiente
+### HC-2: Tasa de Corrosión de 0.12 mm/año — Sustentada con Datos de Campo
 
 **Ubicación:** `07_bases_disenio.tex` (línea 251, 258); `09_resultados.tex` (líneas 555–570)
 
-**Hallazgo:** La tasa de corrosión ajustada de **0.12 mm/año** para el fenómeno de corrosión-fatiga del SS316L en glucosa a 75°C:
-- No cita ninguna fuente de revista científica indexada
-- Invoca una "aceleración de Arrhenius" de 60°C a 75°C sin presentar la energía de activación (E_a) calculada
-- No presenta el desarrollo matemático del modelo de Arrhenius
-- No referencia datos experimentales de corrosión de SS316L en soluciones de azúcar
+**Hallazgo original:** La tasa de corrosión de 0.12 mm/año se presentaba como derivada de un modelo de Arrhenius sin sustento bibliográfico indexado.
+
+**Resolución:** El usuario confirmó que la tasa de **0.12 mm/año fue determinada a partir de un análisis de espesores en campo** (mediciones ultrasónicas), calculando la tasa media de pérdida de material a partir del espesor nominal de fabricación, el tiempo de operación acumulado y el espesor residual medido. Este enfoque basado en datos reales es técnicamente más robusto que un modelo teórico.
+
+**Estado:** ✅ **CORREGIDO** — El texto del informe ahora describe correctamente la fuente como "análisis de espesores en campo" en `07_bases_disenio.tex`, `09_resultados.tex`
+
+**Pendiente:** ⏳ Se agregó una nota al pie indicando que el informe de inspección y análisis de espesores será incorporado como anexo en la próxima revisión del documento.
 
 **Evidencia de la literatura científica (fuentes indexadas):**
 
@@ -107,7 +103,7 @@ La tasa de 0.12 mm/año es **2.4× mayor** que el umbral superior de la literatu
 
 **Análisis:** El cálculo matemático (Ec. en línea 567 de resultados) produce inequívocamente **7.5 años** con los parámetros declarados: e_nom × 0.10 / v_corr = 9.0 × 0.10 / 0.12 = 7.5 años. Los valores de "6.0 años" en conclusiones y recomendaciones carecen de sustento numérico en el documento.
 
-**Acción correctiva:** Unificar a **7.5 años** en todo el documento (o recalcular con nueva tasa si se adopta la recomendación de HC-2).
+**Estado:** ✅ **CORREGIDO** — Unificado a **7.5 años** en todos los archivos: `09_resultados.tex`, `11_conclusiones.tex`, `12_recomendaciones.tex`, `02_resumen.tex`
 
 ---
 
@@ -120,9 +116,7 @@ La tasa de 0.12 mm/año es **2.4× mayor** que el umbral superior de la literatu
 
 Sin embargo, la sección de Resultados introduce un análisis completo de **Corrosión-Fatiga** con ciclicidad mecánica de 2,920 ciclos/año, ruptura periódica de capa pasiva, y cálculo de vida útil por fatiga.
 
-**Acción correctiva:** Actualizar la tabla de alcance en `06_alcance.tex` para:
-- Remover "Análisis de fatiga" de las exclusiones
-- Agregar como incluido: "Análisis de corrosión-fatiga del fondo toriesférico bajo condiciones de alta ciclicidad operativa y temperatura elevada"
+**Estado:** ✅ **CORREGIDO** — Se actualizó `06_alcance.tex`: CFD y FEA como "Incluido", corrosion-fatiga como item incluido, exclusión refinada a "fatiga por vibración o daño mecánico accidental".
 
 ---
 
@@ -137,7 +131,7 @@ Sin embargo, la sección de Resultados introduce un análisis completo de **Corr
 
 **Causa probable:** Redondeo en los datos intermedios (W y C_s). La diferencia es < 0.5%, aceptable para ingeniería, pero se debe unificar.
 
-**Acción correctiva:** Usar los valores de la ecuación (993.5 kN y 5,434 kN·m) y actualizar la tabla, o viceversa.
+**Estado:** ✅ **CORREGIDO** — Tabla y texto de `09_resultados.tex` unificados a 993.5 kN y 5,434 kN·m.
 
 ---
 

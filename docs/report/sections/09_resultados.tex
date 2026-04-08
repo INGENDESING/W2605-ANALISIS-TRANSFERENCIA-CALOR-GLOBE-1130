@@ -340,6 +340,138 @@ En el Escenario~2 (agua a 65~°C), la temperatura de la glucosa se mantiene en u
 	\label{fig:ciclo_gantt}
 \end{figure}
 
+\subsubsection{\'Area de Transferencia para Calentamiento Continuo}
+
+El modelo de dimensionamiento descrito en la Sección~\ref{sec:area_continuo} —basado en la integración trapezoidal de $1/U(T)$ y el método LMTD con temperatura de agua variable— permite cuantificar el área de chaqueta requerida para calentar glucosa Globe~1130 desde distintas temperaturas de entrada hasta 57\,°C, para flujos continuos de 1 a 16~ton/h. La Figura~\ref{fig:U_vs_T} ilustra la variación del coeficiente global $U$ con la temperatura de la glucosa, evidenciando el incremento de 23.7 a 36.2~W/m\textsuperscript{2}$\cdot$°C al disminuir la viscosidad del jarabe entre 25 y 57\,°C.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth]{../figures/U_vs_T_glucosa.png}
+    \caption{Variación del coeficiente global $U$ y de los coeficientes convectivos individuales $h_i$ (agua, Sieder-Tate) y $h_o$ (glucosa, Churchill-Chu) con la temperatura de la glucosa ($T_w = 75$\,°C, $v = 2.5$\,m/s). La diferencia de tres órdenes de magnitud entre $h_i$ y $h_o$ confirma la dominancia de la resistencia de la glucosa.}
+    \label{fig:U_vs_T}
+\end{figure}
+
+Para el calentamiento completo desde 25\,°C hasta 57\,°C, el coeficiente efectivo integrado resulta $U_{ef} = 30.54$\,W/m\textsuperscript{2}$\cdot$°C y la LMTD varía entre 31.2 y 28.8\,°C al incrementarse el flujo (por efecto de la caída de temperatura del agua). La Tabla~\ref{tab:areas_25_57} presenta los resultados para flujos representativos del rango de operación.
+
+\begin{table}[H]
+    \centering
+    \caption{Área de transferencia requerida para calentamiento continuo de glucosa Globe~1130 de 25\,°C a 57\,°C ($T_w = 75$\,°C, $v = 2.5$\,m/s, $U_{ef} = 30.54$\,W/m\textsuperscript{2}$\cdot$°C).}
+    \label{tab:areas_25_57}
+    \setcounter{itemcount}{0}
+    \begin{tabularx}{\textwidth}{@{}Ncccccc@{}}
+        \toprule
+        \multicolumn{1}{c}{\textbf{Item}} & $\dot{m}$ [ton/h] & $\dot{m}$ [kg/s] & $\dot{Q}$ [kW] & $\Delta T_{lm}$ [°C] & $A_{req}$ [m\textsuperscript{2}] & $L_{eq}$ [m] \\
+        \midrule
+        &  1 & 0.278 &  18.8 & 31.2 &  19.7 &  165 \\
+        &  4 & 1.111 &  75.2 & 30.7 &  80.2 &  671 \\
+        &  8 & 2.222 & 150.3 & 30.1 & 163.7 & 1369 \\
+        & 12 & 3.333 & 225.5 & 29.4 & 250.9 & 2099 \\
+        & 16 & 4.444 & 300.7 & 28.8 & 341.9 & 2860 \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+Los valores de área requerida oscilan entre 19.7 y 341.9~m\textsuperscript{2}, evidenciando que tanto la chaqueta dimple actual (28~m\textsuperscript{2}) como la media caña propuesta (13~m\textsuperscript{2}) resultan insuficientes para calentamiento continuo desde frío a flujos industriales superiores a 1.5~ton/h. Esta observación es consistente con el propósito del sistema instalado: calentar el tanque en modo estático (batch), no en modo de flujo continuo.
+
+Para el calentamiento de mantenimiento desde 55\,°C hasta 57\,°C, la menor variación de viscosidad de la glucosa en ese intervalo resulta en un coeficiente efectivo más elevado, $U_{ef} = 36.13$\,W/m\textsuperscript{2}$\cdot$°C, con variación relativa de apenas el 0.6\,\% (criterio $\Delta U/U < 10$\,\% de Incropera et al.\ satisfecho). La LMTD se reduce a 19.0\,°C por la menor diferencia de temperatura entre el agua y la glucosa. La Tabla~\ref{tab:areas_55_57} resume los resultados.
+
+\begin{table}[H]
+    \centering
+    \caption{Área de transferencia requerida para calentamiento de mantenimiento de glucosa Globe~1130 de 55\,°C a 57\,°C ($T_w = 75$\,°C, $v = 2.5$\,m/s, $U_{ef} = 36.13$\,W/m\textsuperscript{2}$\cdot$°C).}
+    \label{tab:areas_55_57}
+    \setcounter{itemcount}{0}
+    \begin{tabularx}{\textwidth}{@{}Ncccccc@{}}
+        \toprule
+        \multicolumn{1}{c}{\textbf{Item}} & $\dot{m}$ [ton/h] & $\dot{m}$ [kg/s] & $\dot{Q}$ [kW] & $\Delta T_{lm}$ [°C] & $A_{req}$ [m\textsuperscript{2}] & Cumple ($A_{prop}=13$\,m\textsuperscript{2}) \\
+        \midrule
+        &  1 & 0.278 &  1.18 & 18.97 &  1.73 & Sí \\
+        &  4 & 1.111 &  4.73 & 18.95 &  6.91 & Sí \\
+        &  8 & 2.222 &  9.47 & 18.91 & 13.85 & No (límite) \\
+        & 12 & 3.333 & 14.20 & 18.87 & 20.82 & No \\
+        & 16 & 4.444 & 18.93 & 18.84 & 27.82 & No \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+La Figura~\ref{fig:comp_escenarios_areas} compara visualmente los perfiles de área requerida para ambos rangos de temperatura, destacando la severa penalización de la fuerza impulsora térmica que impone el rango 55–57\,°C: una reducción del 39.4\,\% en la LMTD respecto al rango 25–57\,°C incrementa el área requerida por unidad de potencia transferida en un factor de 1.39.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../figures/comparacion_escenarios.png}
+    \caption{Comparación de los escenarios de calentamiento continuo 25$\rightarrow$57\,°C y 55$\rightarrow$57\,°C: área requerida, potencia térmica, eficiencia de superficie ($A/\dot{Q}$) y coeficiente global efectivo en función del flujo de glucosa.}
+    \label{fig:comp_escenarios_areas}
+\end{figure}
+
+\subsubsection{Comparativa de Chaquetas: Actual (Dimple, 28\,m\textsuperscript{2}) vs.\ Propuesta (Media Ca\~na, 13\,m\textsuperscript{2})}
+
+Con base en la metodología descrita en la Sección~\ref{sec:comp_chaquetas}, se evaluaron cuantitativamente las dos configuraciones de chaqueta disponibles para el fondo toriesférico del tanque Globe~1130. La chaqueta dimple actual posee un área efectiva de $A_{actual} = 28$\,m\textsuperscript{2} distribuida en tres circuitos paralelos, mientras que la media caña propuesta opera con $A_{prop} = 13$\,m\textsuperscript{2} en un único paso en espiral. Dado que $U$ es invariante entre configuraciones —la resistencia de la glucosa domina el 98\,\% del total—, la capacidad de calentamiento escala directamente con el área disponible.
+
+\textbf{Calentamiento batch.} La Tabla~\ref{tab:comp_batch} presenta los tiempos de calentamiento calculados para el tanque al 80\,\% de su capacidad (178.2\,m\textsuperscript{3} de glucosa) con agua a 75\,°C.
+
+\begin{table}[H]
+    \centering
+    \caption{Tiempos de calentamiento batch para la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y propuesta (media caña, 13\,m\textsuperscript{2}). Tanque al 80\,\% de capacidad, $T_w = 75$\,°C, $v = 2.5$\,m/s.}
+    \label{tab:comp_batch}
+    \setcounter{itemcount}{0}
+    \begin{tabularx}{\textwidth}{@{}NllccccX@{}}
+        \toprule
+        \multicolumn{1}{c}{\textbf{Item}} & Caso & Chaqueta & $A$ [m\textsuperscript{2}] & $T_{ini}$ [°C] & $T_{fin}$ [°C] & Tiempo [h] & Tiempo [días] \\
+        \midrule
+        & 25\,→\,57\,°C & Actual (dimple)     & 28 & 25 & 57 & 170.7 & 7.11 \\
+        & 25\,→\,57\,°C & Propuesta (media caña) & 13 & 25 & 57 & 367.5 & 15.31 \\
+        & 55\,→\,57\,°C & Actual (dimple)     & 28 & 55 & 57 &  15.5 &  0.65 \\
+        & 55\,→\,57\,°C & Propuesta (media caña) & 13 & 55 & 57 &  33.2 &  1.38 \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+El cociente de tiempos entre la configuración propuesta y la actual es $367.5/170.7 = 2.153$ para el caso 25–57\,°C y $33.2/15.5 = 2.145$ para el caso 55–57\,°C, ambos prácticamente idénticos al ratio de áreas $A_{actual}/A_{prop} = 28/13 = 2.154$. Esta proporcionalidad confirma con precisión que $U$ es invariante entre configuraciones, y que la reducción del 54\,\% en el área (de 28 a 13\,m\textsuperscript{2}) conlleva una reducción en la misma proporción de la capacidad de calentamiento del sistema. La Figura~\ref{fig:comp_batch_Tvst} superpone las curvas de calentamiento batch para ambas configuraciones y ambos casos térmicos.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{../figures/comp_batch_T_vs_t.png}
+    \caption{Evolución temporal de la temperatura de la glucosa durante el calentamiento batch para la chaqueta actual (dimple, 28\,m\textsuperscript{2}, línea continua azul) y la propuesta (media caña, 13\,m\textsuperscript{2}, línea discontinua roja). Panel superior: caso 25\,°C\,$\rightarrow$\,57\,°C; panel inferior: caso 55\,°C\,$\rightarrow$\,57\,°C. Tanque al 80\,\%, agua a 75\,°C, $v = 2.5$\,m/s.}
+    \label{fig:comp_batch_Tvst}
+\end{figure}
+
+\textbf{Calentamiento continuo.} Para el modo de flujo continuo, la Tabla~\ref{tab:comp_flujo} compara la temperatura de salida de la glucosa alcanzable con cada chaqueta a flujos representativos, para los dos rangos de temperatura.
+
+\begin{table}[H]
+    \centering
+    \caption{Temperatura de salida de la glucosa $T_{out}$ alcanzable en modo continuo con la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y propuesta (media caña, 13\,m\textsuperscript{2}), para temperaturas de entrada de 25\,°C y 55\,°C ($T_w = 75$\,°C, $v = 2.5$\,m/s).}
+    \label{tab:comp_flujo}
+    \setcounter{itemcount}{0}
+    \begin{tabularx}{\textwidth}{@{}NcccccX@{}}
+        \toprule
+        \multicolumn{1}{c}{\textbf{Item}} & $\dot{m}$ [ton/h] & \multicolumn{2}{c}{$T_{in} = 25$\,°C} & \multicolumn{2}{c}{$T_{in} = 55$\,°C} & Obs. \\
+        \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+        & & $T_{out}^{actual}$ [°C] & $T_{out}^{prop}$ [°C] & $T_{out}^{actual}$ [°C] & $T_{out}^{prop}$ [°C] & \\
+        \midrule
+        &  1 & 64.6 & 49.2 & 70.9 & 65.9 & \\
+        &  4 & 38.9 & 31.6 & 62.0 & 58.6 & \\
+        &  8 & 32.1 & 28.3 & 58.9 & 56.9 & Límite prop. \\
+        & 12 & 29.7 & 27.2 & 57.7 & 56.3 & \\
+        & 16 & 28.6 & 26.7 & 57.0 & 56.0 & Límite actual \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+Los resultados revelan que para el calentamiento desde 25\,°C, la chaqueta actual puede alcanzar los 57\,°C de salida únicamente a flujos inferiores a 1.47~ton/h, y la propuesta solo hasta 0.69~ton/h. En contraste, para el calentamiento de mantenimiento desde 55\,°C, la chaqueta actual cubre el rango completo de operación (hasta más de 16~ton/h), mientras que la propuesta resulta insuficiente para flujos superiores a 7.54~ton/h. La Figura~\ref{fig:comp_flujo_Tout} ilustra estos perfiles y la Figura~\ref{fig:comp_flujo_max} muestra la comparativa de flujos máximos alcanzables.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{../figures/comp_flujo_T_out_vs_mdot.png}
+    \caption{Temperatura de salida de la glucosa en función del flujo másico para la chaqueta actual (28\,m\textsuperscript{2}) y propuesta (13\,m\textsuperscript{2}). Panel superior: temperatura de entrada 25\,°C; panel inferior: temperatura de entrada 55\,°C. La línea punteada indica el objetivo operativo de 57\,°C; las líneas verticales marcan el flujo máximo alcanzable por cada configuración.}
+    \label{fig:comp_flujo_Tout}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../figures/comp_flujo_maximo_bar.png}
+    \caption{Flujo máximo continuo alcanzable para cumplir la especificación de 57\,°C a la salida, para la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y la propuesta (media caña, 13\,m\textsuperscript{2}), discriminado por temperatura de entrada.}
+    \label{fig:comp_flujo_max}
+\end{figure}
+
 \subsubsection{Espesor de Aislamiento T\'ermico}
 
 Se evalu\'o el efecto del espesor de aislamiento de lana mineral sobre las p\'erdidas de calor al ambiente y la temperatura superficial exterior de la chaqueta. La Tabla~\ref{tab:aislamiento} presenta los resultados para agua a 75\,°C (Escenario~3).
@@ -391,13 +523,13 @@ Este comportamiento en el arranque explica el bajo coeficiente de transferencia 
 		\midrule
 		& Anal\'itico --- arranque ($T_g = 25$\,°C) & $\approx 10$ & Viscosidad extrema: $\approx\!212\,000$\,cP \\
 		& Anal\'itico --- estado estable ($T_g = 40$--$60$\,°C) & 26--36 & Convecci\'on natural mejorada \\
-		& CFD (COMSOL~6.4) --- estado estable & \textbf{40.2} & Promedio ponderado sobre $A=13$\,m\textsuperscript{2} \\
-		& Diferencia anal\'itico vs.\ CFD (estado estable) & +11\,\% & Concordancia satisfactoria \\
+		& CFD (COMSOL~6.4) --- estado estable & \textbf{38} & Promedio ponderado sobre $A=13$\,m\textsuperscript{2} \\
+		& Diferencia anal\'itico vs.\ CFD (estado estable) & +5\,\% & Concordancia satisfactoria \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
 
-El coeficiente global promedio determinado por la simulaci\'on CFD en estado estable es $U_{\text{CFD}} = 40.2$\,W/m\textsuperscript{2}$\cdot$°C, valor que supera en un 11\,\% al resultado anal\'itico para la condici\'on m\'as cercana en temperatura ($U_{\text{anal\'itico}} = 36.2$\,W/m\textsuperscript{2}$\cdot$°C a $T_g = 60$\,°C). Esta concordancia es plenamente satisfactoria para ingenier\'ia de proceso, considerando que el modelo anal\'itico emplea correlaciones de convecci\'on natural desarrolladas para geometr\'ias ideales planas, mientras que la simulaci\'on CFD captura la geometr\'ia tridimensional real del fondo toriesf\'erico, el car\'acter espiral de la chaqueta y los efectos de estratificaci\'on local. En t\'erminos pr\'acticos, el modelo anal\'itico resulta conservador: los tiempos de calentamiento calculados representan el l\'imite superior y el sistema real puede calentar ligeramente m\'as r\'apido.
+El coeficiente global promedio determinado por la simulaci\'on CFD en estado estable es $U_{\text{CFD}} = 38$\,W/m\textsuperscript{2}$\cdot$°C, valor que supera en un 5\,\% al resultado anal\'itico para la condici\'on m\'as cercana en temperatura ($U_{\text{anal\'itico}} = 36.2$\,W/m\textsuperscript{2}$\cdot$°C a $T_g = 60$\,°C). Esta concordancia es plenamente satisfactoria para ingenier\'ia de proceso, considerando que el modelo anal\'itico emplea correlaciones de convecci\'on natural desarrolladas para geometr\'ias ideales planas (Churchill~\& Chu, 1975), mientras que la simulaci\'on CFD captura la geometr\'ia tridimensional real del fondo toriesf\'erico, el car\'acter espiral de la chaqueta y los efectos de estratificaci\'on local. En t\'erminos pr\'acticos, el modelo anal\'itico resulta conservador: los tiempos de calentamiento calculados representan el l\'imite superior y el sistema real puede calentar ligeramente m\'as r\'apido.
 
 La simulaci\'on puso tambi\'en de manifiesto un fen\'omeno de relevancia operacional: durante el arranque, el agua sufre un enfriamiento brusco y concentrado en las primeras espiras de la chaqueta, donde la diferencia de temperatura con la glucosa fr\'ia es m\'axima. Esta concentraci\'on del intercambio de calor en la zona central del fondo resulta subóptima en cuanto a la utilizaci\'on del \'area disponible, puesto que las espiras exteriores operan con un $\Delta T$ reducido y, en consecuencia, con una tasa de transferencia de calor sensiblemente menor. Para mitigar este efecto en futuras ampliaciones del sistema, se recomienda evaluar la incorporaci\'on de m\'ultiples boquillas de entrada y salida del agua distribuidas a lo largo de la espiral, lo que reducir\'ia el tiempo de residencia del agua en el canal y producir\'ia una distribuci\'on m\'as uniforme de temperatura sobre toda la superficie de contacto de 13\,m\textsuperscript{2}.
 
@@ -542,41 +674,41 @@ La Tabla~\ref{tab:cargas_externas} resume las cargas externas.
 		& Fuerza de viento sobre el tanque & 20.3 & kN & API 650 \\
 		& Momento de volcamiento por viento & 111.2 & kN$\cdot$m & API 650 \\
 		& Coeficiente s\'ismico $C_s$ & 0.391 & -- & NSR-10 \\
-		& Fuerza s\'ismica horizontal & 989.6 & kN & NSR-10 \\
-		& Momento s\'ismico en la base & 5\,413 & kN$\cdot$m & NSR-10 \\
+		& Fuerza s\'ismica horizontal & 993.5 & kN & NSR-10 \\
+		& Momento s\'ismico en la base & 5\,434 & kN$\cdot$m & NSR-10 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
 
 La fuerza s\'ismica (989.6~kN) es significativamente mayor que la fuerza de viento (20.3~kN), lo que confirma que el sismo es la carga lateral dominante para el dise\~no del tanque en Cali. El momento s\'ismico en la base (5\,413~kN$\cdot$m) debe ser resistido por los anclajes y la cimentaci\'on del tanque.
 
-\subsubsection{Ciclo de Vida y Corrosión-Fatiga (Nuevo Fondo)}
+\subsubsection{Ciclo de Vida y Corrosi\'on-Fatiga (Nuevo Fondo)}
 
-Bajo las nuevas premisas operativas de alta severidad (8 ciclos/día de carga/descarga y temperatura constante de 75°C), el mecanismo de degradación del fondo toriesférico transita de una corrosión uniforme simple a un fenómeno de **Corrosión-Fatiga**. 
+Bajo las premisas operativas de alta severidad (8 ciclos/d\'ia de carga/descarga y temperatura constante de 75\,°C), el mecanismo de degradaci\'on del fondo toriesf\'erico transita de una corrosi\'on uniforme simple a un fen\'omeno de \textbf{corrosi\'on-fatiga}.
 
-Para el recálculo de la vida útil, se han considerado los siguientes factores agravantes:
+La tasa de corrosi\'on utilizada para la proyecci\'on de vida \'util del fondo toriesf\'erico se determin\'o a partir de un \textbf{an\'alisis de espesores en campo} realizado sobre el tanque en condiciones de servicio. A partir del espesor nominal de fabricaci\'on de la l\'amina, el tiempo de operaci\'on acumulado y el espesor residual medido mediante ultrasonido, se calcul\'o una tasa media de p\'erdida de material de \textbf{0.12~mm/a\~no}. Este valor integra impl\'icitamente los efectos sin\'ergicos de la temperatura de operaci\'on (75\,°C), la acidez del medio ($pH \approx 4.5$--$5.5$) y la ciclicidad mec\'anica del proceso\footnote{El informe de inspecci\'on y an\'alisis de espesores que sustenta esta tasa ser\'a incorporado como anexo en la pr\'oxima revisi\'on del presente documento.}.
+
+Para el rec\'alculo de la vida \'util, se consideraron los siguientes factores agravantes:
 \begin{itemize}
-	\item \textbf{Aceleración Térmica (Arrhenius):} El incremento de 60°C a 75°C en un medio de glucosa ácida ($pH < 5.0$) acelera la cinética de corrosión, estimándose una tasa ajustada de \textbf{0.12 mm/año}.
-	\item \textbf{Ciclicidad Mecánica:} La operación de 8 cargas/día equivale a \textbf{2,920 ciclos/año}. Esta fluctuación de esfuerzos en el nudillo (zona con $FS \approx 0.71$) rompe periódicamente la capa pasiva del SS316L, exponiendo metal fresco al ataque químico.
-	\item \textbf{Criterio de Diseño (Retiro al 10\%):} Se establece un límite de vida útil basado en la pérdida del 10\% del espesor nominal de la plancha de 9.0 mm (Margen de sacrificio = 0.9 mm).
+	\item \textbf{Tasa de corrosi\'on medida en campo:} La tasa de 0.12~mm/a\~no, determinada mediante an\'alisis de espesores, es superior a los valores t\'ipicos de la literatura para SS316L en contacto con soluciones de glucosa ($<0.05$~mm/a\~no seg\'un NACE~Corrosion~Data~Survey, 2015). Esta diferencia se atribuye al efecto combinado de la temperatura elevada (75\,°C), la naturaleza \'acida de la glucosa y la alta ciclicidad operativa.
+	\item \textbf{Ciclicidad mec\'anica:} La operaci\'on de 8~cargas/d\'ia equivale a \textbf{2\,920~ciclos/a\~no}. La fluctuaci\'on de esfuerzos en la zona del nudillo (donde el FEA identific\'o $FS \approx 0.71$) contribuye a la ruptura peri\'odica de la capa pasiva del SS316L, exponiendo metal fresco al medio corrosivo.
+	\item \textbf{Criterio de retiro (10\% del espesor nominal):} Se establece un l\'imite de vida \'util basado en la p\'erdida del 10\% del espesor nominal de 9.0~mm, lo que define un margen de sacrificio de 0.9~mm.
 \end{itemize}
 
-La vida útil remanente estimada ($t_{vida}$) para el nuevo fondo se calcula como:
+La vida \'util remanente estimada ($t_{vida}$) para el nuevo fondo se calcula como:
 
 \begin{equation}
-	t_{vida,fondo} = \frac{e_{nom} \cdot 0.10}{v_{corr, adj}} = \frac{9.0 \text{ mm} \cdot 0.10}{0.12 \text{ mm/año}} = \mathbf{7.5 \text{ años}}
+	t_{vida,fondo} = \frac{e_{nom} \cdot 0.10}{v_{corr}} = \frac{9.0~\text{mm} \times 0.10}{0.12~\text{mm/a\~no}} = \mathbf{7.5~\text{a\~nos}}
 \end{equation}
 
-Esta reducción frente a modelos estáticos subraya la importancia del monitoreo de grietas por fatiga en las zonas de concentración de esfuerzos detectadas por FEA. Para el cuerpo cilíndrico, manteniendo su régimen menos cíclico, se conserva la proyección previa basada en la tasa histórica.
+Esta proyecci\'on subraya la importancia del monitoreo peri\'odico de espesores y la detecci\'on temprana de grietas por fatiga en las zonas de concentraci\'on de esfuerzos identificadas por FEA. Para el \textbf{cuerpo cil\'indrico}, cuyo r\'egimen operativo involucra menores gradientes t\'ermicos y esfuerzos c\'iclicos, se conserva la proyecci\'on previa basada en la tasa hist\'orica de 0.0625~mm/a\~no, que arroja una vida \'util remanente estimada de \textbf{16.3~a\~nos} (informe P2543-PR-INF-002~REV0).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\textwidth]{../figures/ciclo_vida_corrosion.png}
-	\caption{Proyección de degradación acelerada por Corrosión-Fatiga. El nuevo fondo alcanza su límite de diseño del 10\% a los 7.5 años debido a la interacción de la acidez, los 75°C y la alta ciclicidad operativa con una tasa de 0.12 mm/año.}
+	\caption{Proyecci\'on de degradaci\'on por corrosi\'on-fatiga del fondo toriesf\'erico. La tasa de 0.12~mm/a\~no, determinada mediante an\'alisis de espesores en campo, proyecta que el fondo alcanzar\'a el l\'imite de dise\~no del 10\% a los 7.5~a\~nos bajo las condiciones operativas de 75\,°C y 2\,920~ciclos/a\~no.}
 	\label{fig:ciclo_vida}
 \end{figure}
-
-El an\'alisis confirma un per\'iodo de operaci\'on seguro de al menos 16 a\~nos adicionales para la planta, condicionado al seguimiento e inspecci\'on por Mapeo de Corrosi\'on o l\'ineas de Phased Array Ultras\'onico (PAUT) dadas las uniones y gradientes de operaci\'on.
 
 \subsubsection{Validaci\'on FEA --- ANSYS Mechanical}
 

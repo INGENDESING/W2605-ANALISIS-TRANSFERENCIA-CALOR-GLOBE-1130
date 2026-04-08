@@ -1,0 +1,5 @@
+Caso,Chaqueta,Area_m2,T_inicial_C,T_final_C,Tiempo_h,Tiempo_dias
+25.0->57C,"Actual (dimple, 28 m²)",28.0,25.0,57.0,170.667,7.111
+25.0->57C,"Propuesta (media caña, 13 m²)",13.0,25.0,57.0,367.5,15.312
+55.0->57C,"Actual (dimple, 28 m²)",28.0,55.0,57.0,15.5,0.646
+55.0->57C,"Propuesta (media caña, 13 m²)",13.0,55.0,57.0,33.25,1.385

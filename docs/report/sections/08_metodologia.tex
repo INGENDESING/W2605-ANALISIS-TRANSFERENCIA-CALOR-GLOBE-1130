@@ -40,6 +40,8 @@ válida para $\text{Re} > 10\,000$, $0.7 < \text{Pr} < 16\,700$ y $L/D_h > 10$. 
 
 donde $\text{Ra}_L = \text{Gr}_L \cdot \text{Pr}$ es el número de Rayleigh, evaluado con la longitud característica de la superficie de contacto y las propiedades de la glucosa a la temperatura de película $T_f = (T_s + T_\infty)/2$. Las propiedades de la glucosa Globe~1130, particularmente la viscosidad (que es fuertemente dependiente de la temperatura), se evalúan según los datos del fabricante y la literatura técnica especializada.
 
+Es pertinente se\~nalar que la correlaci\'on de Churchill~\& Chu~(1975) fue desarrollada originalmente para \textbf{placas verticales isotermas}. Su aplicaci\'on al fondo toriesf\'erico del tanque representa una aproximaci\'on conservadora, dado que la geometr\'ia curva calentada desde abajo favorece la convecci\'on natural respecto a una placa plana vertical. La longitud caracter\'istica se toma como $L = 1.0$~m, valor representativo de la escala vertical del fondo. Esta elecci\'on metodol\'ogica es coherente con la pr\'actica de ingenier\'ia para fondos toriesf\'ericos de grandes di\'ametros y fue validada mediante la simulaci\'on CFD, la cual arroj\'o una desviaci\'on del 5\,\% respecto al modelo anal\'itico.
+
 \subsubsection{Modelo de Calentamiento Transitorio}
 
 El calentamiento de la glucosa en el tanque se modela mediante un balance de energía transitorio. Para el caso de glucosa en reposo (sin descarga), la ecuación diferencial gobernante es:
@@ -74,9 +76,58 @@ donde $\dot{m}_{out}$ es el flujo m\'asico de descarga al carrotanque y $T_{ref}
 
 El sistema de Ecs.~\ref{eq:balance_descarga} y \ref{eq:balance_masa} constituye un sistema de ecuaciones diferenciales ordinarias acopladas que se resuelve con el m\'etodo RK45 adaptativo.
 
+\subsubsection{Determinaci\'on del \'Area de Transferencia Requerida}
+\label{sec:area_continuo}
+
+Para evaluar la capacidad del sistema de chaqueta en modo de calentamiento continuo, se desarrolló un modelo de dimensionamiento basado en el método de la Diferencia de Temperatura Media Logarítmica (LMTD) con integración numérica del coeficiente global variable. El calor requerido por unidad de tiempo para calentar un flujo másico de glucosa $\dot{m}$ desde una temperatura de entrada $T_{g,in}$ hasta una temperatura de salida $T_{g,out}$ se expresa como:
+
+\begin{equation}
+    \dot{Q} = \dot{m} \cdot C_{p,prom} \cdot (T_{g,out} - T_{g,in})
+    \label{eq:calor_continuo}
+\end{equation}
+
+donde $C_{p,prom}$ se evalúa a la temperatura media del rango de calentamiento. La diferencia de temperatura media logarítmica, considerando el agua a temperatura prácticamente constante $T_w$ a lo largo de la chaqueta, se determina mediante:
+
+\begin{equation}
+    \Delta T_{lm} = \frac{(T_w - T_{g,in}) - (T_w - T_{g,out})}{\ln\!\left(\dfrac{T_w - T_{g,in}}{T_w - T_{g,out}}\right)}
+    \label{eq:LMTD_continuo}
+\end{equation}
+
+Dado que $U$ varía de manera significativa con la temperatura de la glucosa —de 23.7 a 36.2~W/m\textsuperscript{2}$\cdot$°C en el rango de operación de 25 a 57\,°C—, el coeficiente global efectivo se obtiene mediante integración trapezoidal de la resistencia específica sobre el rango de temperatura~\citep{Incropera2011}:
+
+\begin{equation}
+    \frac{1}{U_{ef}} = \frac{1}{\Delta T_{g}} \int_{T_{g,in}}^{T_{g,out}} \frac{1}{U(T)} \, dT
+    \label{eq:U_efectivo}
+\end{equation}
+
+Este enfoque, conforme a la Sección~11.4 de Incropera et al.~\citep{Incropera2011}, es termodinámicamente riguroso cuando $U$ varía con la temperatura del fluido frío, y es considerablemente más preciso que el simple promedio aritmético de $U$, especialmente para fluidos de alta viscosidad donde la variación de $U$ con la temperatura supera el 50\,\%. El área de transferencia requerida para alcanzar la temperatura de salida especificada resulta entonces:
+
+\begin{equation}
+    A_{req} = \frac{\dot{Q}}{U_{ef} \cdot \Delta T_{lm}}
+    \label{eq:area_requerida}
+\end{equation}
+
+Se analizan dos rangos de temperatura de la glucosa: calentamiento completo desde 25\,°C hasta 57\,°C ($\Delta T_g = 32$\,°C) y calentamiento de mantenimiento desde 55\,°C hasta 57\,°C ($\Delta T_g = 2$\,°C). Para el segundo rango, la variación relativa de $U$ es de apenas 0.6\,\%, inferior al criterio del 10\,\% establecido por~\citet{Incropera2011}, por lo que el uso de un $U$ constante evaluado a la temperatura media del rango es plenamente justificado.
+
 \subsubsection{Ciclo de Descargas a Carrotanque}
 
 Para los Escenarios~2 y 3, el ciclo de descargas se simula con un per\'iodo de 3~horas (1.5~h de descarga + 1.5~h de calentamiento) durante 24~horas. Para el Escenario~4 (ciclo industrial a 57~°C), se implementa un esquema adaptativo: la glucosa se calienta hasta alcanzar la temperatura de descarga (57~°C) y se descarga inmediatamente. El flujo m\'asico de descarga a carrotanque es $\dot{m}_{out} = 24\,000 / (1.5 \times 3\,600) = 4.444$~kg/s, correspondiente a la descarga de 24~toneladas en 1.5~horas por boquilla de 8''.
+
+\subsubsection{Comparativa de Configuraciones de Chaqueta}
+\label{sec:comp_chaquetas}
+
+El estudio contempla la comparación cuantitativa entre la configuración de chaqueta actualmente instalada en el fondo toriesférico y la configuración propuesta. La chaqueta actual corresponde a un diseño tipo \textit{dimple} con un área efectiva de transferencia de $A_{actual} = 28$\,m\textsuperscript{2} distribuida en tres circuitos de agua en paralelo (tres entradas y tres salidas), mientras que la chaqueta propuesta es una espiral de media caña rectangular de paso único con $A_{prop} = 13$\,m\textsuperscript{2}. Ambas operan con las mismas condiciones de servicio: $T_w = 75$\,°C y $v = 2.5$\,m/s.
+
+Una consideración metodológica fundamental es que el coeficiente global de transferencia de calor $U$ es prácticamente invariante entre ambas configuraciones. Esta condición se sustenta en que la resistencia del lado de la glucosa —gobernada por convección natural y controlada por la viscosidad del jarabe— concentra entre el 97.7\,\% y el 98.8\,\% de la resistencia térmica total del sistema, con independencia de la geometría de la chaqueta. Por consiguiente, la única diferencia operacional cuantificable entre las dos configuraciones es el área de contacto $A$.
+
+La comparativa se desarrolla en dos modos de operación. En el \textbf{modo \textit{batch}}, con la glucosa estática en el tanque al 80\,\% de su capacidad, se integra la Ec.~\ref{eq:balance_transitorio} con $A$ como parámetro libre, determinando los tiempos de calentamiento desde 25\,°C y desde 55\,°C hasta 57\,°C para cada configuración. En el \textbf{modo continuo}, para flujos de glucosa de 1 a 16~ton/h, se resuelve la ecuación diferencial espacial:
+
+\begin{equation}
+    \dot{m} \cdot C_{p,g}(T) \cdot \frac{dT}{dA} = U(T) \cdot (T_w - T)
+    \label{eq:ode_espacial}
+\end{equation}
+
+donde la variable independiente es la coordenada de área $A$, integrada desde cero hasta el área disponible de la chaqueta para obtener la temperatura de salida $T_{out}$. El flujo máximo continuo que permite alcanzar $T_{out} = 57$\,°C se determina mediante búsqueda numérica con el método de Brent sobre la ecuación implícita $T_{out}(\dot{m}) = 57$\,°C.
 
 \subsection{Parte II: An\'alisis Estructural del Tanque}
 
@@ -120,7 +171,9 @@ El an\'alisis estructural incluye adicionalmente las siguientes cargas, evaluada
 		& Carga de viento (velocidad máxima) & 120 km/h & NSR-10 \\
 		& Carga sísmica (zona intermedia, Cali) & Según coeficientes & NSR-10 / API 650 App. E \\
 		& Temperatura de operación del fondo & 75\,°C & Especificación del proyecto \\
-		& Corrosion allowance & 1.875 mm (30 años) & P2543-PR-INF-002 REV0 \\
+		& Tasa de corrosi\'on (campo, fondo nuevo) & 0.12~mm/a\~no & An\'alisis de espesores \\
+		& Corrosion allowance (fondo, 7.5~a\~nos) & 0.9~mm & 10\% espesor nominal \\
+		& Corrosion allowance (cuerpo, 30~a\~nos) & 1.875~mm & P2543-PR-INF-002~REV0 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}

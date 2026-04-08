@@ -18,20 +18,21 @@ El presente estudio constituye un an\'alisis t\'ecnico independiente elaborado p
 		& Incluido & Perfiles de temperatura vs.\ tiempo; an\'alisis de la operaci\'on c\'iclica de 8~cargas a carrotanque en 24~horas. \\
 		& Incluido & C\'alculo del espesor \'optimo de aislamiento de lana mineral con base en criterios de eficiencia energ\'etica y seguridad al contacto. \\
 		& Incluido & C\'alculos num\'ericos en Python con presentaci\'on paso a paso en el informe para verificaci\'on del lector. \\
-		& Pendiente & Simulaci\'on CFD con COMSOL Multiphysics — metodolog\'ia detallada incluida; resultados en elaboraci\'on. \\
+		& Incluido & Simulaci\'on CFD con COMSOL Multiphysics~6.4: validaci\'on del coeficiente global $U$ y distribuci\'on espacial de temperaturas en el fondo toriesf\'erico. \\
 		\midrule
 		\multicolumn{3}{l}{\textbf{Parte II — An\'alisis Estructural del Tanque}} \\
 		\cmidrule(lr){1-3}
 		& Incluido & An\'alisis estructural del fondo toriesf\'erico (SS316L, 9~mm, construido), cuerpo cil\'indrico existente y tapa c\'onica existente, seg\'un API~650 y ASME~VIII. \\
 		& Incluido & Cargas de dise\~no: presi\'on hidrost\'atica al 90\% de capacidad, peso propio, viento (120~km/h), sismo (zona intermedia NSR-10), temperatura del fondo a 75\,°C. \\
-		& Incluido & Criterios de corrosi\'on: tasa de dise\~no de 0.0625~mm/a\~no, allowance de 1.875~mm para vida \'util de 30~a\~nos (seg\'un informe P2543-PR-INF-002~REV0). \\
-		& Pendiente & Simulaci\'on FEA con ANSYS — metodolog\'ia detallada incluida; resultados en elaboraci\'on. \\
+		& Incluido & Criterios de corrosi\'on: tasa de 0.12~mm/a\~no determinada mediante an\'alisis de espesores en campo; allowance de 0.9~mm bajo criterio del 10\% de espesor nominal para el fondo nuevo. \\
+		& Incluido & An\'alisis de corrosi\'on-fatiga del fondo toriesf\'erico bajo condiciones de alta ciclicidad operativa (2\,920~ciclos/a\~no) y temperatura elevada (75\,°C). Proyecci\'on de vida \'util. \\
+		& Incluido & Simulaci\'on FEA con ANSYS Mechanical: distribuci\'on de esfuerzos, factores de seguridad y deformaci\'on bajo carga combinada hidrost\'atica y t\'ermica. \\
 		\midrule
 		\multicolumn{3}{l}{\textbf{Exclusiones}} \\
 		\cmidrule(lr){1-3}
 		& Excluido & Corrosi\'on externa del tanque, corrosi\'on bajo aislamiento (CUI) y corrosi\'on de componentes estructurales auxiliares (escaleras, plataformas). \\
 		& Excluido & Dise\~no del sistema de suministro de agua caliente (caldera, bombas de recirculaci\'on). \\
-		& Excluido & An\'alisis de fatiga, da\~no mec\'anico o vibraci\'on. \\
+		& Excluido & An\'alisis de fatiga por vibraci\'on o da\~no mec\'anico accidental. \\
 		& Excluido & Evaluaci\'on de materiales alternativos al SS316L. \\
 		\bottomrule
 	\end{tabularx}

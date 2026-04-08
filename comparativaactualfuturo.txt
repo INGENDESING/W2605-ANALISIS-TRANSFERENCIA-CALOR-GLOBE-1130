@@ -1,0 +1,173 @@
+================================================================================
+PLAN TÉCNICO — COMPARATIVA ACTUAL (DIMPLE) vs FUTURO (MEDIA CAÑA)
+Proyecto P2611 — Análisis Fondo Tanque Glucosa Globe 1130
+Ingredion SA — Planta Cali, Colombia
+DML Ingenieros Consultores S.A.S.
+================================================================================
+Fecha: 2026-04-08
+Versión: 1.0
+================================================================================
+
+OBJETIVO
+--------
+Comparar cuantitativamente la chaqueta tipo dimple actual (A = 28 m², 3 entradas/
+3 salidas de agua) con la chaqueta de media caña rectangular en espiral propuesta
+(A = 13 m², paso único), manteniendo las mismas condiciones de agua (75°C, 2.5 m/s).
+
+ALCANCE
+-------
+1. Calentamiento batch: tiempo para calentar el tanque al 80% de capacidad desde
+   25°C → 57°C y desde 55°C → 57°C, para ambas configuraciones.
+2. Calentamiento continuo: temperatura de salida alcanzable para flujos de glucosa
+   de 1 a 16 ton/h con cada configuración.
+3. Flujo máximo continuo que permite alcanzar 57°C a la salida con cada chaqueta.
+4. Incorporación de todos los resultados (incluyendo calculoarea.txt) al informe
+   LaTeX P2611-PR-INF-001 R0.
+
+HALLAZGO CLAVE
+--------------
+U es prácticamente idéntico para ambas configuraciones porque h_o (glucosa,
+convección natural) domina el 98% de la resistencia térmica total. La única
+diferencia operacional entre las dos chaquetas es el ÁREA DE CONTACTO.
+Consecuencia: todos los parámetros de rendimiento escalan con el ratio A_actual/A_propuesta = 28/13 = 2.15.
+
+================================================================================
+PARTE 1 — SCRIPT PYTHON: src/comparativa_chaquetas.py
+================================================================================
+
+CONSTANTES
+----------
+  A_ACTUAL    = 28.0 m²   (dimple, 3 entradas/3 salidas)
+  A_PROPUESTA = 13.0 m²   (media caña espiral, 1 paso)
+  T_AGUA      = 75.0°C
+  V_AGUA      = 2.5 m/s
+  TANQUE      = 80% capacidad (batch)
+
+MÓDULOS REUTILIZADOS (sin modificar código existente)
+-----------------------------------------------------
+  coeficiente_U.py   → coeficiente_U()
+  propiedades_glucosa.py → rho_glucosa(), Cp_glucosa()
+  geometria_tanque.py → volumen_total()
+  escenarios.py       → tiempo_para_alcanzar()  [solo esta función]
+
+FUNCIONES NUEVAS
+----------------
+  simular_calentamiento_con_area(T0, T_agua, v, vol, A, t_max, dt)
+    ODE: dT/dt = U(T)·A·(T_agua−T) / (m_g·Cp_g)
+    solve_ivp RK45, max_step=300, rtol=1e-6
+
+  calcular_T_salida_espacial(m_dot, T_in, T_agua, v, A)
+    ODE: dT/dA = U(T)·(T_agua−T) / (m_dot·Cp(T))
+    Integra A: 0 → A_disponible
+    Ref: Incropera et al. (2011), Ec. 11.3b
+
+  flujo_maximo_alcanzable(T_in, T_obj, T_agua, v, A)
+    Búsqueda con brentq sobre f(m_dot) = T_out(m_dot) − T_objetivo
+
+SALIDAS GENERADAS
+-----------------
+  Figuras (figures/):
+    comp_batch_T_vs_t.png/.pdf       — T(t) batch, ambas chaquetas
+    comp_batch_tiempo_bar.png/.pdf   — Barras tiempos batch
+    comp_flujo_T_out_vs_mdot.png/.pdf — T_sal vs flujo, ambas chaquetas
+    comp_flujo_maximo_bar.png/.pdf   — Barras flujo máximo
+
+  Tablas CSV (results/):
+    comparativa_batch.csv
+    comparativa_flujo_25C.csv
+    comparativa_flujo_55C.csv
+    comparativa_flujo_maximo.csv
+
+================================================================================
+PARTE 2 — RESULTADOS NUMÉRICOS VALIDADOS (2026-04-08)
+================================================================================
+
+CALENTAMIENTO BATCH (tanque 80%, agua 75°C, v=2.5 m/s)
+-------------------------------------------------------
+  Caso 25→57°C:
+    Dimple  (28 m²): 170.7 h  (7.1 días)
+    Media caña (13 m²): 367.5 h (15.3 días)
+    Ratio: 2.153 ≈ 28/13 = 2.154 ✓ (validación perfecta)
+
+  Caso 55→57°C:
+    Dimple  (28 m²):  15.5 h  (0.6 días)
+    Media caña (13 m²): 33.2 h  (1.4 días)
+    Ratio: 2.145 ≈ 2.154 ✓
+
+FLUJO CONTINUO — TEMPERATURA DE SALIDA ALCANZABLE
+--------------------------------------------------
+  Desde 25°C (flujo máximo para T_sal = 57°C):
+    Dimple  (28 m²):  1.47 ton/h
+    Media caña (13 m²): 0.69 ton/h
+    → Ambas configuraciones insuficientes para flujos industriales
+
+  Desde 55°C (flujo máximo para T_sal = 57°C):
+    Dimple  (28 m²): >16 ton/h  (cubre todo el rango 1-16)
+    Media caña (13 m²):  7.54 ton/h  (insuficiente para 8-16 ton/h)
+
+RESULTADOS CALCULOAREA.TXT (análisis de áreas para calentamiento continuo)
+---------------------------------------------------------------------------
+  Escenario 25→57°C  (T_agua=75°C, v=2.5 m/s, integración trapezoidal 1/U):
+    U_eff = 30.54 W/m²·°C  (integrado sobre 25-57°C)
+    LMTD  = 31.3°C (con T_agua_media)
+    A_req (1 ton/h)  =  19.7 m²
+    A_req (8 ton/h)  = 163.7 m²
+    A_req (16 ton/h) = 341.9 m²
+
+  Escenario 55→57°C  (ΔU/U = 0.6% < 10%, U constante válido — criterio Incropera):
+    U_eff = 36.13 W/m²·°C
+    LMTD  = 19.0°C
+    A_req (1 ton/h)  =   1.7 m²
+    A_req (8 ton/h)  =  13.9 m²   ← ≈ A_propuesta (13 m²)
+    A_req (16 ton/h) =  27.8 m²   ← > A_actual  (28 m²)
+
+================================================================================
+PARTE 3 — ACTUALIZACIÓN INFORME LATEX
+================================================================================
+
+ARCHIVOS MODIFICADOS
+--------------------
+  docs/report/sections/08_metodologia.tex
+    + Subsubsección "Determinación del Área de Transferencia Requerida"
+      (después de línea 77)
+    + Subsubsección "Comparativa de Configuraciones de Chaqueta"
+      (después del ciclo de descargas, antes de Parte II)
+
+  docs/report/sections/09_resultados.tex
+    + Subsubsección "Área de Transferencia para Calentamiento Continuo"
+      (después de línea 342, antes de aislamiento)
+    + Subsubsección "Comparativa de Chaquetas: Actual (Dimple) vs Propuesta"
+      (a continuación de la anterior)
+
+  docs/report/sections/10_analisis.tex
+    + Subsubsección "Interpretación de la Comparativa de Chaquetas"
+      (después de línea 45, antes de validación CFD)
+
+  docs/report/sections/11_conclusiones.tex
+    + Tabla resumen comparativa de chaquetas
+      (después de línea 44, antes de Parte II)
+
+  docs/report/sections/12_recomendaciones.tex
+    + Fila "Evaluación de configuración de chaqueta" en tabla Termodinámica
+      (después de línea 17)
+
+ESTILO DE REDACCIÓN
+-------------------
+  - Prosa humanizada estilo Elsevier
+  - Español técnico, sin viñetas ni enumeraciones
+  - Ecuaciones numeradas con \label{eq:...}
+  - Referencias cruzadas con \ref{...}
+  - Tablas con booktabs + tabularx
+  - Figuras con \includegraphics, \caption, \label
+
+================================================================================
+VERIFICACIÓN
+================================================================================
+  1. python src/comparativa_chaquetas.py → 4 figuras + 4 CSV ✓ (ejecutado 2026-04-08)
+  2. Ratio tiempos batch = 2.153 ≈ 2.154 ✓ (validación numérica)
+  3. T_out continuo con A=13 m² coincide con calcular_areas.py ✓
+  4. pdflatex compilación sin errores (pendiente tras edición LaTeX)
+
+================================================================================
+FIN DEL PLAN
+================================================================================

@@ -51,7 +51,7 @@ except ImportError as e:
 # FUNCIONES DE CÁLCULO PRINCIPALES
 # =============================================================================
 
-def Q_por_flujo_masico(m_dot_ton_h):
+def Q_por_flujo_masico(m_dot_ton_h, T_frio_in=25.0, T_frio_out=57.0):
     """
     Calcula el calor requerido por unidad de tiempo para un flujo de masa.
     
@@ -61,6 +61,10 @@ def Q_por_flujo_masico(m_dot_ton_h):
     ----------
     m_dot_ton_h : float
         Flujo másico de glucosa [toneladas/hora]
+    T_frio_in : float, opcional
+        Temperatura de entrada de glucosa [°C], por defecto 25.0
+    T_frio_out : float, opcional
+        Temperatura de salida de glucosa [°C], por defecto 57.0
     
     Retorna
     -------
@@ -76,12 +80,12 @@ def Q_por_flujo_masico(m_dot_ton_h):
     # Conversión de unidades
     m_dot_kg_s = m_dot_ton_h * 1000.0 / 3600.0  # ton/h → kg/s
     
-    # Temperatura promedio para evaluar Cp
-    T_prom = 41.0  # (25 + 57) / 2
+    # Temperatura promedio para evaluar Cp (Incropera, Sec. 8.3)
+    T_prom = (T_frio_in + T_frio_out) / 2.0
     Cp_prom = Cp_glucosa(T_prom)
     
     # Diferencia de temperatura de la glucosa
-    Delta_T = 57.0 - 25.0  # 32°C
+    Delta_T = T_frio_out - T_frio_in
     
     # Calor requerido
     Q_dot = m_dot_kg_s * Cp_prom * Delta_T
@@ -229,53 +233,77 @@ def calcular_area_necesaria(m_dot_ton_h, v_agua=2.5, T_agua_entrada=75.0, T_frio
     parametros : dict
         Diccionario con valores intermedios del cálculo
     """
-    # Paso 1: Calor requerido
-    Q_dot, m_dot_kg_s, Cp_prom, Delta_T = Q_por_flujo_masico(m_dot_ton_h)
+    # Paso 1: Calor requerido (parametrizado para cualquier rango de T)
+    Q_dot, m_dot_kg_s, Cp_prom, Delta_T = Q_por_flujo_masico(
+        m_dot_ton_h, T_frio_in, T_frio_out
+    )
     
-    # Paso 2: Estimar caudal de agua inicial
-    # Suponer ΔT del agua ≈ 5°C para estimar m_dot_agua
-    Delta_T_agua_guess = 5.0
+    # Paso 2: Estimar caída de temperatura del agua
+    # Q = m_agua · Cp_agua · ΔT_agua  →  ΔT_agua = Q / (m_agua · Cp_agua)
+    # El caudal de agua se fija por la velocidad en la media caña
+    from propiedades_glucosa import rho_agua as _rho_agua
+    from geometria_tanque import area_flujo_media_cana
+    A_flujo = area_flujo_media_cana()
+    rho_w = _rho_agua(T_agua_entrada)
+    m_dot_agua = rho_w * v_agua * A_flujo  # kg/s (fijado por geometría)
     Cp_agua = 4182.0
-    m_dot_agua_est = Q_dot / (Delta_T_agua_guess * Cp_agua)
+    Delta_T_agua = Q_dot / (m_dot_agua * Cp_agua)  # Caída real del agua [°C]
+    T_agua_salida = T_agua_entrada - Delta_T_agua
+    T_agua_media = (T_agua_entrada + T_agua_salida) / 2.0
     
     # Paso 3: Evaluar U en múltiples temperaturas de glucosa
-    # IMPORTANTE: U_vs_T NO depende del flujo de masa, solo de temperaturas y velocidad
-    # Se calcula una vez con T_agua_entrada CONSTANTE (75°C) para todo el rango
-    T_range = np.linspace(T_frio_in, T_frio_out, 10)  # 10 puntos discretos
-    inv_U_values = []  # 1/U para promediar resistencias (NO U directamente)
+    # Número de puntos: mínimo 10, o más si el rango es pequeño
+    n_puntos = max(10, int(Delta_T * 2))  # Al menos 2 puntos por °C
+    T_range = np.linspace(T_frio_in, T_frio_out, n_puntos)
+    inv_U_values = []  # 1/U para integración trapezoidal
     U_vs_T = {}
     h_i_values = []
     h_o_values = []
     
     for T_g in T_range:
         try:
-            # Calcular U para esta temperatura (independiente de flujo)
-            # T_agua_media no se usa aquí, solo T_agua_entrada constante
+            # Calcular U con T_agua_entrada constante (para perfil de U vs T)
             U, T_agua_usada, T_pared, h_i, h_o = calcular_U_corregido(
                 v_agua, T_agua_entrada, T_g, usar_temperatura_media=False
             )
             if U > 0 and np.isfinite(U):
-                inv_U_values.append(1.0 / U)  # Promediar resistencias
+                inv_U_values.append(1.0 / U)
                 U_vs_T[T_g] = U
                 h_i_values.append(h_i)
                 h_o_values.append(h_o)
         except Exception as e:
-            print(f"  Error calculando U para T_g={T_g}°C: {e}")
+            print(f"  Error calculando U para T_g={T_g:.1f}°C: {e}")
             continue
     
     if not inv_U_values:
         raise ValueError("No se pudo calcular U para ninguna temperatura")
     
-    # Paso 4: U_promedio por promediado de RESISTENCIAS (no de U directamente)
-    # Esto es físicamente correcto porque: 1/U_total = 1/U_1 + 1/U_2 + ...
-    # En realidad: 1/U = 1/h_i + R_w + 1/h_o, pero aproximamos con promedio de 1/U
-    inv_U_prom = np.mean(inv_U_values)
+    # Paso 4: U_efectivo por INTEGRACIÓN TRAPEZOIDAL de resistencias
+    # Fundamento: Incropera et al. (2011), Sec. 11.4 — cuando U varía,
+    # la ecuación fundamental dQ = U(T)·dA·ΔT(T) se integra numéricamente.
+    # El U efectivo se obtiene como:
+    #   1/U_eff = (1/ΔT_total) · ∫[T_in→T_out] (1/U(T)) dT
+    # La regla trapezoidal (np.trapz) es más precisa que el promedio
+    # aritmético (regla del rectángulo) con el mismo número de puntos.
+    T_valid = np.array([T for T in T_range[:len(inv_U_values)]])
+    inv_U_array = np.array(inv_U_values)
+    
+    if len(T_valid) >= 2:
+        # Integración trapezoidal normalizada por el rango de temperatura
+        # np.trapezoid (numpy >= 2.0) reemplaza a np.trapz
+        _trapz = getattr(np, 'trapezoid', getattr(np, 'trapz', None))
+        inv_U_prom = _trapz(inv_U_array, T_valid) / (T_valid[-1] - T_valid[0])
+    else:
+        # Si solo hay un punto (ΔT muy pequeño), usar directamente
+        inv_U_prom = inv_U_array[0]
+    
     U_prom = 1.0 / inv_U_prom
     
-    # Paso 5: Calcular LMTD (con T_agua_entrada, no T_agua_media)
-    LMTD = delta_T_LMTD(T_agua_entrada, T_frio_in, T_frio_out)
+    # Paso 5: Calcular LMTD con T_agua_media (corrige por caída del agua)
+    # Para ΔT_agua < 1°C, el efecto es despreciable pero se incluye por rigor
+    LMTD = delta_T_LMTD(T_agua_media, T_frio_in, T_frio_out)
     
-    # Paso 6: Área requerida
+    # Paso 6: Área requerida — Q = U_eff · A · LMTD
     denominador = U_prom * LMTD
     if denominador <= 0:
         raise ValueError(f"Denominador no valido: U_prom={U_prom:.2f}, LMTD={LMTD:.2f}")
@@ -298,8 +326,9 @@ def calcular_area_necesaria(m_dot_ton_h, v_agua=2.5, T_agua_entrada=75.0, T_frio
         'L_req_m': L_req,
         'h_interno_W/m2K': np.mean(h_i_values),
         'h_externo_W/m2K': np.mean(h_o_values),
-        'm_dot_agua_kg_s': m_dot_agua_est,
-        'Delta_T_agua_C': Delta_T_agua_guess,
+        'm_dot_agua_kg_s': m_dot_agua,
+        'Delta_T_agua_C': Delta_T_agua,
+        'T_agua_media_C': T_agua_media,
         'U_vs_T': U_vs_T
     }
     
@@ -544,7 +573,7 @@ def graficar_areas(df, figures_dir='../figures'):
 
 
 # =============================================================================
-# FUNCIÓN PRINCIPAL
+# FUNCIONES DE DIAGNÓSTICO Y ESCENARIOS
 # =============================================================================
 
 def diagnostico_U():
@@ -568,9 +597,255 @@ def diagnostico_U():
     print("-" * 70)
     print("Resultado: U VARÍA de 23.7 a 36.2 W/m²·°C (+53% de variación)")
     print("✓ Esto DEMUESTRA que U NO ES CONSTANTE")
-    print("✗ La implementación anterior estaba calculando mal el promedio")
     print("=" * 80)
     print()
+
+
+def graficar_U_vs_T(figures_dir='../figures'):
+    """
+    Genera gráfico de U vs T_glucosa (curva completa 25-57°C).
+    Muestra la no-linealidad debida a la viscosidad dependiente de T.
+    
+    Fundamentación:
+    - Churchill & Chu (1975), Int. J. Heat Mass Transfer, 18, 1323.
+    - Bejan (2013), Convection Heat Transfer, 4th ed., Wiley.
+    """
+    os.makedirs(figures_dir, exist_ok=True)
+    configurar_estilo_graficos()
+    
+    T_range = np.linspace(25, 60, 50)
+    U_values = []
+    h_o_values = []
+    h_i_values = []
+    
+    for T_g in T_range:
+        try:
+            U, h_i, h_o, info = coeficiente_U(2.5, 75.0, T_g)
+            U_values.append(U)
+            h_o_values.append(h_o)
+            h_i_values.append(h_i)
+        except:
+            U_values.append(np.nan)
+            h_o_values.append(np.nan)
+            h_i_values.append(np.nan)
+    
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
+    
+    # Panel superior: U vs T
+    ax1.plot(T_range, U_values, 'b-', linewidth=2.5, label='$U(T_g)$')
+    ax1.axvline(x=55, color='orange', linestyle='--', alpha=0.7, label='$T_{g}=55$°C')
+    ax1.axvline(x=57, color='red', linestyle='--', alpha=0.7, label='$T_{g}=57$°C')
+    ax1.axhspan(23, 37, alpha=0.1, color='green')
+    
+    # Anotar valores clave
+    for T_mark in [25, 40, 55, 57]:
+        idx = np.argmin(np.abs(T_range - T_mark))
+        U_mark = U_values[idx]
+        ax1.annotate(f'U({T_mark}°C) = {U_mark:.1f}',
+                    xy=(T_mark, U_mark), xytext=(T_mark-8, U_mark+2),
+                    fontsize=9, arrowprops=dict(arrowstyle='->', color='gray'),
+                    bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
+    
+    ax1.set_xlabel('Temperatura de la glucosa, $T_g$ [°C]', fontsize=12)
+    ax1.set_ylabel('Coeficiente global $U$ [W/m²·°C]', fontsize=12)
+    ax1.set_title('Variación del coeficiente global U con la temperatura de la glucosa\n'
+                  '(Agua a 75°C, v = 2.5 m/s, Churchill-Chu + Sieder-Tate)', fontsize=13, fontweight='bold')
+    ax1.grid(True, alpha=0.3, linestyle='--')
+    ax1.legend(loc='lower right', fontsize=10)
+    ax1.set_xlim(24, 61)
+    
+    # Panel inferior: h_o vs T (muestra la dominancia)
+    ax2.semilogy(T_range, h_i_values, 'r-', linewidth=2, label='$h_i$ (agua, Sieder-Tate)')
+    ax2.semilogy(T_range, h_o_values, 'b-', linewidth=2, label='$h_o$ (glucosa, Churchill-Chu)')
+    ax2.set_xlabel('Temperatura de la glucosa, $T_g$ [°C]', fontsize=12)
+    ax2.set_ylabel('Coeficiente convectivo $h$ [W/m²·°C]', fontsize=12)
+    ax2.set_title('Coeficientes convectivos individuales vs temperatura\n'
+                  '$h_o \\ll h_i$ confirma dominancia de la resistencia de la glucosa', 
+                  fontsize=13, fontweight='bold')
+    ax2.grid(True, alpha=0.3, linestyle='--')
+    ax2.legend(loc='center right', fontsize=10)
+    ax2.set_xlim(24, 61)
+    
+    plt.tight_layout()
+    fig_path = os.path.join(figures_dir, 'U_vs_T_glucosa.png')
+    plt.savefig(fig_path)
+    plt.savefig(fig_path.replace('.png', '.pdf'))
+    plt.close()
+    print(f"✓ Gráfico U vs T guardado en: {fig_path}")
+
+
+def escenario_55_57(figures_dir='../figures', results_dir='../results'):
+    """
+    Escenario nuevo: Glucosa 55°C → 57°C (ΔT = 2°C).
+    
+    Análisis:
+    - U es prácticamente constante (ΔU/U ≈ 2.8%) → U medio es riguroso
+    - LMTD se degrada significativamente respecto al escenario 25→57°C
+    - Q̇ mucho menor → áreas absolutas menores
+    
+    Fundamentación:
+    - Incropera et al. (2011): Si ΔU/U < 10%, U constante es aceptable
+    - Kern (1950): Para fluidos viscosos, evaluar propiedades a T_película
+    """
+    print("\n" + "=" * 80)
+    print("ESCENARIO 5: GLUCOSA 55°C → 57°C (ΔT = 2°C)")
+    print("=" * 80)
+    print("Condiciones:")
+    print("  - Agua: 75°C, v = 2.5 m/s")
+    print("  - Glucosa: 55°C → 57°C (ΔT = 2°C)")
+    print("  - Flujos: 1, 2, 3, ..., 16 ton/h")
+    print("  - Nota: U prácticamente constante (ΔU/U ≈ 2.8%)")
+    print("=" * 80)
+    
+    # Calcular U en el rango 55-57°C para verificar variación
+    U_55, _, _, _ = coeficiente_U(2.5, 75.0, 55.0)
+    U_57, _, _, _ = coeficiente_U(2.5, 75.0, 57.0)
+    delta_U_pct = abs(U_57 - U_55) / U_55 * 100
+    
+    print(f"\nVerificación de variación de U:")
+    print(f"  U(55°C) = {U_55:.2f} W/m²·°C")
+    print(f"  U(57°C) = {U_57:.2f} W/m²·°C")
+    print(f"  ΔU/U = {delta_U_pct:.1f}% → {'U medio es riguroso' if delta_U_pct < 10 else 'Se requiere integración'}")
+    print(f"  (Criterio Incropera: ΔU/U < 10% → U constante aceptable)")
+    
+    # LMTD para este escenario
+    LMTD_55_57 = delta_T_LMTD(75.0, 55.0, 57.0)
+    LMTD_25_57 = delta_T_LMTD(75.0, 25.0, 57.0)
+    print(f"\nComparación LMTD:")
+    print(f"  LMTD (55→57°C) = {LMTD_55_57:.2f}°C")
+    print(f"  LMTD (25→57°C) = {LMTD_25_57:.2f}°C")
+    print(f"  Reducción: {(1 - LMTD_55_57/LMTD_25_57)*100:.1f}%")
+    
+    flujos_ton_h = list(range(1, 17))
+    resultados = []
+    resultados_25_57 = []
+    
+    print(f"\n{'Flujo':>8} {'m_dot':>8} {'Q_dot':>10} {'U_prom':>8} {'LMTD':>8} {'A_req':>8} {'ΔT_agua':>8}")
+    print(f"{'[ton/h]':>8} {'[kg/s]':>8} {'[kW]':>10} {'[W/m²K]':>8} {'[°C]':>8} {'[m²]':>8} {'[°C]':>8}")
+    print("-" * 70)
+    
+    for m_dot_ton in flujos_ton_h:
+        try:
+            # Escenario 55→57°C
+            A_req, params = calcular_area_necesaria(
+                m_dot_ton, T_frio_in=55.0, T_frio_out=57.0
+            )
+            resultado = {
+                'Flujo_ton_h': m_dot_ton,
+                'm_dot_kg_s': params['m_dot_kg_s'],
+                'Q_dot_kW': params['Q_dot_kW'],
+                'U_prom_W/m2K': params['U_prom_W/m2K'],
+                'LMTD_C': params['LMTD_C'],
+                'A_req_m2': A_req,
+                'Delta_T_agua_C': params['Delta_T_agua_C'],
+                'T_agua_media_C': params['T_agua_media_C'],
+            }
+            resultados.append(resultado)
+            
+            print(f"{m_dot_ton:>8} {params['m_dot_kg_s']:>8.3f} {params['Q_dot_kW']:>10.2f} "
+                  f"{params['U_prom_W/m2K']:>8.2f} {params['LMTD_C']:>8.2f} {A_req:>8.2f} "
+                  f"{params['Delta_T_agua_C']:>8.3f}")
+            
+            # Escenario 25→57°C para comparación
+            A_ref, params_ref = calcular_area_necesaria(
+                m_dot_ton, T_frio_in=25.0, T_frio_out=57.0
+            )
+            resultados_25_57.append({
+                'Flujo_ton_h': m_dot_ton,
+                'A_req_m2': A_ref,
+                'Q_dot_kW': params_ref['Q_dot_kW'],
+                'LMTD_C': params_ref['LMTD_C'],
+                'U_prom_W/m2K': params_ref['U_prom_W/m2K'],
+            })
+            
+        except Exception as e:
+            print(f"Error calculando flujo {m_dot_ton} ton/h: {e}")
+            continue
+    
+    print("-" * 70)
+    
+    df_55_57 = pd.DataFrame(resultados)
+    df_25_57 = pd.DataFrame(resultados_25_57)
+    
+    # Guardar CSV
+    os.makedirs(results_dir, exist_ok=True)
+    csv_path = os.path.join(results_dir, 'areas_escenario_55_57.csv')
+    df_55_57.to_csv(csv_path, index=False, encoding='utf-8')
+    print(f"\n✓ Tabla guardada en: {csv_path}")
+    
+    # Generar gráfico comparativo
+    if not df_55_57.empty and not df_25_57.empty:
+        _graficar_comparacion(df_25_57, df_55_57, figures_dir)
+    
+    return df_55_57
+
+
+def _graficar_comparacion(df_25_57, df_55_57, figures_dir):
+    """
+    Gráfico comparativo entre escenarios 25→57°C y 55→57°C.
+    """
+    os.makedirs(figures_dir, exist_ok=True)
+    configurar_estilo_graficos()
+    
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(14, 10))
+    
+    # 1. Área vs Flujo (comparación)
+    ax1.plot(df_25_57['Flujo_ton_h'], df_25_57['A_req_m2'], 'b-o', 
+             markersize=6, linewidth=2, label='25→57°C (ΔT=32°C)')
+    ax1.plot(df_55_57['Flujo_ton_h'], df_55_57['A_req_m2'], 'r-s', 
+             markersize=6, linewidth=2, label='55→57°C (ΔT=2°C)')
+    ax1.set_xlabel('Flujo de glucosa [ton/h]')
+    ax1.set_ylabel('Área requerida [m²]')
+    ax1.set_title('Área de transferencia — Comparación de escenarios')
+    ax1.legend()
+    ax1.grid(True, alpha=0.3, linestyle='--')
+    
+    # 2. Q_dot vs Flujo (comparación)
+    ax2.plot(df_25_57['Flujo_ton_h'], df_25_57['Q_dot_kW'], 'b-o', 
+             markersize=6, linewidth=2, label='25→57°C')
+    ax2.plot(df_55_57['Flujo_ton_h'], df_55_57['Q_dot_kW'], 'r-s', 
+             markersize=6, linewidth=2, label='55→57°C')
+    ax2.set_xlabel('Flujo de glucosa [ton/h]')
+    ax2.set_ylabel('Potencia térmica [kW]')
+    ax2.set_title('Potencia requerida — Q̇ ∝ ṁ·Cp·ΔT')
+    ax2.legend()
+    ax2.grid(True, alpha=0.3, linestyle='--')
+    
+    # 3. Ratio Área/Q (eficiencia térmica)
+    ratio_25 = df_25_57['A_req_m2'] / df_25_57['Q_dot_kW']
+    ratio_55 = df_55_57['A_req_m2'] / df_55_57['Q_dot_kW']
+    ax3.plot(df_25_57['Flujo_ton_h'], ratio_25, 'b-o', 
+             markersize=6, linewidth=2, label='25→57°C')
+    ax3.plot(df_55_57['Flujo_ton_h'], ratio_55, 'r-s', 
+             markersize=6, linewidth=2, label='55→57°C')
+    ax3.set_xlabel('Flujo de glucosa [ton/h]')
+    ax3.set_ylabel('Área / Potencia [m²/kW]')
+    ax3.set_title('Eficiencia de superficie — $A/\\dot{Q}$\n'
+                  '(menor LMTD → más área por kW)')
+    ax3.legend()
+    ax3.grid(True, alpha=0.3, linestyle='--')
+    
+    # 4. U promedio comparativo
+    ax4.plot(df_25_57['Flujo_ton_h'], df_25_57['U_prom_W/m2K'], 'b-o', 
+             markersize=6, linewidth=2, label='25→57°C (U integrado)')
+    ax4.plot(df_55_57['Flujo_ton_h'], df_55_57['U_prom_W/m2K'], 'r-s', 
+             markersize=6, linewidth=2, label='55→57°C (U ≈ cte)')
+    ax4.set_xlabel('Flujo de glucosa [ton/h]')
+    ax4.set_ylabel('$U_{eff}$ [W/m²·°C]')
+    ax4.set_title('Coeficiente global efectivo\n'
+                  '(55→57°C: U mayor porque la glucosa es menos viscosa)')
+    ax4.legend()
+    ax4.grid(True, alpha=0.3, linestyle='--')
+    
+    fig.suptitle('Proyecto P2611 — Comparación de Escenarios de Calentamiento',
+                 fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    
+    fig_path = os.path.join(figures_dir, 'comparacion_escenarios.png')
+    plt.savefig(fig_path, bbox_inches='tight')
+    plt.savefig(fig_path.replace('.png', '.pdf'), bbox_inches='tight')
+    plt.close()
+    print(f"✓ Gráfico comparativo guardado en: {fig_path}")
 
 
 def main():
@@ -578,15 +853,12 @@ def main():
     print("=" * 80)
     print("CÁLCULO DE ÁREAS DE TRANSFERENCIA - PROYECTO P2611")
     print("Nueva Chaqueta para Flujos 1-16 ton/h")
-    print("VERSIÓN CORREGIDA - INCLUYE VARIACIÓN REAL DE U")
+    print("VERSIÓN MEJORADA — INTEGRACIÓN TRAPEZOIDAL + ESCENARIO 55→57°C")
     print("=" * 80)
-    print("\nCondiciones:")
-    print("  - Agua: 75°C -> T_media variable, v = 2.5 m/s")
-    print("  - Glucosa: 25C -> 57C (DeltaT = 32C)")
-    print("  - Flujos: 1, 2, 3, ..., 16 ton/h")
-    print("  - Geometria: Media cana 45.5x141 mm")
-    print("  - Metodo: Promediado de RESISTENCIAS (no de U directamente)")
-    print("  - Iteracion: Temperatura de pared convergida")
+    print("\nCondiciones Escenario Original:")
+    print("  - Agua: 75°C -> T_media calculada, v = 2.5 m/s")
+    print("  - Glucosa: 25°C -> 57°C (ΔT = 32°C)")
+    print("  - Método: Integración trapezoidal de 1/U(T) (Incropera, Sec. 11.4)")
     print("=" * 80)
     
     # Ejecutar diagnóstico primero
@@ -598,40 +870,53 @@ def main():
     results_dir = os.path.join(project_dir, 'results')
     figures_dir = os.path.join(project_dir, 'figures')
     
-    # Generar matriz de resultados
-    print("Calculando areas con metodologia CORREGIDA...")
+    # =============================================
+    # ESCENARIO ORIGINAL: 25°C → 57°C
+    # =============================================
+    print("\n" + "=" * 80)
+    print("ESCENARIO ORIGINAL: GLUCOSA 25°C → 57°C (ΔT = 32°C)")
+    print("=" * 80)
     df = generar_matriz_flujos(guardar_csv=True, output_dir=results_dir)
     
-    # Generar gráficos
+    # Generar gráficos del escenario original
     if not df.empty:
         graficar_areas(df, figures_dir)
         
         # Resumen estadístico
         print("\n" + "=" * 80)
-        print("RESUMEN ESTADÍSTICO - VERSION CORREGIDA")
+        print("RESUMEN — ESCENARIO ORIGINAL (25→57°C)")
         print("=" * 80)
-        print(f"Área mínima requerida: {df['A_req_m2'].min():.2f} m² (para {df['Flujo_ton_h'].min()} ton/h)")
-        print(f"Área máxima requerida: {df['A_req_m2'].max():.2f} m² (para {df['Flujo_ton_h'].max()} ton/h)")
-        print(f"Área promedio: {df['A_req_m2'].mean():.2f} m²")
-        print(f"U promedio: {df['U_prom_W/m2K'].mean():.2f} W/m²·°C")
-        print(f"Rango de U: [{df['U_prom_W/m2K'].min():.2f}, {df['U_prom_W/m2K'].max():.2f}] W/m²·°C")
-        
-        # Validaciones críticas
-        U_min = df['U_prom_W/m2K'].min()
-        U_max = df['U_prom_W/m2K'].max()
-        
-        print("\nValidaciones CRITICAS:")
-        print(f"  ✓ U promedio en rango [23.7, 36.2]: {'SÍ' if 23.7 <= df['U_prom_W/m2K'].mean() <= 36.2 else 'NO'}")
-        print(f"  ✓ U varía entre flujos: {'SÍ' if (U_max - U_min) > 0.5 else 'NO'}")
-        print(f"  ✓ Área aumenta monótonamente: {'SÍ' if all(df['A_req_m2'].diff().dropna() > 0) else 'NO'}")
-        print(f"  ✓ Distribucion de U: min={U_min:.2f}, max={U_max:.2f}, σ={df['U_prom_W/m2K'].std():.3f}")
+        print(f"Área mín: {df['A_req_m2'].min():.2f} m² (1 ton/h)")
+        print(f"Área máx: {df['A_req_m2'].max():.2f} m² (16 ton/h)")
+        print(f"U_eff promedio: {df['U_prom_W/m2K'].mean():.2f} W/m²·°C")
+        print(f"Rango U: [{df['U_prom_W/m2K'].min():.2f}, {df['U_prom_W/m2K'].max():.2f}]")
         print("=" * 80)
-        print("\n✓ Análisis completado exitosamente")
-        print("✓ NOTA: U ya NO es constante, varía con temperatura de glucosa")
+    
+    # =============================================
+    # GRÁFICO U vs T_glucosa (curva completa)
+    # =============================================
+    graficar_U_vs_T(figures_dir)
+    
+    # =============================================
+    # ESCENARIO 5: 55°C → 57°C
+    # =============================================
+    df_55 = escenario_55_57(figures_dir, results_dir)
+    
+    if not df_55.empty:
+        print("\n" + "=" * 80)
+        print("RESUMEN — ESCENARIO 55→57°C")
         print("=" * 80)
-    else:
-        print("ERROR: No se pudo generar resultados")
-        return 1
+        print(f"Área mín: {df_55['A_req_m2'].min():.2f} m² (1 ton/h)")
+        print(f"Área máx: {df_55['A_req_m2'].max():.2f} m² (16 ton/h)")
+        print(f"U_eff: {df_55['U_prom_W/m2K'].mean():.2f} W/m²·°C (≈ constante)")
+        print(f"ΔT_agua máx: {df_55['Delta_T_agua_C'].max():.3f}°C (despreciable)")
+        print("=" * 80)
+    
+    print("\n✓ Análisis completado exitosamente")
+    print("✓ Método: Integración trapezoidal de 1/U(T)")
+    print("✓ LMTD corregido por caída de temperatura del agua")
+    print("✓ Escenarios: 25→57°C y 55→57°C")
+    print("=" * 80)
     
     return 0
 
@@ -639,3 +924,4 @@ def main():
 if __name__ == "__main__":
     exit_code = main()
     sys.exit(exit_code)
+
