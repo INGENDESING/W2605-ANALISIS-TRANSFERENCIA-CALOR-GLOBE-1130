@@ -181,6 +181,103 @@ def espesor_recomendado(T_agua, T_sup_max=60.0, h_i=6800.0):
     return espesor_mm
 
 
+def calcular_perdidas_ambiente_mantenimiento(T_glucosa, T_amb=26.5, h_ext=15.0, 
+                                               espesor_aisl=0.025, k_aisl=0.045,
+                                               factor_conservador=1.8):
+    """
+    Calcula pérdidas de calor del tanque al ambiente durante operación de 
+    calentamiento de mantenimiento (ESCENARIO CONSERVADOR).
+    
+    Modelo: Resistencias en serie desde glucosa hasta ambiente.
+    
+    NOTA CRÍTICA: Este modelo es INTENCIONALMENTE CONSERVADOR para considerar:
+    - Tanque externo expuesto a ambiente (Cali, viento ~15 km/h)
+    - Aislamiento degradado (humedad, envejecimiento, daño mecánico)
+    - Puentes térmicos en soldaduras y soportes
+    - Pérdidas por radiación (no solo convección)
+    - Efecto de la lluvia y condensación en el aislamiento
+    - Convección aumentada por geometría del fondo toriesférico
+    
+    Parámetros CONSERVADORES:
+    - h_ext = 15 W/m²K (viento + radiación, más alto que natural ~8)
+    - espesor_aisl = 25 mm (asume instalación deficiente o daño)
+    - k_aisl = 0.045 W/mK (lana mineral saturada de humedad)
+    - factor_conservador = 1.8 (multiplicador para incertidumbres)
+
+    Parámetros
+    ----------
+    T_glucosa : float — Temperatura promedio de la glucosa [°C]
+    T_amb     : float — Temperatura ambiente [°C], default 26.5 (Cali)
+    h_ext     : float — Coef. convección+radiación exterior [W/m²K], default 15.0
+    espesor_aisl : float — Espesor EFECTIVO de aislamiento [m], default 0.025
+    k_aisl    : float — Conductividad del aislamiento degradado [W/mK], default 0.045
+    factor_conservador : float — Factor de seguridad para incertidumbres, default 1.8
+    
+    Retorna
+    -------
+    Q_perdida_total : float — Pérdida total de calor al ambiente [W]
+    Q_perdida_equiv : float — Pérdida expresada como °C equivalente [°C]
+    q_flujo         : float — Flujo de calor [W/m²]
+    R_total         : float — Resistencia térmica total [m²K/W]
+    
+    Referencias
+    -----------
+    - Incropera et al., 7th Ed., Sec. 3.4
+    - ASHRAE Handbook - HVAC Applications (pérdidas en tanques industriales)
+    - API 650, Anexo H (aislamiento de tanques de almacenamiento)
+    - Petrobras, "Manual de Aislamiento Térmico Industrial" (pérdidas reales vs. teóricas)
+    
+    Nota: Los valores reales en campo típicamente exceden los cálculos teóricos
+    por factores de 2-4x debido a instalación deficiente y deterioro.
+    """
+    # Geometría del tanque - Área superficial total expuesta
+    # Fondo toriesférico completo + parte inferior del cilindro
+    # Área del fondo torisférico ~ 22 m² (aproximación conservadora)
+    # Área de chaqueta A_CONTACTO = 13 m² (contacto directo)
+    # Área adicional del cilindro inferior ~ 8 m²
+    A_total_perdida = 30.0  # m² (valor conservador: fondo + cilindro inferior)
+    
+    # Resistencias por unidad de área [m²K/W]
+    # R_conv_int: convección glucosa-pared (dominada por viscosidad alta)
+    h_conv_int = 28.0  # W/m²K (promedio conservador para glucosa 54-57°C)
+    R_conv_int = 1.0 / h_conv_int
+    
+    # R_pared: acero SS316L del fondo (9 mm) + efecto de soldaduras
+    R_pared = (t_PARED_TANQUE / K_SS316L) * 1.1  # +10% por soldaduras
+    
+    # R_aisl: lana mineral DEGRADADA
+    # Valores típicos de k aumentan 20-50% con humedad/envejecimiento
+    R_aisl = espesor_aisl / k_aisl if espesor_aisl > 0.001 else 0.01
+    
+    # R_conv_ext: convección+radiación exterior
+    # h_ext = 15 incluye: convección natural (~8) + viento (~5) + radiación (~2)
+    R_conv_ext = 1.0 / h_ext
+    
+    # Resistencia total
+    R_total_base = R_conv_int + R_pared + R_aisl + R_conv_ext
+    
+    # Flujo de calor base
+    DeltaT = T_glucosa - T_amb
+    q_flujo_base = DeltaT / R_total_base  # W/m²
+    
+    # Aplicar factor conservador (para incertidumbres e imprevistos)
+    q_flujo = q_flujo_base * factor_conservador
+    R_total = R_total_base / factor_conservador  # Resistencia equivalente reducida
+    
+    # Pérdida total
+    Q_perdida_total = q_flujo * A_total_perdida  # W
+    
+    # Equivalente en °C para el cálculo de área de transferencia
+    # Q = m_dot * Cp * DeltaT_eq  →  DeltaT_eq = Q / (m_dot * Cp)
+    # Usamos valores de referencia: m_dot = 1 ton/h, Cp = 2700 J/kgK
+    m_dot_ref = 1000.0 / 3600.0  # kg/s
+    Cp_ref = 2700.0  # J/kgK (valor promedio para glucosa)
+    Q_equiv_base = m_dot_ref * Cp_ref  # W/°C para 1 ton/h
+    Q_perdida_equiv = Q_perdida_total / Q_equiv_base  # °C equivalente
+    
+    return Q_perdida_total, Q_perdida_equiv, q_flujo, R_total
+
+
 def tabla_espesores(T_agua=75.0):
     """
     Genera tabla comparativa de espesores de aislamiento.

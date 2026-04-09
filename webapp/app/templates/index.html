@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - P2611{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-gradient-primary text-white border-0 shadow" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);">
+            <div class="card-body p-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h1 class="display-5 fw-bold mb-3">
+                            <i class="bi bi-thermometer-half me-3"></i>
+                            Balance de Materia y Energía
+                        </h1>
+                        <p class="lead mb-4">
+                            Aplicación para el análisis de transferencia de calor en el sistema de calentamiento 
+                            de glucosa Globe 42 DE mediante chaqueta de media caña sobre fondo toriesférico.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="{{ url_for('main.calculadora') }}" class="btn btn-light btn-lg">
+                                <i class="bi bi-calculator me-2"></i>Ir a Calculadora
+                            </a>
+                            <a href="{{ url_for('main.simulador') }}" class="btn btn-outline-light btn-lg">
+                                <i class="bi bi-graph-up-arrow me-2"></i>Simulador
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center d-none d-lg-block">
+                        <i class="bi bi-droplet-half" style="font-size: 8rem; opacity: 0.3;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Módulos Principales -->
+<div class="row g-4 mb-4">
+    <!-- Calculadora -->
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+            <div class="card-body text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-calculator text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h4 class="card-title">Calculadora</h4>
+                <p class="card-text text-muted">
+                    Calcule parámetros de transferencia de calor: coeficiente U, 
+                    potencia térmica, tiempo de calentamiento y propiedades termofísicas.
+                </p>
+                <a href="{{ url_for('main.calculadora') }}" class="btn btn-primary">
+                    <i class="bi bi-arrow-right me-1"></i>Acceder
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Simulador -->
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+            <div class="card-body text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-graph-up-arrow text-success" style="font-size: 3rem;"></i>
+                </div>
+                <h4 class="card-title">Simulador</h4>
+                <p class="card-text text-muted">
+                    Simule el ciclo completo de descargas a carrotanques. 
+                    Compare escenarios con agua a 65°C vs 75°C.
+                </p>
+                <a href="{{ url_for('main.simulador') }}" class="btn btn-success">
+                    <i class="bi bi-arrow-right me-1"></i>Acceder
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard -->
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+            <div class="card-body text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-speedometer2 text-warning" style="font-size: 3rem;"></i>
+                </div>
+                <h4 class="card-title">Dashboard</h4>
+                <p class="card-text text-muted">
+                    Visualice KPIs, gráficos interactivos y tablas de resultados 
+                    en un panel de control tipo Power BI.
+                </p>
+                <a href="{{ url_for('main.dashboard') }}" class="btn btn-warning text-dark">
+                    <i class="bi bi-arrow-right me-1"></i>Acceder
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Parámetros del Sistema -->
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">
+                    <i class="bi bi-gear me-2"></i>Parámetros del Sistema
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3 col-6">
+                        <div class="border rounded p-3 text-center">
+                            <div class="text-muted small">Área de Contacto</div>
+                            <div class="fs-4 fw-bold text-primary">13.0 m²</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="border rounded p-3 text-center">
+                            <div class="text-muted small">Capacidad Total</div>
+                            <div class="fs-4 fw-bold text-success">211 m³</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="border rounded p-3 text-center">
+                            <div class="text-muted small">Masa Máxima</div>
+                            <div class="fs-4 fw-bold text-info">~300 ton</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="border rounded p-3 text-center">
+                            <div class="text-muted small">Material</div>
+                            <div class="fs-4 fw-bold text-secondary">SS316L</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.3s ease;
+}
+</style>
+{% endblock %}

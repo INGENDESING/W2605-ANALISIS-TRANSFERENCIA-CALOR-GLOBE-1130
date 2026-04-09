@@ -50,7 +50,7 @@ ID_PIPE_8IN = 0.2027      # Diámetro interior 8" Sch 40 [m]
 A_PIPE_8IN = np.pi / 4 * ID_PIPE_8IN**2  # Área de flujo [m²]
 
 # Densidad de glucosa Globe 1130 (valor de referencia a ~40°C)
-RHO_GLUCOSA_REF = 1410.0  # [kg/m³] — aprox. 85 Brix
+RHO_GLUCOSA_REF = 1410.0  # [kg/m³] — aprox. 80.6 Brix a ~40°C
 
 
 # =============================================================================

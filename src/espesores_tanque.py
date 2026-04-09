@@ -390,7 +390,7 @@ if __name__ == "__main__":
     print(f"Corrosion allowance: {CA_MM:.3f} mm ({CA_IN:.4f} in)")
     print(f"Gravedad especifica: {G_GLUCOSA}")
 
-    resultados_cuerpo = analisis_cuerpo_cilindrico(n_virolas=4, h_virola_mm=2500.0,
+    resultados_cuerpo = analisis_cuerpo_cilindrico(n_virolas=4, h_virola_mm=2417.5,
                                                     llenado_pct=90.0)
 
     print(f"\n{'Virola':>7} {'Elev [mm]':>10} {'H_liq [ft]':>10} {'t_req [mm]':>10} "

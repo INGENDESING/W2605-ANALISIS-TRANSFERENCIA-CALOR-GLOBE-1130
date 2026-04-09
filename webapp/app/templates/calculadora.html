@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}Calculadora - P2611{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-0">
+            <i class="bi bi-calculator me-2 text-primary"></i>
+            Calculadora de Transferencia de Calor
+        </h2>
+        <p class="text-muted">Calcule parámetros térmicos y propiedades del sistema</p>
+    </div>
+</div>
+
+<!-- Contenido Principal -->
+<div class="row g-4">
+    <!-- Panel de Inputs -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-sliders me-2"></i>Parámetros de Entrada
+                </h5>
+            </div>
+            <div class="card-body">
+                <form id="calculadoraForm">
+                    <!-- Flujo de Agua -->
+                    <div class="mb-3">
+                        <label for="flujoAgua" class="form-label">
+                            Flujo de Agua <span class="text-muted">(m³/h)</span>
+                        </label>
+                        <input type="number" class="form-control" id="flujoAgua" 
+                               value="30.9" min="10" max="100" step="0.1">
+                        <div class="form-text">Caudal de agua caliente</div>
+                    </div>
+                    
+                    <!-- Temperatura Agua -->
+                    <div class="mb-3">
+                        <label for="tempAgua" class="form-label">
+                            Temperatura Agua <span class="text-muted">(°C)</span>
+                        </label>
+                        <input type="number" class="form-control" id="tempAgua" 
+                               value="65" min="50" max="90" step="1">
+                        <div class="form-text">Temperatura de entrada del agua</div>
+                    </div>
+                    
+                    <!-- Temperatura Glucosa Inicial -->
+                    <div class="mb-3">
+                        <label for="tempGlucosaIni" class="form-label">
+                            Temp. Glucosa Inicial <span class="text-muted">(°C)</span>
+                        </label>
+                        <input type="number" class="form-control" id="tempGlucosaIni" 
+                               value="20" min="10" max="50" step="1">
+                    </div>
+                    
+                    <!-- Temperatura Glucosa Objetivo -->
+                    <div class="mb-3">
+                        <label for="tempGlucosaObj" class="form-label">
+                            Temp. Glucosa Objetivo <span class="text-muted">(°C)</span>
+                        </label>
+                        <input type="number" class="form-control" id="tempGlucosaObj" 
+                               value="60" min="40" max="70" step="1">
+                    </div>
+                    
+                    <!-- Volumen Glucosa -->
+                    <div class="mb-3">
+                        <label for="volumenGlucosa" class="form-label">
+                            Volumen Glucosa <span class="text-muted">(m³)</span>
+                        </label>
+                        <input type="number" class="form-control" id="volumenGlucosa" 
+                               value="24" min="10" max="210" step="1">
+                    </div>
+                    
+                    <!-- Área de Contacto -->
+                    <div class="mb-3">
+                        <label for="areaContacto" class="form-label">
+                            Área Contacto <span class="text-muted">(m²)</span>
+                        </label>
+                        <input type="number" class="form-control" id="areaContacto" 
+                               value="13" min="5" max="50" step="0.1">
+                    </div>
+                    
+                    <!-- Botones -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-play-fill me-1"></i>Calcular
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" id="btnReset">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Escenarios Predefinidos -->
+        <div class="card shadow-sm mt-3">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">
+                    <i class="bi bi-lightning me-2"></i>Escenarios Rápidos
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="cargarEscenario(1)">
+                        Escenario 1: 24m³, 65°C, 30.9m³/h
+                    </button>
+                    <button type="button" class="btn btn-outline-success btn-sm" onclick="cargarEscenario(2)">
+                        Escenario 2: 80%, 65°C, 2.5m/s
+                    </button>
+                    <button type="button" class="btn btn-outline-warning btn-sm" onclick="cargarEscenario(3)">
+                        Escenario 3: 80%, 75°C, 2.5m/s
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Panel de Resultados -->
+    <div class="col-lg-8">
+        <!-- KPI Cards -->
+        <div class="row g-3 mb-4" id="resultadosCards" style="display: none;">
+            <div class="col-md-4">
+                <div class="card bg-primary text-white shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Coeficiente U</h6>
+                                <p class="display-6 mb-0" id="kpiU">-</p>
+                            </div>
+                            <i class="bi bi-thermometer-high fs-1 opacity-50"></i>
+                        </div>
+                        <small>W/m²·°C</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success text-white shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Potencia Térmica</h6>
+                                <p class="display-6 mb-0" id="kpiPotencia">-</p>
+                            </div>
+                            <i class="bi bi-lightning-charge fs-1 opacity-50"></i>
+                        </div>
+                        <small>kW</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-info text-white shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Tiempo Calent.</h6>
+                                <p class="display-6 mb-0" id="kpiTiempo">-</p>
+                            </div>
+                            <i class="bi bi-clock-history fs-1 opacity-50"></i>
+                        </div>
+                        <small>horas</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gráfico -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">
+                    <i class="bi bi-graph-up me-2"></i>Perfil de Temperatura
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="graficoTemperatura" style="height: 400px;">
+                    <div class="text-center text-muted py-5">
+                        <i class="bi bi-graph-up fs-1"></i>
+                        <p class="mt-3">Ingrese parámetros y presione "Calcular" para ver resultados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabla de Resultados Detallados -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-table me-2"></i>Resultados Detallados
+                </h5>
+                <button class="btn btn-sm btn-outline-primary" id="btnExportar" style="display: none;">
+                    <i class="bi bi-download me-1"></i>Exportar
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tablaResultados" style="display: none;">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Parámetro</th>
+                                <th>Valor</th>
+                                <th>Unidad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyResultados">
+                        </tbody>
+                    </table>
+                    <div id="mensajeInicial" class="text-center text-muted py-4">
+                        Los resultados aparecerán aquí
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/calculadora.js') }}"></script>
+{% endblock %}

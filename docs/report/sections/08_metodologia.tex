@@ -29,9 +29,9 @@ donde $a$ y $b$ son las dimensiones internas del perfil rectangular, $A_c$ es el
 	\label{eq:sieder_tate}
 \end{equation}
 
-válida para $\text{Re} > 10\,000$, $0.7 < \text{Pr} < 16\,700$ y $L/D_h > 10$. El número de Reynolds se evalúa con las propiedades del agua a la temperatura media del fluido y el diámetro hidráulico del canal. La referencia fundamental es Incropera et al., \textit{Fundamentals of Heat and Mass Transfer}, 7th ed., Ec.~8.62.
+válida para $\text{Re} > 10\,000$, $0.7 < \text{Pr} < 16\,700$ y $L/D_h > 10$. El número de Reynolds se evalúa con las propiedades del agua a la temperatura media del fluido y el diámetro hidráulico del canal. La correlaci\'on de Sieder-Tate corresponde a la Ec.~8.62 de \citet{Incropera2011}.
 
-\textbf{Coeficiente del lado de la glucosa ($h_o$).} La glucosa se encuentra en reposo dentro del tanque (sin agitación mecánica), por lo que el mecanismo de transferencia de calor dominante es la convección natural. Para una superficie plana caliente orientada hacia arriba en contacto con un fluido viscoso, se emplea la correlación de Churchill y Chu para convección natural:
+\textbf{Coeficiente del lado de la glucosa ($h_o$).} La glucosa se encuentra en reposo dentro del tanque (sin agitación mecánica), por lo que el mecanismo de transferencia de calor dominante es la convección natural. Para una superficie plana caliente orientada hacia arriba en contacto con un fluido viscoso, se emplea la correlación de Churchill y Chu~\citep{churchill1975} para convección natural:
 
 \begin{equation}
 	\text{Nu}_L = \left[0.825 + \frac{0.387 \cdot \text{Ra}_L^{1/6}}{\left(1 + (0.492/\text{Pr})^{9/16}\right)^{8/27}}\right]^2
@@ -133,7 +133,7 @@ donde la variable independiente es la coordenada de área $A$, integrada desde c
 
 \subsubsection{Espesor del Cuerpo Cilíndrico — Método One-Foot (API 650)}
 
-El espesor requerido para cada virola del cuerpo cilíndrico se calcula mediante el método One-Foot de la norma API~650, Sección~5.6.3.2:
+El espesor requerido para cada virola del cuerpo cilíndrico se calcula mediante el método One-Foot de la norma API~650~\citep{api650_2020}, Sección~5.6.3.2:
 
 \begin{equation}
 	t_d = \frac{2.6 \cdot D \cdot (H - 1) \cdot G}{S_d} + CA
@@ -144,7 +144,7 @@ donde $t_d$ es el espesor de diseño [in], $D$ es el diámetro nominal del tanqu
 
 \subsubsection{Espesor del Fondo Toriesférico — ASME Section VIII Div. 1}
 
-El espesor mínimo requerido para el fondo toriesférico se calcula según ASME~VIII~Div.~1, UG-32(e), para cabezales toriesféricos sometidos a presión interna:
+El espesor mínimo requerido para el fondo toriesférico se calcula según ASME~VIII~Div.~1~\citep{asme_viii_2021}, UG-32(e), para cabezales toriesféricos sometidos a presión interna:
 
 \begin{equation}
 	t = \frac{0.885 \cdot P \cdot L}{S \cdot E - 0.1 \cdot P} + CA
@@ -266,4 +266,4 @@ La simulaci\'on FEA tiene como objetivo evaluar la distribuci\'on de esfuerzos y
 	\end{tabularx}
 \end{table}
 
-Los resultados de las simulaciones CFD y FEA se integrar\'an al presente informe en una revisi\'on posterior, una vez que hayan sido completadas y verificadas.
+Las simulaciones CFD y FEA fueron ejecutadas conforme a la metodolog\'ia descrita, y sus resultados se presentan integrados en la Secci\'on~\ref{sec:resultados_cfd_fea} correspondiente.
