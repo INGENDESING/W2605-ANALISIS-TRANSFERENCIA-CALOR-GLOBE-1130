@@ -36,6 +36,18 @@ def about():
     return render_template('about.html')
 
 
+@main_bp.route('/sensibilidad')
+def sensibilidad():
+    """Módulo de análisis de sensibilidad"""
+    return render_template('sensibilidad.html')
+
+
+@main_bp.route('/propiedades')
+def propiedades():
+    """Propiedades termofísicas de la glucosa"""
+    return render_template('propiedades.html')
+
+
 @main_bp.route('/health')
 def health_check():
     """Endpoint de health check"""

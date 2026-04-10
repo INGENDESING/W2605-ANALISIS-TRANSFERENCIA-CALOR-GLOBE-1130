@@ -604,7 +604,7 @@ if __name__ == "__main__":
 
     # Directorio de figuras
     figures_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                               '..', 'figures')
+                               '..', 'results', 'figures')
     os.makedirs(figures_dir, exist_ok=True)
 
     # --- Escenario 2: Agua a 65 C ---
@@ -640,7 +640,7 @@ if __name__ == "__main__":
 
     ax.set_xlabel('Tiempo [h]')
     ax.set_ylabel('Temperatura de la glucosa [$\\degree$C]')
-    ax.set_title(f'Comparacion de escenarios: Ciclo de {N_DESCARGAS} '
+    ax.set_title(f'Comparación de escenarios: Ciclo de {N_DESCARGAS} '
                  f'descargas de {MASA_POR_DESCARGA/1000:.0f} ton en {T_TOTAL:.0f} h')
     ax.legend(loc='best', framealpha=0.9)
     ax.grid(True, alpha=0.3)

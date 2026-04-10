@@ -462,7 +462,7 @@ def graficar_gantt(res, figures_dir):
 
 if __name__ == "__main__":
     figures_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                               '..', 'figures')
+                               '..', 'results', 'figures')
     os.makedirs(figures_dir, exist_ok=True)
 
     # Simular ciclo

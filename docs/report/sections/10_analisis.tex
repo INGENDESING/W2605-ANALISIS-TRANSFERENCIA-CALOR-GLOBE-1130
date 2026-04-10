@@ -8,7 +8,7 @@ El an\'alisis de resistencias t\'ermicas permite identificar con claridad el fac
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{../figures/resistencias_termicas.png}
+	\includegraphics[width=0.7\textwidth]{../../results/figures/resistencias_termicas.png}
 	\caption{Distribuci\'on porcentual de las resistencias t\'ermicas del sistema de calentamiento por media ca\~na. La alta viscosidad de la glucosa sin agitaci\'on concentra el 98\,\% de la resistencia total, constituyendo el factor limitante del coeficiente global $U$.}
 	\label{fig:pie_resistencias}
 \end{figure}
@@ -47,7 +47,7 @@ Las simulaciones transitorias y c\'iclicas revelaron un comportamiento t\'ermico
 
 \subsubsection{Interpretaci\'on de la Comparativa de Configuraciones de Chaqueta}
 
-El análisis cuantitativo de las dos configuraciones de chaqueta —dimple actual (28\,m\textsuperscript{2}) y media caña propuesta (13\,m\textsuperscript{2})— permite extraer conclusiones de alto valor ingenieril para la toma de decisiones sobre el diseño del sistema de calentamiento del tanque Globe~1130.
+El análisis cuantitativo de las dos configuraciones de chaqueta —dimple actual (28\,m\textsuperscript{2}) y media caña propuesta (13\,m\textsuperscript{2})— permite extraer conclusiones de alto valor ingenieril para la toma de decisiones sobre el diseño del sistema de calentamiento del tanque de almacenamiento de glucosa Tag 53A-90A-0056.
 
 El resultado más significativo del análisis batch es la proporcionalidad exacta entre los tiempos de calentamiento y el inverso del área: el cociente $t_{prop}/t_{actual} = 2.153 \approx A_{actual}/A_{prop} = 28/13 = 2.154$ se verifica con una desviación inferior al 0.05\,\% para ambos rangos de temperatura analizados (25–57\,°C y 55–57\,°C). Esta proporcionalidad no es una coincidencia numérica; es una consecuencia directa de la estructura del balance de energía transitorio, donde el tiempo de calentamiento satisface $t \propto m_g\,C_p / (U \cdot A)$. Dado que $U$ es invariante entre configuraciones (la resistencia del lado de la glucosa domina el 98\,\% de $R_{total}$), el tiempo escala exclusivamente con $1/A$. Este resultado confirma con precisión que \textbf{el tipo de chaqueta —dimple o media caña— no introduce ninguna ventaja o desventaja sobre el coeficiente de transferencia de calor}; la única palanca de diseño disponible en el lado de la chaqueta es el área de contacto.
 
@@ -70,7 +70,7 @@ El an\'alisis estructural del tanque de almacenamiento, basado en los criterios 
 \begin{table}[H]
 	\centering
 	\small
-	\caption{Estado estructural consolidado de los componentes del tanque Globe~1130.}
+	\caption{Estado estructural consolidado de los componentes del tanque de almacenamiento de glucosa Tag 53A-90A-0056.}
 	\label{tab:sintesis_estructural}
 	\setcounter{itemcount}{0}
 	\begin{tabularx}{\textwidth}{@{}p{3.0cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{2.6cm}>{\centering\arraybackslash}p{2.2cm}X@{}}
@@ -104,3 +104,7 @@ La deformaci\'on m\'axima de aproximadamente 4.1~mm en el centro del fondo (Figu
 En s\'intesis, la simulaci\'on FEA valida los m\'etodos anal\'iticos empleados, corrobora el l\'imite operativo del 90\% de llenado y a\~nade el mapa de esfuerzos tridimensional necesario para orientar futuras acciones de refuerzo estructural en la zona del nudillo, tal como se detalla en las recomendaciones del presente informe.
 
 \newpage
+
+
+
+

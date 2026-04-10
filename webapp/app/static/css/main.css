@@ -168,3 +168,228 @@ main {
 ::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SISTEMA DE DISEÑO DML / INGREDION — P2611
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    --color-dml: #1a3a6c;
+    --color-dml-dark: #112550;
+    --color-dml-light: #2b5ba8;
+    --color-ingredion: #e8750a;
+    --color-ingredion-light: #f5a04a;
+    --color-calentamiento: #2196F3;
+    --color-descarga: #FF5722;
+    --color-mantenimiento: #4CAF50;
+    --color-alerta: #FFC107;
+    --color-error: #F44336;
+    --sidebar-width: 260px;
+    --card-radius: 12px;
+    --shadow-card: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+/* ── Layout sidebar ───────────────────────────────────────────────────────── */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.app-sidebar {
+    width: var(--sidebar-width);
+    background: var(--color-dml);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1030;
+    transition: transform 0.3s ease;
+}
+
+.app-sidebar .sidebar-brand {
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.app-sidebar .sidebar-brand .brand-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.3px;
+}
+
+.app-sidebar .sidebar-brand .brand-project {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.app-sidebar .nav-section-title {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.4);
+    padding: 18px 16px 6px;
+}
+
+.app-sidebar .nav-link {
+    color: rgba(255,255,255,0.78);
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin: 2px 8px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.app-sidebar .nav-link:hover,
+.app-sidebar .nav-link.active {
+    background: rgba(255,255,255,0.13);
+    color: #fff;
+}
+
+.app-sidebar .nav-link.active {
+    background: var(--color-ingredion);
+    color: #fff;
+}
+
+.app-sidebar .nav-link i {
+    font-size: 1.05rem;
+    width: 20px;
+    text-align: center;
+}
+
+.app-main {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 28px 32px;
+    background: #f4f6fb;
+    min-height: 100vh;
+}
+
+/* ── KPI Cards ────────────────────────────────────────────────────────────── */
+.kpi-card-new {
+    background: white;
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow-card);
+    padding: 20px;
+    border-left: 4px solid var(--color-dml);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+}
+
+.kpi-card-new:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.kpi-card-new .kpi-icon {
+    font-size: 1.8rem;
+    color: var(--color-dml);
+    opacity: 0.7;
+}
+
+.kpi-card-new .kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: Georgia, serif;
+    color: var(--color-dml);
+    line-height: 1.1;
+}
+
+.kpi-card-new .kpi-unit {
+    font-size: 0.78rem;
+    color: #888;
+    font-family: monospace;
+}
+
+.kpi-card-new .kpi-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #777;
+    font-weight: 600;
+}
+
+.kpi-card-new .kpi-trend {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.kpi-status-ok    { border-left-color: #4CAF50 !important; }
+.kpi-status-warn  { border-left-color: #FFC107 !important; }
+.kpi-status-error { border-left-color: #F44336 !important; }
+
+/* ── Selector de escenario ────────────────────────────────────────────────── */
+.scenario-tabs .btn-check + .btn {
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 6px 14px;
+}
+
+/* ── SVG tanque ───────────────────────────────────────────────────────────── */
+.tank-svg-wrapper {
+    background: white;
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow-card);
+    padding: 16px;
+    text-align: center;
+}
+
+/* ── Slider con valor inline ──────────────────────────────────────────────── */
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider-row input[type=range] {
+    flex: 1;
+}
+
+.slider-row .slider-val {
+    min-width: 52px;
+    text-align: right;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-dml);
+    font-family: monospace;
+}
+
+/* ── Badge de régimen de flujo ────────────────────────────────────────────── */
+.badge-regimen-turbulento { background: #2196F3; }
+.badge-regimen-transicion { background: #FF9800; }
+.badge-regimen-laminar    { background: #9C27B0; }
+
+/* ── Responsividad: ocultar sidebar en móvil ──────────────────────────────── */
+@media (max-width: 767.98px) {
+    .app-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .app-sidebar.sidebar-open {
+        transform: translateX(0);
+    }
+
+    .app-main {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .app-main-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 1029;
+    }
+
+    .app-main-overlay.active {
+        display: block;
+    }
+}

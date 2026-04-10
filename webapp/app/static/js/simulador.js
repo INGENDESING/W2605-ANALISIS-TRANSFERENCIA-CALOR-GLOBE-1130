@@ -1,408 +1,390 @@
 /**
- * JavaScript del Módulo Simulador - P2611
+ * Simulador de Ciclo Completo - P2611
+ * Calentamiento inicial + ciclo de descargas
  */
 
-// Variables globales
-let resultadosSimulacion = null;
-let vistaActual = 'temp';
+// Layout Plotly
+const plotlyLayout = {
+    font: { family: 'Georgia, serif', size: 11 },
+    paper_bgcolor: 'white',
+    plot_bgcolor: '#fafafa',
+    xaxis: { gridcolor: '#e0e0e0', showgrid: true, title: 'Tiempo (h)' },
+    yaxis: { gridcolor: '#e0e0e0', showgrid: true },
+    margin: { l: 60, r: 60, t: 40, b: 50 },
+    hovermode: 'x unified'
+};
+
+// Estado
+let estadoSim = {
+    datos: null,
+    escenario: null
+};
 
 /**
- * Inicializar módulo simulador
+ * Inicializar
  */
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('simuladorForm');
-    const btnComparar = document.getElementById('btnComparar');
-    const btnExportar = document.getElementById('btnExportarSim');
-    const sliderNivel = document.getElementById('nivelInicial');
-    
-    if (form) {
-        form.addEventListener('submit', handleSimular);
-    }
-    
-    if (btnComparar) {
-        btnComparar.addEventListener('click', handleComparar);
-    }
-    
-    if (btnExportar) {
-        btnExportar.addEventListener('click', handleExportarSim);
-    }
-    
-    if (sliderNivel) {
-        sliderNivel.addEventListener('input', function() {
-            document.getElementById('nivelInicialValor').textContent = this.value + '%';
-        });
-    }
+    initEventListeners();
+    // Cargar escenario 2 por defecto
+    cargarEscenario(2);
 });
 
 /**
- * Manejar simulación
+ * Configurar event listeners
  */
-async function handleSimular(e) {
-    e.preventDefault();
-    
-    const tempAgua = parseFloat(document.getElementById('tempAguaSim').value);
-    const tempInicial = parseFloat(document.getElementById('tempInicialSim').value);
-    const numDescargas = parseInt(document.getElementById('numDescargas').value);
-    const masaDescarga = parseFloat(document.getElementById('masaDescarga').value);
-    const tiempoDescarga = parseFloat(document.getElementById('tiempoDescarga').value);
-    const nivelInicial = parseFloat(document.getElementById('nivelInicial').value);
-    
-    showLoading('graficoCiclo');
-    
-    try {
-        // 1. Calcular capacidad
-        const responseCap = await fetchAPI('/api/simular/capacidad', {
-            method: 'POST',
-            body: JSON.stringify({
-                temp_inicial: tempInicial,
-                temp_agua: tempAgua,
-                num_descargas: numDescargas,
-                masa_por_descarga_ton: masaDescarga,
-                tiempo_descarga_h: tiempoDescarga,
-                nivel_inicial_pct: nivelInicial
-            })
-        });
-        
-        // 2. Simular ciclo completo
-        const responseCiclo = await fetchAPI('/api/simular/ciclo-descargas', {
-            method: 'POST',
-            body: JSON.stringify({
-                temp_inicial: tempInicial,
-                temp_agua: tempAgua,
-                num_descargas: numDescargas,
-                masa_por_descarga_ton: masaDescarga,
-                tiempo_descarga_h: tiempoDescarga,
-                nivel_inicial_pct: nivelInicial,
-                periodo_ciclo_h: 3.0
-            })
-        });
-        
-        resultadosSimulacion = {
-            capacidad: responseCap.data,
-            ciclo: responseCiclo.data
-        };
-        
-        // Actualizar UI
-        actualizarKPISim(resultadosSimulacion);
-        actualizarGraficoCiclo(resultadosSimulacion.ciclo);
-        actualizarGantt(resultadosSimulacion.ciclo);
-        actualizarTablaDescargas(resultadosSimulacion.ciclo);
-        
-        showToast('Simulación completada', 'success');
-        
-    } catch (error) {
-        console.error('Error en simulación:', error);
-        document.getElementById('graficoCiclo').innerHTML = `
-            <div class="alert alert-danger m-3">
-                <i class="bi bi-exclamation-triangle me-2"></i>
-                Error: ${error.message}
-            </div>
-        `;
-    }
-}
-
-/**
- * Actualizar KPIs del simulador
- */
-function actualizarKPISim(data) {
-    document.getElementById('kpiCapacidad').textContent = data.capacidad.capacidad_maxima_ton_dia || '-';
-    document.getElementById('kpiDescargasDia').textContent = data.capacidad.descargas_por_dia || '-';
-    document.getElementById('kpiFlujo').textContent = formatNumber(data.capacidad.flujo_maximo_ton_h, 1);
-    document.getElementById('kpiTempFinal').textContent = formatNumber(data.ciclo.temp_final, 1);
-    
-    document.getElementById('resultadosSimCards').style.display = 'flex';
-}
-
-/**
- * Actualizar gráfico principal del ciclo
- */
-function actualizarGraficoCiclo(data) {
-    const serie = data.serie_temporal;
-    const tiempo = serie.map(p => p.t_h);
-    const temperatura = serie.map(p => p.T_glucosa);
-    const masa = serie.map(p => p.m_ton);
-    const U = serie.map(p => p.U);
-    
-    // Encontrar fases de descarga para sombreado
-    const descargas = data.descargas;
-    const shapes = descargas.map(d => ({
-        type: 'rect',
-        x0: d.t_inicio_h,
-        x1: d.t_fin_h,
-        y0: 0,
-        y1: 1,
-        yref: 'paper',
-        fillcolor: 'rgba(255, 193, 7, 0.2)',
-        line: { width: 0 },
-        layer: 'below'
-    }));
-    
-    // Anotaciones de descargas
-    const annotations = descargas.map(d => ({
-        x: (d.t_inicio_h + d.t_fin_h) / 2,
-        y: 1.05,
-        yref: 'paper',
-        text: `D${d.descarga}`,
-        showarrow: false,
-        font: { size: 10, color: '#856404' }
-    }));
-    
-    let trace, yaxis;
-    
-    switch(vistaActual) {
-        case 'temp':
-            trace = {
-                x: tiempo,
-                y: temperatura,
-                type: 'scatter',
-                mode: 'lines',
-                name: 'Temperatura',
-                line: { color: '#0d6efd', width: 2 }
-            };
-            yaxis = { title: 'Temperatura (°C)', range: [50, 80] };
-            break;
-        case 'masa':
-            trace = {
-                x: tiempo,
-                y: masa,
-                type: 'scatter',
-                mode: 'lines',
-                name: 'Masa',
-                line: { color: '#198754', width: 2 },
-                fill: 'tozeroy'
-            };
-            yaxis = { title: 'Masa (ton)' };
-            break;
-        case 'U':
-            trace = {
-                x: tiempo,
-                y: U,
-                type: 'scatter',
-                mode: 'lines',
-                name: 'Coef. U',
-                line: { color: '#6f42c1', width: 2 }
-            };
-            yaxis = { title: 'U (W/m²·°C)' };
-            break;
-    }
-    
-    const layout = {
-        xaxis: { title: 'Tiempo (h)', gridcolor: '#e9ecef' },
-        yaxis: { ...yaxis, gridcolor: '#e9ecef' },
-        shapes: shapes,
-        annotations: annotations,
-        showlegend: false,
-        margin: { t: 40, r: 40, b: 60, l: 60 },
-        hovermode: 'x unified'
-    };
-    
-    createPlotlyChart('graficoCiclo', [trace], layout);
-}
-
-/**
- * Cambiar vista del gráfico
- */
-function cambiarVistaGrafico(vista) {
-    vistaActual = vista;
-    
-    // Actualizar botones
-    document.getElementById('btnVerTemp').classList.toggle('active', vista === 'temp');
-    document.getElementById('btnVerMasa').classList.toggle('active', vista === 'masa');
-    document.getElementById('btnVerU').classList.toggle('active', vista === 'U');
-    
-    if (resultadosSimulacion) {
-        actualizarGraficoCiclo(resultadosSimulacion.ciclo);
-    }
-}
-
-/**
- * Actualizar gráfico de Gantt
- */
-function actualizarGantt(data) {
-    const fases = data.fases;
-    
-    const traces = fases.map((fase, i) => ({
-        x: [fase.t_fin_h - fase.t_inicio_h],
-        y: [fase.tipo === 'descarga' ? 'Descarga' : 'Calentamiento'],
-        type: 'bar',
-        orientation: 'h',
-        base: [fase.t_inicio_h],
-        name: fase.tipo === 'descarga' ? `Descarga ${fase.descarga_num}` : `Calentamiento ${i}`,
-        marker: {
-            color: fase.tipo === 'descarga' ? '#ffc107' : '#0d6efd'
-        },
-        showlegend: false
-    }));
-    
-    const layout = {
-        xaxis: { title: 'Tiempo (h)', range: [0, data.tiempo_total_h] },
-        yaxis: { title: '' },
-        barmode: 'stack',
-        margin: { t: 20, r: 20, b: 60, l: 100 }
-    };
-    
-    createPlotlyChart('graficoGantt', traces, layout);
-    document.getElementById('cardGantt').style.display = 'block';
-}
-
-/**
- * Actualizar tabla de descargas
- */
-function actualizarTablaDescargas(data) {
-    const tbody = document.getElementById('tbodyDescargas');
-    
-    tbody.innerHTML = data.descargas.map(d => `
-        <tr>
-            <td class="fw-bold">${d.descarga}</td>
-            <td>${formatNumber(d.t_inicio_h, 2)}</td>
-            <td>${formatNumber(d.t_fin_h, 2)}</td>
-            <td>${formatNumber(d.T_inicio, 2)}</td>
-            <td>${formatNumber(d.T_fin, 2)}</td>
-            <td>${formatNumber(d.m_inicio_kg / 1000, 2)}</td>
-            <td>${formatNumber(d.m_fin_kg / 1000, 2)}</td>
-            <td class="fw-bold text-success">${formatNumber(d.masa_descargada_kg / 1000, 2)}</td>
-        </tr>
-    `).join('');
-    
-    document.getElementById('tablaDescargas').style.display = 'table';
-    document.getElementById('mensajeInicialSim').style.display = 'none';
-    document.getElementById('btnExportarSim').style.display = 'inline-block';
-}
-
-/**
- * Comparar escenarios
- */
-async function handleComparar() {
-    const tempInicial = parseFloat(document.getElementById('tempInicialSim').value);
-    const numDescargas = parseInt(document.getElementById('numDescargas').value);
-    
-    showLoading('graficoComparacion');
-    
-    try {
-        const response = await fetchAPI('/api/simular/comparar-escenarios', {
-            method: 'POST',
-            body: JSON.stringify({
-                temp_inicial: tempInicial,
-                num_descargas: numDescargas
-            })
-        });
-        
-        const data = response.data;
-        
-        // Gráfico de comparación
-        const trace1 = {
-            x: ['Temp Final', 'U Promedio', 'Masa Final'],
-            y: [data.escenario_2_65C.temp_final, data.escenario_2_65C.U_promedio, 
-                data.escenario_2_65C.masa_final_ton],
-            type: 'bar',
-            name: 'Escenario 2 (65°C)',
-            marker: { color: '#0d6efd' }
-        };
-        
-        const trace2 = {
-            x: ['Temp Final', 'U Promedio', 'Masa Final'],
-            y: [data.escenario_3_75C.temp_final, data.escenario_3_75C.U_promedio,
-                data.escenario_3_75C.masa_final_ton],
-            type: 'bar',
-            name: 'Escenario 3 (75°C)',
-            marker: { color: '#ffc107' }
-        };
-        
-        const layout = {
-            barmode: 'group',
-            xaxis: { title: 'Parámetro' },
-            yaxis: { title: 'Valor' },
-            margin: { t: 40, r: 40, b: 60, l: 60 }
-        };
-        
-        createPlotlyChart('graficoComparacion', [trace1, trace2], layout);
-        
-        // Tabla de comparación
-        const tbody = document.getElementById('tbodyComparacion');
-        tbody.innerHTML = `
-            <tr>
-                <td>Temperatura Final</td>
-                <td>${formatNumber(data.escenario_2_65C.temp_final, 2)} °C</td>
-                <td>${formatNumber(data.escenario_3_75C.temp_final, 2)} °C</td>
-                <td class="text-success">+${formatNumber(data.comparacion.mejora_temp_final, 2)} °C</td>
-            </tr>
-            <tr>
-                <td>U Promedio</td>
-                <td>${formatNumber(data.escenario_2_65C.U_promedio, 2)} W/m²·°C</td>
-                <td>${formatNumber(data.escenario_3_75C.U_promedio, 2)} W/m²·°C</td>
-                <td class="text-success">+${formatNumber(data.comparacion.mejora_U_promedio, 2)}</td>
-            </tr>
-            <tr>
-                <td>Masa Final</td>
-                <td>${formatNumber(data.escenario_2_65C.masa_final_ton, 2)} ton</td>
-                <td>${formatNumber(data.escenario_3_75C.masa_final_ton, 2)} ton</td>
-                <td>-</td>
-            </tr>
-        `;
-        
-        // Mostrar modal
-        const modal = new bootstrap.Modal(document.getElementById('modalComparacion'));
-        modal.show();
-        
-    } catch (error) {
-        showToast('Error en comparación: ' + error.message, 'danger');
-    }
-}
-
-/**
- * Exportar simulación
- */
-function handleExportarSim() {
-    if (!resultadosSimulacion) return;
-    
-    const datosExportar = {
-        parametros: {
-            temp_agua: document.getElementById('tempAguaSim').value,
-            temp_inicial: document.getElementById('tempInicialSim').value,
-            num_descargas: document.getElementById('numDescargas').value,
-            masa_descarga: document.getElementById('masaDescarga').value
-        },
-        capacidad: resultadosSimulacion.capacidad,
-        descargas: resultadosSimulacion.ciclo.descargas,
-        serie_temporal: resultadosSimulacion.ciclo.serie_temporal
-    };
-    
-    fetchAPI('/api/exportar/excel', {
-        method: 'POST',
-        body: JSON.stringify({
-            serie_temporal: datosExportar.serie_temporal,
-            descargas: datosExportar.descargas,
-            filename: 'simulacion_p2611.xlsx'
-        })
-    }).then(response => {
-        // La respuesta es un blob para descargar
-        return fetch('/api/exportar/excel', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                serie_temporal: datosExportar.serie_temporal,
-                descargas: datosExportar.descargas,
-                filename: 'simulacion_p2611.xlsx'
-            })
-        });
-    }).then(response => response.blob())
-    .then(blob => {
-        downloadFile(blob, 'simulacion_p2611.xlsx');
-        showToast('Archivo exportado', 'success');
-    });
+function initEventListeners() {
+    document.getElementById('btnSimular').addEventListener('click', simular);
+    document.getElementById('btnEsc2').addEventListener('click', () => cargarEscenario(2));
+    document.getElementById('btnEsc3').addEventListener('click', () => cargarEscenario(3));
+    document.getElementById('btnExportar').addEventListener('click', exportarCSV);
 }
 
 /**
  * Cargar escenario predefinido
  */
-function cargarEscenarioSim(num) {
-    if (num === 2) {
-        document.getElementById('tempAguaSim').value = 65;
-        document.getElementById('tempInicialSim').value = 57;
-    } else if (num === 3) {
-        document.getElementById('tempAguaSim').value = 75;
-        document.getElementById('tempInicialSim').value = 57;
+function cargarEscenario(esc) {
+    estadoSim.escenario = esc;
+    
+    if (esc === 2) {
+        document.getElementById('TAgua').value = 65;
+        document.getElementById('VAgua').value = 2.5;
+        document.getElementById('TObjetivo').value = 57;
+    } else if (esc === 3) {
+        document.getElementById('TAgua').value = 75;
+        document.getElementById('VAgua').value = 2.5;
+        document.getElementById('TObjetivo').value = 57;
     }
     
-    showToast(`Escenario ${num} cargado`, 'info');
+    // Simular automáticamente
+    simular();
+}
+
+/**
+ * Ejecutar simulación
+ */
+async function simular() {
+    mostrarSpinner(true);
+    
+    try {
+        const params = leerParametros();
+        
+        const response = await fetch('/api/calcular/transitorio-completo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(params)
+        });
+        
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error);
+        
+        estadoSim.datos = result.data;
+        
+        // Actualizar UI
+        actualizarKPIs(result.data);
+        renderizarGraficaTyM(result.data);
+        renderizarGantt(result.data);
+        renderizarGraficaUyQ(result.data);
+        renderizarTabla(result.data);
+        
+        document.getElementById('kpiResumen').style.display = 'flex';
+        
+    } catch (error) {
+        console.error('Error en simulación:', error);
+        alert('Error: ' + error.message);
+    } finally {
+        mostrarSpinner(false);
+    }
+}
+
+/**
+ * Leer parámetros del formulario
+ */
+function leerParametros() {
+    const saltarCalentamiento = document.getElementById('saltarCalentamiento').checked;
+    
+    return {
+        T_inicial: saltarCalentamiento ? 
+            parseFloat(document.getElementById('TObjetivo').value) : 
+            parseFloat(document.getElementById('TInicial').value),
+        T_objetivo_inicio_descarga: parseFloat(document.getElementById('TObjetivo').value),
+        T_agua: parseFloat(document.getElementById('TAgua').value),
+        velocidad_m_s: parseFloat(document.getElementById('VAgua').value),
+        area_m2: parseFloat(document.getElementById('Area').value),
+        nivel_inicial_pct: parseFloat(document.getElementById('NivelInicial').value),
+        num_descargas: parseInt(document.getElementById('NumDescargas').value),
+        masa_por_descarga_ton: parseFloat(document.getElementById('MasaDescarga').value),
+        tiempo_descarga_h: parseFloat(document.getElementById('TiempoDescarga').value),
+        periodo_ciclo_h: parseFloat(document.getElementById('Periodo').value),
+        temp_minima_aceptable: parseFloat(document.getElementById('TMinima').value)
+    };
+}
+
+/**
+ * Actualizar KPIs de resumen
+ */
+function actualizarKPIs(data) {
+    const m = data.metricas;
+    
+    document.getElementById('resTiempoCal').textContent = m.tiempo_calentamiento_inicial_h.toFixed(1);
+    document.getElementById('resMasaTotal').textContent = m.masa_total_descargada_ton.toFixed(1);
+    document.getElementById('resDescargasOk').textContent = m.descargas_ok;
+    document.getElementById('resTotalDesc').textContent = m.descargas_totales;
+    document.getElementById('resTFinal').textContent = m.T_final.toFixed(1);
+    
+    // Color según estado
+    const cardTFinal = document.getElementById('resTFinal').closest('.kpi-card-new');
+    cardTFinal.classList.remove('kpi-status-ok', 'kpi-status-warn', 'kpi-status-error');
+    if (m.T_final >= 55) cardTFinal.classList.add('kpi-status-ok');
+    else if (m.T_final >= 50) cardTFinal.classList.add('kpi-status-warn');
+    else cardTFinal.classList.add('kpi-status-error');
+}
+
+/**
+ * Renderizar gráfica Temperatura y Masa vs Tiempo
+ */
+function renderizarGraficaTyM(data) {
+    const serie = data.serie_temporal;
+    const fases = data.fases;
+    const T_min = parseFloat(document.getElementById('TMinima').value);
+    
+    const tiempo = serie.map(p => p.t_h);
+    const temperatura = serie.map(p => p.T_glucosa);
+    const masa = serie.map(p => p.m_ton);
+    
+    // Shapes para fases
+    const shapes = [];
+    const coloresFase = {
+        'calentamiento_inicial': 'rgba(33, 150, 243, 0.08)',
+        'descarga': 'rgba(255, 87, 34, 0.08)',
+        'mantenimiento': 'rgba(76, 175, 80, 0.06)'
+    };
+    
+    fases.forEach(f => {
+        if (coloresFase[f.tipo]) {
+            shapes.push({
+                type: 'rect',
+                x0: f.t_inicio_h, x1: f.t_fin_h,
+                y0: 0, y1: 1, yref: 'paper',
+                fillcolor: coloresFase[f.tipo],
+                line: { width: 0 }, layer: 'below'
+            });
+        }
+    });
+    
+    // Línea de temperatura mínima
+    shapes.push({
+        type: 'line',
+        x0: 0, x1: 1, xref: 'paper',
+        y0: T_min, y1: T_min,
+        line: { color: '#F44336', width: 1, dash: 'dash' }
+    });
+    
+    const traceT = {
+        x: tiempo, y: temperatura,
+        type: 'scatter', mode: 'lines',
+        name: 'T Glucosa (°C)',
+        line: { color: '#1a3a6c', width: 2.5 },
+        yaxis: 'y1'
+    };
+    
+    const traceM = {
+        x: tiempo, y: masa,
+        type: 'scatter', mode: 'lines',
+        name: 'Masa (ton)',
+        line: { color: '#e8750a', width: 2, dash: 'dash' },
+        yaxis: 'y2'
+    };
+    
+    const layout = {
+        ...plotlyLayout,
+        xaxis: { ...plotlyLayout.xaxis, range: [0, Math.max(24, tiempo[tiempo.length-1])] },
+        yaxis: { ...plotlyLayout.yaxis, title: 'Temperatura (°C)', side: 'left', range: [10, 80] },
+        yaxis2: { title: 'Masa (ton)', side: 'right', overlaying: 'y', range: [0, 200] },
+        shapes: shapes,
+        annotations: [{
+            x: tiempo[tiempo.length-1], y: T_min,
+            text: 'T mínima', showarrow: false,
+            yshift: -10, font: { size: 9, color: '#F44336' }
+        }],
+        legend: { orientation: 'h', y: -0.2 }
+    };
+    
+    Plotly.newPlot('graficaTyM', [traceT, traceM], layout, {responsive: true});
+}
+
+/**
+ * Renderizar diagrama de Gantt
+ */
+function renderizarGantt(data) {
+    const fases = data.fases;
+    const descargas = data.descargas;
+    const T_min = parseFloat(document.getElementById('TMinima').value);
+    
+    const tareas = [];
+    const etiquetas = [];
+    const colores = [];
+    const textos = [];
+    
+    // Fase de calentamiento inicial
+    const calIni = fases.find(f => f.tipo === 'calentamiento_inicial');
+    if (calIni) {
+        tareas.push(calIni.t_fin_h - calIni.t_inicio_h);
+        etiquetas.push('🔥 Calentamiento Inicial');
+        colores.push('#2196F3');
+        textos.push(`${calIni.T_inicio}°C → ${calIni.T_fin}°C`);
+    }
+    
+    // Descargas y mantenimientos
+    for (let i = 0; i < descargas.length; i++) {
+        const d = descargas[i];
+        
+        // Descarga
+        tareas.push(d.t_fin_h - d.t_inicio_h);
+        etiquetas.push(`🚛 Descarga ${d.descarga}`);
+        colores.push(d.T_fin >= T_min ? '#4CAF50' : (d.T_fin >= T_min - 5 ? '#FFC107' : '#F44336'));
+        textos.push(`${d.T_inicio}°C → ${d.T_fin}°C`);
+        
+        // Mantenimiento (si no es la última)
+        const mant = fases.find(f => f.tipo === 'mantenimiento' && f.t_inicio_h >= d.t_fin_h);
+        if (mant && i < descargas.length - 1) {
+            tareas.push(mant.t_fin_h - mant.t_inicio_h);
+            etiquetas.push(`⏱️ Mantenimiento ${d.descarga}`);
+            colores.push('#9E9E9E');
+            textos.push(`${mant.T_inicio}°C → ${mant.T_fin}°C`);
+        }
+    }
+    
+    const trace = {
+        x: tareas,
+        y: etiquetas,
+        type: 'bar',
+        orientation: 'h',
+        marker: { color: colores },
+        text: textos,
+        textposition: 'inside',
+        hovertemplate: '%{y}<br>Inicio: %{base:.1f}h<br>Duración: %{x:.1f}h<br>%{text}<extra></extra>'
+    };
+    
+    // Calcular bases (acumulado)
+    let base = 0;
+    const bases = [];
+    for (let i = 0; i < tareas.length; i++) {
+        bases.push(base);
+        base += tareas[i];
+    }
+    trace.base = bases;
+    
+    const layout = {
+        ...plotlyLayout,
+        xaxis: { ...plotlyLayout.xaxis, range: [0, 24] },
+        yaxis: { ...plotlyLayout.yaxis, autorange: 'reversed' },
+        margin: { l: 180, r: 20, t: 20, b: 50 },
+        showlegend: false
+    };
+    
+    Plotly.newPlot('graficaGantt', [trace], layout, {responsive: true});
+}
+
+/**
+ * Renderizar gráfica de U y Q
+ */
+function renderizarGraficaUyQ(data) {
+    const serie = data.serie_temporal;
+    
+    const tiempo = serie.map(p => p.t_h);
+    const Uvals = serie.map(p => p.U);
+    const Qvals = serie.map(p => p.Q_kW);
+    
+    const traceU = {
+        x: tiempo, y: Uvals,
+        type: 'scatter', mode: 'lines',
+        name: 'U (W/m²·°C)',
+        line: { color: '#1a3a6c', width: 2 },
+        yaxis: 'y1'
+    };
+    
+    const traceQ = {
+        x: tiempo, y: Qvals,
+        type: 'scatter', mode: 'lines',
+        name: 'Q (kW)',
+        line: { color: '#e8750a', width: 2, dash: 'dash' },
+        yaxis: 'y2'
+    };
+    
+    const layout = {
+        ...plotlyLayout,
+        yaxis: { ...plotlyLayout.yaxis, title: 'U (W/m²·°C)', side: 'left' },
+        yaxis2: { title: 'Q (kW)', side: 'right', overlaying: 'y' },
+        legend: { orientation: 'h', y: -0.25 }
+    };
+    
+    Plotly.newPlot('graficaUyQ', [traceU, traceQ], layout, {responsive: true});
+}
+
+/**
+ * Renderizar tabla de descargas
+ */
+function renderizarTabla(data) {
+    const descargas = data.descargas;
+    const tbody = document.getElementById('tbodyDescargas');
+    
+    let html = '';
+    descargas.forEach(d => {
+        const badgeClass = d.estado === 'OK' ? 'bg-success' : 
+                          (d.estado === 'Marginal' ? 'bg-warning text-dark' : 'bg-danger');
+        
+        html += `<tr>
+            <td class="fw-bold">${d.descarga}</td>
+            <td>${d.t_inicio_h.toFixed(2)}</td>
+            <td>${d.t_fin_h.toFixed(2)}</td>
+            <td>${d.T_inicio.toFixed(1)}</td>
+            <td>${d.T_fin.toFixed(1)}</td>
+            <td>${d.m_inicio_ton.toFixed(1)}</td>
+            <td>${d.m_fin_ton.toFixed(1)}</td>
+            <td class="fw-semibold">${d.masa_descargada_ton.toFixed(1)}</td>
+            <td>${d.U_prom.toFixed(1)}</td>
+            <td><span class="badge ${badgeClass}">${d.estado}</span></td>
+        </tr>`;
+    });
+    
+    tbody.innerHTML = html;
+}
+
+/**
+ * Exportar CSV
+ */
+function exportarCSV() {
+    if (!estadoSim.datos) return;
+    
+    const descargas = estadoSim.datos.descargas;
+    const metricas = estadoSim.datos.metricas;
+    
+    let csv = 'Descarga,T_inicio_h,T_fin_h,T_inicial_C,T_final_C,Masa_inicio_ton,Masa_fin_ton,Descargada_ton,U_prom,Estado\n';
+    descargas.forEach(d => {
+        csv += `${d.descarga},${d.t_inicio_h},${d.t_fin_h},${d.T_inicio},${d.T_fin},${d.m_inicio_ton},${d.m_fin_ton},${d.masa_descargada_ton},${d.U_prom},${d.estado}\n`;
+    });
+    
+    csv += `\nResumen del Ciclo\n`;
+    csv += `Tiempo calentamiento inicial (h),${metricas.tiempo_calentamiento_inicial_h}\n`;
+    csv += `Tiempo total (h),${metricas.tiempo_total_h}\n`;
+    csv += `Temperatura final (°C),${metricas.T_final}\n`;
+    csv += `Masa total descargada (ton),${metricas.masa_total_descargada_ton}\n`;
+    csv += `Descargas OK,${metricas.descargas_ok}/${metricas.descargas_totales}\n`;
+    csv += `T mínima en ciclo (°C),${metricas.T_min_ciclo}\n`;
+    csv += `T promedio ciclo (°C),${metricas.T_promedio_ciclo}\n`;
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `simulacion_ciclo_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+/**
+ * Mostrar/ocultar spinner
+ */
+function mostrarSpinner(mostrar) {
+    document.getElementById('spinnerSim').classList.toggle('d-none', !mostrar);
 }

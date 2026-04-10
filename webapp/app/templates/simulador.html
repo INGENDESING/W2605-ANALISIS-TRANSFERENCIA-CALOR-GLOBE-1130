@@ -1,250 +1,254 @@
 {% extends "base.html" %}
-
-{% block title %}Simulador - P2611{% endblock %}
+{% block title %}Simulador de Ciclo — P2611{% endblock %}
 
 {% block content %}
-<!-- Header -->
-<div class="row mb-4">
-    <div class="col-12">
-        <h2 class="mb-0">
-            <i class="bi bi-graph-up-arrow me-2 text-success"></i>
-            Simulador de Ciclo de Descargas
-        </h2>
-        <p class="text-muted">Simule la operación de carga/descarga de carrotanques con área fija de 13 m²</p>
+<!-- Cabecera -->
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+    <div>
+        <h4 class="mb-0" style="color:var(--color-dml);font-weight:700;">
+            <i class="bi bi-graph-up-arrow me-2" style="color:var(--color-ingredion);"></i>Simulador de Ciclo Completo
+        </h4>
+        <small class="text-muted">Calentamiento inicial + ciclo de descargas (24h)</small>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-sm btn-outline-primary" id="btnEsc2">
+            <i class="bi bi-lightning me-1"></i>Esc. 2 (65°C)
+        </button>
+        <button class="btn btn-sm btn-outline-warning" id="btnEsc3">
+            <i class="bi bi-lightning-fill me-1"></i>Esc. 3 (75°C)
+        </button>
+        <button class="btn btn-sm btn-success" id="btnSimular">
+            <i class="bi bi-play-fill me-1"></i>Simular
+        </button>
     </div>
 </div>
 
-<!-- Contenido Principal -->
 <div class="row g-4">
-    <!-- Panel de Inputs -->
+    <!-- Panel izquierdo: Configuración -->
     <div class="col-lg-3">
-        <div class="card shadow-sm">
-            <div class="card-header bg-success text-white">
-                <h5 class="mb-0">
-                    <i class="bi bi-sliders me-2"></i>Configuración
-                </h5>
+        <!-- Calentamiento Inicial -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-thermometer-sun me-1" style="color:var(--color-calentamiento);"></i>CALENTAMIENTO INICIAL
+                </div>
             </div>
             <div class="card-body">
-                <form id="simuladorForm">
-                    <!-- Escenario Predefinido -->
-                    <div class="mb-3">
-                        <label class="form-label">Escenario Rápido</label>
-                        <div class="d-grid gap-2">
-                            <button type="button" class="btn btn-outline-primary btn-sm" onclick="cargarEscenarioSim(2)">
-                                Esc. 2: Agua 65°C
-                            </button>
-                            <button type="button" class="btn btn-outline-warning btn-sm" onclick="cargarEscenarioSim(3)">
-                                Esc. 3: Agua 75°C
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <hr>
-                    
-                    <!-- Temperatura Agua -->
-                    <div class="mb-3">
-                        <label for="tempAguaSim" class="form-label">
-                            Temp. Agua <span class="text-muted">(°C)</span>
-                        </label>
-                        <input type="number" class="form-control" id="tempAguaSim" value="65" min="50" max="90">
-                    </div>
-                    
-                    <!-- Temperatura Inicial Glucosa -->
-                    <div class="mb-3">
-                        <label for="tempInicialSim" class="form-label">
-                            Temp. Inicial <span class="text-muted">(°C)</span>
-                        </label>
-                        <input type="number" class="form-control" id="tempInicialSim" value="57" min="20" max="60">
-                    </div>
-                    
-                    <!-- Número de Descargas -->
-                    <div class="mb-3">
-                        <label for="numDescargas" class="form-label">
-                            # Descargas
-                        </label>
-                        <input type="number" class="form-control" id="numDescargas" value="8" min="1" max="20">
-                    </div>
-                    
-                    <!-- Masa por Descarga -->
-                    <div class="mb-3">
-                        <label for="masaDescarga" class="form-label">
-                            Masa/Descarga <span class="text-muted">(ton)</span>
-                        </label>
-                        <input type="number" class="form-control" id="masaDescarga" value="24" min="10" max="50">
-                    </div>
-                    
-                    <!-- Tiempo Descarga -->
-                    <div class="mb-3">
-                        <label for="tiempoDescarga" class="form-label">
-                            Tiempo Descarga <span class="text-muted">(h)</span>
-                        </label>
-                        <input type="number" class="form-control" id="tiempoDescarga" value="1.5" min="0.5" max="5" step="0.5">
-                    </div>
-                    
-                    <!-- Nivel Inicial -->
-                    <div class="mb-3">
-                        <label for="nivelInicial" class="form-label">
-                            Nivel Inicial <span class="text-muted">(%)</span>
-                        </label>
-                        <input type="range" class="form-range" id="nivelInicial" value="80" min="20" max="100">
-                        <div class="text-center">
-                            <span class="badge bg-secondary" id="nivelInicialValor">80%</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Botones -->
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-play-fill me-1"></i>Simular
-                        </button>
-                        <button type="button" class="btn btn-outline-primary" id="btnComparar">
-                            <i class="bi bi-bar-chart-line me-1"></i>Comparar Escenarios
-                        </button>
-                    </div>
-                </form>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">T inicial glucosa [°C]</label>
+                    <input type="number" class="form-control form-control-sm" id="TInicial" value="20" min="10" max="50">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">T objetivo descarga [°C]</label>
+                    <input type="number" class="form-control form-control-sm" id="TObjetivo" value="57" min="40" max="65">
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="saltarCalentamiento">
+                    <label class="form-check-label small" for="saltarCalentamiento">
+                        Pre-calentado (omitir fase)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Condiciones Chaqueta -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-droplet-fill me-1" style="color:var(--color-calentamiento);"></i>CHAQUETA
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label small text-muted">T agua [°C]</label>
+                    <input type="number" class="form-control form-control-sm" id="TAgua" value="65" min="50" max="90">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Velocidad agua [m/s]</label>
+                    <input type="number" class="form-control form-control-sm" id="VAgua" value="2.5" min="0.5" max="4" step="0.1">
+                    <div class="form-text" style="font-size:0.65rem;">~57.7 m³/h en media caña</div>
+                </div>
+                <div class="mb-0">
+                    <label class="form-label small text-muted">Área contacto [m²]</label>
+                    <input type="number" class="form-control form-control-sm" id="Area" value="13.0" min="5" max="50" step="0.5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Ciclo de Descargas -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-truck me-1" style="color:var(--color-descarga);"></i>CICLO DE DESCARGAS
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Número de descargas</label>
+                    <input type="number" class="form-control form-control-sm" id="NumDescargas" value="8" min="1" max="15">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Masa por descarga [ton]</label>
+                    <input type="number" class="form-control form-control-sm" id="MasaDescarga" value="24" min="5" max="50">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Tiempo descarga [h]</label>
+                    <input type="number" class="form-control form-control-sm" id="TiempoDescarga" value="1.5" min="0.5" max="5" step="0.5">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Período entre inicios [h]</label>
+                    <input type="number" class="form-control form-control-sm" id="Periodo" value="3.0" min="1" max="8" step="0.5">
+                    <div class="form-text" style="font-size:0.65rem;">Tiempo entre descargas = 1.5h</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">T mínima aceptable [°C]</label>
+                    <input type="number" class="form-control form-control-sm" id="TMinima" value="55" min="45" max="60">
+                </div>
+                <div class="mb-0">
+                    <label class="form-label small text-muted">Nivel inicial [%]</label>
+                    <input type="number" class="form-control form-control-sm" id="NivelInicial" value="80" min="20" max="100">
+                </div>
+            </div>
+        </div>
+
+        <!-- Opciones Avanzadas -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-gear me-1"></i>AVANZADO
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <label class="form-label small text-muted">Resolución ODE</label>
+                    <select class="form-select form-select-sm" id="Resolucion">
+                        <option value="60">Baja (dt=60s)</option>
+                        <option value="30" selected>Media (dt=30s)</option>
+                        <option value="10">Alta (dt=10s)</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
-    
-    <!-- Panel de Resultados -->
+
+    <!-- Panel derecho: Resultados -->
     <div class="col-lg-9">
-        <!-- KPI Cards -->
-        <div class="row g-3 mb-4" id="resultadosSimCards" style="display: none;">
+        <!-- KPI Cards de resumen -->
+        <div class="row g-3 mb-3" id="kpiResumen" style="display:none;">
             <div class="col-md-3">
-                <div class="card bg-primary text-white shadow-sm">
-                    <div class="card-body text-center">
-                        <h6 class="card-title">Capacidad Diaria</h6>
-                        <p class="display-6 mb-0" id="kpiCapacidad">-</p>
-                        <small>ton/día</small>
-                    </div>
+                <div class="kpi-card-new text-center">
+                    <div class="text-muted small mb-1">Tiempo Calentamiento</div>
+                    <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resTiempoCal">—</div>
+                    <div class="text-muted small">horas</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card bg-success text-white shadow-sm">
-                    <div class="card-body text-center">
-                        <h6 class="card-title">Descargas/Día</h6>
-                        <p class="display-6 mb-0" id="kpiDescargasDia">-</p>
-                        <small>carrotanques</small>
-                    </div>
+                <div class="kpi-card-new text-center">
+                    <div class="text-muted small mb-1">Masa Total Descargada</div>
+                    <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resMasaTotal">—</div>
+                    <div class="text-muted small">toneladas</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card bg-info text-white shadow-sm">
-                    <div class="card-body text-center">
-                        <h6 class="card-title">Flujo Máximo</h6>
-                        <p class="display-6 mb-0" id="kpiFlujo">-</p>
-                        <small>ton/h</small>
-                    </div>
+                <div class="kpi-card-new text-center">
+                    <div class="text-muted small mb-1">Descargas Exitosas</div>
+                    <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resDescargasOk">—</div>
+                    <div class="text-muted small">de <span id="resTotalDesc">—</span></div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card bg-warning text-dark shadow-sm">
-                    <div class="card-body text-center">
-                        <h6 class="card-title">Temp. Final</h6>
-                        <p class="display-6 mb-0" id="kpiTempFinal">-</p>
-                        <small>°C</small>
-                    </div>
+                <div class="kpi-card-new text-center">
+                    <div class="text-muted small mb-1">T Final del Ciclo</div>
+                    <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resTFinal">—</div>
+                    <div class="text-muted small">°C</div>
                 </div>
             </div>
         </div>
-        
-        <!-- Gráfico Principal -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">
-                    <i class="bi bi-graph-up me-2"></i>Evolución del Ciclo
-                </h5>
-                <div class="btn-group btn-group-sm">
-                    <button class="btn btn-outline-secondary active" id="btnVerTemp" onclick="cambiarVistaGrafico('temp')">Temperatura</button>
-                    <button class="btn btn-outline-secondary" id="btnVerMasa" onclick="cambiarVistaGrafico('masa')">Masa</button>
-                    <button class="btn btn-outline-secondary" id="btnVerU" onclick="cambiarVistaGrafico('U')">Coef. U</button>
+
+        <!-- Gráfica principal: T y Masa vs Tiempo -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-graph-up me-1"></i>TEMPERATURA Y MASA vs TIEMPO
                 </div>
             </div>
             <div class="card-body">
-                <div id="graficoCiclo" style="height: 400px;">
+                <div id="graficaTyM" style="height:320px;">
                     <div class="text-center text-muted py-5">
-                        <i class="bi bi-graph-up fs-1"></i>
-                        <p class="mt-3">Configure parámetros y presione "Simular"</p>
+                        <i class="bi bi-graph-up fs-1 opacity-25"></i>
+                        <p class="mt-2 small">Configure parámetros y presione "Simular"</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Gráfico de Gantt -->
-        <div class="card shadow-sm mb-4" id="cardGantt" style="display: none;">
-            <div class="card-header bg-light">
-                <h5 class="mb-0">
-                    <i class="bi bi-calendar3 me-2"></i>Diagrama de Gantt - Ciclo Operativo
-                </h5>
+
+        <!-- Gráfica Gantt -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-calendar3 me-1"></i>DIAGRAMA DE GANTT
+                </div>
             </div>
             <div class="card-body">
-                <div id="graficoGantt" style="height: 250px;"></div>
+                <div id="graficaGantt" style="height:280px;"></div>
             </div>
         </div>
-        
-        <!-- Tabla de Descargas -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">
-                    <i class="bi bi-table me-2"></i>Detalle de Descargas
-                </h5>
-                <button class="btn btn-sm btn-outline-success" id="btnExportarSim" style="display: none;">
-                    <i class="bi bi-file-excel me-1"></i>Exportar Excel
+
+        <!-- Gráfica U y Q -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-activity me-1"></i>EVOLUCIÓN DE U Y POTENCIA
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="graficaUyQ" style="height:240px;"></div>
+            </div>
+        </div>
+
+        <!-- Tabla de descargas -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-table me-1"></i>DETALLE DE DESCARGAS
+                </div>
+                <button class="btn btn-sm btn-outline-success" id="btnExportar">
+                    <i class="bi bi-download me-1"></i>Exportar CSV
                 </button>
             </div>
-            <div class="card-body">
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-striped table-sm" id="tablaDescargas" style="display: none;">
-                        <thead class="table-dark">
+                    <table class="table table-sm table-striped mb-0" style="font-size:0.8rem;" id="tablaDescargas">
+                        <thead class="table-light">
                             <tr>
                                 <th>#</th>
-                                <th>Inicio (h)</th>
-                                <th>Fin (h)</th>
-                                <th>T Inicial (°C)</th>
-                                <th>T Final (°C)</th>
-                                <th>Masa Inicial (ton)</th>
-                                <th>Masa Final (ton)</th>
-                                <th>Descargada (ton)</th>
+                                <th>Inicio [h]</th>
+                                <th>Fin [h]</th>
+                                <th>T inicial [°C]</th>
+                                <th>T final [°C]</th>
+                                <th>Masa ini [ton]</th>
+                                <th>Masa fin [ton]</th>
+                                <th>Descargada [ton]</th>
+                                <th>U prom [W/m²·°C]</th>
+                                <th>Estado</th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyDescargas"></tbody>
+                        <tbody id="tbodyDescargas">
+                            <tr><td colspan="10" class="text-center text-muted py-3">Sin datos</td></tr>
+                        </tbody>
                     </table>
-                    <div id="mensajeInicialSim" class="text-center text-muted py-4">
-                        Los resultados aparecerán aquí
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal de Comparación -->
-<div class="modal fade" id="modalComparacion" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="bi bi-bar-chart-line me-2"></i>Comparación de Escenarios
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div id="graficoComparacion" style="height: 400px;"></div>
-                <div class="table-responsive mt-3">
-                    <table class="table table-bordered" id="tablaComparacion">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Parámetro</th>
-                                <th class="text-primary">Escenario 2 (65°C)</th>
-                                <th class="text-warning">Escenario 3 (75°C)</th>
-                                <th>Diferencia</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodyComparacion"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<!-- Spinner -->
+<div id="spinnerSim" class="position-fixed top-0 start-0 w-100 h-100 bg-white d-none" style="z-index:9999;opacity:0.9;">
+    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="spinner-border text-primary mb-3" role="status"></div>
+        <p class="text-muted">Simulando ciclo completo...</p>
+        <p class="text-muted small">Esto puede tomar 5-10 segundos</p>
     </div>
 </div>
 {% endblock %}

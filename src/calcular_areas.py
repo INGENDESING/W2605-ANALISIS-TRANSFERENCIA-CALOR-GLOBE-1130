@@ -51,11 +51,12 @@ except ImportError as e:
 # FUNCIONES DE CÁLCULO PRINCIPALES
 # =============================================================================
 
-def Q_por_flujo_masico(m_dot_ton_h, T_frio_in=25.0, T_frio_out=57.0):
+def Q_por_flujo_masico(m_dot_ton_h, T_frio_in=25.0, T_frio_out=57.0, 
+                        incluir_perdidas=False):
     """
     Calcula el calor requerido por unidad de tiempo para un flujo de masa.
     
-    Q_dot = m_dot × Cp_promedio × ΔT_glucosa
+    Q_dot = m_dot × Cp_promedio × ΔT_glucosa + Q_perdidas (opcional)
     
     Parámetros
     ----------
@@ -65,6 +66,9 @@ def Q_por_flujo_masico(m_dot_ton_h, T_frio_in=25.0, T_frio_out=57.0):
         Temperatura de entrada de glucosa [°C], por defecto 25.0
     T_frio_out : float, opcional
         Temperatura de salida de glucosa [°C], por defecto 57.0
+    incluir_perdidas : bool, opcional
+        Si True, incluye pérdidas al ambiente (escenario conservador).
+        Solo aplica para calentamiento de mantenimiento (T cercanas a 57°C).
     
     Retorna
     -------
@@ -77,6 +81,9 @@ def Q_por_flujo_masico(m_dot_ton_h, T_frio_in=25.0, T_frio_out=57.0):
     Delta_T : float
         Diferencia de temperatura de la glucosa [°C]
     """
+    # Importar función de pérdidas
+    from aislamiento import calcular_perdidas_ambiente_mantenimiento
+    
     # Conversión de unidades
     m_dot_kg_s = m_dot_ton_h * 1000.0 / 3600.0  # ton/h → kg/s
     
@@ -87,8 +94,20 @@ def Q_por_flujo_masico(m_dot_ton_h, T_frio_in=25.0, T_frio_out=57.0):
     # Diferencia de temperatura de la glucosa
     Delta_T = T_frio_out - T_frio_in
     
-    # Calor requerido
-    Q_dot = m_dot_kg_s * Cp_prom * Delta_T
+    # Calor requerido para elevar temperatura
+    Q_dot_calentamiento = m_dot_kg_s * Cp_prom * Delta_T
+    
+    # Pérdidas al ambiente (escenario conservador)
+    Q_perdidas = 0.0
+    if incluir_perdidas:
+        # Calcular pérdidas basadas en temperatura promedio
+        Q_perd_total, Q_perd_equiv, _, _ = calcular_perdidas_ambiente_mantenimiento(T_prom)
+        # Las pérdidas se escalan con el flujo (cuanto más glucosa, más pérdidas)
+        # Factor de escala: proporcional a la fracción del tanque
+        Q_perdidas = Q_perd_total
+    
+    # Calor total requerido
+    Q_dot = Q_dot_calentamiento + Q_perdidas
     
     return Q_dot, m_dot_kg_s, Cp_prom, Delta_T
 
@@ -199,15 +218,16 @@ def calcular_U_corregido(v_agua, T_agua_entrada, T_glucosa, usar_temperatura_med
     return U, T_agua_usada, T_pared, h_i, h_o
 
 
-def calcular_area_necesaria(m_dot_ton_h, v_agua=2.5, T_agua_entrada=75.0, T_frio_in=25.0, T_frio_out=57.0):
+def calcular_area_necesaria(m_dot_ton_h, v_agua=2.5, T_agua_entrada=75.0, 
+                             T_frio_in=25.0, T_frio_out=57.0, incluir_perdidas=False):
     """
     Calcula el área de transferencia necesaria para un flujo de masa específico.
     Versión corregida que considera variación real de U con temperatura.
     
     Algoritmo corregido:
-    1. Calcular Q_dot requerido
+    1. Calcular Q_dot requerido (incluye pérdidas si aplica)
     2. Estimar caudal de agua inicial (suponer ΔT_agua ≈ 5°C)
-    3. Para cada T_g en [25, 57°C]:
+    3. Para cada T_g en rango:
         a. Calcular U(T_g) con función corregida (incluye caída de T_agua)
         b. Almacenar 1/U(T_g) para promediado de resistencias
     4. U_prom = 1 / mean(1/U(T_g))  # Promedio de resistencias, NO de U
@@ -225,6 +245,8 @@ def calcular_area_necesaria(m_dot_ton_h, v_agua=2.5, T_agua_entrada=75.0, T_frio
         Temperatura de entrada de glucosa [°C], por defecto 25.0
     T_frio_out : float, opcional
         Temperatura de salida de glucosa [°C], por defecto 57.0
+    incluir_perdidas : bool, opcional
+        Si True, incluye pérdidas al ambiente (escenario conservador 54→57°C)
     
     Retorna
     -------
@@ -234,8 +256,12 @@ def calcular_area_necesaria(m_dot_ton_h, v_agua=2.5, T_agua_entrada=75.0, T_frio
         Diccionario con valores intermedios del cálculo
     """
     # Paso 1: Calor requerido (parametrizado para cualquier rango de T)
+    # Si es escenario de mantenimiento (54→57°C), incluir pérdidas
+    if T_frio_in >= 54.0 and T_frio_out == 57.0:
+        incluir_perdidas = True
+    
     Q_dot, m_dot_kg_s, Cp_prom, Delta_T = Q_por_flujo_masico(
-        m_dot_ton_h, T_frio_in, T_frio_out
+        m_dot_ton_h, T_frio_in, T_frio_out, incluir_perdidas
     )
     
     # Paso 2: Estimar caída de temperatura del agua
@@ -423,7 +449,7 @@ def configurar_estilo_graficos():
     })
 
 
-def graficar_areas(df, figures_dir='../figures'):
+def graficar_areas(df, figures_dir='../results/figures'):
     """
     Genera gráficos de validación: Área vs Flujo, U_prom vs Flujo, Q_dot vs Flujo.
     
@@ -432,7 +458,7 @@ def graficar_areas(df, figures_dir='../figures'):
     df : pandas.DataFrame
         DataFrame con los resultados
     figures_dir : str, opcional
-        Directorio para guardar figuras, por defecto '../figures'
+        Directorio para guardar figuras, por defecto '../results/figures'
     """
     if df.empty:
         print("ERROR: DataFrame vacío, no se pueden generar gráficos")
@@ -601,7 +627,7 @@ def diagnostico_U():
     print()
 
 
-def graficar_U_vs_T(figures_dir='../figures'):
+def graficar_U_vs_T(figures_dir='../results/figures'):
     """
     Genera gráfico de U vs T_glucosa (curva completa 25-57°C).
     Muestra la no-linealidad debida a la viscosidad dependiente de T.
@@ -637,19 +663,25 @@ def graficar_U_vs_T(figures_dir='../figures'):
     ax1.axvline(x=57, color='red', linestyle='--', alpha=0.7, label='$T_{g}=57$°C')
     ax1.axhspan(23, 37, alpha=0.1, color='green')
     
-    # Anotar valores clave
-    for T_mark in [25, 40, 55, 57]:
+    # Anotar valores clave - posiciones ajustadas para evitar superposicion
+    anotaciones = [
+        (25, -12, -1.5),   # T=25: izquierda y abajo
+        (40, -10, 2.0),    # T=40: izquierda y arriba
+        (55, -12, 1.0),    # T=55: izquierda y arriba
+        (57, 2, 4.5)       # T=57: derecha y más arriba
+    ]
+    for T_mark, x_off, y_off in anotaciones:
         idx = np.argmin(np.abs(T_range - T_mark))
         U_mark = U_values[idx]
         ax1.annotate(f'U({T_mark}°C) = {U_mark:.1f}',
-                    xy=(T_mark, U_mark), xytext=(T_mark-8, U_mark+2),
-                    fontsize=9, arrowprops=dict(arrowstyle='->', color='gray'),
+                    xy=(T_mark, U_mark), xytext=(x_off, y_off),
+                    textcoords='offset points', fontsize=9,
+                    arrowprops=dict(arrowstyle='->', color='gray'),
                     bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
     
     ax1.set_xlabel('Temperatura de la glucosa, $T_g$ [°C]', fontsize=12)
     ax1.set_ylabel('Coeficiente global $U$ [W/m²·°C]', fontsize=12)
-    ax1.set_title('Variación del coeficiente global U con la temperatura de la glucosa\n'
-                  '(Agua a 75°C, v = 2.5 m/s, Churchill-Chu + Sieder-Tate)', fontsize=13, fontweight='bold')
+    ax1.set_title('Coeficiente global $U$ vs temperatura de glucosa', fontsize=13, fontweight='bold')
     ax1.grid(True, alpha=0.3, linestyle='--')
     ax1.legend(loc='lower right', fontsize=10)
     ax1.set_xlim(24, 61)
@@ -659,9 +691,7 @@ def graficar_U_vs_T(figures_dir='../figures'):
     ax2.semilogy(T_range, h_o_values, 'b-', linewidth=2, label='$h_o$ (glucosa, Churchill-Chu)')
     ax2.set_xlabel('Temperatura de la glucosa, $T_g$ [°C]', fontsize=12)
     ax2.set_ylabel('Coeficiente convectivo $h$ [W/m²·°C]', fontsize=12)
-    ax2.set_title('Coeficientes convectivos individuales vs temperatura\n'
-                  '$h_o \\ll h_i$ confirma dominancia de la resistencia de la glucosa', 
-                  fontsize=13, fontweight='bold')
+    ax2.set_title('Coeficientes convectivos individuales ($h_o \\ll h_i$)', fontsize=13, fontweight='bold')
     ax2.grid(True, alpha=0.3, linestyle='--')
     ax2.legend(loc='center right', fontsize=10)
     ax2.set_xlim(24, 61)
@@ -674,7 +704,7 @@ def graficar_U_vs_T(figures_dir='../figures'):
     print(f"✓ Gráfico U vs T guardado en: {fig_path}")
 
 
-def escenario_55_57(figures_dir='../figures', results_dir='../results'):
+def escenario_55_57(figures_dir='../results/figures', results_dir='../results'):
     """
     Escenario nuevo: Glucosa 55°C → 57°C (ΔT = 2°C).
     

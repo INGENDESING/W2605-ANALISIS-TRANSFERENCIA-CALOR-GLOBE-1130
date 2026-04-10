@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% block title %}Propiedades Termofísicas — P2611{% endblock %}
+
+{% block content %}
+<!-- Cabecera -->
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+    <div>
+        <h4 class="mb-0" style="color:var(--color-dml);font-weight:700;">
+            <i class="bi bi-table me-2" style="color:var(--color-ingredion);"></i>Propiedades Termofísicas
+        </h4>
+        <small class="text-muted">Glucosa Globe 1130 (85 Brix) - Funciones de temperatura</small>
+    </div>
+    <button class="btn btn-sm btn-outline-success" id="btnExportarProps">
+        <i class="bi bi-download me-1"></i>Exportar CSV
+    </button>
+</div>
+
+<div class="row g-4">
+    <!-- Panel izquierdo: Configuración -->
+    <div class="col-lg-3">
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-gear me-1"></i>RANGO DE TEMPERATURA
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label small text-muted">T mínima [°C]</label>
+                    <input type="number" class="form-control form-control-sm" id="tempMin" value="20" min="10" max="80">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">T máxima [°C]</label>
+                    <input type="number" class="form-control form-control-sm" id="tempMax" value="70" min="20" max="90">
+                </div>
+                <div class="mb-0">
+                    <label class="form-label small text-muted">Paso [°C]</label>
+                    <select class="form-select form-select-sm" id="tempPaso">
+                        <option value="1">1 °C</option>
+                        <option value="2">2 °C</option>
+                        <option value="5" selected>5 °C</option>
+                        <option value="10">10 °C</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary w-100" id="btnActualizarProps">
+            <i class="bi bi-arrow-clockwise me-1"></i>Actualizar Tabla
+        </button>
+
+        <!-- Info -->
+        <div class="alert alert-light border mt-3" style="font-size:0.8rem;">
+            <div class="fw-semibold mb-1">Correlaciones utilizadas:</div>
+            <div class="text-muted">
+                <div><strong>ρ:</strong> Polinomio 3° orden</div>
+                <div><strong>μ:</strong> Arrhenius modificada</div>
+                <div><strong>Cp:</strong> Lineal con T</div>
+                <div><strong>k:</strong> Constante ~0.35</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel derecho: Gráficas y tabla -->
+    <div class="col-lg-9">
+        <!-- Gráficas de propiedades -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-2">
+                        <div class="fw-semibold text-muted small">Densidad ρ [kg/m³]</div>
+                    </div>
+                    <div class="card-body">
+                        <div id="graficaRho" style="height:200px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-2">
+                        <div class="fw-semibold text-muted small">Viscosidad μ [cP] - escala log</div>
+                    </div>
+                    <div class="card-body">
+                        <div id="graficaMu" style="height:200px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-2">
+                        <div class="fw-semibold text-muted small">Calor específico Cp [J/kg·K]</div>
+                    </div>
+                    <div class="card-body">
+                        <div id="graficaCp" style="height:200px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-2">
+                        <div class="fw-semibold text-muted small">Conductividad k [W/m·K]</div>
+                    </div>
+                    <div class="card-body">
+                        <div id="graficaK" style="height:200px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cursor interactivo -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-cursor me-1"></i>VALORES A TEMPERATURA ESPECÍFICA
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <label class="form-label small text-muted">Temperatura seleccionada</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="tempCursor" value="40" min="20" max="70">
+                            <span class="input-group-text">°C</span>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row g-2 text-center" id="valoresCursor">
+                            <div class="col">
+                                <div class="p-2 bg-light rounded">
+                                    <div class="text-muted small">ρ</div>
+                                    <div class="fw-bold fs-5" style="color:var(--color-dml);" id="valRho">—</div>
+                                    <div class="text-muted" style="font-size:0.7rem;">kg/m³</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-2 bg-light rounded">
+                                    <div class="text-muted small">μ</div>
+                                    <div class="fw-bold fs-5" style="color:var(--color-dml);" id="valMu">—</div>
+                                    <div class="text-muted" style="font-size:0.7rem;">Pa·s</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-2 bg-light rounded">
+                                    <div class="text-muted small">Cp</div>
+                                    <div class="fw-bold fs-5" style="color:var(--color-dml);" id="valCp">—</div>
+                                    <div class="text-muted" style="font-size:0.7rem;">J/kg·K</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-2 bg-light rounded">
+                                    <div class="text-muted small">k</div>
+                                    <div class="fw-bold fs-5" style="color:var(--color-dml);" id="valK">—</div>
+                                    <div class="text-muted" style="font-size:0.7rem;">W/m·K</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-2 bg-light rounded">
+                                    <div class="text-muted small">Pr</div>
+                                    <div class="fw-bold fs-5" style="color:var(--color-dml);" id="valPr">—</div>
+                                    <div class="text-muted" style="font-size:0.7rem;">—</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de propiedades -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">TABLA DE PROPIEDADES</div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped mb-0" style="font-size:0.8rem;" id="tablaPropiedades">
+                        <thead class="table-light">
+                            <tr>
+                                <th>T [°C]</th>
+                                <th>ρ [kg/m³]</th>
+                                <th>μ [Pa·s]</th>
+                                <th>μ [cP]</th>
+                                <th>Cp [J/kg·K]</th>
+                                <th>k [W/m·K]</th>
+                                <th>Pr [-]</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyPropiedades">
+                            <tr><td colspan="7" class="text-center text-muted py-3">Cargue la tabla para ver los datos</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/propiedades.js') }}"></script>
+{% endblock %}

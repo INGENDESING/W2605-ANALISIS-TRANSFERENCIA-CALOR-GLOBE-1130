@@ -199,7 +199,7 @@ def simular_descarga_esc1(T_g0, m_g0, T_agua_in, v_agua, t_descarga_h=1.5,
     return sol.t / 3600.0, sol.y[0], sol.y[1]
 
 
-def escenario_1(figures_dir='../figures'):
+def escenario_1(figures_dir='../results/figures'):
     """Ejecuta el Escenario 1 y genera gráficas.
 
     T_agua = 65°C (confirmado por el usuario).
@@ -317,7 +317,7 @@ def escenario_1(figures_dir='../figures'):
 # ESCENARIO 2: Agua a 65°C, tanque al 80%, v = 2.5 m/s
 # =============================================================================
 
-def escenario_2(figures_dir='../figures'):
+def escenario_2(figures_dir='../results/figures'):
     """Ejecuta el Escenario 2."""
     print("\n" + "=" * 75)
     print("ESCENARIO 2: Agua a 65°C, tanque al 80%, v = 2.5 m/s")
@@ -377,7 +377,7 @@ def escenario_2(figures_dir='../figures'):
 # ESCENARIO 3: Agua a 75°C, tanque al 80%, v = 2.5 m/s
 # =============================================================================
 
-def escenario_3(figures_dir='../figures'):
+def escenario_3(figures_dir='../results/figures'):
     """Ejecuta el Escenario 3."""
     print("\n" + "=" * 75)
     print("ESCENARIO 3: Agua a 75°C, tanque al 80%, v = 2.5 m/s")
@@ -430,7 +430,7 @@ def escenario_3(figures_dir='../figures'):
 # GRÁFICA COMPARATIVA
 # =============================================================================
 
-def grafica_comparativa(t2, Tg2, t3, Tg3, figures_dir='../figures'):
+def grafica_comparativa(t2, Tg2, t3, Tg3, figures_dir='../results/figures'):
     """Gráfica comparativa Escenario 2 vs 3."""
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(t2, Tg2, 'b-', linewidth=2, label='Escenario 2: agua a 65 °C')
@@ -438,7 +438,7 @@ def grafica_comparativa(t2, Tg2, t3, Tg3, figures_dir='../figures'):
     ax.axhline(y=60, color='gray', linestyle='--', alpha=0.7, label='T descarga = 60 °C')
     ax.set_xlabel('Tiempo [h]')
     ax.set_ylabel('Temperatura de la glucosa [°C]')
-    ax.set_title('Comparacion de escenarios de calentamiento (tanque al 80%, v = 2.5 m/s)')
+    ax.set_title('Comparación de escenarios de calentamiento (tanque al 80%, v = 2.5 m/s)')
     ax.legend()
     ax.grid(True, alpha=0.3)
     plt.savefig(f'{figures_dir}/comparacion_escenarios_2_3.pdf')
@@ -452,7 +452,7 @@ def grafica_comparativa(t2, Tg2, t3, Tg3, figures_dir='../figures'):
 
 if __name__ == "__main__":
     import os
-    figures_dir = os.path.join(os.path.dirname(__file__), '..', 'figures')
+    figures_dir = os.path.join(os.path.dirname(__file__), '..', 'results', 'figures')
     os.makedirs(figures_dir, exist_ok=True)
 
     t1, Tg1, U1, t1d, Tg1d, m1d = escenario_1(figures_dir)

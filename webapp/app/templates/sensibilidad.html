@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block title %}Análisis de Sensibilidad — P2611{% endblock %}
+
+{% block content %}
+<!-- Cabecera -->
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+    <div>
+        <h4 class="mb-0" style="color:var(--color-dml);font-weight:700;">
+            <i class="bi bi-sliders me-2" style="color:var(--color-ingredion);"></i>Análisis de Sensibilidad
+        </h4>
+        <small class="text-muted">Análisis univariable: impacto de cada parámetro en los KPIs</small>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Panel izquierdo: Configuración -->
+    <div class="col-lg-3">
+        <!-- Variable a analizar -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-arrow-left-right me-1"></i>VARIABLE DE ANÁLISIS
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Variable</label>
+                    <select class="form-select form-select-sm" id="selectVariable">
+                        <option value="T_agua">Temperatura agua [°C]</option>
+                        <option value="velocidad_m_s">Velocidad agua [m/s]</option>
+                        <option value="area_m2">Área de contacto [m²]</option>
+                        <option value="T_glucosa_inicial">T inicial glucosa [°C]</option>
+                        <option value="nivel_pct">Nivel inicial [%]</option>
+                        <option value="num_descargas">Número de descargas</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Rango mínimo</label>
+                    <input type="number" class="form-control form-control-sm" id="rangoMin" value="50">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Rango máximo</label>
+                    <input type="number" class="form-control form-control-sm" id="rangoMax" value="90">
+                </div>
+                <div class="mb-0">
+                    <label class="form-label small text-muted">Paso</label>
+                    <input type="number" class="form-control form-control-sm" id="rangoPaso" value="5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Parámetros fijos -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <div class="fw-semibold text-muted small">
+                    <i class="bi bi-pin-angle me-1"></i>PARÁMETROS FIJOS
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <label class="form-label small text-muted">T agua [°C]</label>
+                    <input type="number" class="form-control form-control-sm param-fijo" id="fijoTAgua" value="65">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small text-muted">Velocidad [m/s]</label>
+                    <input type="number" class="form-control form-control-sm param-fijo" id="fijoV" value="2.5" step="0.1">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small text-muted">T inicial glucosa [°C]</label>
+                    <input type="number" class="form-control form-control-sm param-fijo" id="fijoTIni" value="20">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small text-muted">T objetivo [°C]</label>
+                    <input type="number" class="form-control form-control-sm param-fijo" id="fijoTObj" value="57">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small text-muted">Nivel [%]</label>
+                    <input type="number" class="form-control form-control-sm param-fijo" id="fijoNivel" value="80">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small text-muted">Área [m²]</label>
+                    <input type="number" class="form-control form-control-sm param-fijo" id="fijoArea" value="13">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small text-muted"># Descargas</label>
+                    <input type="number" class="form-control form-control-sm param-fijo" id="fijoNumDesc" value="8">
+                </div>
+                <div class="mb-0">
+                    <label class="form-label small text-muted">Masa/descarga [ton]</label>
+                    <input type="number" class="form-control form-control-sm param-fijo" id="fijoMasa" value="24">
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón calcular -->
+        <button class="btn btn-primary w-100" id="btnCalcularSensibilidad">
+            <i class="bi bi-calculator me-1"></i>Calcular Sensibilidad
+        </button>
+    </div>
+
+    <!-- Panel derecho: Resultados -->
+    <div class="col-lg-9">
+        <!-- Estado inicial -->
+        <div id="estadoInicial" class="text-center text-muted py-5">
+            <i class="bi bi-sliders fs-1 opacity-25"></i>
+            <p class="mt-3">Seleccione la variable de análisis y presione "Calcular Sensibilidad"</p>
+            <p class="small">El análisis puede tomar 10-30 segundos dependiendo del rango</p>
+        </div>
+
+        <!-- Gráficas (ocultas inicialmente) -->
+        <div id="resultadosSensibilidad" style="display:none;">
+            <!-- U vs Variable -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-white py-2">
+                    <div class="fw-semibold text-muted small">Coeficiente U vs Variable</div>
+                </div>
+                <div class="card-body">
+                    <div id="graficaU" style="height:250px;"></div>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <!-- Tiempo calentamiento -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-white py-2">
+                            <div class="fw-semibold text-muted small">Tiempo de Calentamiento</div>
+                        </div>
+                        <div class="card-body">
+                            <div id="graficaTiempo" style="height:220px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Capacidad diaria -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-white py-2">
+                            <div class="fw-semibold text-muted small">Capacidad Diaria</div>
+                        </div>
+                        <div class="card-body">
+                            <div id="graficaCapacidad" style="height:220px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- T final -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-white py-2">
+                    <div class="fw-semibold text-muted small">Temperatura Final del Ciclo</div>
+                </div>
+                <div class="card-body">
+                    <div id="graficaTFinal" style="height:220px;"></div>
+                </div>
+            </div>
+
+            <!-- Tabla de resultados -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                    <div class="fw-semibold text-muted small">Tabla de Resultados</div>
+                    <button class="btn btn-sm btn-outline-success" id="btnExportarSens">
+                        <i class="bi bi-download me-1"></i>Exportar
+                    </button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped mb-0" style="font-size:0.8rem;" id="tablaSensibilidad">
+                            <thead class="table-light">
+                                <tr>
+                                    <th id="thVariable">Variable</th>
+                                    <th>U [W/m²·°C]</th>
+                                    <th>Tiempo calent. [h]</th>
+                                    <th>Capacidad [ton/día]</th>
+                                    <th>T final [°C]</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodySensibilidad"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Spinner -->
+<div id="spinnerSens" class="position-fixed top-0 start-0 w-100 h-100 bg-white d-none" style="z-index:9999;opacity:0.9;">
+    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="spinner-border text-primary mb-3" role="status"></div>
+        <p class="text-muted">Calculando análisis de sensibilidad...</p>
+        <div class="progress w-50 mt-2" style="height: 4px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" id="progressSens" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/sensibilidad.js') }}"></script>
+{% endblock %}

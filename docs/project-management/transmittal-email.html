@@ -75,15 +75,20 @@
             vertical-align: top;
         }
         .finding-cell {
-            background-color: #3e2b2b; /* Dark red tint */
+            background-color: #3e2b2b;
             border-left: 4px solid #f1707b;
         }
         .solution-cell {
-            background-color: #2b3e2b; /* Dark green tint */
+            background-color: #2b3e2b;
             border-left: 4px solid #6bbd6b;
         }
         .finding-cell strong { color: #f1707b; }
         .solution-cell strong { color: #6bbd6b; }
+        .optional-cell {
+            background-color: #3b3b1f;
+            border-left: 4px solid #ffc107;
+        }
+        .optional-cell strong { color: #ffc107; }
 
         .footer {
             background-color: #252525;
@@ -104,6 +109,14 @@
         }
         .badge-warning { background-color: #614a19; color: #ffb900; }
         .badge-success { background-color: #107c10; color: #ffffff; }
+        .badge-info { background-color: #0e4a7a; color: #4cc2ff; }
+        .highlight-box {
+            background-color: #2b3a4a;
+            border-left: 4px solid #4cc2ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
     </style>
 </head>
 <body>
@@ -113,13 +126,14 @@
         </div>
         <div class="content">
             <p style="font-size: 16px;">Estimados <strong>Herminsul Rosero</strong> y <strong>Wilson Camelo</strong>,</p>
-            <p>Se hace entrega formal del informe técnico final correspondiente al análisis de integridad y optimización térmica del tanque <strong>Globe 1130</strong>.</p>
+            <p>Se hace entrega formal del informe técnico final correspondiente a la evaluación de validación y verificación del diseño del sistema de calentamiento y fondo toriesférico del tanque <strong>Tag 53A-90A-0056</strong>.</p>
             
             <div class="doc-info">
                 <p><strong>Documento:</strong> P2611-PR-INF-001 REV0</p>
-                <p><strong>Proyecto:</strong> Optimización Térmica e Integridad Estructural - Tanque Glucosa</p>
+                <p><strong>Proyecto:</strong> Análisis Térmico y Estructural - Tanque Glucosa Tag 53A-90A-0056</p>
                 <p><strong>Cliente:</strong> Ingredion S.A.</p>
-                <p><strong>Fecha:</strong> 06 de abril de 2026</p>
+                <p><strong>Fecha:</strong> 08 de abril de 2026</p>
+                <p><strong>Área de Transferencia:</strong> 13 m² (media caña fondo) + Opcional 40-80 m² (cilindro)</p>
             </div>
 
             <h3 style="color: #4cc2ff; margin-bottom: 10px;">Matriz Crítica de Hallazgos y Soluciones</h3>
@@ -136,29 +150,49 @@
                             <strong>Subesfuerzo Estructural:</strong> Nudillo fondo-cilindro con <span class="badge badge-warning">FS = 0.71</span> bajo carga hidrostática al 100%.
                         </td>
                         <td class="solution-cell">
-                            <strong>Restricción Operativa:</strong> Limitar llenado al <strong>90% (200.5 m³)</strong> y ejecutar refuerzos con anillos de rigidización.
+                            <strong>Restricción Operativa Mandatoria:</strong> Limitar llenado al <strong>90% (200.5 m³)</strong>. Evaluar refuerzos con anillos de rigidización en zona del nudillo.
                         </td>
                     </tr>
                     <tr>
                         <td class="finding-cell">
-                            <strong>Corrosión-Fatiga:</strong> Vida útil limitada a <strong>7.5 años</strong> (Tasa: 0.12 mm/año) por alta ciclicidad y 75°C.
+                            <strong>Corrosión-Fatiga Diferencial:</strong> Fondo con vida útil de <strong>7.5 años</strong> (75°C, tasa 0.12 mm/año). Cilindro: 16 años (60°C, tasa 0.0625 mm/año).
                         </td>
                         <td class="solution-cell">
-                            <strong>Plan de Inspección:</strong> Ejecutar monitoreo <strong>PAUT</strong> cada 2 años con énfasis en zonas de concentración de esfuerzos.
+                            <strong>Plan de Inspección Diferenciado:</strong> Ejecutar monitoreo <strong>PAUT</strong> cada 2 años en fondo (zonas críticas), cada 4 años en cilindro.
                         </td>
                     </tr>
                     <tr>
                         <td class="finding-cell">
-                            <strong>Ineficiencia Térmica:</strong> Altas pérdidas energéticas y coeficiente $U$ limitado por viscosidad extrema del producto.
+                            <strong>Capacidad Operativa Limitada:</strong> Con área 13 m² y pérdidas térmicas (aislamiento degradado 20 años), solo se alcanzan <span class="badge badge-warning">5 descargas/día</span> (62.5% del requerimiento de 8).
                         </td>
                         <td class="solution-cell">
-                            <strong>Aislamiento:</strong> Instalar <strong>2" de lana mineral</strong> y sistema multi-ramal para mejorar el gradiente térmico.
+                            <strong>Optimización Térmica:</strong> Instalar <strong>2" lana mineral</strong> (reduce pérdidas 91%), mantener glucosa ≥55°C para alcanzar <strong>7 descargas/día</strong>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="finding-cell">
+                            <strong>Ineficiencia Distribución Térmica:</strong> CFD evidencia enfriamiento progresivo del agua en espiral, con espiras exteriores operando con ΔT reducido.
+                        </td>
+                        <td class="solution-cell">
+                            <strong>Reconfiguración a Flujo Paralelo:</strong> Dividir circuito en <strong>3 entradas/salidas</strong> (46.2 m³/h cada uno, v=2.0 m/s, total 138.6 m³/h) para distribución homogénea.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="optional-cell">
+                            <strong>Alternativa Técnica - Ampliación Opcional:</strong> Instalación de media caña en virolas inferiores del cuerpo cilíndrico (40-80 m² adicionales).
+                        </td>
+                        <td class="solution-cell">
+                            <strong>Viabilidad Confirmada:</strong> Menor severidad térmica en cilindro (60°C vs 75°C en fondo) proyecta vida útil de <strong>16 años</strong>. Incrementaría capacidad térmica sin intervenir fondo en construcción.
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <p style="margin-top: 30px; font-style: italic; color: #aaa;">El informe PDF adjunto incluye las validaciones CFD en COMSOL y el análisis de elementos finitos (FEA) en ANSYS.</p>
+            <div class="highlight-box">
+                <strong style="color: #4cc2ff;">Síntesis Ejecutiva:</strong> El tanque Tag 53A-90A-0056 con media caña propuesta (13 m²) opera en condiciones realistas (54°C→57°C) con capacidad de <strong>5 descargas/día</strong>. Para alcanzar 7 descargas (87.5% del requerimiento) se requiere optimización del aislamiento. La ampliación opcional con media caña en cilindro es técnicamente viable y mejoraría significativamente la capacidad térmica.
+            </div>
+
+            <p style="margin-top: 30px; font-style: italic; color: #aaa;">El informe PDF adjunto incluye validaciones CFD en COMSOL Multiphysics, análisis de elementos finitos (FEA) en ANSYS, y evaluación de diseño desarrollado por firma contratista.</p>
         </div>
         <div class="footer">
             <p>DML Ingenieros Consultores S.A.S. | Cali, Colombia</p>
