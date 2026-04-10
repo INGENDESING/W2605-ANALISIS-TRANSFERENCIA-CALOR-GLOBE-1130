@@ -199,7 +199,7 @@ function actualizarKPICard(id, valor, unidad, estado) {
  */
 function actualizarSVGTanque(data, params) {
     const serie = data.serie_temporal;
-    const puntoActual = serie[serie.length - 1] || serie[Math.floor(serie.length / 2)];
+    const puntoActual = serie[0];  // Condiciones iniciales del tanque
     
     const nivel_pct = params.nivel_pct;
     const temp = puntoActual.T_glucosa;

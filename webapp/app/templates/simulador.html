@@ -84,10 +84,6 @@
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label class="form-label small text-muted">Número de descargas</label>
-                    <input type="number" class="form-control form-control-sm" id="NumDescargas" value="8" min="1" max="15">
-                </div>
-                <div class="mb-3">
                     <label class="form-label small text-muted">Masa por descarga [ton]</label>
                     <input type="number" class="form-control form-control-sm" id="MasaDescarga" value="24" min="5" max="50">
                 </div>
@@ -135,32 +131,46 @@
     <div class="col-lg-9">
         <!-- KPI Cards de resumen -->
         <div class="row g-3 mb-3" id="kpiResumen" style="display:none;">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="kpi-card-new text-center">
                     <div class="text-muted small mb-1">Tiempo Calentamiento</div>
                     <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resTiempoCal">—</div>
                     <div class="text-muted small">horas</div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="kpi-card-new text-center">
                     <div class="text-muted small mb-1">Masa Total Descargada</div>
                     <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resMasaTotal">—</div>
                     <div class="text-muted small">toneladas</div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <div class="kpi-card-new text-center" style="border-left: 3px solid var(--color-ingredion);">
+                    <div class="text-muted small mb-1">🚚 Descargas Calculadas</div>
+                    <div class="fs-2 fw-bold" style="color:var(--color-ingredion);" id="resDescCalc">—</div>
+                    <div class="text-muted small">carrotanques</div>
+                </div>
+            </div>
+            <div class="col-md-2">
                 <div class="kpi-card-new text-center">
                     <div class="text-muted small mb-1">Descargas Exitosas</div>
                     <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resDescargasOk">—</div>
                     <div class="text-muted small">de <span id="resTotalDesc">—</span></div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="kpi-card-new text-center">
                     <div class="text-muted small mb-1">T Final del Ciclo</div>
                     <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resTFinal">—</div>
                     <div class="text-muted small">°C</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="kpi-card-new text-center">
+                    <div class="text-muted small mb-1">Motivo de Corte</div>
+                    <div class="fs-5 fw-bold" style="color:#666;" id="resMotivo">—</div>
+                    <div class="text-muted small">restricción</div>
                 </div>
             </div>
         </div>

@@ -442,3 +442,236 @@ def simular_calentamiento_y_ciclo(T_inicial, T_objetivo_inicio_descarga,
             'T_promedio_ciclo': round(sum(T_vals) / len(T_vals), 2),
         }
     }
+
+
+def simular_ciclo_automatico(T_inicial, T_objetivo_inicio_descarga,
+                              T_agua, v_agua, area,
+                              volumen_inicial_m3,
+                              masa_por_descarga_kg,
+                              tiempo_descarga_h, periodo_ciclo_h,
+                              temp_minima_aceptable=55.0,
+                              tiempo_maximo_h=24.0,
+                              dt_seg=30):
+    """
+    Simulación automática: calentamiento inicial + ciclo de descargas
+    hasta que se violen restricciones.
+
+    A diferencia de simular_calentamiento_y_ciclo(), aquí el número de
+    descargas NO es un parámetro de entrada sino un RESULTADO calculado.
+
+    Restricciones de corte (cualquiera detiene el ciclo):
+      1. T glucosa < temp_minima_aceptable después de una descarga
+      2. Masa restante < masa_por_descarga_kg
+      3. Tiempo acumulado > tiempo_maximo_h (24 h)
+    """
+    A = area
+    dot_m_out = masa_por_descarga_kg / (tiempo_descarga_h * 3600.0)
+    tiempo_calentamiento_entre_h = periodo_ciclo_h - tiempo_descarga_h
+
+    rho_ini = rho_glucosa(T_inicial)
+    masa_inicial = volumen_inicial_m3 * rho_ini
+
+    serie = []
+    fases = []
+    descargas = []
+
+    def _ode_con_masa(t, y, descargando):
+        T, m = y
+        if m < 500:
+            return [0.0, 0.0]
+        Cp_g = Cp_glucosa(T)
+        U, _, _, _ = coeficiente_U(v_agua, T_agua, T)
+        DeltaT = T_agua - T
+        dT = U * A * DeltaT / (m * Cp_g) if DeltaT > 0.01 else 0.0
+        dm = -dot_m_out if descargando else 0.0
+        return [dT, dm]
+
+    t_cursor = 0.0
+
+    # ── FASE 1: Calentamiento inicial ─────────────────────────────────────────
+    t_max_cal = 36 * 3600
+    t_eval_f1 = np.arange(0, t_max_cal + 1, dt_seg)
+
+    def _ode_sin_descarga(t, y):
+        T = y[0]
+        if T >= T_agua - 0.1:
+            return [0.0]
+        rho_g = rho_glucosa(T)
+        Cp_g = Cp_glucosa(T)
+        mass = rho_g * volumen_inicial_m3
+        U, _, _, _ = coeficiente_U(v_agua, T_agua, T)
+        dT = U * A * (T_agua - T) / (mass * Cp_g)
+        return [dT]
+
+    sol_f1 = solve_ivp(
+        lambda t, y: _ode_sin_descarga(t, y),
+        [0, t_max_cal], [T_inicial],
+        t_eval=t_eval_f1, method='RK45', max_step=120,
+        events=lambda t, y: y[0] - T_objetivo_inicio_descarga
+    )
+
+    t_f1 = sol_f1.t
+    T_f1 = sol_f1.y[0]
+    if sol_f1.t_events and len(sol_f1.t_events[0]) > 0:
+        t_stop = sol_f1.t_events[0][0]
+        mask = t_f1 <= t_stop
+        t_f1 = t_f1[mask]
+        T_f1 = T_f1[mask]
+
+    m_f1 = np.full_like(T_f1, masa_inicial)
+
+    for t, T, m in zip(t_f1, T_f1, m_f1):
+        U, _, _, _ = coeficiente_U(v_agua, T_agua, T)
+        Q = U * A * max(T_agua - T, 0)
+        serie.append({'t_h': round((t_cursor + t) / 3600, 4),
+                      'T_glucosa': round(T, 3),
+                      'm_ton': round(m / 1000, 3),
+                      'U': round(U, 3),
+                      'Q_kW': round(Q / 1000, 4),
+                      'fase': 'calentamiento_inicial'})
+
+    t_cal_fin_h = round(t_f1[-1] / 3600, 4)
+    fases.append({'tipo': 'calentamiento_inicial',
+                  't_inicio_h': 0.0, 't_fin_h': t_cal_fin_h,
+                  'T_inicio': round(T_inicial, 2),
+                  'T_fin': round(T_f1[-1], 2)})
+
+    t_cursor += t_f1[-1]
+    T_actual = T_f1[-1]
+    m_actual = masa_inicial
+
+    # ── FASE 2: Ciclo automático de descargas ─────────────────────────────────
+    i_descarga = 0
+    motivo_corte = 'completado'
+
+    while True:
+        # Verificar restricción de tiempo
+        if t_cursor / 3600 >= tiempo_maximo_h:
+            motivo_corte = 'tiempo_maximo'
+            break
+
+        # Verificar restricción de masa
+        if m_actual < masa_por_descarga_kg:
+            motivo_corte = 'masa_insuficiente'
+            break
+
+        # Verificar restricción de temperatura
+        if i_descarga > 0 and T_actual < temp_minima_aceptable:
+            motivo_corte = 'temperatura_baja'
+            break
+
+        # — Descarga —
+        t0 = 0.0
+        t1 = tiempo_descarga_h * 3600
+        # No exceder tiempo máximo
+        t_restante = (tiempo_maximo_h * 3600) - t_cursor
+        if t1 > t_restante:
+            t1 = t_restante
+        if t1 < 60:
+            motivo_corte = 'tiempo_maximo'
+            break
+
+        t_eval_d = np.arange(t0, t1 + 1, dt_seg)
+        sol_d = solve_ivp(
+            lambda t, y: _ode_con_masa(t, y, True),
+            [t0, t1], [T_actual, m_actual],
+            t_eval=t_eval_d, method='RK45', max_step=60
+        )
+        T_ini_d = T_actual
+        m_ini_d = m_actual
+        for t, T, m in zip(sol_d.t, sol_d.y[0], sol_d.y[1]):
+            U, _, _, _ = coeficiente_U(v_agua, T_agua, T)
+            Q = U * A * max(T_agua - T, 0)
+            serie.append({'t_h': round((t_cursor + t) / 3600, 4),
+                          'T_glucosa': round(T, 3),
+                          'm_ton': round(m / 1000, 3),
+                          'U': round(U, 3),
+                          'Q_kW': round(Q / 1000, 4),
+                          'fase': f'descarga_{i_descarga+1}'})
+
+        T_actual = sol_d.y[0][-1]
+        m_actual = sol_d.y[1][-1]
+        t_d_ini_h = round(t_cursor / 3600, 4)
+        t_cursor += t1
+        t_d_fin_h = round(t_cursor / 3600, 4)
+
+        masa_desc = m_ini_d - m_actual
+        estado = ('OK' if T_actual >= temp_minima_aceptable else
+                  'Marginal' if T_actual >= temp_minima_aceptable - 5 else 'Fuera')
+        descargas.append({'descarga': i_descarga + 1,
+                          't_inicio_h': t_d_ini_h, 't_fin_h': t_d_fin_h,
+                          'T_inicio': round(T_ini_d, 2),
+                          'T_fin': round(T_actual, 2),
+                          'm_inicio_ton': round(m_ini_d / 1000, 3),
+                          'm_fin_ton': round(m_actual / 1000, 3),
+                          'masa_descargada_ton': round(masa_desc / 1000, 3),
+                          'U_prom': round(coeficiente_U(v_agua, T_agua, (T_ini_d + T_actual) / 2)[0], 2),
+                          'estado': estado})
+        fases.append({'tipo': 'descarga', 'descarga_num': i_descarga + 1,
+                      't_inicio_h': t_d_ini_h, 't_fin_h': t_d_fin_h,
+                      'T_inicio': round(T_ini_d, 2), 'T_fin': round(T_actual, 2)})
+
+        i_descarga += 1
+
+        # Si T cayó por debajo del mínimo, no hacemos más descargas
+        if T_actual < temp_minima_aceptable:
+            motivo_corte = 'temperatura_baja'
+            break
+
+        # — Calentamiento entre descargas —
+        if tiempo_calentamiento_entre_h > 0 and t_cursor / 3600 < tiempo_maximo_h:
+            t0 = 0.0
+            t1 = tiempo_calentamiento_entre_h * 3600
+            t_restante = (tiempo_maximo_h * 3600) - t_cursor
+            if t1 > t_restante:
+                t1 = t_restante
+            if t1 > 60:
+                t_eval_c = np.arange(t0, t1 + 1, dt_seg)
+                sol_c = solve_ivp(
+                    lambda t, y: _ode_con_masa(t, y, False),
+                    [t0, t1], [T_actual, m_actual],
+                    t_eval=t_eval_c, method='RK45', max_step=60
+                )
+                T_ini_c = T_actual
+                t_c_ini_h = round(t_cursor / 3600, 4)
+                for t, T, m in zip(sol_c.t, sol_c.y[0], sol_c.y[1]):
+                    U, _, _, _ = coeficiente_U(v_agua, T_agua, T)
+                    Q = U * A * max(T_agua - T, 0)
+                    serie.append({'t_h': round((t_cursor + t) / 3600, 4),
+                                  'T_glucosa': round(T, 3),
+                                  'm_ton': round(m / 1000, 3),
+                                  'U': round(U, 3),
+                                  'Q_kW': round(Q / 1000, 4),
+                                  'fase': f'mantenimiento_{i_descarga}'})
+                T_actual = sol_c.y[0][-1]
+                m_actual = sol_c.y[1][-1]
+                t_cursor += t1
+                fases.append({'tipo': 'mantenimiento',
+                              't_inicio_h': t_c_ini_h,
+                              't_fin_h': round(t_cursor / 3600, 4),
+                              'T_inicio': round(T_ini_c, 2),
+                              'T_fin': round(T_actual, 2)})
+
+    # ── Métricas de resumen ───────────────────────────────────────────────────
+    T_vals = [p['T_glucosa'] for p in serie]
+    masa_total_desc = sum(d['masa_descargada_ton'] for d in descargas)
+    descargas_ok = sum(1 for d in descargas if d['estado'] == 'OK')
+
+    return {
+        'serie_temporal': serie,
+        'fases': fases,
+        'descargas': descargas,
+        'metricas': {
+            'tiempo_calentamiento_inicial_h': round(t_cal_fin_h, 3),
+            'tiempo_total_h': round(t_cursor / 3600, 3),
+            'T_final': round(T_actual, 2),
+            'masa_total_descargada_ton': round(masa_total_desc, 2),
+            'descargas_ok': descargas_ok,
+            'descargas_calculadas': i_descarga,
+            'motivo_corte': motivo_corte,
+            'T_min_ciclo': round(min(T_vals), 2),
+            'T_promedio_ciclo': round(sum(T_vals) / len(T_vals), 2),
+            'masa_restante_ton': round(m_actual / 1000, 2),
+        }
+    }
+

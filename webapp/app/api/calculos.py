@@ -7,6 +7,7 @@ from ..core.balance_energia import (
     calcular_transferencia_calor,
     simular_calentamiento_transitorio,
     simular_calentamiento_y_ciclo,
+    simular_ciclo_automatico,
     calcular_tiempo_calentamiento
 )
 from ..core.balance_masa import (
@@ -328,6 +329,45 @@ def api_transitorio_completo():
             masa_por_descarga_kg=masa_ton * 1000,
             tiempo_descarga_h=t_desc_h, periodo_ciclo_h=periodo_h,
             temp_minima_aceptable=temp_min_ac,
+        )
+        return jsonify({'success': True, 'data': resultado})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# ── A.4b: Ciclo automático (num_descargas es resultado) ──────────────────────
+@api_calculos_bp.route('/calcular/ciclo-automatico', methods=['POST'])
+def api_ciclo_automatico():
+    """Ciclo automático: descargas calculadas por el motor ODE."""
+    data = request.get_json() or {}
+    try:
+        T_inicial = float(data.get('T_inicial', 20))
+        T_objetivo = float(data.get('T_objetivo_inicio_descarga', 57))
+        T_agua = float(data.get('T_agua', 65))
+        area = float(data.get('area_m2', _A_CONTACTO))
+        nivel_pct = float(data.get('nivel_inicial_pct', 80))
+        masa_ton = float(data.get('masa_por_descarga_ton', 24))
+        t_desc_h = float(data.get('tiempo_descarga_h', 1.5))
+        periodo_h = float(data.get('periodo_ciclo_h', 3.0))
+        temp_min_ac = float(data.get('temp_minima_aceptable', 55))
+        tiempo_max_h = float(data.get('tiempo_maximo_h', 24.0))
+        _Amc = 0.0455 * 0.141
+        if 'velocidad_m_s' in data:
+            v_agua = float(data['velocidad_m_s'])
+        elif 'flujo_agua_m3h' in data:
+            v_agua = float(data['flujo_agua_m3h']) / 3600.0 / _Amc
+        else:
+            v_agua = 2.5
+        from geometria_tanque import volumen_total
+        vol_ini = volumen_total() * (nivel_pct / 100.0)
+        resultado = simular_ciclo_automatico(
+            T_inicial=T_inicial, T_objetivo_inicio_descarga=T_objetivo,
+            T_agua=T_agua, v_agua=v_agua, area=area,
+            volumen_inicial_m3=vol_ini,
+            masa_por_descarga_kg=masa_ton * 1000,
+            tiempo_descarga_h=t_desc_h, periodo_ciclo_h=periodo_h,
+            temp_minima_aceptable=temp_min_ac,
+            tiempo_maximo_h=tiempo_max_h,
         )
         return jsonify({'success': True, 'data': resultado})
     except Exception as e:

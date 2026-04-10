@@ -68,7 +68,7 @@ async function simular() {
     try {
         const params = leerParametros();
         
-        const response = await fetch('/api/calcular/transitorio-completo', {
+        const response = await fetch('/api/calcular/ciclo-automatico', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(params)
@@ -111,11 +111,11 @@ function leerParametros() {
         velocidad_m_s: parseFloat(document.getElementById('VAgua').value),
         area_m2: parseFloat(document.getElementById('Area').value),
         nivel_inicial_pct: parseFloat(document.getElementById('NivelInicial').value),
-        num_descargas: parseInt(document.getElementById('NumDescargas').value),
         masa_por_descarga_ton: parseFloat(document.getElementById('MasaDescarga').value),
         tiempo_descarga_h: parseFloat(document.getElementById('TiempoDescarga').value),
         periodo_ciclo_h: parseFloat(document.getElementById('Periodo').value),
-        temp_minima_aceptable: parseFloat(document.getElementById('TMinima').value)
+        temp_minima_aceptable: parseFloat(document.getElementById('TMinima').value),
+        tiempo_maximo_h: 24.0
     };
 }
 
@@ -128,8 +128,18 @@ function actualizarKPIs(data) {
     document.getElementById('resTiempoCal').textContent = m.tiempo_calentamiento_inicial_h.toFixed(1);
     document.getElementById('resMasaTotal').textContent = m.masa_total_descargada_ton.toFixed(1);
     document.getElementById('resDescargasOk').textContent = m.descargas_ok;
-    document.getElementById('resTotalDesc').textContent = m.descargas_totales;
+    document.getElementById('resTotalDesc').textContent = m.descargas_calculadas;
     document.getElementById('resTFinal').textContent = m.T_final.toFixed(1);
+    document.getElementById('resDescCalc').textContent = m.descargas_calculadas;
+    
+    // Motivo de corte
+    const motivoMap = {
+        'tiempo_maximo': 'Límite 24h',
+        'masa_insuficiente': 'Masa agotada',
+        'temperatura_baja': 'T < mínima',
+        'completado': 'Completado'
+    };
+    document.getElementById('resMotivo').textContent = motivoMap[m.motivo_corte] || m.motivo_corte;
     
     // Color según estado
     const cardTFinal = document.getElementById('resTFinal').closest('.kpi-card-new');
