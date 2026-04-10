@@ -11,11 +11,8 @@
         <small class="text-muted">Calentamiento inicial + ciclo de descargas (24h)</small>
     </div>
     <div class="d-flex gap-2">
-        <button class="btn btn-sm btn-outline-primary" id="btnEsc2">
-            <i class="bi bi-lightning me-1"></i>Esc. 2 (65°C)
-        </button>
-        <button class="btn btn-sm btn-outline-warning" id="btnEsc3">
-            <i class="bi bi-lightning-fill me-1"></i>Esc. 3 (75°C)
+        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalInstrucciones">
+            <i class="bi bi-info-circle me-1"></i>Instrucciones de Uso
         </button>
         <button class="btn btn-sm btn-success" id="btnSimular">
             <i class="bi bi-play-fill me-1"></i>Simular
@@ -259,6 +256,32 @@
         <div class="spinner-border text-primary mb-3" role="status"></div>
         <p class="text-muted">Simulando ciclo completo...</p>
         <p class="text-muted small">Esto puede tomar 5-10 segundos</p>
+    </div>
+</div>
+
+<!-- Modal Instrucciones -->
+<div class="modal fade" id="modalInstrucciones" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:var(--color-dml);">Instrucciones de Uso y Escenarios del Estudio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-muted" style="font-size: 0.9rem;">
+                <h6>¿Cómo usar el simulador?</h6>
+                <p>Ingrese los parámetros deseados en el panel izquierdo y haga clic en <strong>Simular</strong> para estimar el comportamiento térmico del tanque. El simulador calculará automáticamente las transferencias de calor, el desgaste de masa por descarga y si la temperatura residual de la glucosa permite completar los viajes de manera satisfactoria sin caer por debajo de la temperatura aceptable.</p>
+                <hr>
+                <h6>Escenarios del Estudio (P2611)</h6>
+                <p>Si desea replicar en el simulador los escenarios puntuales analizados en el informe de auditoría, utilice los siguientes parámetros base (Flujo de agua a 57.7 m³/h o Velocidad a 2.5 m/s):</p>
+                <ul>
+                    <li><strong>Escenario 2:</strong> Temperatura de chaqueta (agua) a 65°C, con T objetivo de 57°C para descargas.</li>
+                    <li><strong>Escenario 3:</strong> Temperatura de chaqueta aumentda a 75°C, manteniendo la T objetivo en 57°C.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

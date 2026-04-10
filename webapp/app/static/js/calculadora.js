@@ -86,6 +86,9 @@ function setupSliderInput(sliderId, inputId, callback) {
         if (estado.modo === 'velocidad' && sliderId === 'sliderVelocidad') {
             actualizarFlujoEquivalente();
         }
+        if (sliderId === 'sliderTAgua') {
+            if (estado.modo === 'velocidad') actualizarFlujoEquivalente();
+        }
         debounceCalcular(callback);
     });
 
@@ -103,6 +106,9 @@ function setupSliderInput(sliderId, inputId, callback) {
         }
         if (estado.modo === 'velocidad' && sliderId === 'sliderVelocidad') {
             actualizarFlujoEquivalente();
+        }
+        if (sliderId === 'sliderTAgua') {
+            if (estado.modo === 'velocidad') actualizarFlujoEquivalente();
         }
         calcularInstantaneo();
     });
@@ -155,7 +161,17 @@ function actualizarVelocidadEquivalente() {
 function actualizarFlujoEquivalente() {
     const v = parseFloat(document.getElementById('sliderVelocidad').value);
     const flujo = v * A_SEC_MC * 3600;
-    // Solo actualizar el display, no el input
+    
+    // Densidad aproximada del agua en kg/m3 (fórmula simplificada)
+    const T_agua = parseFloat(document.getElementById('sliderTAgua').value);
+    const rho_agua = 999.8 - 0.06 * T_agua - 0.0036 * Math.pow(T_agua, 2);
+    
+    const masa_flujo = flujo * rho_agua; // kg/h
+    
+    const elVol = document.getElementById('fluVolEquiv');
+    const elMas = document.getElementById('fluMasEquiv');
+    if (elVol) elVol.textContent = flujo.toFixed(1);
+    if (elMas) elMas.textContent = masa_flujo.toFixed(0);
 }
 
 /**

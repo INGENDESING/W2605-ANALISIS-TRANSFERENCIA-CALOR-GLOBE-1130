@@ -20,6 +20,10 @@
 - [x] **D.3** Corregir `balance_energia.py` para validar la temperatura desde la **primera** descarga (`i_descargas > 0` removido).
 - [x] **D.4** Probar con parámetros exactos del pantallazo.
 
+### Requisitos de Interfaz
+- [x] **E.1** Reemplazar botones de escenarios fijos por un botón de "Instrucciones de Uso" con modal en `simulador.html` y `simulador.js`.
+- [x] **E.2** Añadir cálculo equivalente de flujo volumétrico (m³/h) y másico (kg/h) basado en Temperatura cuando el modo velocidad está activo en `calculadora.html` y `calculadora.js`.
+
 ---
 
 ## Sección de Revisión
@@ -27,3 +31,4 @@
 - Se descubrió que el usuario tenía la casilla **"Pre-calentado (omitir fase)" marcada**. Debido a un error previo, esto forzaba la T_inicial enviada a 57°C, saltando la fase de calentamiento pero manteniendo "50°C" visualmente en el campo de texto. 
 - Se deshabilitó lógicamente el uso de esta casilla en JS cuando la temperatura del tanque es menor al objetivo mínimo, lanzando un warning e imponiendo la fase de calentamiento obligatoria. Además, el backend ahora bloquea matemáticamente la descarga desde el bloque 1 si la T < mínima.
 - Una simulación realista con Agua a 65°C y Glucosa a 50°C toma ~36h y su temperatura final a duras penas llega a ~51.5°C, mostrando claramente que en esas condiciones no se logran descargar los primeros carrotanques. En el anterior código, la restricción de descarga sólo actuaba después del primer viaje. Se corrigieron todas las inconsistencias detectadas.
+- Se refactorizó la UI del simulador y calculadora: se eliminaron opciones f-escenarios prestablecidas para obligar al usuario a leer introducciones con instrucciones explícitas. Asimismo se añadió conversión transparente m/s -> m³/h -> kg/h en tiempo real usando dependencia de densidad de agua por temperatura en la calculadora.

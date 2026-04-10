@@ -25,8 +25,6 @@ let estadoSim = {
  */
 document.addEventListener('DOMContentLoaded', function() {
     initEventListeners();
-    // Cargar escenario 2 por defecto
-    cargarEscenario(2);
 });
 
 /**
@@ -34,29 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function initEventListeners() {
     document.getElementById('btnSimular').addEventListener('click', simular);
-    document.getElementById('btnEsc2').addEventListener('click', () => cargarEscenario(2));
-    document.getElementById('btnEsc3').addEventListener('click', () => cargarEscenario(3));
     document.getElementById('btnExportar').addEventListener('click', exportarCSV);
-}
-
-/**
- * Cargar escenario predefinido
- */
-function cargarEscenario(esc) {
-    estadoSim.escenario = esc;
-    
-    if (esc === 2) {
-        document.getElementById('TAgua').value = 65;
-        document.getElementById('VAgua').value = 2.5;
-        document.getElementById('TObjetivo').value = 57;
-    } else if (esc === 3) {
-        document.getElementById('TAgua').value = 75;
-        document.getElementById('VAgua').value = 2.5;
-        document.getElementById('TObjetivo').value = 57;
-    }
-    
-    // Simular automáticamente
-    simular();
 }
 
 /**
