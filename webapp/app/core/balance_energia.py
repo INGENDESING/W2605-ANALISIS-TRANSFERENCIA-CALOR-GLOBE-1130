@@ -555,8 +555,8 @@ def simular_ciclo_automatico(T_inicial, T_objetivo_inicio_descarga,
             motivo_corte = 'masa_insuficiente'
             break
 
-        # Verificar restricción de temperatura
-        if i_descarga > 0 and T_actual < temp_minima_aceptable:
+        # Verificar restricción de temperatura (aplica a todas las descargas)
+        if T_actual < temp_minima_aceptable:
             motivo_corte = 'temperatura_baja'
             break
 

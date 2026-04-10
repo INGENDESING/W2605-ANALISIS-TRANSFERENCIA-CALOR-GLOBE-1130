@@ -101,12 +101,26 @@ async function simular() {
  */
 function leerParametros() {
     const saltarCalentamiento = document.getElementById('saltarCalentamiento').checked;
+    const T_inicial_input = parseFloat(document.getElementById('TInicial').value);
+    const T_objetivo = parseFloat(document.getElementById('TObjetivo').value);
+    
+    // Solo permitir saltar calentamiento si T_inicial >= T_objetivo
+    let T_inicial;
+    if (saltarCalentamiento && T_inicial_input >= T_objetivo) {
+        T_inicial = T_objetivo;
+    } else {
+        T_inicial = T_inicial_input;
+        if (saltarCalentamiento && T_inicial_input < T_objetivo) {
+            // Desmarcar checkbox y advertir al usuario
+            document.getElementById('saltarCalentamiento').checked = false;
+            console.warn('No se puede omitir calentamiento: T inicial (' + 
+                T_inicial_input + '°C) < T objetivo (' + T_objetivo + '°C)');
+        }
+    }
     
     return {
-        T_inicial: saltarCalentamiento ? 
-            parseFloat(document.getElementById('TObjetivo').value) : 
-            parseFloat(document.getElementById('TInicial').value),
-        T_objetivo_inicio_descarga: parseFloat(document.getElementById('TObjetivo').value),
+        T_inicial: T_inicial,
+        T_objetivo_inicio_descarga: T_objetivo,
         T_agua: parseFloat(document.getElementById('TAgua').value),
         velocidad_m_s: parseFloat(document.getElementById('VAgua').value),
         area_m2: parseFloat(document.getElementById('Area').value),
