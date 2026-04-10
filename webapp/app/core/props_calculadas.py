@@ -89,6 +89,7 @@ def generar_tabla_propiedades(temp_min=20, temp_max=80, paso=5):
         tabla.append({
             'temperatura_c': round(T, 1),
             'rho_glucosa': props['glucosa']['densidad_kg_m3'],
+            'mu_glucosa_Pa_s': props['glucosa']['viscosidad_Pa_s'],
             'mu_glucosa_cP': props['glucosa']['viscosidad_cP'],
             'cp_glucosa': props['glucosa']['cp_J_kg_C'],
             'k_glucosa': props['glucosa']['k_W_m_C'],
