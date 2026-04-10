@@ -41,6 +41,7 @@ class ProductionConfig(Config):
     DEBUG = False
     ENV = 'production'
     SECRET_KEY = os.environ.get('SECRET_KEY')
+    CORS_ORIGINS = '*'  # Permitir todo en producción para evitar problemas con URL dinámica
 
 
 class TestingConfig(Config):
