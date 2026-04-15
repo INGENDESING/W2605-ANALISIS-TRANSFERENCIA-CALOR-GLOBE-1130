@@ -1,0 +1,4 @@
+v_viento_m_s,T_salida_C,U_chaqueta_W_m2K,Q_chaqueta_MJ_h,Q_perdidas_MJ_h,Q_net_MJ_h
+1.0,54.47,35.89,34.75,26.70,8.05
+1.5,54.11,35.85,35.02,33.09,1.93
+3.0,53.39,35.79,35.56,45.98,-10.43

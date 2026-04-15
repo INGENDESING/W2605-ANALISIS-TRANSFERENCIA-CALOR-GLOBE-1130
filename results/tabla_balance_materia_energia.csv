@@ -1,0 +1,27 @@
+BALANCE DE MATERIA Y ENERGIA - PROYECTO P2611
+Escenario Optimizado: Agua a 75C, Flujo 57.7 m3/h
+
+BALANCE DE MATERIA,,,,,
+Corriente,Flujo Masico (kg/h),Flujo Volumetrico (m3/h),Temperatura (C),Entalpia (MJ/h),Densidad (kg/m3)
+1 - Glucosa Entrada,8000,-,57.0,971.7,1405
+4 - Glucosa Salida,8000,-,55.1,939.5,1405
+2 - Agua Entrada,56258,57.7,75.0,17690,975
+3 - Agua Salida,56258,-,74.9,17670,975
+
+BALANCE DE ENERGIA,,,,,
+Parametro,Valor,Unidad,Notas,,
+Calor Transferido (Chaqueta),18.9,MJ/h,U=36.2 W/m2C; A=13 m2,,
+Perdidas Termicas,51.1,MJ/h,Delta T = 3C,,
+Calor Neto al Producto,-32.2,MJ/h,Perdidas - Transferencia,,
+
+PROPIEDADES TERMOFISICAS,,,,,
+Propiedad,Glucosa,Agua,Unidad,,
+Densidad,1405,975,kg/m3,,
+Calor Especifico (Cp),2.131,4.192,kJ/kgC,,
+Viscosidad,2870,-,cP,,
+
+COEFICIENTES DE TRANSFERENCIA,,,,,
+Parametro,Valor,Unidad,Notas,,
+Coeficiente Global (U),36.2,W/m2C,Calculado a 60C,,
+Area de Transferencia (A),13,m2,Area chaqueta,,
+Delta T Logaritmico (LMTD),~40,C,Estimado,,

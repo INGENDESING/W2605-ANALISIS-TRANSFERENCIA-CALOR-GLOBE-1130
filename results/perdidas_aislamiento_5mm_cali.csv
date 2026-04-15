@@ -1,0 +1,14 @@
+Escenario 1: Aislamiento 5mm - Condiciones Cali
+""
+Parametros
+Temperatura ambiente (°C),26.5
+Temperatura glucosa (°C),57.0
+Espesor aislamiento (mm),5
+Conductividad aislamiento (W/m.K),0.045
+Masa glucosa al 80% (ton),250.36
+""
+Velocidad viento (m/s),h_ext (W/m2.K),U_global (W/m2.K),Q_perdida (kW),Delta_T (°C/h),Energia (MJ/h)
+1.0,2.42,1.78,8.13,0.055,29.27
+2.0,4.16,2.58,11.76,0.079,42.35
+2.5,4.99,2.87,13.12,0.089,47.24
+3.0,5.8,3.13,14.28,0.096,51.4

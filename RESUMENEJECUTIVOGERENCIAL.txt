@@ -1,0 +1,50 @@
+Titulo:  
+diagnósticos para el tanque de glucosa , revisión área de transferencia fondo y revisión estructural del fondo del tanque
+
+
+
+
+
+resumen del proyecto
+
+El presente estudio técnico corresponde a la revisión térmica y estructural del tanque de glucosa  solicitada por
+Ingredion S.A. a DMLIngenieros Consultores S.A.S., basadas en el informe entregado por el cliente (planos códigos de informe y fechas) del sistema de calentamiento .
+
+Ingredion en su proceso de mejoramiento de sus equipos ha considerado el cambio del fondo del tanque de glucosa codigo xxxxxxxxx.
+
+descripción del procesos
+
+En el tanque xxxxxxx se alimenta glucosa de 55a 60 °C , llenando el tanque xxxxxxxx, para una logística de suministro a carrotanques de 24 toneladas con una frecuencia de descarga cada 24 horas, una condición para llenado es que la glucosa suministrada este entre 57°C y 60°C. Para sostener la temperatura se tiene el fondo del tanque una chaqueta tipo media caña de perfil rectangular en un solo paso (una entrada y una salida) según el plano xxxxxx que recorre desde al centro hasta el borde externo del fondo torisferico el área de contacto de esta media cama es de 13m3. En el informe xxxxxx las condiciones de entreda del agua son 
+
+Temperatura agua : 65 °C
+Flujo agua       : 30.9 m3/h
+
+
+Metodología 
+
+Revisión térmica para la transferencia de calor del tanque
+
+revisión estructural del tanque
+
+
+Recomendaciones y observaciones
+
+
+
+LO FLUJOS SON PROMEDIOS
+ACTUAL ÑINEA BASE , VA PERDE
+
+DOS ACTIAL VELOCIDAD Y TEMPERATURA
+
+TERCERA SI ALCANZA EL AREA INICIAL 
+
+
+para garantizar este rango de temperatura (57-60°C)
+
+
+
+
+
+
+
+

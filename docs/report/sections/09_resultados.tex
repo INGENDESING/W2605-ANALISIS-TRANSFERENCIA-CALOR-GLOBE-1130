@@ -230,7 +230,7 @@ Con agua a 75~°C, el tiempo para alcanzar la cota operativa de 57~°C se reduce
 
 \subsubsection{Escenario 4: Capacidad Operativa Diaria con Área 13 m\textsuperscript{2}}
 
-El Escenario~4 evalúa la capacidad operativa real del sistema de calentamiento con el área de transferencia propuesta de 13~m\textsuperscript{2} (media caña), determinando cuántas descargas de carrotanque de 24~toneladas se pueden completar por día bajo diferentes condiciones de temperatura de entrada.
+El Escenario~4 evalúa la capacidad operativa real del sistema de calentamiento con el área de transferencia de calor del fondo instalado (13~m\textsuperscript{2}, media caña), determinando cuántas descargas de carrotanque de 24~toneladas se pueden completar por día bajo diferentes condiciones de temperatura de entrada.
 
 \textbf{Contexto operativo:} La planta suministra glucosa al tanque a una temperatura máxima de 60°C. Se analizan dos casos:
 \begin{itemize}
@@ -450,7 +450,7 @@ Para el calentamiento completo desde 25\,°C hasta 57\,°C, el coeficiente efect
     \end{tabularx}
 \end{table}
 
-Los valores de área requerida oscilan entre 19.7 y 341.9~m\textsuperscript{2}, evidenciando que tanto la chaqueta dimple actual (28~m\textsuperscript{2}) como la media caña propuesta (13~m\textsuperscript{2}) resultan insuficientes para calentamiento continuo desde frío a flujos industriales superiores a 1.5~ton/h. Esta observación es consistente con el propósito del sistema instalado: calentar el tanque en modo estático (batch), no en modo de flujo continuo.
+Los valores de área requerida oscilan entre 19.7 y 341.9~m\textsuperscript{2}, evidenciando que tanto la chaqueta dimple actual (28~m\textsuperscript{2}) como la media caña del fondo construido (13~m\textsuperscript{2}) resultan insuficientes para calentamiento continuo desde frío a flujos industriales superiores a 1.5~ton/h. Esta observación es consistente con el propósito del sistema instalado: calentar el tanque en modo estático (batch), no en modo de flujo continuo.
 
 Para el calentamiento de mantenimiento desde 54\,°C hasta 57\,°C (escenario conservador que considera pérdidas al ambiente de ~3\,°C por exposición externa del tanque), la menor variación de viscosidad resulta en un coeficiente efectivo $U_{ef} \approx 36$\,W/m\textsuperscript{2}$\cdot$°C. Sin embargo, el calor requerido aumenta significativamente debido a las pérdidas térmicas al ambiente (tanque externo, aislamiento degradado, efecto viento). La Tabla~\ref{tab:areas_55_57} presenta los resultados para este escenario.
 
@@ -484,7 +484,7 @@ Para el calentamiento de mantenimiento desde 54\,°C hasta 57\,°C (escenario co
     \end{tabularx}
 \end{table}
 
-La Figura~\ref{fig:comp_escenarios_areas} compara visualmente los perfiles de área requerida para ambos rangos de temperatura. Con el área propuesta de 13\,m\textsuperscript{2}, los flujos máximos alcanzables son:
+La Figura~\ref{fig:comp_escenarios_areas} compara visualmente los perfiles de área requerida para ambos rangos de temperatura. Con el área del fondo de reemplazo (13\,m\textsuperscript{2}), los flujos máximos alcanzables son:
 \begin{itemize}
     \item \textbf{Caso A (54°C$\rightarrow$57°C):} 5.1\,ton/h, equivalente a \textbf{5 descargas/día}
     \item \textbf{Caso B (55°C$\rightarrow$57°C):} 7.5\,ton/h, equivalente a \textbf{7 descargas/día}
@@ -498,15 +498,15 @@ El escenario 54–57\,°C resulta más exigente debido a las pérdidas al ambien
     \label{fig:comp_escenarios_areas}
 \end{figure}
 
-\subsubsection{Comparativa de Chaquetas: Actual (Dimple, 28\,m\textsuperscript{2}) vs.\ Propuesta (Media Ca\~na, 13\,m\textsuperscript{2})}
+\subsubsection{Comparativa de Chaquetas: Actual (Dimple, 28\,m\textsuperscript{2}) vs.\ Fondo de Reemplazo (Media Ca\~na, 13\,m\textsuperscript{2})}
 
-Con base en la metodología descrita en la Sección~\ref{sec:comp_chaquetas}, se evaluaron cuantitativamente las dos configuraciones de chaqueta disponibles para el fondo toriesférico del tanque Globe~1130. La chaqueta dimple actual posee un área efectiva de $A_{actual} = 28$\,m\textsuperscript{2} distribuida en tres circuitos paralelos, mientras que la media caña propuesta opera con $A_{prop} = 13$\,m\textsuperscript{2} en un único paso en espiral. Dado que $U$ es invariante entre configuraciones —la resistencia de la glucosa domina el 98\,\% del total—, la capacidad de calentamiento escala directamente con el área disponible.
+Con base en la metodología descrita en la Sección~\ref{sec:comp_chaquetas}, se evaluaron cuantitativamente las dos configuraciones de chaqueta disponibles para el fondo toriesférico del tanque Globe~1130. La chaqueta dimple actual posee un área efectiva de $A_{actual} = 28$\,m\textsuperscript{2} distribuida en tres circuitos paralelos, mientras que la media caña del fondo construido opera con $A_{reemp} = 13$\,m\textsuperscript{2} en un único paso en espiral. Dado que $U$ es invariante entre configuraciones —la resistencia de la glucosa domina el 98\,\% del total—, la capacidad de calentamiento escala directamente con el área disponible.
 
 \textbf{Calentamiento batch.} La Tabla~\ref{tab:comp_batch} presenta los tiempos de calentamiento calculados para el tanque al 80\,\% de su capacidad (178.2\,m\textsuperscript{3} de glucosa) con agua a 75\,°C.
 
 \begin{table}[H]
     \centering
-    \caption{Tiempos de calentamiento batch para la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y propuesta (media caña, 13\,m\textsuperscript{2}). Tanque al 80\,\% de capacidad, $T_w = 75$\,°C, $v = 2.5$\,m/s.}
+    \caption{Tiempos de calentamiento batch para la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y la del fondo de reemplazo (media caña, 13\,m\textsuperscript{2}). Tanque al 80\,\% de capacidad, $T_w = 75$\,°C, $v = 2.5$\,m/s.}
     \label{tab:comp_batch}
     \setcounter{itemcount}{0}
     \begin{tabularx}{\textwidth}{@{}NllccccX@{}}
@@ -514,19 +514,19 @@ Con base en la metodología descrita en la Sección~\ref{sec:comp_chaquetas}, se
         \multicolumn{1}{c}{\textbf{Item}} & Caso & Chaqueta & $A$ [m\textsuperscript{2}] & $T_{ini}$ [°C] & $T_{fin}$ [°C] & Tiempo [h] & Tiempo [días] \\
         \midrule
         & 25\,→\,57\,°C & Actual (dimple)     & 28 & 25 & 57 & 170.7 & 7.11 \\
-        & 25\,→\,57\,°C & Propuesta (media caña) & 13 & 25 & 57 & 367.5 & 15.31 \\
+        & 25\,→\,57\,°C & Fondo de reemplazo (media caña) & 13 & 25 & 57 & 367.5 & 15.31 \\
         & 55\,→\,57\,°C & Actual (dimple)     & 28 & 55 & 57 &  15.5 &  0.65 \\
-        & 55\,→\,57\,°C & Propuesta (media caña) & 13 & 55 & 57 &  33.2 &  1.38 \\
+        & 55\,→\,57\,°C & Fondo de reemplazo (media caña) & 13 & 55 & 57 &  33.2 &  1.38 \\
         \bottomrule
     \end{tabularx}
 \end{table}
 
-El cociente de tiempos entre la configuración propuesta y la actual es $367.5/170.7 = 2.153$ para el caso 25–57\,°C y $33.2/15.5 = 2.145$ para el caso 55–57\,°C, ambos prácticamente idénticos al ratio de áreas $A_{actual}/A_{prop} = 28/13 = 2.154$. Esta proporcionalidad confirma con precisión que $U$ es invariante entre configuraciones, y que la reducción del 54\,\% en el área (de 28 a 13\,m\textsuperscript{2}) conlleva una reducción en la misma proporción de la capacidad de calentamiento del sistema. La Figura~\ref{fig:comp_batch_Tvst} superpone las curvas de calentamiento batch para ambas configuraciones y ambos casos térmicos.
+El cociente de tiempos entre la configuración del fondo de reemplazo y la actual es $367.5/170.7 = 2.153$ para el caso 25–57\,°C y $33.2/15.5 = 2.145$ para el caso 55–57\,°C, ambos prácticamente idénticos al ratio de áreas $A_{actual}/A_{reemp} = 28/13 = 2.154$. Esta proporcionalidad confirma con precisión que $U$ es invariante entre configuraciones, y que la reducción del 54\,\% en el área (de 28 a 13\,m\textsuperscript{2}) conlleva una reducción en la misma proporción de la capacidad de calentamiento del sistema. La Figura~\ref{fig:comp_batch_Tvst} superpone las curvas de calentamiento batch para ambas configuraciones y ambos casos térmicos.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.92\textwidth]{../../results/figures/comp_batch_T_vs_t.png}
-    \caption{Evolución temporal de la temperatura de la glucosa durante el calentamiento batch para la chaqueta actual (dimple, 28\,m\textsuperscript{2}, línea continua azul) y la propuesta (media caña, 13\,m\textsuperscript{2}, línea discontinua roja). Panel superior: caso 25\,°C\,$\rightarrow$\,57\,°C; panel inferior: caso 55\,°C\,$\rightarrow$\,57\,°C. Tanque al 80\,\%, agua a 75\,°C, $v = 2.5$\,m/s.}
+    \caption{Evolución temporal de la temperatura de la glucosa durante el calentamiento batch para la chaqueta actual (dimple, 28\,m\textsuperscript{2}, línea continua azul) y la del fondo de reemplazo (media caña, 13\,m\textsuperscript{2}, línea discontinua roja). Panel superior: caso 25\,°C\,$\rightarrow$\,57\,°C; panel inferior: caso 55\,°C\,$\rightarrow$\,57\,°C. Tanque al 80\,\%, agua a 75\,°C, $v = 2.5$\,m/s.}
     \label{fig:comp_batch_Tvst}
 \end{figure}
 
@@ -534,7 +534,7 @@ El cociente de tiempos entre la configuración propuesta y la actual es $367.5/1
 
 \begin{table}[H]
     \centering
-    \caption{Temperatura de salida de la glucosa $T_{out}$ alcanzable en modo continuo con la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y propuesta (media caña, 13\,m\textsuperscript{2}), para temperaturas de entrada de 25\,°C y 55\,°C ($T_w = 75$\,°C, $v = 2.5$\,m/s).}
+    \caption{Temperatura de salida de la glucosa $T_{out}$ alcanzable en modo continuo con la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y la del fondo de reemplazo (media caña, 13\,m\textsuperscript{2}), para temperaturas de entrada de 25\,°C y 55\,°C ($T_w = 75$\,°C, $v = 2.5$\,m/s).}
     \label{tab:comp_flujo}
     \setcounter{itemcount}{0}
     \begin{tabularx}{\textwidth}{@{}NcccccX@{}}
@@ -552,19 +552,19 @@ El cociente de tiempos entre la configuración propuesta y la actual es $367.5/1
     \end{tabularx}
 \end{table}
 
-Los resultados revelan que para el calentamiento desde 25\,°C, la chaqueta actual puede alcanzar los 57\,°C de salida únicamente a flujos inferiores a 1.47~ton/h, y la propuesta solo hasta 0.69~ton/h. En contraste, para el calentamiento de mantenimiento desde 55\,°C, la chaqueta actual cubre el rango completo de operación (hasta más de 16~ton/h), mientras que la propuesta resulta insuficiente para flujos superiores a 7.54~ton/h. La Figura~\ref{fig:comp_flujo_Tout} ilustra estos perfiles y la Figura~\ref{fig:comp_flujo_max} muestra la comparativa de flujos máximos alcanzables.
+Los resultados revelan que para el calentamiento desde 25\,°C, la chaqueta actual puede alcanzar los 57\,°C de salida únicamente a flujos inferiores a 1.47~ton/h, y la del fondo de reemplazo solo hasta 0.69~ton/h. En contraste, para el calentamiento de mantenimiento desde 55\,°C, la chaqueta actual cubre el rango completo de operación (hasta más de 16~ton/h), mientras que la del fondo de reemplazo resulta insuficiente para flujos superiores a 7.54~ton/h. La Figura~\ref{fig:comp_flujo_Tout} ilustra estos perfiles y la Figura~\ref{fig:comp_flujo_max} muestra la comparativa de flujos máximos alcanzables.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.92\textwidth]{../../results/figures/comp_flujo_T_out_vs_mdot.png}
-    \caption{Temperatura de salida de la glucosa en función del flujo másico para la chaqueta actual (28\,m\textsuperscript{2}) y propuesta (13\,m\textsuperscript{2}). Panel superior: temperatura de entrada 25\,°C; panel inferior: temperatura de entrada 55\,°C. La línea punteada indica el objetivo operativo de 57\,°C; las líneas verticales marcan el flujo máximo alcanzable por cada configuración.}
+    \caption{Temperatura de salida de la glucosa en función del flujo másico para la chaqueta actual (28\,m\textsuperscript{2}) y la del fondo de reemplazo (13\,m\textsuperscript{2}). Panel superior: temperatura de entrada 25\,°C; panel inferior: temperatura de entrada 55\,°C. La línea punteada indica el objetivo operativo de 57\,°C; las líneas verticales marcan el flujo máximo alcanzable por cada configuración.}
     \label{fig:comp_flujo_Tout}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{../../results/figures/comp_flujo_maximo_bar.png}
-    \caption{Flujo máximo continuo alcanzable para cumplir la especificación de 57\,°C a la salida, para la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y la propuesta (media caña, 13\,m\textsuperscript{2}), discriminado por temperatura de entrada.}
+    \caption{Flujo máximo continuo alcanzable para cumplir la especificación de 57\,°C a la salida, para la chaqueta actual (dimple, 28\,m\textsuperscript{2}) y la del fondo de reemplazo (media caña, 13\,m\textsuperscript{2}), discriminado por temperatura de entrada.}
     \label{fig:comp_flujo_max}
 \end{figure}
 
@@ -710,7 +710,7 @@ Al 100\% de llenado, la altura de la columna aumenta a $H = 10.94$~m y la presi\
 	t_{calc} = \frac{0.885 \times 0.1529 \times 5\,264}{97.74} = \frac{712.5}{97.74} = 7.29~\text{mm}, \quad t_{req} = 7.29 + 1.875 = 9.16~\text{mm}
 \end{equation}
 
-El espesor requerido (9.16~mm) excede marginalmente el existente (9.0~mm) en 0.16~mm. Este resultado indica que el fondo toriesf\'erico opera en su l\'imite y que el nivel de llenado no debe exceder el 90\% durante la operaci\'on normal. La Tabla~\ref{tab:espesores_fondo} resume ambas condiciones.
+El espesor requerido (9.16~mm) excede marginalmente el existente (9.0~mm) en 0.16~mm. El an\'alisis FEA complementario establece que la condici\'on operativa segura corresponde al 80\% de llenado, donde el factor de seguridad en el nudillo es $FS \geq 1.3$. Al 100\% de llenado, el FS cae a 0.71, confirmando el sobreesfuerzo local. La Tabla~\ref{tab:espesores_fondo} resume ambas condiciones.
 
 \begin{table}[H]
 	\centering
@@ -902,12 +902,12 @@ La Figura~\ref{fig:fea2} presenta la distribuci\'on del esfuerzo equivalente de 
 	\label{fig:fea2}
 \end{figure}
 
-La Figura~\ref{fig:fea3} presenta el resultado de mayor relevancia estructural del estudio: la distribuci\'on del factor de seguridad sobre el ensamble fondo-chaqueta bajo la carga combinada t\'ermica e hidrost\'atica. Las zonas en verde corresponden a factores de seguridad superiores a 2, que representan condiciones estructuralmente satisfactorias. Las zonas en amarillo y naranja exhiben factores marginales en el rango de 1 a 2. De particular atenci\'on son las zonas de color rojo, localizadas espec\'ificamente en el nudillo fondo-cil\'indro y en los puntos de anclaje de la chaqueta de media ca\~na, donde el factor de seguridad desciende a un m\'inimo de aproximadamente 0.71. Un factor de seguridad inferior a la unidad implica que el esfuerzo local supera el esfuerzo admisible del SS316L ($S = 115$~MPa a 75\,°C, ASME~Section~II~Part~D) bajo la carga combinada aplicada, constituyendo una condici\'on de sobreesfuerzo local que requiere atenci\'on de dise\~no. Este hallazgo es plenamente consistente con la conclusi\'on del an\'alisis anal\'itico, que determin\'o que el fondo toriesf\'erico opera al l\'imite de su espesor nominal al 100\% de llenado y no cumple el requisito ASME~VIII en esa condici\'on (Tabla~\ref{tab:espesores_fondo}).
+La Figura~\ref{fig:fea3} presenta el resultado de mayor relevancia estructural del estudio: la distribuci\'on del factor de seguridad sobre el ensamble fondo-chaqueta bajo la carga combinada t\'ermica e hidrost\'atica. Las zonas en verde corresponden a factores de seguridad superiores a 2, que representan condiciones estructuralmente satisfactorias. Las zonas en amarillo y naranja exhiben factores marginales en el rango de 1 a 2. De particular atenci\'on son las zonas de color rojo, localizadas espec\'ificamente en el nudillo fondo-cil\'indro y en los puntos de anclaje de la chaqueta de media ca\~na, donde el factor de seguridad desciende a un m\'inimo de aproximadamente 0.71. Un factor de seguridad inferior a la unidad implica que el esfuerzo local supera el esfuerzo admisible del SS316L ($S = 115$~MPa a 75\,°C, ASME~Section~II~Part~D) bajo la carga combinada aplicada, constituyendo una condici\'on de sobreesfuerzo local que requiere atenci\'on de dise\~no. Este hallazgo es plenamente consistente con la conclusi\'on del an\'alisis anal\'itico y el FEA, que determinan que el fondo toriesf\'erico opera al l\'imite de su espesor nominal al 100\% de llenado ($FS = 0.71$) y que la condici\'on segura de operaci\'on es al 80\% de llenado ($FS \geq 1.3$).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\textwidth]{../../results/figures/fea3.png}
-	\caption{Distribuci\'on del factor de seguridad sobre el fondo toriesf\'erico y la chaqueta de media ca\~na bajo carga combinada (hidrost\'atica + t\'ermica 75\,°C). Las zonas en rojo presentan factores de seguridad inferiores a la unidad ($FS_{\min} \approx 0.71$), localizados en el nudillo fondo-cil\'indro y en los puntos de soldadura de la chaqueta, confirmando el sobreesfuerzo local bajo la condici\'on de llenado al 100\%.}
+	\caption{Distribuci\'on del factor de seguridad sobre el fondo toriesf\'erico y la chaqueta de media ca\~na bajo carga combinada (hidrost\'atica + t\'ermica 75\,°C). Las zonas en rojo presentan factores de seguridad inferiores a la unidad ($FS_{\min} \approx 0.71$), localizados en el nudillo fondo-cil\'indro y en los puntos de soldadura de la chaqueta, confirmando el sobreesfuerzo local bajo la condici\'on de llenado al 100\% ($FS = 0.71$) y estableciendo el l\'imite operativo seguro al 80\% ($FS \geq 1.3$).}
 	\label{fig:fea3}
 \end{figure}
 

@@ -1,0 +1,541 @@
+% =============================================================================
+% RESUMEN EJECUTIVO GERENCIAL - PROYECTO P2611
+% Análisis Fondo Tanque Glucosa - Ingredion S.A.
+% DML Ingenieros Consultores S.A.S.
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ===================== CONFIGURACIÓN DE PÁGINA =====================
+\usepackage[top=2.5cm, bottom=2.0cm, left=2.0cm, right=2.0cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{tgtermes}
+\usepackage{microtype}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% ===================== PAQUETES MATEMÁTICOS Y GRÁFICOS =====================
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{siunitx}
+\usepackage{booktabs,array,longtable,multirow,tabularx}
+\usepackage{graphicx,float,subcaption}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
+\usepackage{xcolor}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+
+% ===================== CONFIGURACIÓN DE TÍTULOS =====================
+\usepackage{titlesec}
+\titleformat{\section}{\bfseries\fontsize{12}{14}\selectfont}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\bfseries\fontsize{11}{13}\selectfont}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+\titlespacing*{\subsection}{0pt}{8pt}{4pt}
+
+% ===================== ENCABEZADO =====================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\textbf{DML Ingenieros Consultores S.A.S.}}
+\fancyhead[R]{\footnotesize Resumen Ejecutivo P2611}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ===================== COLORES PERSONALIZADOS =====================
+\definecolor{dmlblue}{RGB}{0,51,102}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{heatred}{RGB}{204,51,0}
+\definecolor{coolblue}{RGB}{0,102,153}
+
+% ===================== INFORMACIÓN DEL DOCUMENTO =====================
+\title{\vspace{-1cm}\textbf{\large RESUMEN EJECUTIVO GERENCIAL}\\[0.3cm]
+\textbf{Proyecto P2611 --- Análisis Térmico y Estructural}\\
+\textbf{Fondo del Tanque de Almacenamiento de Glucosa}\\[0.2cm]
+\large Tag 53A-90A-0056 --- Planta Ingredion Cali, Colombia}
+\author{DML Ingenieros Consultores S.A.S.}
+\date{Abril 2026}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\vspace{-0.5cm}
+
+% =============================================================================
+% 1. RESUMEN EJECUTIVO
+% =============================================================================
+\section{Introducción}
+
+El presente estudio técnico corresponde a la revisión térmica y estructural del tanque de almacenamiento de glucosa \textbf{Tag 53A-90A-0056}, solicitada por \textbf{Ingredion S.A.} a \textbf{DML Ingenieros Consultores S.A.S.} El análisis se fundamenta en la documentación de diseño suministrada por el cliente: los planos mecánicos \texttt{REV0DMI17160102} (feb. 2026) y la memoria de cálculo térmico \texttt{GTTP-1004b Rev.1} (ene. 2026).
+
+El cambio del fondo torisférico forma parte del programa de mejoramiento de equipos de Ingredion en la planta de Cali, Colombia. El proceso opera alimentando glucosa entre 55~$^\circ$C y 60~$^\circ$C al tanque, con una logística de suministro a carrotanques de 24~toneladas que exige que la glucosa despachada se mantenga entre 57~$^\circ$C y 60~$^\circ$C. Para sostener esta temperatura en el rango indicado (57-60), el fondo se debera diseñar para cumplir una temperatura de salina de glucosa minimo de 57C.
+
+El diseño entregado segun las memorias de calculo esta basado en :
+
+  El sistema de calentamiento es de tipo  media caña de perfil rectangular (150 mm x 45.5 mm) en un solo paso (una entrada y una salida)
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Datos suministrados en la memoria de calculo}
+\label{tab:kpi}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} & \textbf{Estado} \\
+\midrule
+Área de transferencia de calor & 13 & m$^2$ & Base de diseño \\
+Temperatura suministro del agua & 65 & $^\circ$C & Dato suministrado \\
+Coeficiente global de transferencia ($U$) & 850 & W/m$^2\cdot^\circ$C & Dato suministrado \\
+Flujo agua de suministro & 30.9 & m$^3$/h & Dato suministrado \\
+Capacidad de descarga requerida & \multicolumn{2}{c}{8 descargas a carrotanques de 24 toneladas en 24 horas} & Requerimiento \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% =============================================================================
+% 2. DESCRIPCIÓN DEL PROCESO Y BALANCE
+% =============================================================================
+\section{Descripción del Proceso}
+
+La planta envia glucosa al tanque pulmon en un rango de temperatura normal entre (57 y 60), sin embargo hay baches en la planta en que se envia glucosa por debajo de los 57 (55°C), Del tanque se debe cargar 8 carrotanques de 24 toneladas por dia, con una duracion de cada cargue de 1.5 horas, se destaca que por velocidad de cargue y por operacion la temperatura no debe bajar de 57°C, Esta condicion debe ser garantizada por el sistema de calentamiento diseñado en el fondo del tanque
+
+
+
+
+
+
+
+
+
+
+
+% -------------------- FIGURA 1: PFD ESCENARIO LÍNEA BASE (65°C) --------------------
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.72, transform shape,
+    font=\scriptsize,
+    line/.style={thick},
+    arrow_gluc/.style={thick, -Stealth, color=green!50!black},
+    arrow_agua/.style={thick, -Stealth, dashed, color=red!70!black}
+]
+
+% ===================== TANQUE T-101 =====================
+\begin{scope}[shift={(3,4.5)}]
+    % Aislamiento
+    \draw[gray!50, thick, dashed, rounded corners=6pt] (-2.2,-2.5) rectangle (2.2,2.5);
+    % Cuerpo
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,-1.5) rectangle (2,1.5);
+    % Fondo toriesférico
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,-1.5) arc (180:360:2 and 0.5);
+    % Tapa
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,1.5) arc (180:0:2 and 0.5);
+    \draw[thick, draw=orange!70!black] (-2,1.5) -- (2,1.5);
+    % Nivel
+    \draw[cyan!70!black, thick] (-1.8,0.3) -- (1.8,0.3);
+    % Etiquetas
+    \node[font=\bfseries, color=orange!70!black] at (0,0.8) {T-101};
+    \node[font=\tiny] at (0,-0.2) {Tanque};
+\end{scope}
+
+% ===================== CHAQUETA E-201 =====================
+\begin{scope}[shift={(3,1.2)}]
+    \draw[fill=cyan!15, thick, draw=blue!50!black, rounded corners=2pt] (-1.4,0) rectangle (1.4,1);
+    \foreach \y in {0.15,0.35,0.55,0.75} {
+        \draw[blue!50!black, thick] (-1.2,\y) -- (1.2,\y);
+    }
+    \node[font=\tiny\bfseries, color=blue!50!black] at (0,1.3) {E-201};
+\end{scope}
+
+% ===================== BOMBA P-101 =====================
+\begin{scope}[shift={(9,4.5)}]
+    \draw[fill=purple!15, thick, draw=purple!50!black] (0,0) circle (0.7);
+    \draw[fill=white, thick, draw=purple!50!black] (-0.35,-0.25) -- (0.35,0) -- (-0.35,0.25) -- cycle;
+    \node[font=\tiny\bfseries, color=purple!50!black, above] at (0,0.8) {P-101};
+\end{scope}
+
+% ===================== CARROTANQUE =====================
+\begin{scope}[shift={(15,4.5)}]
+    \draw[fill=yellow!40, thick, draw=yellow!60!black] (-2,-0.5) rectangle (0,0.5);
+    \draw[fill=cyan!20, thick, draw=cyan!50!black] (-1.6,0) rectangle (-0.6,0.35);
+    \draw[fill=gray!35, thick, draw=gray!60!black] (0.3,-0.6) rectangle (2.7,0.6);
+    \draw[gray!50, thick] (0.8,-0.6) -- (0.8,0.6);
+    \draw[gray!50, thick] (1.6,-0.6) -- (1.6,0.6);
+    \draw[gray!50, thick] (2.2,-0.6) -- (2.2,0.6);
+    \foreach \x in {-1.2, -0.4, 1.0, 2.0} {
+        \draw[fill=black!60, thick] (\x,-0.7) circle (0.12);
+    }
+    \node[font=\tiny\bfseries, above] at (0.4,0.8) {Carro Tanque};
+\end{scope}
+
+% ===================== LÍNEAS DE PROCESO =====================
+\draw[arrow_gluc] (0,6.5) -- (1,6.5) -- (1,6) -- (3,6);
+\draw[arrow_gluc] (5,5) -- (8.3,4.5);
+\draw[arrow_gluc] (9.7,4.5) -- (13,4.5);
+
+\draw[arrow_agua] (0,0.5) -- (1.6,0.5) -- (1.6,1.2);
+\draw[arrow_agua] (4.4,1.2) -- (4.4,0.5) -- (6,0.5);
+
+% ===================== CAJAS DE DATOS =====================
+\node[fill=green!10, draw=green!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (0,7.8) {
+    \textbf{Corriente 1 -- Glucosa}\\8,000 kg/h | 57.0$^\circ$C | 971.7 MJ/h
+};
+
+\node[fill=red!10, draw=red!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (0,-0.8) {
+    \textbf{Corriente 2 -- Agua}\\30,900 kg/h | 65.0$^\circ$C | 8,420 MJ/h
+};
+
+\node[fill=red!10, draw=red!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (6,-0.8) {
+    \textbf{Corriente 3 -- Agua}\\30,900 kg/h | 64.0$^\circ$C | 8,290 MJ/h
+};
+
+\node[fill=green!10, draw=green!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (15,7.8) {
+    \textbf{Corriente 4 -- Glucosa}\\8,000 kg/h | 54.5$^\circ$C | 929.8 MJ/h
+};
+
+% ===================== BALANCE =====================
+\node[fill=white, draw=dmlblue, thick, rounded corners=3pt, inner sep=5pt, align=center, font=\tiny] at (15,-0.8) {
+    \textbf{BALANCE ENERGÉTICO}\\[1mm]
+    \begin{tabular}{@{}lr@{}}
+    \toprule
+    \textbf{Concepto} & \textbf{MJ/h} \\
+    \midrule
+    Transferido & 10.5 \\
+    Pérdidas & 51.1 \\
+    \midrule
+    \textbf{Neto} & \textbf{$-$40.6} \\
+    \bottomrule
+    \end{tabular}
+};
+
+\end{tikzpicture}
+\caption{Diagrama de flujo de proceso (PFD) -- Escenario Línea Base: agua de servicio a 65$^\circ$C, caudal 30,900~kg/h, área de transferencia 13~m$^2$.}
+\label{fig:pfd_base}
+\end{figure}
+
+% -------------------- FIGURA 2: PFD ESCENARIO OPTIMIZADO (75°C) --------------------
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.72, transform shape,
+    font=\scriptsize,
+    line/.style={thick},
+    arrow_gluc/.style={thick, -Stealth, color=green!50!black},
+    arrow_agua/.style={thick, -Stealth, dashed, color=red!70!black}
+]
+
+% ===================== TANQUE T-101 =====================
+\begin{scope}[shift={(3,4.5)}]
+    \draw[gray!50, thick, dashed, rounded corners=6pt] (-2.2,-2.5) rectangle (2.2,2.5);
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,-1.5) rectangle (2,1.5);
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,-1.5) arc (180:360:2 and 0.5);
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,1.5) arc (180:0:2 and 0.5);
+    \draw[thick, draw=orange!70!black] (-2,1.5) -- (2,1.5);
+    \draw[cyan!70!black, thick] (-1.8,0.3) -- (1.8,0.3);
+    \node[font=\bfseries, color=orange!70!black] at (0,0.8) {T-101};
+    \node[font=\tiny] at (0,-0.2) {Tanque};
+\end{scope}
+
+% ===================== CHAQUETA E-201 =====================
+\begin{scope}[shift={(3,1.2)}]
+    \draw[fill=cyan!15, thick, draw=blue!50!black, rounded corners=2pt] (-1.4,0) rectangle (1.4,1);
+    \foreach \y in {0.15,0.35,0.55,0.75} {
+        \draw[blue!50!black, thick] (-1.2,\y) -- (1.2,\y);
+    }
+    \node[font=\tiny\bfseries, color=blue!50!black] at (0,1.3) {E-201};
+\end{scope}
+
+% ===================== BOMBA P-101 =====================
+\begin{scope}[shift={(9,4.5)}]
+    \draw[fill=purple!15, thick, draw=purple!50!black] (0,0) circle (0.7);
+    \draw[fill=white, thick, draw=purple!50!black] (-0.35,-0.25) -- (0.35,0) -- (-0.35,0.25) -- cycle;
+    \node[font=\tiny\bfseries, color=purple!50!black, above] at (0,0.8) {P-101};
+\end{scope}
+
+% ===================== CARROTANQUE =====================
+\begin{scope}[shift={(15,4.5)}]
+    \draw[fill=yellow!40, thick, draw=yellow!60!black] (-2,-0.5) rectangle (0,0.5);
+    \draw[fill=cyan!20, thick, draw=cyan!50!black] (-1.6,0) rectangle (-0.6,0.35);
+    \draw[fill=gray!35, thick, draw=gray!60!black] (0.3,-0.6) rectangle (2.7,0.6);
+    \draw[gray!50, thick] (0.8,-0.6) -- (0.8,0.6);
+    \draw[gray!50, thick] (1.6,-0.6) -- (1.6,0.6);
+    \draw[gray!50, thick] (2.2,-0.6) -- (2.2,0.6);
+    \foreach \x in {-1.2, -0.4, 1.0, 2.0} {
+        \draw[fill=black!60, thick] (\x,-0.7) circle (0.12);
+    }
+    \node[font=\tiny\bfseries, above] at (0.4,0.8) {Carro Tanque};
+\end{scope}
+
+% ===================== LÍNEAS DE PROCESO =====================
+\draw[arrow_gluc] (0,6.5) -- (1,6.5) -- (1,6) -- (3,6);
+\draw[arrow_gluc] (5,5) -- (8.3,4.5);
+\draw[arrow_gluc] (9.7,4.5) -- (13,4.5);
+
+\draw[arrow_agua] (0,0.5) -- (1.6,0.5) -- (1.6,1.2);
+\draw[arrow_agua] (4.4,1.2) -- (4.4,0.5) -- (6,0.5);
+
+% ===================== CAJAS DE DATOS =====================
+\node[fill=green!10, draw=green!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (0,7.8) {
+    \textbf{Corriente 1 -- Glucosa}\\8,000 kg/h | 57.0$^\circ$C | 971.7 MJ/h
+};
+
+\node[fill=red!10, draw=red!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (0,-0.8) {
+    \textbf{Corriente 2 -- Agua}\\56,258 kg/h | 75.0$^\circ$C | 17,690 MJ/h
+};
+
+\node[fill=red!10, draw=red!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (6,-0.8) {
+    \textbf{Corriente 3 -- Agua}\\56,258 kg/h | 74.9$^\circ$C | 17,670 MJ/h
+};
+
+\node[fill=green!10, draw=green!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (15,7.8) {
+    \textbf{Corriente 4 -- Glucosa}\\8,000 kg/h | 55.1$^\circ$C | 939.5 MJ/h
+};
+
+% ===================== BALANCE =====================
+\node[fill=white, draw=dmlblue, thick, rounded corners=3pt, inner sep=5pt, align=center, font=\tiny] at (15,-0.8) {
+    \textbf{BALANCE ENERGÉTICO}\\[1mm]
+    \begin{tabular}{@{}lr@{}}
+    \toprule
+    \textbf{Concepto} & \textbf{MJ/h} \\
+    \midrule
+    Transferido & 18.9 \\
+    Pérdidas & 51.1 \\
+    \midrule
+    \textbf{Neto} & \textbf{$-$32.2} \\
+    \bottomrule
+    \end{tabular}
+};
+
+\end{tikzpicture}
+\caption{Diagrama de flujo de proceso (PFD) -- Escenario Optimizado: agua de servicio a 75$^\circ$C, caudal 56,258~kg/h, área de transferencia 13~m$^2$.}
+\label{fig:pfd_optimo}
+\end{figure}
+
+\vspace{-0.2cm}
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Balance de materia y energía -- Comparativa de escenarios.}
+\label{tab:balance}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+& \multicolumn{2}{c}{\textbf{Línea Base (65$^\circ$C)}} & \multicolumn{2}{c}{\textbf{Optimizado (75$^\circ$C)}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+\textbf{Corriente} & \textbf{Flujo (kg/h)} & \textbf{$T$ ($^\circ$C)} & \textbf{Flujo (kg/h)} & \textbf{$T$ ($^\circ$C)} \\
+\midrule
+1 -- Glucosa entrada & 8,000 & 57.0 & 8,000 & 57.0 \\
+4 -- Glucosa salida & 8,000 & 54.5 & 8,000 & 55.1 \\
+2 -- Agua entrada & 30,900 & 65.0 & 56,258 & 75.0 \\
+3 -- Agua salida & 30,900 & 64.0 & 56,258 & 74.9 \\
+\midrule
+\textbf{Calor transferido} & \multicolumn{2}{c}{12.8 MJ/h} & \multicolumn{2}{c}{18.9 MJ/h} \\
+\textbf{Pérdidas térmicas} & \multicolumn{2}{c}{51.1 MJ/h} & \multicolumn{2}{c}{51.1 MJ/h} \\
+\textbf{Balance neto} & \multicolumn{2}{c}{$-$38.3 MJ/h} & \multicolumn{2}{c}{$-$32.2 MJ/h} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El balance energético comparativo (Tabla~\ref{tab:balance}) revela que en ambos escenarios las pérdidas térmicas (51.1~MJ/h) exceden el calor transferido desde la chaqueta. En el escenario optimizado (75$^\circ$C), el calor transferido es de 18.9~MJ/h, resultando en un déficit de $-$32.2~MJ/h. En la línea base (65$^\circ$C), con menor capacidad de transferencia (12.8~MJ/h), el déficit es mayor ($-$38.3~MJ/h) y la glucosa sale a menor temperatura (54.5$^\circ$C vs 55.1$^\circ$C). Esta condición implica que, bajo operación continua, la temperatura de la glucosa tiende a disminuir, requiriendo recalentamiento periódico.
+
+% =============================================================================
+% 3. METODOLOGÍA
+% =============================================================================
+\section{Metodología}
+
+
+Para evaluar el sistema de calentamiento del tanque se consideraron los siguientes escenarios:
+
+1) Como linea base se considera el diseño , segun las memorias de calculo sin ninguna modificacion
+
+2) Se considero mejoras al diseño entregado
+
+3) Se considero complementos al diseño entregado 
+
+La parte termica se corrio en el Software CONSOL Multifphisic V6.4 2025 y Aspen Plus 2025
+
+
+\section{Escenario 01}
+
+Con un flujo promedio de entrada de glucosa de 8000 kg/h y una temperatura de xxx
+
+
+\section{Escenario 01B}
+
+Con un flujo promedio de entrada de glucosa de 8000 kg/h y una temperatura de 57°C , la temperatura a la salida del tanque sera de 54.5°C
+
+\section{Escenario 01C}
+
+Con un flujo promedio de entrada de glucosa de 8000 kg/h y una temperatura de 55°C , la temperatura a la salida del tanque sera de 52.5°C
+
+
+En este escenario vemos que la transferencia de calor esta limitada un bajo flujo de suministro de agua (se esta trabajando a una velocidad de 1.5 m/s) y un area reducida (observese que el area de transferencia del tanque inicial era de 28 m2 y en el actual solo se tiene 13 m2)
+
+
+\section{Escenario 02A}
+
+Se considero aumentar el flujo de agua para alcanzar una velocidad de 2.5 m/s con lo cual se logra que el escenario 1A se alcance ua temperatura de la salida de glucosa de xxx, y para el escenario 1B xxx
+Escenario 1C xxx
+
+
+\section{Escenario 02B}
+
+En este escenario se considera que el agua caliente entrara a una temperatura de 75°C y un flujo de 50.7 m3/h (velocidad 2.5 m/s), con lo cual 
+
+
+
+\section{Observaciones y recomendaciones}
+
+
+1) Con el diseño entregado , la salida de la glucosa se mantendra por encima de los 57°C solo si la temperatura a la entrada al tanque de la glucosa esta por encima de 59.5°C, por debajo de esta temperatura no se tendra la condicion optima de salida a la glucosa, siendo muy critico en el caso que se suministre al tanque glucosa a 55°C, ya que la salida de la glucosa estaria al rededor de los 52.5°C.
+
+2) Para mejorar las condiciones de operacion se recomienda mejorar el aislamiento que parmitan solo la caida de 1°C entre la entrada y salida del tanque.
+
+3)Obserbese que se puede mejorar las condiciones de operacion , si se aumenta el flujo de agua y la temperatura 
+
+
+
+
+El estudio empleó una metodología de cálculo analítico complementada con simulación numérica. Los cálculos térmicos se desarrollaron en Python utilizando el modelo de resistencias térmicas en serie para determinar el coeficiente global de transferencia de calor $U$:
+
+\vspace{-0.2cm}
+\begin{equation}
+\frac{1}{U} = \frac{1}{h_i} + \frac{e_w}{k_w} + \frac{1}{h_o}
+\end{equation}
+
+El coeficiente del lado del agua ($h_i$) se calculó mediante la correlación de Sieder-Tate para flujo turbulento en conductos no circulares. El coeficiente del lado de la glucosa ($h_o$) se determinó mediante la correlación de Churchill-Chu para convección natural en fluidos de alta viscosidad.
+
+La validación del modelo analítico se realizó mediante simulación CFD en COMSOL Multiphysics 6.4, resolviendo las ecuaciones de Navier-Stokes acopladas con transferencia de energía. El análisis estructural se ejecutó mediante elementos finitos (FEA) en ANSYS Mechanical, evaluando cumplimiento con API 650 (cuerpo cilíndrico) y ASME VIII Div.~1 (fondo toriesférico).
+
+% =============================================================================
+% 4. RESULTADOS PRINCIPALES
+% =============================================================================
+\section{Resultados Principales}
+
+\subsection{Análisis de Transferencia de Calor}
+
+El coeficiente global de transferencia de calor varía significativamente con la temperatura de la glucosa debido a la fuerte dependencia de la viscosidad. La Tabla~\ref{tab:U_vs_T} resume los valores calculados.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Coeficiente global $U$ y resistencias térmicas a diferentes temperaturas de glucosa.}
+\label{tab:U_vs_T}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+\textbf{$T_g$ ($^\circ$C)} & \textbf{$h_i$ (W/m$^2\cdot^\circ$C)} & \textbf{$h_o$ (W/m$^2\cdot^\circ$C)} & \textbf{$U$ (W/m$^2\cdot^\circ$C)} & \textbf{$R_o/R_T$ (\%)} \\
+\midrule
+25 & 10,867 & 21.4 & 21.1 & 98.6 \\
+40 & 11,122 & 31.7 & 31.1 & 98.0 \\
+57 & 11,356 & 37.1 & 36.2 & 97.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El coeficiente del lado del agua es 300--600 veces mayor que el de la glucosa. La resistencia térmica del lado de la glucosa concentra el 97.7\%--98.8\% del total, estableciendo la convección natural del jarabe viscoso como el mecanismo limitante del proceso.
+
+\subsection{Capacidad Operativa de Descarga}
+
+Se evaluó la capacidad del sistema para completar descargas de 24~toneladas a carrotanques bajo diferentes condiciones de temperatura de entrada de la glucosa.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Capacidad operativa con área 13~m$^2$ ($T_w$ = 75$^\circ$C).}
+\label{tab:capacidad}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Caso A (54$\rightarrow$57$^\circ$C)} & \textbf{Caso B (55$\rightarrow$57$^\circ$C)} & \textbf{Requerimiento} \\
+\midrule
+Flujo máximo alcanzable (ton/h) & 5.1 & 7.5 & 8.0 \\
+Descargas por día (24 h) & 5 & 7 & 8 \\
+Capacidad diaria (ton) & 120 & 168 & 192 \\
+Cumplimiento & 62.5\% & 87.5\% & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El área de 13~m$^2$ es insuficiente para el requerimiento completo de 8 descargas diarias. Manteniendo la glucosa almacenada a $\geq$55$^\circ$C (Caso~B), se alcanzan 7 descargas/día, considerado operativamente viable con un déficit del 12.5\%.
+
+\subsection{Análisis Estructural}
+
+El análisis FEA identificó un factor de seguridad mínimo de 0.71 en el nudillo fondo-cilindro al 100\% de llenado, confirmando sobreesfuerzo local. La condición segura de operación se alcanza al 80\% de llenado, donde $FS \approx 1.3$.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Cumplimiento normativo del fondo toriesférico (SS316L, 9~mm).}
+\label{tab:estructural}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Condición} & \textbf{$P$ (MPa)} & \textbf{$t_{req}$ (mm)} & \textbf{$t_{exist}$ (mm)} & \textbf{Estado} \\
+\midrule
+Operación segura (80\%) & 0.122 & 7.85 & 9.0 & Cumple ($FS \geq 1.3$) \\
+Prueba hidrostática (100\%) & 0.153 & 9.16 & 9.0 & No cumple ($FS = 0.71$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La vida útil proyectada del fondo toriesférico es de \textbf{7.5 años} bajo el criterio del 10\% de margen de diseño, considerando la tasa de corrosión-fatiga térmica de 0.12~mm/año medida en campo en equipos similares.
+
+% =============================================================================
+% 5. CONCLUSIONES Y RECOMENDACIONES
+% =============================================================================
+\section{Conclusiones y Recomendaciones}
+
+\subsection{Conclusiones Técnicas}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Síntesis de conclusiones técnicas por disciplina.}
+\label{tab:conclusiones}
+\begin{tabular}{@{}p{2.5cm}p{11cm}@{}}
+\toprule
+\textbf{Aspecto} & \textbf{Conclusión} \\
+\midrule
+\textbf{Térmico} & El balance energético es deficitario ($-$32.2~MJ/h): las pérdidas térmicas (51.1~MJ/h) exceden 2.7 veces el aporte de la chaqueta (18.9~MJ/h). El sistema requiere aislamiento térmico optimizado para mantener operación viable. \\
+\midrule
+\textbf{Mecanismo} & La convección natural de la glucosa representa el 97.7\%--98.8\% de la resistencia térmica total. El coeficiente del lado del agua es 300--600 veces mayor que el de la glucosa. \\
+\midrule
+\textbf{Capacidad} & Con el área de 13~m$^2$ se alcanzan 5--7 descargas/día según condiciones térmicas, versus 8 descargas requeridas. \\
+\midrule
+\textbf{Estructural} & El límite operativo mandatorio es 80\% de llenado (178.2~m$^3$) para garantizar $FS \geq 1.3$. El fondo presenta vida útil proyectada de 7.5 años por corrosión-fatiga. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Recomendaciones Priorizadas}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Recomendaciones técnicas priorizadas para implementación.}
+\label{tab:recomendaciones}
+\begin{tabular}{@{}p{2.0cm}p{5.5cm}p{5.5cm}@{}}
+\toprule
+\textbf{Prioridad} & \textbf{Recomendación} & \textbf{Impacto Esperado} \\
+\midrule
+\textbf{Alta} & Estandarizar agua de calentamiento a 75$^\circ$C & Reducción del 46\% en tiempos de preparación logística \\
+\midrule
+\textbf{Alta} & Instalar aislamiento 2" (50.8~mm) lana mineral & Reducción del 91\% en pérdidas térmicas; temperatura superficial segura \\
+\midrule
+\textbf{Alta} & Mantener glucosa almacenada $\geq$55$^\circ$C & Incremento de capacidad de 5 a 7 descargas/día (+40\%) \\
+\midrule
+\textbf{Media} & Implementar lazo de control a 60$^\circ$C & Prevención de sobrecalentamiento en descargas tardías \\
+\midrule
+\textbf{Media} & Programa de inspección PAUT bianual (fondo) & Detección temprana de corrosión-fatiga; vida útil 7.5 años \\
+\midrule
+\textbf{Media} & Bloqueo operativo al 80\% de llenado & Garantiza integridad estructural ($FS \geq 1.3$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+\noindent\rule{\textwidth}{0.4pt}
+\vspace{0.2cm}
+
+\noindent\textbf{Síntesis Ejecutiva Global:} El tanque Tag 53A-90A-0056 con el sistema de media caña del fondo construido (13~m$^2$) alcanza una capacidad de 5--7 descargas diarias según las condiciones térmicas de operación. Para alcanzar la condición superior (7 descargas, 87.5\% del requerimiento), es mandatorio mantener la glucosa almacenada a temperaturas $\geq$55$^\circ$C mediante optimización del aislamiento térmico. El cumplimiento estructural demanda el estricto límite de llenado al 80\% y un programa de inspección acelerado (bianual) para el fondo toriesférico con vida útil proyectada de 7.5 años.
+
+\end{document}

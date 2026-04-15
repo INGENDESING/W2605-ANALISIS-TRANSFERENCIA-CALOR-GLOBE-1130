@@ -116,7 +116,7 @@ Para los Escenarios~2 y 3, el ciclo de descargas se simula con un per\'iodo de 3
 \subsubsection{Comparativa de Configuraciones de Chaqueta}
 \label{sec:comp_chaquetas}
 
-El estudio contempla la comparación cuantitativa entre la configuración de chaqueta actualmente instalada en el fondo toriesférico y la configuración propuesta. La chaqueta actual corresponde a un diseño tipo \textit{dimple} con un área efectiva de transferencia de $A_{actual} = 28$\,m\textsuperscript{2} distribuida en tres circuitos de agua en paralelo (tres entradas y tres salidas), mientras que la chaqueta propuesta es una espiral de media caña rectangular de paso único con $A_{prop} = 13$\,m\textsuperscript{2}. Ambas operan con las mismas condiciones de servicio: $T_w = 75$\,°C y $v = 2.5$\,m/s.
+El estudio contempla la comparación cuantitativa entre la configuración de chaqueta actualmente instalada en el fondo toriesférico y la configuración del fondo de reemplazo. La chaqueta actual corresponde a un diseño tipo \textit{dimple} con un área efectiva de transferencia de $A_{actual} = 28$\,m\textsuperscript{2} distribuida en tres circuitos de agua en paralelo (tres entradas y tres salidas), mientras que la chaqueta del fondo de reemplazo es una espiral de media caña rectangular de paso único con $A_{reemp} = 13$\,m\textsuperscript{2}. Ambas operan con las mismas condiciones de servicio: $T_w = 75$\,°C y $v = 2.5$\,m/s.
 
 Una consideración metodológica fundamental es que el coeficiente global de transferencia de calor $U$ es prácticamente invariante entre ambas configuraciones. Esta condición se sustenta en que la resistencia del lado de la glucosa —gobernada por convección natural y controlada por la viscosidad del jarabe— concentra entre el 97.7\,\% y el 98.8\,\% de la resistencia térmica total del sistema, con independencia de la geometría de la chaqueta. Por consiguiente, la única diferencia operacional cuantificable entre las dos configuraciones es el área de contacto $A$.
 
@@ -166,7 +166,7 @@ El an\'alisis estructural incluye adicionalmente las siguientes cargas, evaluada
 		\toprule
 		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Tipo de Carga} & \textbf{Valor} & \textbf{Norma} \\
 		\midrule
-		& Presión hidrostática (llenado al 90\%) & Variable por virola & API 650 §5.6 \\
+		& Presión hidrostática (llenado al 80\%, condición operativa segura) & Variable por virola & API 650 §5.6 \\
 		& Peso propio del tanque y contenido & Calculado & API 650 §5.2 \\
 		& Carga de viento (velocidad máxima) & 120 km/h & NSR-10 \\
 		& Carga sísmica (zona intermedia, Cali) & Según coeficientes & NSR-10 / API 650 App. E \\
@@ -193,7 +193,7 @@ donde $R_{conv,i} = 1/h_i$ es la resistencia de convecci\'on interna, $R_{perfil
 
 \subsubsection{CFD --- COMSOL Multiphysics (Parte I)}
 
-La simulaci\'on CFD tiene como objetivo complementar los c\'alculos anal\'iticos con la distribuci\'on espacial de temperaturas y velocidades en el tanque. A continuaci\'on se describe la metodolog\'ia paso a paso propuesta.
+La simulaci\'on CFD tiene como objetivo complementar los c\'alculos anal\'iticos con la distribuci\'on espacial de temperaturas y velocidades en el tanque. A continuaci\'on se describe la metodolog\'ia de simulaci\'on paso a paso.
 
 \textbf{Paso 1: Geometr\'ia.} Se construir\'a un modelo 3D del fondo toriesf\'erico con las dimensiones reales ($D_i = 5264$~mm, $t = 9$~mm, $H = 1266$~mm) incluyendo la chaqueta de media ca\~na en espiral (perfil rectangular 141~mm $\times$ 45.5~mm, paso 196~mm). El dominio del fluido comprender\'a tres regiones: (a)~el canal de la media ca\~na (agua), (b)~la pared del tanque (s\'olido SS316L) y (c)~el volumen interior del tanque (glucosa). La geometr\'ia se importar\'a desde un modelo CAD o se construir\'a mediante las herramientas param\'etricas de COMSOL. Si el costo computacional del modelo completo resulta excesivo, se evaluar\'a un modelo 2D axisim\'etrico con la espiral proyectada como anillos conc\'entricos equivalentes.
 
@@ -211,7 +211,7 @@ La simulaci\'on CFD tiene como objetivo complementar los c\'alculos anal\'iticos
 
 \subsubsection{FEA --- ANSYS (Parte II)}
 
-La simulaci\'on FEA tiene como objetivo evaluar la distribuci\'on de esfuerzos y deformaciones en el tanque bajo las condiciones de carga combinadas. A continuaci\'on se describe la metodolog\'ia propuesta.
+La simulaci\'on FEA tiene como objetivo evaluar la distribuci\'on de esfuerzos y deformaciones en el tanque bajo las condiciones de carga combinadas. A continuaci\'on se describe la metodolog\'ia de simulaci\'on.
 
 \textbf{Paso 1: Geometr\'ia CAD.} Se construir\'a un modelo 3D del tanque completo, incluyendo: (a)~fondo toriesf\'erico ($D_i = 5264$~mm, $t = 9$~mm, radio de corona $L = D_i$, radio de nudillo $r = 0.06 D_i$), (b)~cuerpo cil\'indrico ($D_i = 5264$~mm, $t = 6$~mm, $H = 9670$~mm), (c)~chaqueta de media ca\~na en espiral ($t_{perfil} = 4.5$~mm). Los espesores del modelo corresponder\'an a los espesores originales de fabricaci\'on (sin descontar corrosi\'on), ya que el modelo FEA representa la condici\'on del tanque tal como fue construido. La evaluaci\'on del efecto de la corrosi\'on se realizar\'a mediante comparaci\'on de los esfuerzos calculados con los esfuerzos admisibles reducidos.
 
@@ -232,7 +232,7 @@ La simulaci\'on FEA tiene como objetivo evaluar la distribuci\'on de esfuerzos y
 		\toprule
 		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Caso de Carga} & \textbf{Descripci\'on} \\
 		\midrule
-		& Caso 1 --- Operaci\'on normal & Presi\'on hidrost\'atica de glucosa (llenado al 90\%, $\rho = 1410$~kg/m\textsuperscript{3}), peso propio, presi\'on del agua en la media ca\~na y gradiente t\'ermico ($\Delta T = 48.5$~°C en el fondo). \\
+		& Caso 1 --- Operaci\'on normal & Presi\'on hidrost\'atica de glucosa (llenado al 80\%, $\rho = 1410$~kg/m\textsuperscript{3}, $FS \geq 1.3$), peso propio, presi\'on del agua en la media ca\~na y gradiente t\'ermico ($\Delta T = 48.5$~°C en el fondo). \\
 		& Caso 2 --- Operaci\'on + viento & Caso~1 m\'as presi\'on de viento (120~km/h, perfil seg\'un API~650). \\
 		& Caso 3 --- Operaci\'on + sismo & Caso~1 m\'as carga s\'ismica (NSR-10, $C_s = 0.391$, distribuci\'on impulsiva seg\'un API~650 Ap\'endice~E). \\
 		& Caso 4 --- Prueba hidrost\'atica & Llenado al 100\% con agua ($\rho = 1000$~kg/m\textsuperscript{3}) a temperatura ambiente, sin cargas t\'ermicas. \\

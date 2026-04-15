@@ -1,0 +1,2337 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1600"
+   height="1100"
+   viewBox="0 0 1600 1100"
+   version="1.1"
+   id="svg164"
+   sodipodi:docname="PFD_Escenario_01C.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   inkscape:export-filename="PFD_Escenario_01c.pdf"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview164"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.65"
+     inkscape:cx="720.30303"
+     inkscape:cy="507.57576"
+     inkscape:window-width="3840"
+     inkscape:window-height="2054"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g107" />
+  <title
+     id="title1">PFD Escenario 01A - Proyecto P2611</title>
+  <desc
+     id="desc1">Diagrama de Flujo de Proceso - Sistema de Almacenamiento de Glucosa con chaqueta de calentamiento</desc>
+  <!-- ====== DEFS ====== -->
+  <defs
+     id="defs27">
+    <linearGradient
+       id="bgGrad"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#F8FAFC"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#EEF2F7"
+         id="stop2" />
+    </linearGradient>
+    <pattern
+       id="grid"
+       width="40"
+       height="40"
+       patternUnits="userSpaceOnUse">
+      <path
+         d="M 40 0 L 0 0 0 40"
+         fill="none"
+         stroke="#E2E8F0"
+         stroke-width="0.5"
+         opacity="0.6"
+         id="path2" />
+    </pattern>
+    <linearGradient
+       id="tankBody"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0">
+      <stop
+         offset="0%"
+         stop-color="#FFF8E1"
+         id="stop3" />
+      <stop
+         offset="30%"
+         stop-color="#FFFDE7"
+         id="stop4" />
+      <stop
+         offset="70%"
+         stop-color="#FFFDE7"
+         id="stop5" />
+      <stop
+         offset="100%"
+         stop-color="#FFF8E1"
+         id="stop6" />
+    </linearGradient>
+    <linearGradient
+       id="tankStroke"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0">
+      <stop
+         offset="0%"
+         stop-color="#BF360C"
+         id="stop7" />
+      <stop
+         offset="50%"
+         stop-color="#E65100"
+         id="stop8" />
+      <stop
+         offset="100%"
+         stop-color="#BF360C"
+         id="stop9" />
+    </linearGradient>
+    <linearGradient
+       id="glucosaLiquid"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#FFE0B2"
+         stop-opacity="0.5"
+         id="stop10" />
+      <stop
+         offset="100%"
+         stop-color="#FFB74D"
+         stop-opacity="0.35"
+         id="stop11" />
+    </linearGradient>
+    <radialGradient
+       id="pumpGrad"
+       cx="33.393884"
+       cy="32.940163"
+       r="34.437443"
+       gradientTransform="scale(1.1978241,0.83484711)"
+       fx="33.393884"
+       fy="32.940163"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#CE93D8"
+         id="stop12" />
+      <stop
+         offset="100%"
+         stop-color="#AB47BC"
+         id="stop13" />
+    </radialGradient>
+    <linearGradient
+       id="truckTankGrad"
+       x1="40.973023"
+       y1="1.2950594"
+       x2="40.973023"
+       y2="95.402711"
+       gradientTransform="scale(1.7267459,0.57912401)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#ECEFF1"
+         id="stop14" />
+      <stop
+         offset="50%"
+         stop-color="#CFD8DC"
+         id="stop15" />
+      <stop
+         offset="100%"
+         stop-color="#B0BEC5"
+         id="stop16" />
+    </linearGradient>
+    <linearGradient
+       id="jacketGrad"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#BBDEFB"
+         id="stop17" />
+      <stop
+         offset="100%"
+         stop-color="#90CAF9"
+         id="stop18" />
+    </linearGradient>
+    <linearGradient
+       id="titleGrad"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0">
+      <stop
+         offset="0%"
+         stop-color="#0D47A1"
+         id="stop19" />
+      <stop
+         offset="50%"
+         stop-color="#1565C0"
+         id="stop20" />
+      <stop
+         offset="100%"
+         stop-color="#0D47A1"
+         id="stop21" />
+    </linearGradient>
+    <linearGradient
+       id="stationGrad"
+       x1="8.9413292"
+       y1="29.749492"
+       x2="8.9413292"
+       y2="126.82678"
+       gradientTransform="scale(1.5657627,0.63866637)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#E8EAF6"
+         id="stop22" />
+      <stop
+         offset="100%"
+         stop-color="#C5CAE9"
+         id="stop23" />
+    </linearGradient>
+    <filter
+       id="shadow"
+       x="-5%"
+       y="-5%"
+       width="115%"
+       height="115%">
+      <feDropShadow
+         dx="2"
+         dy="3"
+         stdDeviation="4"
+         flood-color="#1A237E"
+         flood-opacity="0.12" />
+    </filter>
+    <filter
+       id="shadowSm"
+       x="-3%"
+       y="-3%"
+       width="108%"
+       height="108%">
+      <feDropShadow
+         dx="1"
+         dy="1.5"
+         stdDeviation="2"
+         flood-color="#000"
+         flood-opacity="0.1" />
+    </filter>
+    <marker
+       id="arrowGreen"
+       markerWidth="12"
+       markerHeight="8"
+       refX="11"
+       refY="4"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0 0 L 12 4 L 0 8 L 3 4 Z"
+         fill="#2E7D32"
+         id="path23" />
+    </marker>
+    <marker
+       id="arrowRed"
+       markerWidth="12"
+       markerHeight="8"
+       refX="11"
+       refY="4"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0 0 L 12 4 L 0 8 L 3 4 Z"
+         fill="#C62828"
+         id="path24" />
+    </marker>
+    <marker
+       id="arrowCyan"
+       markerWidth="12"
+       markerHeight="8"
+       refX="11"
+       refY="4"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0 0 L 12 4 L 0 8 L 3 4 Z"
+         fill="#00838F"
+         id="path25" />
+    </marker>
+    <marker
+       id="arrowPurple"
+       markerWidth="12"
+       markerHeight="8"
+       refX="11"
+       refY="4"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0 0 L 12 4 L 0 8 L 3 4 Z"
+         fill="#7B1FA2"
+         id="path26" />
+    </marker>
+    <marker
+       id="arrowIndigo"
+       markerWidth="12"
+       markerHeight="8"
+       refX="11"
+       refY="4"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0 0 L 12 4 L 0 8 L 3 4 Z"
+         fill="#283593"
+         id="path27" />
+    </marker>
+    <marker
+       id="arrowGreen-0"
+       markerWidth="12"
+       markerHeight="8"
+       refX="11"
+       refY="4"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0,0 12,4 0,8 3,4 Z"
+         fill="#2e7d32"
+         id="path23-9" />
+    </marker>
+    <marker
+       id="arrowGreen-0-8"
+       markerWidth="12"
+       markerHeight="8"
+       refX="11"
+       refY="4"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0,0 12,4 0,8 3,4 Z"
+         fill="#2e7d32"
+         id="path23-9-2" />
+    </marker>
+  </defs>
+  <!-- ====== FONDO ====== -->
+  <rect
+     width="1600"
+     height="1100"
+     fill="url(#bgGrad)"
+     id="rect27" />
+  <rect
+     width="1600"
+     height="1100"
+     fill="url(#grid)"
+     id="rect28" />
+  <polyline
+     points="838,783 838,810 838,866"
+     fill="none"
+     stroke="#2e7d32"
+     stroke-width="3"
+     stroke-linejoin="round"
+     marker-end="url(#arrowGreen-0-8)"
+     id="polyline103-8-5"
+     transform="matrix(-0.01100097,-0.96083192,1.9610349,-0.00539005,-470.81143,1617.5715)"
+     style="marker-end:url(#arrowGreen-0-8)" />
+  <polyline
+     points="838,783 838,810 838,866"
+     fill="none"
+     stroke="#2e7d32"
+     stroke-width="3"
+     stroke-linejoin="round"
+     marker-end="url(#arrowGreen-0)"
+     id="polyline103-8"
+     transform="matrix(-0.02019914,-0.66128207,3.6007031,-0.00370964,-2234.9263,1332.3011)"
+     style="marker-end:url(#arrowGreen-0)" />
+  <!-- ====== BARRA DE TITULO ====== -->
+  <g
+     id="g30">
+    <rect
+       x="40"
+       y="15"
+       width="1520"
+       height="55"
+       rx="10"
+       fill="url(#titleGrad)"
+       id="rect29" />
+    <text
+       x="800"
+       y="38"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="20"
+       font-weight="700"
+       fill="#FFF"
+       text-anchor="middle"
+       letter-spacing="1.5"
+       id="text29">PFD ESCENARIO 01C — Sistema de Almacenamiento de Glucosa</text>
+    <text
+       x="800"
+       y="58"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#B3D4FC"
+       text-anchor="middle"
+       id="text30">Proyecto P2611  |  DML Ingenieros Consultores SAS</text>
+  </g>
+  <text
+     x="800"
+     y="88"
+     font-family="'Segoe UI', Tahoma, sans-serif"
+     font-size="11.5"
+     fill="#546E7A"
+     text-anchor="middle"
+     id="text31">
+    Agua caliente 65 °C  ·  Caudal agua 30.900 kg/h  ·  Área chaqueta 13 m²  ·  Viento 1.5 m/s  ·  Caudal glucosa 8.000 kg/h
+  </text>
+  <!-- ====== VIENTO ====== -->
+  <g
+     transform="translate(460, 115)"
+     id="g34">
+    <rect
+       x="-55"
+       y="-12"
+       width="110"
+       height="65"
+       rx="8"
+       fill="#E0F7FA"
+       stroke="#00838F"
+       stroke-width="1"
+       opacity="0.7"
+       id="rect31" />
+    <text
+       x="0"
+       y="5"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="12"
+       font-weight="600"
+       fill="#00695C"
+       text-anchor="middle"
+       id="text32">Viento</text>
+    <text
+       x="0"
+       y="20"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#00838F"
+       text-anchor="middle"
+       id="text33">v = 1.5 m/s</text>
+    <line
+       x1="-35"
+       y1="32"
+       x2="35"
+       y2="32"
+       stroke="#00838F"
+       stroke-width="2.5"
+       marker-end="url(#arrowCyan)"
+       id="line33" />
+    <line
+       x1="-25"
+       y1="42"
+       x2="25"
+       y2="42"
+       stroke="#00838F"
+       stroke-width="1.8"
+       marker-end="url(#arrowCyan)"
+       id="line34" />
+  </g>
+  <!-- ================================================================ -->
+  <!--                  TANQUE T-101                                    -->
+  <!-- ================================================================ -->
+  <g
+     id="tank-T101"
+     transform="translate(360, 190)">
+    <rect
+       x="-20"
+       y="-15"
+       width="240"
+       height="360"
+       rx="14"
+       fill="none"
+       stroke="#90A4AE"
+       stroke-width="1.5"
+       stroke-dasharray="6,4"
+       opacity="0.5"
+       id="rect34" />
+    <rect
+       x="10"
+       y="50"
+       width="180"
+       height="220"
+       fill="url(#tankBody)"
+       stroke="url(#tankStroke)"
+       stroke-width="3"
+       rx="2"
+       id="rect35" />
+    <path
+       d="M 10,50 Q 100,-15 190,50"
+       fill="url(#tankBody)"
+       stroke="url(#tankStroke)"
+       stroke-width="3"
+       id="path35" />
+    <path
+       d="M 20,50 Q 100,-5 180,50"
+       fill="none"
+       stroke="#E65100"
+       stroke-width="0.8"
+       opacity="0.4"
+       id="path36" />
+    <path
+       d="M 10,270 Q 100,345 190,270"
+       fill="url(#tankBody)"
+       stroke="url(#tankStroke)"
+       stroke-width="3"
+       id="path37" />
+    <path
+       d="M 10,270 Q 100,320 190,270"
+       fill="none"
+       stroke="#E65100"
+       stroke-width="1"
+       stroke-dasharray="4,3"
+       opacity="0.5"
+       id="path38" />
+    <rect
+       x="13"
+       y="94"
+       width="174"
+       height="176"
+       fill="url(#glucosaLiquid)"
+       id="rect38" />
+    <line
+       x1="13"
+       y1="94"
+       x2="187"
+       y2="94"
+       stroke="#FF9800"
+       stroke-width="2.5"
+       stroke-dasharray="8,3"
+       id="line38" />
+    <rect
+       x="190"
+       y="85"
+       width="42"
+       height="18"
+       rx="4"
+       fill="#FFF3E0"
+       stroke="#FF9800"
+       stroke-width="1"
+       id="rect39" />
+    <text
+       x="211"
+       y="98"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       font-weight="700"
+       fill="#E65100"
+       text-anchor="middle"
+       id="text39">80%</text>
+    <!-- Boquillas -->
+    <rect
+       x="-18"
+       y="55"
+       width="30"
+       height="12"
+       rx="2"
+       fill="#E8F5E9"
+       stroke="#2E7D32"
+       stroke-width="2"
+       id="rect40" />
+    <rect
+       x="-22"
+       y="53"
+       width="8"
+       height="16"
+       rx="1"
+       fill="#C8E6C9"
+       stroke="#2E7D32"
+       stroke-width="1.5"
+       id="rect41" />
+    <rect
+       x="85"
+       y="298"
+       width="30"
+       height="14"
+       rx="2"
+       fill="#E8F5E9"
+       stroke="#2E7D32"
+       stroke-width="2"
+       id="rect42" />
+    <rect
+       x="89"
+       y="308"
+       width="22"
+       height="8"
+       rx="1"
+       fill="#C8E6C9"
+       stroke="#2E7D32"
+       stroke-width="1.5"
+       id="rect43" />
+    <!-- Patas -->
+    <line
+       x1="40"
+       y1="295"
+       x2="30"
+       y2="335"
+       stroke="#795548"
+       stroke-width="3"
+       stroke-linecap="round"
+       id="line43" />
+    <line
+       x1="160"
+       y1="295"
+       x2="170"
+       y2="335"
+       stroke="#795548"
+       stroke-width="3"
+       stroke-linecap="round"
+       id="line44" />
+    <rect
+       x="20"
+       y="332"
+       width="22"
+       height="5"
+       rx="1"
+       fill="#795548"
+       id="rect44" />
+    <rect
+       x="160"
+       y="332"
+       width="22"
+       height="5"
+       rx="1"
+       fill="#795548"
+       id="rect45" />
+    <!-- Labels -->
+    <rect
+       x="45"
+       y="108"
+       width="110"
+       height="48"
+       rx="6"
+       fill="white"
+       fill-opacity="0.85"
+       stroke="#E65100"
+       stroke-width="1"
+       id="rect46" />
+    <text
+       x="100"
+       y="126"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="18"
+       font-weight="800"
+       fill="#BF360C"
+       text-anchor="middle"
+       id="text46">T-101</text>
+    <text
+       x="100"
+       y="142"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#5D4037"
+       text-anchor="middle"
+       id="text47">Tanque Almacenamiento</text>
+    <text
+       x="100"
+       y="152"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="8"
+       fill="#8D6E63"
+       text-anchor="middle"
+       id="text48">Fondo Toriesférico</text>
+    <text
+       x="100"
+       y="244"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#6D4C41"
+       text-anchor="middle"
+       font-style="italic"
+       id="text49">D = 5.03 m  |  H = 9.67 m</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--                  CHAQUETA E-201                                  -->
+  <!-- ================================================================ -->
+  <g
+     id="jacket-E201"
+     transform="translate(350, 525)">
+    <rect
+       x="0"
+       y="0"
+       width="220"
+       height="80"
+       rx="8"
+       fill="url(#jacketGrad)"
+       stroke="#1565C0"
+       stroke-width="2.5"
+       id="rect49" />
+    <polyline
+       points="20,18 200,18 200,30 20,30 20,42 200,42 200,54 20,54 20,66 200,66"
+       fill="none"
+       stroke="#0D47A1"
+       stroke-width="2"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       opacity="0.6"
+       id="polyline49" />
+    <text
+       x="175"
+       y="27"
+       font-family="'Segoe UI'"
+       font-size="8"
+       fill="#0D47A1"
+       opacity="0.7"
+       id="text50">→</text>
+    <text
+       x="25"
+       y="39"
+       font-family="'Segoe UI'"
+       font-size="8"
+       fill="#0D47A1"
+       opacity="0.7"
+       id="text51">←</text>
+    <text
+       x="175"
+       y="51"
+       font-family="'Segoe UI'"
+       font-size="8"
+       fill="#0D47A1"
+       opacity="0.7"
+       id="text52">→</text>
+    <rect
+       x="-16"
+       y="33"
+       width="18"
+       height="14"
+       rx="2"
+       fill="#BBDEFB"
+       stroke="#1565C0"
+       stroke-width="1.5"
+       id="rect52" />
+    <rect
+       x="218"
+       y="33"
+       width="18"
+       height="14"
+       rx="2"
+       fill="#BBDEFB"
+       stroke="#1565C0"
+       stroke-width="1.5"
+       id="rect53" />
+    <rect
+       x="60"
+       y="-22"
+       width="100"
+       height="20"
+       rx="5"
+       fill="#0D47A1"
+       id="rect54" />
+    <text
+       x="110"
+       y="-8"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="13"
+       font-weight="700"
+       fill="white"
+       text-anchor="middle"
+       id="text54">E-201</text>
+    <text
+       x="110"
+       y="97"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#37474F"
+       text-anchor="middle"
+       id="text55">Chaqueta Media Caña</text>
+    <text
+       x="110"
+       y="111"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#607D8B"
+       text-anchor="middle"
+       font-style="italic"
+       id="text56">A = 13 m²</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--        BOMBA P-101 (Desplazamiento Positivo, lobular)            -->
+  <!-- ================================================================ -->
+  <g
+     id="pump-P101"
+     transform="translate(502.4264,745.57115)">
+    <rect
+       x="0"
+       y="0"
+       width="80"
+       height="55"
+       rx="5"
+       fill="url(#pumpGrad)"
+       stroke="#6a1b9a"
+       stroke-width="2.5"
+       id="rect56"
+       style="fill:url(#pumpGrad)" />
+    <circle
+       cx="28"
+       cy="27"
+       r="14"
+       fill="none"
+       stroke="#6a1b9a"
+       stroke-width="1.5"
+       stroke-dasharray="4, 2.5"
+       id="circle56" />
+    <circle
+       cx="52"
+       cy="27"
+       r="14"
+       fill="none"
+       stroke="#6a1b9a"
+       stroke-width="1.5"
+       stroke-dasharray="4, 2.5"
+       id="circle57" />
+    <circle
+       cx="28"
+       cy="27"
+       r="4"
+       fill="#ffffff"
+       stroke="#6a1b9a"
+       stroke-width="1.5"
+       id="circle58" />
+    <circle
+       cx="52"
+       cy="27"
+       r="4"
+       fill="#ffffff"
+       stroke="#6a1b9a"
+       stroke-width="1.5"
+       id="circle59" />
+    <path
+       d="m 20,18 a 10,10 0 0 1 16,0"
+       fill="none"
+       stroke="#4a148c"
+       stroke-width="1"
+       marker-end="url(#arrowPurple)"
+       id="path59" />
+    <path
+       d="M 60,18 A 10,10 0 0 0 44,18"
+       fill="none"
+       stroke="#4a148c"
+       stroke-width="1"
+       marker-end="url(#arrowPurple)"
+       id="path60" />
+    <!-- Succion izq -->
+    <rect
+       x="-22"
+       y="18"
+       width="24"
+       height="18"
+       rx="2"
+       fill="#e1bee7"
+       stroke="#6a1b9a"
+       stroke-width="2"
+       id="rect60" />
+    <rect
+       x="-26"
+       y="15"
+       width="6"
+       height="24"
+       rx="1"
+       fill="#ce93d8"
+       stroke="#6a1b9a"
+       stroke-width="1.5"
+       id="rect61" />
+    <!-- Descarga der -->
+    <rect
+       x="78"
+       y="18"
+       width="24"
+       height="18"
+       rx="2"
+       fill="#e1bee7"
+       stroke="#6a1b9a"
+       stroke-width="2"
+       id="rect62" />
+    <rect
+       x="100"
+       y="15"
+       width="6"
+       height="24"
+       rx="1"
+       fill="#ce93d8"
+       stroke="#6a1b9a"
+       stroke-width="1.5"
+       id="rect63" />
+    <!-- Motor -->
+    <rect
+       x="15"
+       y="-35"
+       width="50"
+       height="30"
+       rx="4"
+       fill="#f3e5f5"
+       stroke="#6a1b9a"
+       stroke-width="1.5"
+       id="rect64" />
+    <text
+       x="40"
+       y="-16"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="8px"
+       fill="#6a1b9a"
+       text-anchor="middle"
+       font-weight="600"
+       id="text64">MOTOR</text>
+    <line
+       x1="40"
+       y1="-5"
+       x2="40"
+       y2="2"
+       stroke="#6a1b9a"
+       stroke-width="3"
+       id="line64" />
+    <rect
+       x="35"
+       y="-7"
+       width="10"
+       height="5"
+       rx="1"
+       fill="#ce93d8"
+       stroke="#6a1b9a"
+       stroke-width="1"
+       id="rect65" />
+    <!-- Tag -->
+    <rect
+       x="8"
+       y="-55"
+       width="64"
+       height="18"
+       rx="5"
+       fill="#7b1fa2"
+       id="rect66" />
+    <text
+       x="40"
+       y="-42"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="12px"
+       font-weight="700"
+       fill="#ffffff"
+       text-anchor="middle"
+       id="text66">P-101</text>
+    <text
+       x="40"
+       y="72"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10px"
+       fill="#4a148c"
+       text-anchor="middle"
+       font-weight="600"
+       id="text67">Bomba Desp. Positivo</text>
+    <text
+       x="40"
+       y="84"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="8px"
+       fill="#7b1fa2"
+       text-anchor="middle"
+       font-style="italic"
+       id="text68">Tipo lobular</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--      ESTACION DE DESCARGA ED-301 (skid con manifold)             -->
+  <!-- ================================================================ -->
+  <g
+     id="station-ED301"
+     transform="translate(881.49146,726.84418)">
+    <!-- Plataforma / skid -->
+    <rect
+       x="0"
+       y="85"
+       width="180"
+       height="10"
+       rx="3"
+       fill="#78909c"
+       stroke="#455a64"
+       stroke-width="1.5"
+       id="rect68" />
+    <rect
+       x="10"
+       y="95"
+       width="8"
+       height="14"
+       rx="1"
+       fill="#607d8b"
+       id="rect69" />
+    <rect
+       x="162"
+       y="95"
+       width="8"
+       height="14"
+       rx="1"
+       fill="#607d8b"
+       id="rect70" />
+    <!-- Cuerpo manifold -->
+    <rect
+       x="15"
+       y="20"
+       width="150"
+       height="60"
+       rx="6"
+       fill="url(#stationGrad)"
+       stroke="#283593"
+       stroke-width="2"
+       id="rect71"
+       style="fill:url(#stationGrad)" />
+    <!-- Colector horizontal -->
+    <line
+       x1="30"
+       y1="50"
+       x2="150"
+       y2="50"
+       stroke="#3949ab"
+       stroke-width="4"
+       stroke-linecap="round"
+       id="line71" />
+    <!-- Derivaciones + valvulas (rombos) -->
+    <line
+       x1="55"
+       y1="35"
+       x2="55"
+       y2="50"
+       stroke="#3949ab"
+       stroke-width="3"
+       stroke-linecap="round"
+       id="line72" />
+    <polygon
+       points="55,40 60,35 55,30 50,35 "
+       fill="#c5cae9"
+       stroke="#283593"
+       stroke-width="1.5"
+       id="polygon72" />
+    <line
+       x1="90"
+       y1="35"
+       x2="90"
+       y2="50"
+       stroke="#3949ab"
+       stroke-width="3"
+       stroke-linecap="round"
+       id="line73" />
+    <polygon
+       points="90,40 95,35 90,30 85,35 "
+       fill="#c5cae9"
+       stroke="#283593"
+       stroke-width="1.5"
+       id="polygon73" />
+    <line
+       x1="125"
+       y1="35"
+       x2="125"
+       y2="50"
+       stroke="#3949ab"
+       stroke-width="3"
+       stroke-linecap="round"
+       id="line74" />
+    <polygon
+       points="125,40 130,35 125,30 120,35 "
+       fill="#c5cae9"
+       stroke="#283593"
+       stroke-width="1.5"
+       id="polygon74" />
+    <!-- Manometro -->
+    <circle
+       cx="150"
+       cy="35"
+       r="8"
+       fill="#ffffff"
+       stroke="#283593"
+       stroke-width="1.5"
+       id="circle74" />
+    <text
+       x="150"
+       y="38"
+       font-family="'Segoe UI'"
+       font-size="6px"
+       fill="#283593"
+       text-anchor="middle"
+       font-weight="700"
+       id="text74">PI</text>
+    <line
+       x1="150"
+       y1="30"
+       x2="153"
+       y2="33"
+       stroke="#d32f2f"
+       stroke-width="1"
+       id="line75" />
+    <!-- Brazo de carga articulado (sale por la derecha y baja) -->
+    <line
+       x1="150"
+       y1="50"
+       x2="178"
+       y2="50"
+       stroke="#3949ab"
+       stroke-width="3.5"
+       stroke-linecap="round"
+       id="line76" />
+    <line
+       x1="178"
+       y1="50"
+       x2="178"
+       y2="80"
+       stroke="#3949ab"
+       stroke-width="3.5"
+       stroke-linecap="round"
+       id="line77" />
+    <!-- Junta articulada -->
+    <circle
+       cx="178"
+       cy="50"
+       r="3.5"
+       fill="#7986cb"
+       stroke="#283593"
+       stroke-width="1"
+       id="circle77" />
+    <!-- Boquilla de descarga del brazo -->
+    <circle
+       cx="178"
+       cy="83"
+       r="5"
+       fill="#7986cb"
+       stroke="#283593"
+       stroke-width="1.5"
+       id="circle78" />
+    <!-- Boquilla entrada (izquierda, desde bomba) -->
+    <rect
+       x="-18"
+       y="43"
+       width="20"
+       height="14"
+       rx="2"
+       fill="#c5cae9"
+       stroke="#283593"
+       stroke-width="2"
+       id="rect78" />
+    <rect
+       x="-22"
+       y="40"
+       width="6"
+       height="20"
+       rx="1"
+       fill="#9fa8da"
+       stroke="#283593"
+       stroke-width="1.5"
+       id="rect79" />
+    <!-- Tag -->
+    <rect
+       x="28"
+       y="-5"
+       width="120"
+       height="22"
+       rx="6"
+       fill="#283593"
+       id="rect80" />
+    <text
+       x="88"
+       y="11"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="12px"
+       font-weight="700"
+       fill="#ffffff"
+       text-anchor="middle"
+       id="text80">ED-301</text>
+    <text
+       x="90"
+       y="122"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10px"
+       fill="#1a237e"
+       text-anchor="middle"
+       font-weight="600"
+       id="text81">Estación de Descarga</text>
+    <text
+       x="90"
+       y="136"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="8px"
+       fill="#3949ab"
+       text-anchor="middle"
+       font-style="italic"
+       id="text82">Manifold + brazo de carga</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--              CARROTANQUE (debajo de estacion)                     -->
+  <!-- ================================================================ -->
+  <g
+     id="truck"
+     transform="translate(1107.2727,890.90909)">
+    <rect
+       x="0"
+       y="52"
+       width="240"
+       height="8"
+       rx="2"
+       fill="#455a64"
+       id="rect82" />
+    <rect
+       x="0"
+       y="5"
+       width="65"
+       height="50"
+       rx="5"
+       fill="#fff8e1"
+       stroke="#f57f17"
+       stroke-width="2"
+       id="rect83" />
+    <rect
+       x="8"
+       y="12"
+       width="28"
+       height="22"
+       rx="3"
+       fill="#b3e5fc"
+       stroke="#0288d1"
+       stroke-width="1.2"
+       id="rect84" />
+    <line
+       x1="42"
+       y1="10"
+       x2="42"
+       y2="52"
+       stroke="#f57f17"
+       stroke-width="1"
+       opacity="0.5"
+       id="line84" />
+    <rect
+       x="-5"
+       y="18"
+       width="8"
+       height="5"
+       rx="1"
+       fill="#90a4ae"
+       stroke="#607d8b"
+       stroke-width="0.8"
+       id="rect85" />
+    <!-- Tanque cisterna -->
+    <rect
+       x="72"
+       y="2"
+       width="160"
+       height="52"
+       rx="26"
+       fill="url(#truckTankGrad)"
+       stroke="#546e7a"
+       stroke-width="2.5"
+       id="rect86"
+       style="fill:url(#truckTankGrad)" />
+    <ellipse
+       cx="72"
+       cy="28"
+       rx="5"
+       ry="26"
+       fill="#b0bec5"
+       stroke="#546e7a"
+       stroke-width="1.5"
+       id="ellipse86" />
+    <ellipse
+       cx="232"
+       cy="28"
+       rx="5"
+       ry="26"
+       fill="#b0bec5"
+       stroke="#546e7a"
+       stroke-width="1.5"
+       id="ellipse87" />
+    <line
+       x1="115"
+       y1="6"
+       x2="115"
+       y2="50"
+       stroke="#78909c"
+       stroke-width="1.2"
+       stroke-dasharray="3, 2"
+       id="line87" />
+    <line
+       x1="152"
+       y1="4"
+       x2="152"
+       y2="52"
+       stroke="#78909c"
+       stroke-width="1.2"
+       stroke-dasharray="3, 2"
+       id="line88" />
+    <line
+       x1="189"
+       y1="6"
+       x2="189"
+       y2="50"
+       stroke="#78909c"
+       stroke-width="1.2"
+       stroke-dasharray="3, 2"
+       id="line89" />
+    <!-- Tapa de carga superior -->
+    <rect
+       x="145"
+       y="-8"
+       width="14"
+       height="12"
+       rx="1"
+       fill="none"
+       stroke="#78909c"
+       stroke-width="1"
+       id="rect89" />
+    <line
+       x1="148"
+       y1="-5"
+       x2="156"
+       y2="-5"
+       stroke="#78909c"
+       stroke-width="0.8"
+       id="line90" />
+    <line
+       x1="148"
+       y1="0"
+       x2="156"
+       y2="0"
+       stroke="#78909c"
+       stroke-width="0.8"
+       id="line91" />
+    <!-- Boquilla recepcion (superior, desde brazo de carga) -->
+    <rect
+       x="172"
+       y="-14"
+       width="12"
+       height="10"
+       rx="1"
+       fill="#cfd8dc"
+       stroke="#546e7a"
+       stroke-width="1.2"
+       id="rect91" />
+    <!-- Ruedas -->
+    <circle
+       cx="30"
+       cy="66"
+       r="12"
+       fill="#37474f"
+       stroke="#263238"
+       stroke-width="2"
+       id="circle91" />
+    <circle
+       cx="30"
+       cy="66"
+       r="5"
+       fill="#78909c"
+       id="circle92" />
+    <circle
+       cx="30"
+       cy="66"
+       r="2"
+       fill="#b0bec5"
+       id="circle93" />
+    <circle
+       cx="170"
+       cy="66"
+       r="12"
+       fill="#37474f"
+       stroke="#263238"
+       stroke-width="2"
+       id="circle94" />
+    <circle
+       cx="170"
+       cy="66"
+       r="5"
+       fill="#78909c"
+       id="circle95" />
+    <circle
+       cx="170"
+       cy="66"
+       r="2"
+       fill="#b0bec5"
+       id="circle96" />
+    <circle
+       cx="200"
+       cy="66"
+       r="12"
+       fill="#37474f"
+       stroke="#263238"
+       stroke-width="2"
+       id="circle97" />
+    <circle
+       cx="200"
+       cy="66"
+       r="5"
+       fill="#78909c"
+       id="circle98" />
+    <circle
+       cx="200"
+       cy="66"
+       r="2"
+       fill="#b0bec5"
+       id="circle99" />
+    <!-- Tag -->
+    <rect
+       x="85"
+       y="-32"
+       width="130"
+       height="18"
+       rx="5"
+       fill="#455a64"
+       id="rect99" />
+    <text
+       x="150"
+       y="-19"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11px"
+       font-weight="700"
+       fill="#ffffff"
+       text-anchor="middle"
+       id="text99">Carro Tanque</text>
+    <text
+       x="150"
+       y="90"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9px"
+       fill="#546e7a"
+       text-anchor="middle"
+       font-style="italic"
+       id="text100">Capacidad: 24 ton</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--                     LINEAS DE PROCESO                            -->
+  <!-- ================================================================ -->
+  <!-- C-1: Caja glucosa entrada → boquilla tanque -->
+  <polyline
+     points="265,235 325,235 325,252 342,252"
+     fill="none"
+     stroke="#2E7D32"
+     stroke-width="3.5"
+     marker-end="url(#arrowGreen)"
+     stroke-linejoin="round"
+     id="polyline100" />
+  <text
+     x="295"
+     y="228"
+     font-family="'Segoe UI', Tahoma, sans-serif"
+     font-size="9.5"
+     fill="#2E7D32"
+     font-weight="700"
+     id="text101">C-1</text>
+  <!-- Tanque salida → baja → succion bomba P-101 -->
+  <!-- Boquilla inferior tanque ≈ (460,504), Bomba succion brida izq ≈ (434,768) -->
+  <polyline
+     points="460,504 460,768 434,768"
+     fill="none"
+     stroke="#2e7d32"
+     stroke-width="3"
+     stroke-linejoin="round"
+     marker-end="url(#arrowGreen)"
+     id="polyline101"
+     transform="matrix(-0.80743051,0,0,1.0381752,830.4436,-24.141491)" />
+  <!-- C-4: Bomba descarga → derecha → sube → entra estacion ED-301 -->
+  <!-- Bomba descarga brida der ≈ (566,768), Estacion entrada brida izq ≈ (638,750) -->
+  <text
+     x="585"
+     y="760"
+     font-family="'Segoe UI', Tahoma, sans-serif"
+     font-size="9.5"
+     fill="#2E7D32"
+     font-weight="700"
+     id="text102">C-4</text>
+  <!-- C-5: Estacion brazo de carga → baja → boquilla carrotanque -->
+  <!-- Brazo de carga boquilla ≈ (838,783), Carrotanque boquilla superior ≈ (838,866) -->
+  <polyline
+     points="838,783 838,810 838,866"
+     fill="none"
+     stroke="#2e7d32"
+     stroke-width="3"
+     stroke-linejoin="round"
+     marker-end="url(#arrowGreen)"
+     id="polyline103"
+     transform="matrix(1,0,0,0.51533085,377.72282,404.8056)" />
+  <text
+     x="1222.8485"
+     y="799.39392"
+     font-family="'Segoe UI', Tahoma, sans-serif"
+     font-size="9.5px"
+     fill="#2e7d32"
+     font-weight="700"
+     id="text103">C-5</text>
+  <!-- C-2: Agua entrada → chaqueta (izquierda) -->
+  <polyline
+     points="265,685 310,685 334,565"
+     fill="none"
+     stroke="#C62828"
+     stroke-width="3"
+     stroke-dasharray="10,5"
+     marker-end="url(#arrowRed)"
+     stroke-linejoin="round"
+     id="polyline104" />
+  <text
+     x="275"
+     y="675"
+     font-family="'Segoe UI', Tahoma, sans-serif"
+     font-size="9.5"
+     fill="#C62828"
+     font-weight="700"
+     id="text104">C-2</text>
+  <!-- C-3: Agua salida chaqueta (derecha) -->
+  <polyline
+     points="586,565 630,565 630,633"
+     fill="none"
+     stroke="#C62828"
+     stroke-width="3"
+     stroke-dasharray="10,5"
+     marker-end="url(#arrowRed)"
+     stroke-linejoin="round"
+     id="polyline105" />
+  <text
+     x="598"
+     y="558"
+     font-family="'Segoe UI', Tahoma, sans-serif"
+     font-size="9.5"
+     fill="#C62828"
+     font-weight="700"
+     id="text105">C-3</text>
+  <!-- Referencia salida glucosa -->
+  <g
+     transform="matrix(1.8099127,0,0,2.4529879,583.42669,868.11506)"
+     id="g107">
+    <rect
+       x="-5"
+       y="-12"
+       width="155"
+       height="28"
+       rx="4"
+       fill="#ffffff"
+       fill-opacity="0.8"
+       stroke="#66bb6a"
+       stroke-width="0.8"
+       id="rect105" />
+    <text
+       x="72"
+       y="2"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9px"
+       fill="#33691e"
+       text-anchor="middle"
+       font-style="italic"
+       id="text106">Temp. salida glucosa</text>
+    <text
+       x="72"
+       y="13"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="8px"
+       fill="#558b2f"
+       text-anchor="middle"
+       id="text107">→ Ver Tabla 4.0</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--                  CAJAS DE DATOS DE CORRIENTES                    -->
+  <!-- ================================================================ -->
+  <!-- CORRIENTE 1 -->
+  <g
+     id="stream1"
+     transform="translate(30, 195)">
+    <rect
+       x="0"
+       y="0"
+       width="235"
+       height="75"
+       rx="8"
+       fill="#E8F5E9"
+       stroke="#2E7D32"
+       stroke-width="2"
+       id="rect107" />
+    <rect
+       x="0"
+       y="0"
+       width="235"
+       height="22"
+       rx="8"
+       fill="#2E7D32"
+       id="rect108" />
+    <rect
+       x="0"
+       y="12"
+       width="235"
+       height="10"
+       fill="#2E7D32"
+       id="rect109" />
+    <text
+       x="117"
+       y="16"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       font-weight="700"
+       fill="white"
+       text-anchor="middle"
+       id="text109">CORRIENTE 1 — Glucosa Entrada</text>
+    <text
+       x="117"
+       y="42"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#1B5E20"
+       text-anchor="middle"
+       font-weight="600"
+       id="text110">8,000 kg/h  |  60 / 57 / 54 °C</text>
+    <text
+       x="117"
+       y="58"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#4E342E"
+       text-anchor="middle"
+       id="text111">Cp = 2.13 kJ/(kg·K)  ·  ρ ≈ 1,300 kg/m³</text>
+    <text
+       x="117"
+       y="70"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="8"
+       fill="#795548"
+       text-anchor="middle"
+       font-style="italic"
+       id="text112">Glucosa jarabe ≈ 43 °Brix</text>
+  </g>
+  <!-- CORRIENTE 2 -->
+  <g
+     id="stream2"
+     transform="translate(30, 645)">
+    <rect
+       x="0"
+       y="0"
+       width="235"
+       height="75"
+       rx="8"
+       fill="#FFEBEE"
+       stroke="#C62828"
+       stroke-width="2"
+       id="rect112" />
+    <rect
+       x="0"
+       y="0"
+       width="235"
+       height="22"
+       rx="8"
+       fill="#C62828"
+       id="rect113" />
+    <rect
+       x="0"
+       y="12"
+       width="235"
+       height="10"
+       fill="#C62828"
+       id="rect114" />
+    <text
+       x="117"
+       y="16"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       font-weight="700"
+       fill="white"
+       text-anchor="middle"
+       id="text114">CORRIENTE 2 — Agua Entrada</text>
+    <text
+       x="117"
+       y="42"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#B71C1C"
+       text-anchor="middle"
+       font-weight="600"
+       id="text115">57.700 kg/h  |  75,0 °C</text>
+    <text
+       x="117"
+       y="58"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#212121"
+       text-anchor="middle"
+       id="text116">17.719,7 MJ/h  ·  57,7 m³/h</text>
+    <text
+       x="117"
+       y="70"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#616161"
+       text-anchor="middle"
+       id="text117">Cp = 4.18 kJ/(kg·K)</text>
+  </g>
+  <!-- CORRIENTE 3 -->
+  <g
+     id="stream3"
+     transform="translate(638.0303,561.06061)">
+    <rect
+       x="0"
+       y="0"
+       width="235"
+       height="75"
+       rx="8"
+       fill="#ffebee"
+       stroke="#c62828"
+       stroke-width="2"
+       id="rect117" />
+    <rect
+       x="0"
+       y="0"
+       width="235"
+       height="22"
+       rx="8"
+       fill="#ef5350"
+       id="rect118" />
+    <rect
+       x="0"
+       y="12"
+       width="235"
+       height="10"
+       fill="#ef5350"
+       id="rect119" />
+    <text
+       x="117"
+       y="16"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11px"
+       font-weight="700"
+       fill="#ffffff"
+       text-anchor="middle"
+       id="text119">CORRIENTE 3 — Agua Salida</text>
+    <text
+       x="117"
+       y="42"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11px"
+       fill="#c62828"
+       text-anchor="middle"
+       font-weight="600"
+       id="text120">57.700 kg/h  |  74,9 °C</text>
+    <text
+       x="117"
+       y="58"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9px"
+       fill="#212121"
+       text-anchor="middle"
+       id="text121">17.694,2 MJ/h</text>
+    <text
+       x="117"
+       y="70"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9px"
+       fill="#616161"
+       text-anchor="middle"
+       id="text122">Q transferido: 26,0 – 35,0 MJ/h</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--                  TABLA BALANCE ENERGETICO                        -->
+  <!-- ================================================================ -->
+  <g
+     id="energyTable"
+     transform="translate(950, 105)">
+    <rect
+       x="0"
+       y="0"
+       width="420"
+       height="210"
+       rx="10"
+       fill="white"
+       stroke="#1565C0"
+       stroke-width="2"
+       id="rect122" />
+    <rect
+       x="0"
+       y="0"
+       width="420"
+       height="35"
+       rx="10"
+       fill="#1565C0"
+       id="rect123" />
+    <rect
+       x="0"
+       y="20"
+       width="420"
+       height="15"
+       fill="#1565C0"
+       id="rect124" />
+    <text
+       x="210"
+       y="24"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="14"
+       font-weight="700"
+       fill="white"
+       text-anchor="middle"
+       id="text124">BALANCE ENERGÉTICO — ESCENARIO 01C</text>
+    <text
+       x="90"
+       y="58"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       font-weight="700"
+       fill="#37474F"
+       text-anchor="middle"
+       id="text125">Concepto</text>
+    <rect
+       x="180"
+       y="40"
+       width="70"
+       height="24"
+       rx="4"
+       fill="#E8F5E9"
+       id="rect125" />
+    <text
+       x="215"
+       y="57"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       font-weight="700"
+       fill="#2E7D32"
+       text-anchor="middle"
+       id="text126">60 °C</text>
+    <rect
+       x="260"
+       y="40"
+       width="70"
+       height="24"
+       rx="4"
+       fill="#FFF3E0"
+       id="rect126" />
+    <text
+       x="295"
+       y="57"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       font-weight="700"
+       fill="#E65100"
+       text-anchor="middle"
+       id="text127">57 °C</text>
+    <rect
+       x="340"
+       y="40"
+       width="70"
+       height="24"
+       rx="4"
+       fill="#FFEBEE"
+       id="rect127" />
+    <text
+       x="375"
+       y="57"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       font-weight="700"
+       fill="#C62828"
+       text-anchor="middle"
+       id="text128">54 °C</text>
+    <line
+       x1="15"
+       y1="68"
+       x2="405"
+       y2="68"
+       stroke="#E0E0E0"
+       stroke-width="1"
+       id="line128" />
+    <text
+       x="90"
+       y="90"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#424242"
+       text-anchor="middle"
+       id="text129">Q Transferido (MJ/h)</text>
+    <text
+       x="215"
+       y="90"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#1565C0"
+       text-anchor="middle"
+       font-weight="600"
+       id="text130">26,0</text>
+    <text
+       x="295"
+       y="90"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#1565C0"
+       text-anchor="middle"
+       font-weight="600"
+       id="text131">30,7</text>
+    <text
+       x="375"
+       y="90"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#1565C0"
+       text-anchor="middle"
+       font-weight="600"
+       id="text132">35,0</text>
+    <rect
+       x="5"
+       y="100"
+       width="410"
+       height="22"
+       rx="3"
+       fill="#F5F5F5"
+       id="rect132" />
+    <text
+       x="90"
+       y="116"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#424242"
+       text-anchor="middle"
+       id="text133">Q Pérdidas (MJ/h)</text>
+    <text
+       x="215"
+       y="116"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#E53935"
+       text-anchor="middle"
+       font-weight="600"
+       id="text134">39,5</text>
+    <text
+       x="295"
+       y="116"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#E53935"
+       text-anchor="middle"
+       font-weight="600"
+       id="text135">36,3</text>
+    <text
+       x="375"
+       y="116"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#E53935"
+       text-anchor="middle"
+       font-weight="600"
+       id="text136">33,1</text>
+    <line
+       x1="15"
+       y1="128"
+       x2="405"
+       y2="128"
+       stroke="#1565C0"
+       stroke-width="1.5"
+       id="line136" />
+    <rect
+       x="5"
+       y="132"
+       width="410"
+       height="28"
+       rx="4"
+       fill="#E3F2FD"
+       id="rect136" />
+    <text
+       x="90"
+       y="151"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#0D47A1"
+       text-anchor="middle"
+       font-weight="700"
+       id="text137">Q Neto (MJ/h)</text>
+    <text
+       x="215"
+       y="151"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="13"
+       fill="#D32F2F"
+       text-anchor="middle"
+       font-weight="800"
+       id="text138">−13,5</text>
+    <text
+       x="295"
+       y="151"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="13"
+       fill="#D32F2F"
+       text-anchor="middle"
+       font-weight="800"
+       id="text139">−5,6</text>
+    <text
+       x="375"
+       y="151"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="13"
+       fill="#D32F2F"
+       text-anchor="middle"
+       font-weight="800"
+       id="text140">+1,9</text>
+    <text
+       x="90"
+       y="180"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#424242"
+       text-anchor="middle"
+       id="text141">T salida glucosa (°C)</text>
+    <text
+       x="215"
+       y="180"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#2E7D32"
+       text-anchor="middle"
+       font-weight="600"
+       id="text142">59,2</text>
+    <text
+       x="295"
+       y="180"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#2E7D32"
+       text-anchor="middle"
+       font-weight="600"
+       id="text143">56,7</text>
+    <text
+       x="375"
+       y="180"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       fill="#2E7D32"
+       text-anchor="middle"
+       font-weight="600"
+       id="text144">54,1</text>
+    <text
+       x="210"
+       y="202"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="8"
+       fill="#78909C"
+       text-anchor="middle"
+       font-style="italic"
+       id="text145">Velocidad de viento constante: 1.5 m/s  ·  Escenario conservador</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--                  PARAMETROS DEL SISTEMA                          -->
+  <!-- ================================================================ -->
+  <g
+     id="params"
+     transform="translate(950, 340)">
+    <rect
+       x="0"
+       y="0"
+       width="420"
+       height="110"
+       rx="8"
+       fill="#FFF8E1"
+       stroke="#FF8F00"
+       stroke-width="1.5"
+       id="rect145" />
+    <rect
+       x="0"
+       y="0"
+       width="420"
+       height="26"
+       rx="8"
+       fill="#FF8F00"
+       id="rect146" />
+    <rect
+       x="0"
+       y="14"
+       width="420"
+       height="12"
+       fill="#FF8F00"
+       id="rect147" />
+    <text
+       x="210"
+       y="18"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="12"
+       font-weight="700"
+       fill="white"
+       text-anchor="middle"
+       id="text147">PARÁMETROS DEL SISTEMA</text>
+    <text
+       x="20"
+       y="48"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#4E342E"
+       id="text148"><tspan
+   font-weight="600"
+   fill="#BF360C"
+   id="tspan147">U chaqueta:</tspan> 35,9 – 36,3 W/(m²·K)  (calculado)</text>
+    <text
+       x="20"
+       y="65"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#4E342E"
+       id="text149"><tspan
+   font-weight="600"
+   fill="#0D47A1"
+   id="tspan148">h_i (agua):</tspan> ~11320 W/(m²·K)   |   <tspan
+   font-weight="600"
+   fill="#E65100"
+   id="tspan149">h_o (glucosa):</tspan> ~36,7 – 37,1 W/(m²·K)</text>
+    <text
+       x="20"
+       y="82"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#4E342E"
+       id="text151"><tspan
+   font-weight="600"
+   fill="#546E7A"
+   id="tspan150">A_sup expuesta:</tspan> 149.67 m²   |   <tspan
+   font-weight="600"
+   fill="#00695C"
+   id="tspan151">T_ambiente:</tspan> 26.5 °C</text>
+    <text
+       x="20"
+       y="100"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#78909C"
+       font-style="italic"
+       id="text152">Método: Balance energético E.E. · Pérdidas por convección natural + forzada (viento)</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--                     LEYENDA DE EQUIPOS                           -->
+  <!-- ================================================================ -->
+  <g
+     id="legend"
+     transform="translate(950, 475)">
+    <rect
+       x="0"
+       y="0"
+       width="420"
+       height="148"
+       rx="8"
+       fill="white"
+       stroke="#78909C"
+       stroke-width="1.5"
+       id="rect152" />
+    <rect
+       x="0"
+       y="0"
+       width="420"
+       height="24"
+       rx="8"
+       fill="#546E7A"
+       id="rect153" />
+    <rect
+       x="0"
+       y="13"
+       width="420"
+       height="11"
+       fill="#546E7A"
+       id="rect154" />
+    <text
+       x="210"
+       y="17"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="11"
+       font-weight="700"
+       fill="white"
+       text-anchor="middle"
+       id="text154">LISTA DE EQUIPOS</text>
+    <!-- T-101 -->
+    <rect
+       x="15"
+       y="33"
+       width="16"
+       height="16"
+       rx="2"
+       fill="#FFF3E0"
+       stroke="#E65100"
+       stroke-width="1.5"
+       id="rect155" />
+    <text
+       x="40"
+       y="46"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#212121"
+       id="text155"><tspan
+   font-weight="700"
+   fill="#BF360C"
+   id="tspan155">T-101</tspan>  Tanque almacenamiento (D=5.03m, H=9.67m, 80%)</text>
+    <!-- E-201 -->
+    <rect
+       x="15"
+       y="55"
+       width="16"
+       height="16"
+       rx="2"
+       fill="#BBDEFB"
+       stroke="#1565C0"
+       stroke-width="1.5"
+       id="rect156" />
+    <text
+       x="40"
+       y="68"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#212121"
+       id="text156"><tspan
+   font-weight="700"
+   fill="#0D47A1"
+   id="tspan156">E-201</tspan>  Chaqueta de media caña (A = 13 m²)</text>
+    <!-- P-101 -->
+    <rect
+       x="15"
+       y="77"
+       width="16"
+       height="12"
+       rx="2"
+       fill="#E1BEE7"
+       stroke="#7B1FA2"
+       stroke-width="1.5"
+       id="rect157" />
+    <text
+       x="40"
+       y="88"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#212121"
+       id="text157"><tspan
+   font-weight="700"
+   fill="#6A1B9A"
+   id="tspan157">P-101</tspan>  Bomba desplazamiento positivo (lobular)</text>
+    <!-- ED-301 -->
+    <rect
+       x="15"
+       y="97"
+       width="16"
+       height="12"
+       rx="2"
+       fill="#C5CAE9"
+       stroke="#283593"
+       stroke-width="1.5"
+       id="rect158" />
+    <text
+       x="40"
+       y="108"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="10"
+       fill="#212121"
+       id="text158"><tspan
+   font-weight="700"
+   fill="#283593"
+   id="tspan158">ED-301</tspan>  Estación de descarga (manifold + brazo)</text>
+    <!-- Lineas -->
+    <line
+       x1="15"
+       y1="128"
+       x2="35"
+       y2="128"
+       stroke="#2E7D32"
+       stroke-width="2.5"
+       id="line158" />
+    <text
+       x="40"
+       y="132"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#424242"
+       id="text159">Glucosa (continua)</text>
+    <line
+       x1="170"
+       y1="128"
+       x2="190"
+       y2="128"
+       stroke="#C62828"
+       stroke-width="2.5"
+       stroke-dasharray="6,3"
+       id="line159" />
+    <text
+       x="195"
+       y="132"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#424242"
+       id="text160">Agua caliente (discontinua)</text>
+    <!-- Carrotanque en leyenda -->
+    <rect
+       x="310"
+       y="125"
+       width="16"
+       height="10"
+       rx="4"
+       fill="#CFD8DC"
+       stroke="#546E7A"
+       stroke-width="1"
+       id="rect160" />
+    <text
+       x="332"
+       y="134"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#424242"
+       id="text161">Carrotanque 24 ton</text>
+  </g>
+  <!-- ================================================================ -->
+  <!--                   BLOQUE REVISION                                -->
+  <!-- ================================================================ -->
+  <g
+     transform="translate(950, 648)"
+     id="g164">
+    <rect
+       x="0"
+       y="0"
+       width="420"
+       height="50"
+       rx="8"
+       fill="#ECEFF1"
+       stroke="#90A4AE"
+       stroke-width="1"
+       id="rect161" />
+    <text
+       x="20"
+       y="18"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#37474F"
+       font-weight="600"
+       id="text162">Rev. 02  ·  Abril 2026  ·  DML Ingenieros Consultores SAS</text>
+    <text
+       x="20"
+       y="34"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="8"
+       fill="#607D8B"
+       id="text163">Elaboró: J. Arboleda G.  ·  Proyecto P2611  ·  Cliente: Confidencial</text>
+    <text
+       x="20"
+       y="46"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="7.5"
+       fill="#90A4AE"
+       font-style="italic"
+       id="text164">SVG nativo  ·  Balance energético E.E. con pérdidas por convección (viento 1.5 m/s)</text>
+  </g>
+  <metadata
+     id="metadata164">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>PFD Escenario 01A - Proyecto P2611</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
