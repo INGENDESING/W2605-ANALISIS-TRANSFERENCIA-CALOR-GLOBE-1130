@@ -1232,3 +1232,36 @@ Los bordes exteriores del membrete no eran continuos; presentaban interrupciones
 ---
 
 *Sesión de organización en `reciclaje/` completada.*
+
+---
+
+## Revisión — actualización de la webapp W2605
+
+**Fecha de revisión:** 17 de junio de 2026
+
+### Resumen de cambios
+- Se refactorizaron `src/ciclo_descargas_14m2_75C_12m3h.py`, `src/calentamiento_24ton_40_60.py` y `src/escenario4_capacidad.py` para que sean import-safe desde Flask.
+- Se crearon los wrappers `webapp/app/core/ciclo_12m3h.py`, `perdidas_aislamiento.py` y `escenarios_extras.py`.
+- Se añadió el blueprint `webapp/app/api/proyecto.py` con seis endpoints JSON.
+- Se implementó el servicio estático `/figures/<path:filename>` para `results/figures/`.
+- Se añadieron las páginas `/factibilidad`, `/perdidas-aislamiento` y `/escenarios`, y se actualizó la navegación.
+- Se amplió `webapp/tests/test_api.py` a 14 tests, todos exitosos.
+- Se actualizaron `README.md` y `contexto.md` con las nuevas rutas, API y archivos.
+- Se sincronizó el repositorio con GitHub (`main` actualizado).
+
+### Desviaciones respecto al plan original
+Ninguna desviación crítica. La agrupación de los wrappers de calentamiento de 24 ton y capacidad operativa en un único archivo (`escenarios_extras.py`) simplificó la superficie de importación sin alterar la funcionalidad.
+
+### Limitaciones conocidas y trabajo futuro recomendado
+- Advertencia residual `ResourceWarning` en `test_serve_figure` por archivo no cerrado; no afecta el funcionamiento.
+- Pendiente: definición del logo corporativo correcto de DMV SAS para el membrete de los informes PDF.
+
+### Archivos entregables y sus rutas
+- Aplicación web: `webapp/`
+- Blueprint de API: `webapp/app/api/proyecto.py`
+- Wrappers Flask: `webapp/app/core/ciclo_12m3h.py`, `webapp/app/core/perdidas_aislamiento.py`, `webapp/app/core/escenarios_extras.py`
+- Rutas HTML: `webapp/app/routes.py`
+- Templates: `webapp/app/templates/factibilidad.html`, `perdidas_aislamiento.html`, `escenarios.html`
+- Tests: `webapp/tests/test_api.py`
+- Scripts refactorizados: `src/ciclo_descargas_14m2_75C_12m3h.py`, `src/calentamiento_24ton_40_60.py`, `src/escenario4_capacidad.py`
+- Documentación: `README.md`, `contexto.md`

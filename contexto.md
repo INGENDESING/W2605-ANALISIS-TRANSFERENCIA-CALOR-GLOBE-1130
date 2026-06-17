@@ -3,7 +3,7 @@
 ## Estado actual
 - Última tarea completada: Actualización de la aplicación web (`webapp/`): integración de los nuevos análisis del proyecto (ciclo a 12 m³/h con 14 m², pérdidas térmicas con área real, calentamiento de 24 ton, capacidad operativa), refactor import-safe de los scripts de `src/`, servicio estático de figuras desde `results/figures/`, ampliación de tests a 14 casos (OK), actualización de documentación y sincronización con GitHub.
 - Próxima tarea pendiente: Ninguna crítica pendiente; proyecto listo para entrega final.
-- Fecha de última actualización: 2026-06-17T16:45:00-05:00.
+- Fecha de última actualización: 2026-06-17T16:47:00-05:00.
 
 ## Bases de diseño congeladas
 - Capacidad operativa: máximo 5 descargas/día, 24 ton/descarga, 120 ton/día.
