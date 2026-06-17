@@ -1,0 +1,137 @@
+\providecommand{\degC}{\ensuremath{{}^\circ\mathrm{C}}}
+\section{Análisis de factibilidad del ciclo de descargas con flujo de 12~m\textsuperscript{3}/h y chaqueta de 14~m\textsuperscript{2}}
+\label{sec:ciclo_12m3h}
+
+El presente análisis evalúa la factibilidad térmica de mantener la operación de cinco descargas diarias de 24~ton de glucosa cuando el flujo de descarga se fija en 12~m\textsuperscript{3}/h. Se considera una chaqueta de media caña con área de transferencia de 14~m\textsuperscript{2}, agua de calentamiento a 75~\degC, velocidad del agua de 2,5~m/s y configuración de doble entrada. Entre descargas no se programan tiempos muertos; el intervalo restante se destina exclusivamente a calentamiento.
+
+\subsection{Supuestos de diseño del ciclo}
+
+El modelo adopta las bases de diseño congeladas del proyecto W2605, ajustando el flujo de descarga al valor solicitado. La Tabla~\ref{tab:parametros_ciclo_12m3h} resume los datos de entrada.
+
+\begin{table}[H]
+\centering
+\caption{Parámetros del ciclo de descargas evaluado con flujo de 12~m\textsuperscript{3}/h.}
+\label{tab:parametros_ciclo_12m3h}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\midrule
+Área de transferencia de la chaqueta & 14 & m\textsuperscript{2} \\
+Temperatura del agua de calentamiento & 75 & \degC \\
+Velocidad del agua en la media caña & 2,5 & m/s \\
+Flujo volumétrico de descarga & 12 & m\textsuperscript{3}/h \\
+Masa de glucosa por descarga & 24 & ton \\
+Temperatura de la glucosa de alimentación & 55 & \degC \\
+Nivel inicial del tanque & 80 & \% \\
+Temperatura inicial del tanque & 60 & \degC \\
+Temperatura mínima de despacho & 57 & \degC \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El volumen de glucosa que corresponde a 24~ton a 55~\degC se calcula mediante la densidad del jarabe Globe~42~DE:
+
+\begin{equation}
+V_d = \frac{m_d}{\rho_g(55\degC)} = \frac{24~000~\text{kg}}{1405,7~\text{kg/m}^3} = 17,07~\text{m}^3
+\label{eq:volumen_descarga_12m3h}
+\end{equation}
+
+Por tanto, la duración de cada descarga a 12~m\textsuperscript{3}/h es:
+
+\begin{equation}
+t_d = \frac{V_d}{\dot{V}_d} = \frac{17,07~\text{m}^3}{12~\text{m}^3/\text{h}} = 1,42~\text{h}
+\label{eq:duracion_descarga_12m3h}
+\end{equation}
+
+Con cinco descargas distribuidas en 24~h, el período de ciclo disponible es 4,80~h, dejando un tiempo de calentamiento entre descargas de 3,38~h.
+
+\subsection{Modelo matemático}
+
+Durante la descarga, el tanque recibe glucosa a 55~\degC al mismo flujo volumétrico con el que se retira glucosa hacia el carrotanque, por lo que la masa de líquido en el tanque permanece aproximadamente constante. El balance de energía transitorio se expresa como:
+
+\begin{equation}
+m_g \, C_{p,g}(T_g) \, \frac{dT_g}{dt} = U(T_g) \, A \, (T_a - T_g) + \dot{m}_{in} \, C_{p,g}(55\degC) \, (55 - T_g) - Q_{perd}(T_g)
+\label{eq:balance_descarga_12m3h}
+\end{equation}
+
+Entre descargas no existe flujo de entrada ni salida, por lo que el balance se reduce a:
+
+\begin{equation}
+m_g \, C_{p,g}(T_g) \, \frac{dT_g}{dt} = U(T_g) \, A \, (T_a - T_g) - Q_{perd}(T_g)
+\label{eq:balance_calentamiento_12m3h}
+\end{equation}
+
+donde $m_g$ es la masa de glucosa en el tanque, $U(T_g)$ el coeficiente global dependiente de la temperatura, $A = 14~\text{m}^2$, $T_a = 75~\degC$, $\dot{m}_{in}$ el flujo másico de alimentación y $Q_{perd}(T_g)$ las pérdidas térmicas al ambiente calculadas con el área real expuesta y el aislamiento de lana mineral de 50,8~mm.
+
+\subsection{Resultados de la simulación}
+
+La integración numérica de las ecuaciones~\eqref{eq:balance_descarga_12m3h} y \eqref{eq:balance_calentamiento_12m3h} se realizó mediante el método RK45 con paso adaptativo, actualizando las propiedades termofísicas de la glucosa y el coeficiente $U$ en cada instante. La Tabla~\ref{tab:resultados_ciclo_12m3h} presenta la temperatura del tanque al inicio y al final de cada descarga.
+
+\begin{table}[H]
+\centering
+\caption{Evolución de la temperatura del tanque durante las cinco descargas diarias con flujo de 12~m\textsuperscript{3}/h.}
+\label{tab:resultados_ciclo_12m3h}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+\textbf{Descarga} & \textbf{$t_{inicio}$ [h]} & \textbf{$t_{fin}$ [h]} & \textbf{$T_{inicial}$ [\degC]} & \textbf{$T_{final}$ [\degC]} & \textbf{Cumple $T \geq 57$~\degC} \\
+\midrule
+1 & 0,00 & 1,42 & 60,00 & 59,58 & Sí \\
+2 & 4,80 & 6,22 & 59,66 & 59,27 & Sí \\
+3 & 9,60 & 11,02 & 59,36 & 59,00 & Sí \\
+4 & 14,40 & 15,82 & 59,10 & 58,76 & Sí \\
+5 & 19,20 & 20,62 & 58,86 & 58,55 & Sí \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La temperatura mínima alcanzada durante todo el ciclo es 58,55~\degC, registrada al finalizar la quinta descarga. La temperatura final del tanque al cabo de las 24~h es 58,65~\degC. La Figura~\ref{fig:ciclo_12m3h_T_vs_t} ilustra el perfil transitorio de temperatura y el nivel del tanque durante el día de operación.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{../../results/figures/ciclo_12m3h_T_vs_t.pdf}
+\caption{Evolución de la temperatura y del nivel del tanque durante el ciclo de cinco descargas con flujo de 12~m\textsuperscript{3}/h. Las bandas verdes indican los intervalos de descarga (D1 a D5).}
+\label{fig:ciclo_12m3h_T_vs_t}
+\end{figure}
+
+La Figura~\ref{fig:ciclo_12m3h_barras_Tfin} resume la temperatura final del tanque al término de cada descarga, evidenciando que el sistema opera por encima del límite mínimo de despacho en todos los casos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/figures/ciclo_12m3h_barras_Tfin.pdf}
+\caption{Temperatura del tanque al finalizar cada una de las cinco descargas. La línea punteada indica el límite mínimo de despacho de 57~\degC.}
+\label{fig:ciclo_12m3h_barras_Tfin}
+\end{figure}
+
+\subsection{Diagramas de flujo de bloques del ciclo}
+
+La Figura~\ref{fig:diagrama_bloques_descarga} representa el balance de masa y energía durante la fase de descarga. La glucosa de alimentación ingresa a 55~\degC mientras la chaqueta aporta calor y se compensan las pérdidas al ambiente; simultáneamente, el producto caliente se dirige al carrotanque.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{../../results/figures/diagrama_bloques_descarga.pdf}
+\caption{Diagrama de bloques de la fase de descarga: entrada de glucosa fría, aporte térmico de la chaqueta, pérdidas al ambiente y salida hacia el carrotanque.}
+\label{fig:diagrama_bloques_descarga}
+\end{figure}
+
+La Figura~\ref{fig:diagrama_bloques_calentamiento} ilustra la fase de recuperación de temperatura entre descargas, en la cual el tanque no tiene flujo de entrada ni salida y la chaqueta eleva la temperatura compensando las pérdidas térmicas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/figures/diagrama_bloques_calentamiento.pdf}
+\caption{Diagrama de bloques de la fase de calentamiento entre descargas.}
+\label{fig:diagrama_bloques_calentamiento}
+\end{figure}
+
+\subsection{Discusión y conclusión de factibilidad}
+
+El análisis demuestra que, con un flujo de descarga de 12~m\textsuperscript{3}/h, una chaqueta de 14~m\textsuperscript{2} y agua a 75~\degC, el tanque logra mantener la temperatura por encima de 57~\degC\ durante todo el ciclo de cinco descargas diarias. La temperatura final de 58,55~\degC\ alcanzada al término de la quinta descarga cumple el criterio mínimo de despacho, aunque opera con un margen reducido respecto al objetivo de 60~\degC.
+
+La razón principal del margen estrecho radica en el balance entre el aporte térmico de la chaqueta y el enfriamiento producido por la entrada continua de glucosa a 55~\degC\ durante 1,42~h de cada descarga. Aun así, el sistema es técnicamente factible bajo las condiciones evaluadas, siempre que se garantice:
+
+\begin{enumerate}
+\item un nivel inicial de al menos 80~\% del volumen operativo a 60~\degC;
+\item el mantenimiento del aislamiento térmico para conservar las pérdidas en el orden de 14,7~MJ/h;
+\item la disponibilidad continua de agua de calentamiento a 75~\degC\ y 2,5~m/s.
+\end{enumerate}
+
+En consecuencia, se concluye que la operación con flujo de 12~m\textsuperscript{3}/h es factible desde el punto de vista térmico, siempre que se acepte una temperatura de operación ligeramente inferior a 60~\degC\ hacia el final del día. Si se requiere estrictamente 60~\degC\ al final de cada descarga, sería necesario aumentar el área de transferencia, reducir el flujo de descarga o elevar la temperatura del agua de calentamiento.
