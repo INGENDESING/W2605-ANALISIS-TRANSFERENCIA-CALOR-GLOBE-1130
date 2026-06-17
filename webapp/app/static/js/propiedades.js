@@ -3,13 +3,13 @@
  * Glucosa Globe 1130 (85 Brix)
  */
 
-// Layout Plotly
+// Layout Plotly — tema oscuro cyberpunk
 const plotlyLayout = {
-    font: { family: 'Georgia, serif', size: 10 },
-    paper_bgcolor: 'white',
-    plot_bgcolor: '#fafafa',
-    xaxis: { gridcolor: '#e0e0e0', showgrid: true, title: 'T (°C)' },
-    yaxis: { gridcolor: '#e0e0e0', showgrid: true },
+    font: { family: 'Georgia, serif', size: 10, color: '#e0e6ed' },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    xaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, title: 'T (°C)', zerolinecolor: 'rgba(0,150,255,0.2)' },
+    yaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, zerolinecolor: 'rgba(0,150,255,0.2)' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
     hovermode: 'x unified',
     showlegend: false
@@ -98,9 +98,9 @@ function renderizarGraficaRho(data) {
         y: rhos,
         type: 'scatter',
         mode: 'lines',
-        line: { color: '#1a3a6c', width: 2 },
+        line: { color: '#00f0ff', width: 2 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(26, 58, 108, 0.1)',
+        fillcolor: 'rgba(0, 240, 255, 0.10)',
         name: 'ρ'
     };
     
@@ -124,9 +124,9 @@ function renderizarGraficaMu(data) {
         y: mus,
         type: 'scatter',
         mode: 'lines',
-        line: { color: '#e8750a', width: 2 },
+        line: { color: '#ff8c00', width: 2 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(232, 117, 10, 0.1)',
+        fillcolor: 'rgba(255, 140, 0, 0.12)',
         name: 'μ'
     };
     
@@ -150,9 +150,9 @@ function renderizarGraficaCp(data) {
         y: cps,
         type: 'scatter',
         mode: 'lines',
-        line: { color: '#4CAF50', width: 2 },
+        line: { color: '#39ff14', width: 2 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(76, 175, 80, 0.1)',
+        fillcolor: 'rgba(57, 255, 20, 0.10)',
         name: 'Cp'
     };
     
@@ -176,9 +176,9 @@ function renderizarGraficaK(data) {
         y: ks,
         type: 'scatter',
         mode: 'lines',
-        line: { color: '#2196F3', width: 2 },
+        line: { color: '#0096ff', width: 2 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(33, 150, 243, 0.1)',
+        fillcolor: 'rgba(0, 150, 255, 0.12)',
         name: 'k'
     };
     
@@ -258,7 +258,7 @@ function actualizarLineasCursor(temp) {
         type: 'line',
         x0: temp, x1: temp,
         y0: 0, y1: 1, yref: 'paper',
-        line: { color: '#F44336', width: 2, dash: 'dash' }
+        line: { color: '#ff2a6d', width: 2, dash: 'dash' }
     };
     
     ['graficaRho', 'graficaMu', 'graficaCp', 'graficaK'].forEach(id => {

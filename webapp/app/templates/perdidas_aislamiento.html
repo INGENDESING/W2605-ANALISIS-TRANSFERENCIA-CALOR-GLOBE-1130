@@ -4,10 +4,10 @@
 
 {% block content %}
 <!-- Cabecera -->
-<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4 fade-in">
     <div>
-        <h4 class="mb-0" style="color:var(--color-dmv);font-weight:700;">
-            <i class="bi bi-shield-plus me-2" style="color:var(--color-ingredion);"></i>
+        <h4 class="mb-0">
+            <i class="bi bi-shield-plus text-neon-blue me-2"></i>
             Pérdidas térmicas y aislamiento
         </h4>
         <small class="text-muted">Área real expuesta y reducción de pérdidas con lana mineral 50,8 mm</small>
@@ -15,58 +15,58 @@
 </div>
 
 <!-- Resultado principal -->
-<div class="alert alert-info border-0 shadow-sm mb-4" role="alert">
+<div class="alert alert-info mb-4 fade-in" role="alert">
     <h5 class="alert-heading">
         <i class="bi bi-info-circle me-2"></i>Resultado principal
     </h5>
     <p class="mb-0">
-        El recálculo de pérdidas térmicas con el <strong>área real expuesta</strong> del tanque
-        (~{{ perdidas.areas_m2.A_total|format_number(1) }} m² al 80 % de llenado) muestra que, sin
+        El recálculo de pérdidas térmicas con el <strong class="text-white">área real expuesta</strong> del tanque
+        (~<span class="mono">{{ perdidas.areas_m2.A_total|format_number(1) }}</span> m² al 80 % de llenado) muestra que, sin
         aislamiento, las pérdidas alcanzan
-        <strong>{{ perdidas.resultados[1].Q_sin_aislamiento_MJ_h|format_number(1) }} MJ/h</strong> a
-        60 °C. Con un aislamiento de <strong>50,8 mm de lana mineral</strong>, las pérdidas se reducen
-        a <strong>{{ perdidas.resultados[1].Q_con_aislamiento_MJ_h|format_number(1) }} MJ/h</strong>,
-        lo que representa una reducción del <strong>{{ perdidas.resultados[1].reduccion_porc }} %</strong>.
+        <strong class="text-neon-orange mono">{{ perdidas.resultados[1].Q_sin_aislamiento_MJ_h|format_number(1) }} MJ/h</strong> a
+        60 °C. Con un aislamiento de <strong class="text-neon-cyan">50,8 mm de lana mineral</strong>, las pérdidas se reducen
+        a <strong class="text-neon-green mono">{{ perdidas.resultados[1].Q_con_aislamiento_MJ_h|format_number(1) }} MJ/h</strong>,
+        lo que representa una reducción del <strong class="text-neon-green mono">{{ perdidas.resultados[1].reduccion_porc }} %</strong>.
     </p>
 </div>
 
 <!-- Áreas expuestas -->
-<div class="row g-4 mb-4">
+<div class="row g-4 mb-4 fade-in">
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-3 h-100">
-            <div class="text-muted small">Área fondo toriesférico</div>
-            <div class="fs-3 fw-bold text-primary">{{ perdidas.areas_m2.A_fondo|format_number(1) }} m²</div>
+        <div class="bg-card-blue rounded p-3 text-center h-100">
+            <div class="text-dim small">Área fondo toriesférico</div>
+            <div class="fs-3 fw-bold text-neon-blue mono">{{ perdidas.areas_m2.A_fondo|format_number(1) }} m²</div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-3 h-100">
-            <div class="text-muted small">Área cilíndrica al 80 %</div>
-            <div class="fs-3 fw-bold text-primary">{{ perdidas.areas_m2.A_cilindro_80porc|format_number(1) }} m²</div>
+        <div class="bg-card-blue rounded p-3 text-center h-100">
+            <div class="text-dim small">Área cilíndrica al 80 %</div>
+            <div class="fs-3 fw-bold text-neon-blue mono">{{ perdidas.areas_m2.A_cilindro_80porc|format_number(1) }} m²</div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-3 h-100">
-            <div class="text-muted small">Área total expuesta</div>
-            <div class="fs-3 fw-bold text-success">{{ perdidas.areas_m2.A_total|format_number(1) }} m²</div>
+        <div class="bg-card-green rounded p-3 text-center h-100">
+            <div class="text-dim small">Área total expuesta</div>
+            <div class="fs-3 fw-bold text-neon-green mono">{{ perdidas.areas_m2.A_total|format_number(1) }} m²</div>
         </div>
     </div>
 </div>
 
 <!-- Tabla de pérdidas -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3">
+<div class="card mb-4 fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-table me-2"></i>Pérdidas térmicas con y sin aislamiento</h5>
     </div>
     <div class="card-body">
-        <p>
+        <p style="color: var(--text-muted);">
             La Tabla 1 compara las pérdidas térmicas a 57 °C y 60 °C con el aislamiento de diseño y en
             ausencia de él. El tiempo para perder 3 °C se calcula a partir de la capacitancia térmica de
             la masa de glucosa al 80 % de llenado.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped table-hover align-middle">
-                <caption class="caption-top text-muted small">Tabla 1. Pérdidas térmicas con área real expuesta.</caption>
-                <thead class="table-light">
+                <caption class="caption-top text-dim small">Tabla 1. Pérdidas térmicas con área real expuesta.</caption>
+                <thead>
                     <tr>
                         <th>T glucosa [°C]</th>
                         <th>Con aislamiento [MJ/h]</th>
@@ -79,12 +79,12 @@
                 <tbody>
                     {% for r in perdidas.resultados %}
                     <tr>
-                        <td class="fw-semibold">{{ r.T_glucosa_C|format_number(0) }}</td>
-                        <td>{{ r.Q_con_aislamiento_MJ_h|format_number(2) }}</td>
-                        <td>{{ r.Q_sin_aislamiento_MJ_h|format_number(2) }}</td>
-                        <td>{{ r.reduccion_porc|format_number(1) }}</td>
-                        <td>{{ r.U_perdidas_W_m2_C|format_number(3) }}</td>
-                        <td>{{ r.tiempo_3C_d|format_number(1) }}</td>
+                        <td class="fw-semibold mono">{{ r.T_glucosa_C|format_number(0) }}</td>
+                        <td class="mono">{{ r.Q_con_aislamiento_MJ_h|format_number(2) }}</td>
+                        <td class="mono">{{ r.Q_sin_aislamiento_MJ_h|format_number(2) }}</td>
+                        <td class="mono">{{ r.reduccion_porc|format_number(1) }}</td>
+                        <td class="mono">{{ r.U_perdidas_W_m2_C|format_number(3) }}</td>
+                        <td class="mono">{{ r.tiempo_3C_d|format_number(1) }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -94,12 +94,12 @@
 </div>
 
 <!-- Tabla de espesores -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3">
+<div class="card mb-4 fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-layers me-2"></i>Comparativa de espesores de aislamiento</h5>
     </div>
     <div class="card-body">
-        <p>
+        <p style="color: var(--text-muted);">
             La Tabla 2 presenta la pérdida térmica, la temperatura superficial exterior y la eficiencia
             relativa para distintos espesores de lana mineral, con agua de calentamiento a 75 °C. El
             criterio de seguridad al contacto (T<sub>superficial</sub> ≤ 60 °C) se cumple a partir de
@@ -107,8 +107,8 @@
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped table-hover align-middle">
-                <caption class="caption-top text-muted small">Tabla 2. Espesores de aislamiento y temperatura superficial.</caption>
-                <thead class="table-light">
+                <caption class="caption-top text-dim small">Tabla 2. Espesores de aislamiento y temperatura superficial.</caption>
+                <thead>
                     <tr>
                         <th>Espesor [mm]</th>
                         <th>Espesor [in]</th>
@@ -121,11 +121,11 @@
                 <tbody>
                     {% for e in espesores %}
                     <tr>
-                        <td class="fw-semibold">{{ e.espesor_mm|format_number(1) }}</td>
-                        <td>{{ e.espesor_in|format_number(2) }}</td>
-                        <td>{{ e.Q_perdida_kW|format_number(3) }}</td>
-                        <td>{{ e.T_sup_ext_C|format_number(1) }}</td>
-                        <td>{{ e.eficiencia_porc|format_number(1) }}</td>
+                        <td class="fw-semibold mono">{{ e.espesor_mm|format_number(1) }}</td>
+                        <td class="mono">{{ e.espesor_in|format_number(2) }}</td>
+                        <td class="mono">{{ e.Q_perdida_kW|format_number(3) }}</td>
+                        <td class="mono">{{ e.T_sup_ext_C|format_number(1) }}</td>
+                        <td class="mono">{{ e.eficiencia_porc|format_number(1) }}</td>
                         <td>
                             {% if e.seguro_contacto %}
                             <span class="badge bg-success">Sí</span>
@@ -142,15 +142,15 @@
 </div>
 
 <!-- Sensibilidad de espesor -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3">
+<div class="card mb-4 fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-graph-down me-2"></i>Sensibilidad del espesor de aislamiento a 60 °C</h5>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-sm table-striped table-hover align-middle" style="max-width:600px;">
-                <caption class="caption-top text-muted small">Tabla 3. Efecto del espesor sobre pérdidas y tiempo de enfriamiento.</caption>
-                <thead class="table-light">
+                <caption class="caption-top text-dim small">Tabla 3. Efecto del espesor sobre pérdidas y tiempo de enfriamiento.</caption>
+                <thead>
                     <tr>
                         <th>Espesor [mm]</th>
                         <th>U [W/(m²·°C)]</th>
@@ -161,10 +161,10 @@
                 <tbody>
                     {% for s in sensibilidad %}
                     <tr>
-                        <td class="fw-semibold">{{ s.espesor_mm|format_number(1) }}</td>
-                        <td>{{ s.U_W_m2_C|format_number(3) }}</td>
-                        <td>{{ s.Q_MJ_h|format_number(2) }}</td>
-                        <td>{{ s.tiempo_3C_d|format_number(1) }}</td>
+                        <td class="fw-semibold mono">{{ s.espesor_mm|format_number(1) }}</td>
+                        <td class="mono">{{ s.U_W_m2_C|format_number(3) }}</td>
+                        <td class="mono">{{ s.Q_MJ_h|format_number(2) }}</td>
+                        <td class="mono">{{ s.tiempo_3C_d|format_number(1) }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -174,15 +174,15 @@
 </div>
 
 <!-- Implicación operativa -->
-<div class="card border-0 shadow-sm">
-    <div class="card-header bg-white py-3">
+<div class="card fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Implicación para la operación</h5>
     </div>
     <div class="card-body">
-        <p class="mb-0">
+        <p class="mb-0" style="color: var(--text-muted);">
             El aislamiento de 50,8 mm no solo reduce la demanda energética del sistema de agua caliente,
             sino que estabiliza la temperatura del tanque entre descargas. Sin él, las pérdidas
-            ({{ perdidas.resultados[1].Q_sin_aislamiento_MJ_h|format_number(1) }} MJ/h) superarían el
+            (<span class="mono">{{ perdidas.resultados[1].Q_sin_aislamiento_MJ_h|format_number(1) }} MJ/h</span>) superarían el
             aporte térmico disponible en la chaqueta en ciertas condiciones, haciendo inviable mantener
             la temperatura de despacho. Con aislamiento, el aporte de la chaqueta supera ampliamente las
             pérdidas, lo que permite recuperar temperatura entre descargas y cumplir las cinco descargas

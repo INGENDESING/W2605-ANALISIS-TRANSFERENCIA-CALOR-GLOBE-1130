@@ -17,13 +17,13 @@ let estado = {
     graficaTransitorio: null
 };
 
-// Layout Plotly
+// Layout Plotly — tema oscuro cyberpunk
 const plotlyLayout = {
-    font: { family: 'Georgia, serif', size: 11 },
-    paper_bgcolor: 'white',
-    plot_bgcolor: '#fafafa',
-    xaxis: { gridcolor: '#e0e0e0', showgrid: true },
-    yaxis: { gridcolor: '#e0e0e0', showgrid: true },
+    font: { family: 'Georgia, serif', size: 11, color: '#e0e6ed' },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    xaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, zerolinecolor: 'rgba(0,150,255,0.2)' },
+    yaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, zerolinecolor: 'rgba(0,150,255,0.2)' },
     margin: { l: 50, r: 20, t: 30, b: 40 },
     hovermode: 'x unified'
 };
@@ -289,7 +289,7 @@ function actualizarGraficaDonut(data) {
     const valores = [data.pct_R_i, data.pct_R_w, data.pct_R_o, 
                      (data.R_f_agua/(1/data.U))*100, (data.R_f_glucosa/(1/data.U))*100];
     const etiquetas = ['Rᵢ (agua)', 'Rₚ (pared)', 'Rₒ (glucosa)', 'Rf (agua)', 'Rf (glucosa)'];
-    const colores = ['#2196F3', '#9E9E9E', '#FF5722', '#4CAF50', '#FFC107'];
+    const colores = ['#0096ff', '#8b95a8', '#ff5e00', '#39ff14', '#ffaa00'];
 
     const trace = {
         values: valores,
@@ -334,9 +334,9 @@ function initGraficaViscosidad() {
         y: viscosidades,
         type: 'scatter',
         mode: 'lines',
-        line: { color: '#1a3a6c', width: 2 },
+        line: { color: '#00f0ff', width: 2 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(26, 58, 108, 0.1)',
+        fillcolor: 'rgba(0, 240, 255, 0.10)',
         name: 'μ (cP)'
     };
 
@@ -407,9 +407,9 @@ function renderizarTransitorio(data) {
         y: temperatura,
         type: 'scatter',
         mode: 'lines',
-        line: { color: '#1a3a6c', width: 2.5 },
+        line: { color: '#39ff14', width: 2.5 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(26, 58, 108, 0.1)',
+        fillcolor: 'rgba(57, 255, 20, 0.10)',
         name: 'T Glucosa'
     };
 
@@ -421,7 +421,7 @@ function renderizarTransitorio(data) {
             type: 'line',
             x0: 0, x1: 1, xref: 'paper',
             y0: faseCalentamiento.T_fin, y1: faseCalentamiento.T_fin,
-            line: { dash: 'dash', color: '#e8750a', width: 2 }
+            line: { dash: 'dash', color: '#ff8c00', width: 2 }
         }],
         annotations: [{
             x: tiempo[temperatura.length - 1],

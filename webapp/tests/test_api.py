@@ -171,6 +171,18 @@ class TestVistas(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content_type, 'image/png')
 
+    def test_serve_informe(self):
+        """Test descarga de informe PDF"""
+        response = self.client.get('/informes/W2605PRINF001.pdf')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, 'application/pdf')
+        self.assertIn('attachment', response.headers.get('Content-Disposition', ''))
+
+    def test_serve_informe_no_pdf_rejected(self):
+        """Test que solo se permiten archivos PDF"""
+        response = self.client.get('/informes/W2605PRINF001.tex')
+        self.assertEqual(response.status_code, 404)
+
 
 if __name__ == '__main__':
     unittest.main()

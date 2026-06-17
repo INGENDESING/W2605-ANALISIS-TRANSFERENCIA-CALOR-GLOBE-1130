@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="W2605 - Análisis Térmico Glucosa INGREDION — DMV Ingenieros">
+    <meta name="description" content="W2605 - Análisis Térmico Glucosa INGREDION — DMV SAS">
     <title>{% block title %}W2605 — Análisis Térmico{% endblock %}</title>
 
     <!-- Bootstrap 5 CSS -->
@@ -24,17 +24,17 @@
 <!-- ── Sidebar ─────────────────────────────────────────────────────────────── -->
 <aside class="app-sidebar" id="appSidebar">
     <div class="sidebar-brand">
-        <div class="d-flex align-items-center justify-content-center gap-2 mb-3 bg-white p-2 rounded shadow-sm opacity-75 hover-opacity-100 transition-all">
-            <img src="{{ url_for('static', filename='img/logo_dmv.png') }}" alt="DMV" style="max-height: 28px; width: auto;">
-            <div class="vr mx-1"></div>
-            <img src="{{ url_for('static', filename='img/logo_ingredion.png') }}" alt="INGREDION" style="max-height: 28px; width: auto;">
+        <div class="d-flex align-items-center justify-content-center gap-2 logos-box">
+            <img src="{{ url_for('static', filename='img/logo_dmv.png') }}" alt="DMV" style="max-height: 28px; width: auto; filter: brightness(1.15);">
+            <div class="vr mx-1" style="color: rgba(255,255,255,0.15);"></div>
+            <img src="{{ url_for('static', filename='img/logo_ingredion.png') }}" alt="INGREDION" style="max-height: 28px; width: auto; filter: brightness(1.15);">
         </div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <i class="bi bi-thermometer-half text-warning fs-5"></i>
+            <i class="bi bi-thermometer-half text-neon-orange fs-5"></i>
             <span class="brand-name">W2605</span>
         </div>
         <div class="brand-project">Análisis Térmico · INGREDION</div>
-        <div style="font-size:0.65rem;color:rgba(255,255,255,0.38);margin-top:2px;">DMV SAS</div>
+        <div class="brand-client">DMV SAS</div>
     </div>
 
     <nav class="mt-2">
@@ -112,8 +112,9 @@
     </nav>
 
     <!-- Pie del sidebar -->
-    <div class="mt-auto p-3" style="font-size:0.65rem;color:rgba(255,255,255,0.3);border-top:1px solid rgba(255,255,255,0.1);margin-top:auto;">
-        © 2026 DMV S.A.S. — v2.0
+    <div class="mt-auto p-3 text-center" style="font-size:0.65rem;color:var(--text-dim);border-top:1px solid rgba(0,150,255,0.1);margin-top:auto;">
+        <div class="mb-1"><i class="bi bi-cpu text-neon-green"></i> v2.1 cyberpunk</div>
+        © 2026 DMV SAS
     </div>
 </aside>
 
@@ -124,15 +125,15 @@
         <button class="btn btn-sm btn-outline-secondary" onclick="abrirSidebar()">
             <i class="bi bi-list fs-5"></i>
         </button>
-        <span class="fw-bold" style="color:var(--color-dmv);">W2605</span>
+        <span class="fw-bold text-neon-green">W2605</span>
     </div>
 
     {% block content %}{% endblock %}
 
     <!-- Footer -->
-    <footer class="mt-5 pt-3 border-top" style="font-size:0.78rem;color:#aaa;">
+    <footer class="mt-5 pt-3 border-top">
         <div class="d-flex justify-content-between flex-wrap gap-2">
-            <span><strong>W2605</strong> — Análisis Fondo Tanque Glucosa · <strong>INGREDION S.A.</strong></span>
+            <span><strong class="text-neon-blue">W2605</strong> — Análisis Fondo Tanque Glucosa · <strong class="text-neon-orange">INGREDION S.A.</strong></span>
             <span>© 2026 <strong>DMV SAS</strong></span>
         </div>
     </footer>

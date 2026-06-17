@@ -1,9 +1,9 @@
 # Contexto del proyecto: W2605 — Fondo de tanque de glucosa
 
 ## Estado actual
-- Última tarea completada: Actualización de la aplicación web (`webapp/`): integración de los nuevos análisis del proyecto (ciclo a 12 m³/h con 14 m², pérdidas térmicas con área real, calentamiento de 24 ton, capacidad operativa), refactor import-safe de los scripts de `src/`, servicio estático de figuras desde `results/figures/`, ampliación de tests a 14 casos (OK), actualización de documentación y sincronización con GitHub.
-- Próxima tarea pendiente: Ninguna crítica pendiente; proyecto listo para entrega final.
-- Fecha de última actualización: 2026-06-17T16:47:00-05:00.
+- Última tarea completada: Rediseño visual de la webapp W2605 a tema oscuro cyberpunk (verde neón, naranja translúcido, azul transparente), actualización de todas las páginas principales, gráficos Plotly/Chart.js a fondo oscuro, botones de descarga de informes PDF (`/informes/`), preparación para despliegue en Render y ampliación de tests a 16 casos (OK).
+- Próxima tarea pendiente: Desplegar en Render y validar funcionamiento en producción.
+- Fecha de última actualización: 2026-06-17T17:15:00-05:00.
 
 ## Bases de diseño congeladas
 - Capacidad operativa: máximo 5 descargas/día, 24 ton/descarga, 120 ton/día.
@@ -37,6 +37,11 @@
 - (2026-06-17) Se implementó el servicio estático `/figures/<path:filename>` en `webapp/app/routes.py` para servir las gráficas generadas en `results/figures/`.
 - (2026-06-17) Se añadieron las páginas HTML `/factibilidad`, `/perdidas-aislamiento` y `/escenarios`, y se actualizaron `base.html`, `index.html`, `dashboard.html` y `about.html`.
 - (2026-06-17) Se amplió `webapp/tests/test_api.py` a 14 tests; todos pasan exitosamente.
+- (2026-06-17) Se rediseñó la webapp con tema oscuro cyberpunk: nueva paleta en `webapp/app/static/css/main.css`, `base.html` con `data-bs-theme="dark"`, y actualización de `index.html`, `dashboard.html`, `factibilidad.html`, `perdidas_aislamiento.html`, `escenarios.html` y `about.html`.
+- (2026-06-17) Se adaptaron los scripts de gráficos (`dashboard.js`, `calculadora.js`, `simulador.js`, `propiedades.js`, `sensibilidad.js`) a fondo oscuro con colores neón.
+- (2026-06-17) Se añadió la ruta `/informes/<filename>` en `webapp/app/routes.py` para descargar los informes PDF desde `docs/report/`.
+- (2026-06-17) Se actualizó `render.yaml` con nombre de servicio `w2605-webapp`, health check `/health` y configuración de despliegue Gunicorn.
+- (2026-06-17) Se amplió `webapp/tests/test_api.py` a 16 tests (incluye descarga de informes).
 
 ## Archivos clave y su propósito
 - `docs/report/W2605PRINF001.tex` — Informe técnico principal (71 páginas).
@@ -51,8 +56,9 @@
 - `src/ciclo_descargas.py` — Simulación del ciclo de descargas a carrotanques.
 - `task/test_ciclo.py` — Test del ciclo oficial precalentado.
 - `task/test_simulacion_50C.py` — Test de simulación desde 50 °C.
-- `webapp/tests/test_api.py` — Tests de la API Flask (14 casos).
-- `webapp/app/routes.py` — Rutas HTML y servicio de figuras.
+- `webapp/tests/test_api.py` — Tests de la API Flask (16 casos).
+- `webapp/app/static/css/main.css` — Sistema de diseño dark cyberpunk.
+- `webapp/app/routes.py` — Rutas HTML, servicio de figuras y descarga de informes PDF.
 - `webapp/app/api/proyecto.py` — Endpoints JSON de los análisis del proyecto.
 - `webapp/app/core/ciclo_12m3h.py` — Wrapper Flask del ciclo a 12 m³/h con 14 m².
 - `webapp/app/core/perdidas_aislamiento.py` — Wrapper Flask de pérdidas térmicas y espesores.
@@ -75,4 +81,5 @@ Ninguna crítica pendiente.
 - Compilar resumen ejecutivo: `cd docs/report && pdflatex W2605PRINF002.tex && pdflatex W2605PRINF002.tex`
 - Ejecutar tests: `cd task && ../venv/Scripts/python.exe test_ciclo.py && ../venv/Scripts/python.exe test_simulacion_50C.py && cd ../webapp && ../venv/Scripts/python.exe tests/test_api.py`
 - Levantar servidor web: `cd webapp && ../venv/Scripts/python.exe run.py`
+- Desplegar en Render: push a `main`; `render.yaml` configura el servicio `w2605-webapp` automáticamente.
 - Generar figuras: ejecutar scripts en `src/` con `venv/Scripts/python.exe`.

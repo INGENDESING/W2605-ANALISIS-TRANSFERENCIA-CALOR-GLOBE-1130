@@ -4,10 +4,10 @@
 
 {% block content %}
 <!-- Cabecera -->
-<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4 fade-in">
     <div>
-        <h4 class="mb-0" style="color:var(--color-dmv);font-weight:700;">
-            <i class="bi bi-collection me-2" style="color:var(--color-ingredion);"></i>
+        <h4 class="mb-0">
+            <i class="bi bi-collection text-neon-orange me-2"></i>
             Escenarios y comparativas del proyecto
         </h4>
         <small class="text-muted">Resultados de los escenarios térmicos y comparativas de configuraciones de chaqueta</small>
@@ -15,12 +15,12 @@
 </div>
 
 <!-- Introducción -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3">
+<div class="card mb-4 fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-journal-text me-2"></i>Alcance de los escenarios</h5>
     </div>
     <div class="card-body">
-        <p class="mb-0">
+        <p class="mb-0" style="color: var(--text-muted);">
             El análisis térmico del proyecto W2605 incluye cinco escenarios de operación y una
             comparativa entre la chaqueta dimple original y la media caña propuesta. Los Escenarios 1, 2
             y 3 evalúan el calentamiento transitorio del tanque bajo distintas condiciones de agua y
@@ -32,12 +32,12 @@
 </div>
 
 <!-- Escenarios 1-3 -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3">
+<div class="card mb-4 fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-thermometer-sun me-2"></i>Escenarios de calentamiento</h5>
     </div>
     <div class="card-body">
-        <p>
+        <p style="color: var(--text-muted);">
             Los tres primeros escenarios evalúan el comportamiento transitorio de la temperatura de la
             glucosa. El Escenario 1 considera el llenado del tanque desde 20 °C con agua a 65 °C; los
             Escenarios 2 y 3 parten de un nivel inicial del 80 % y comparan el efecto de usar agua a
@@ -45,39 +45,39 @@
         </p>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-blue);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Escenario 1</h6>
+                        <h6 class="card-title text-neon-blue">Escenario 1</h6>
                         <p class="small text-muted">Calentamiento desde 20 °C</p>
                         <img src="{{ url_for('main.serve_figure', filename='escenario1_T_vs_tiempo.png') }}"
-                             class="img-fluid rounded" alt="Escenario 1">
+                             class="img-fluid rounded" alt="Escenario 1" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-cyan);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Escenario 2</h6>
+                        <h6 class="card-title text-neon-cyan">Escenario 2</h6>
                         <p class="small text-muted">80 % inicial, agua 65 °C</p>
                         <img src="{{ url_for('main.serve_figure', filename='escenario2_T_vs_tiempo.png') }}"
-                             class="img-fluid rounded" alt="Escenario 2">
+                             class="img-fluid rounded" alt="Escenario 2" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-green);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Escenario 3</h6>
+                        <h6 class="card-title text-neon-green">Escenario 3</h6>
                         <p class="small text-muted">80 % inicial, agua 75 °C</p>
                         <img src="{{ url_for('main.serve_figure', filename='escenario3_T_vs_tiempo.png') }}"
-                             class="img-fluid rounded" alt="Escenario 3">
+                             class="img-fluid rounded" alt="Escenario 3" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
         </div>
         <div class="mt-4 text-center">
             <img src="{{ url_for('main.serve_figure', filename='comparacion_escenarios_2_3.png') }}"
-                 class="img-fluid rounded" style="max-height:500px;" alt="Comparación Escenarios 2 y 3">
+                 class="img-fluid rounded" style="max-height:500px; border: 1px solid rgba(0,150,255,0.15);" alt="Comparación Escenarios 2 y 3">
             <p class="text-muted small mt-2 mb-0">
                 Comparación directa entre el Escenario 2 (agua 65 °C) y el Escenario 3 (agua 75 °C).
                 El uso de agua a 75 °C reduce significativamente el tiempo de recuperación de temperatura.
@@ -87,12 +87,12 @@
 </div>
 
 <!-- Escenarios 4 y 5 -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3">
+<div class="card mb-4 fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-truck me-2"></i>Escenarios de capacidad y ciclo de descargas</h5>
     </div>
     <div class="card-body">
-        <p>
+        <p style="color: var(--text-muted);">
             El Escenario 4 cuantifica la capacidad operativa diaria con el área de 13 m² y agua a 75 °C
             para dos temperaturas de entrada de glucosa (54 °C y 55 °C). El Escenario 5 modela el ciclo
             completo de descargas partiendo desde 25 °C. Ambos escenarios demuestran que el sistema
@@ -100,40 +100,40 @@
         </p>
         <div class="row g-4">
             <div class="col-lg-6">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-orange);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Escenario 4 — Capacidad operativa</h6>
+                        <h6 class="card-title text-neon-orange">Escenario 4 — Capacidad operativa</h6>
                         <img src="{{ url_for('main.serve_figure', filename='escenario4_comparativa_capacidad.png') }}"
-                             class="img-fluid rounded" alt="Escenario 4 capacidad">
+                             class="img-fluid rounded" alt="Escenario 4 capacidad" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-blue);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Escenario 4 — Ciclo de descargas</h6>
+                        <h6 class="card-title text-neon-blue">Escenario 4 — Ciclo de descargas</h6>
                         <img src="{{ url_for('main.serve_figure', filename='escenario4_ciclo_T.png') }}"
-                             class="img-fluid rounded" alt="Escenario 4 ciclo">
+                             class="img-fluid rounded" alt="Escenario 4 ciclo" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
         </div>
         <div class="row g-4 mt-2">
             <div class="col-lg-6">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-cyan);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Escenario 4 — Diagrama Gantt</h6>
+                        <h6 class="card-title text-neon-cyan">Escenario 4 — Diagrama Gantt</h6>
                         <img src="{{ url_for('main.serve_figure', filename='escenario4_gantt.png') }}"
-                             class="img-fluid rounded" alt="Escenario 4 Gantt">
+                             class="img-fluid rounded" alt="Escenario 4 Gantt" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-purple);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Escenario 5 — Ciclo desde 25 °C</h6>
+                        <h6 class="card-title" style="color: var(--neon-purple);">Escenario 5 — Ciclo desde 25 °C</h6>
                         <img src="{{ url_for('main.serve_figure', filename='escenario5_ciclo_T.png') }}"
-                             class="img-fluid rounded" alt="Escenario 5 ciclo">
+                             class="img-fluid rounded" alt="Escenario 5 ciclo" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
@@ -142,12 +142,12 @@
 </div>
 
 <!-- Comparativa de chaquetas -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3">
+<div class="card mb-4 fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-arrows-angle-expand me-2"></i>Comparativa: chaqueta dimple vs. media caña</h5>
     </div>
     <div class="card-body">
-        <p>
+        <p style="color: var(--text-muted);">
             La comparativa evalúa el desempeño de la chaqueta dimple existente (28 m²) frente a la media
             caña propuesta (13 m²) en dos modalidades: calentamiento por lotes y flujo continuo. Aunque
             el área de contacto de la media caña es menor, la configuración en espiral con doble entrada
@@ -155,40 +155,40 @@
         </p>
         <div class="row g-4">
             <div class="col-lg-6">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-green);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Calentamiento por lotes</h6>
+                        <h6 class="card-title text-neon-green">Calentamiento por lotes</h6>
                         <img src="{{ url_for('main.serve_figure', filename='comp_batch_T_vs_t.png') }}"
-                             class="img-fluid rounded" alt="Comparativa batch T vs t">
+                             class="img-fluid rounded" alt="Comparativa batch T vs t" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-orange);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Tiempo de calentamiento por lotes</h6>
+                        <h6 class="card-title text-neon-orange">Tiempo de calentamiento por lotes</h6>
                         <img src="{{ url_for('main.serve_figure', filename='comp_batch_tiempo_bar.png') }}"
-                             class="img-fluid rounded" alt="Comparativa batch barras">
+                             class="img-fluid rounded" alt="Comparativa batch barras" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
         </div>
         <div class="row g-4 mt-2">
             <div class="col-lg-6">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-blue);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Flujo continuo — T de salida vs. caudal</h6>
+                        <h6 class="card-title text-neon-blue">Flujo continuo — T de salida vs. caudal</h6>
                         <img src="{{ url_for('main.serve_figure', filename='comp_flujo_T_out_vs_mdot.png') }}"
-                             class="img-fluid rounded" alt="Comparativa flujo T out">
+                             class="img-fluid rounded" alt="Comparativa flujo T out" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card h-100">
+                <div class="card h-100" style="border-top: 3px solid var(--neon-cyan);">
                     <div class="card-body text-center">
-                        <h6 class="card-title">Flujo máximo teórico</h6>
+                        <h6 class="card-title text-neon-cyan">Flujo máximo teórico</h6>
                         <img src="{{ url_for('main.serve_figure', filename='comp_flujo_maximo_bar.png') }}"
-                             class="img-fluid rounded" alt="Comparativa flujo máximo">
+                             class="img-fluid rounded" alt="Comparativa flujo máximo" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>
@@ -197,12 +197,12 @@
 </div>
 
 <!-- Caso 24 ton -->
-<div class="card border-0 shadow-sm">
-    <div class="card-header bg-white py-3">
+<div class="card fade-in">
+    <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-fire me-2"></i>Caso de estudio: calentamiento de 24 ton</h5>
     </div>
     <div class="card-body">
-        <p>
+        <p style="color: var(--text-muted);">
             Se evaluó el tiempo necesario para calentar 24 ton de glucosa desde 40 °C hasta 60 °C con
             una chaqueta de 14 m² y agua a 65 °C y 75 °C. Este caso sirve como referencia para
             recuperaciones de temperatura entre descargas.
@@ -210,11 +210,11 @@
         <div class="row g-4">
             <div class="col-lg-6">
                 <img src="{{ url_for('main.serve_figure', filename='calentamiento_24ton_T_vs_t.png') }}"
-                     class="img-fluid rounded" alt="Calentamiento 24 ton T vs t">
+                     class="img-fluid rounded" alt="Calentamiento 24 ton T vs t" style="border: 1px solid rgba(0,150,255,0.15);">
             </div>
             <div class="col-lg-6">
                 <img src="{{ url_for('main.serve_figure', filename='calentamiento_24ton_Q_vs_t.png') }}"
-                     class="img-fluid rounded" alt="Calentamiento 24 ton Q vs t">
+                     class="img-fluid rounded" alt="Calentamiento 24 ton Q vs t" style="border: 1px solid rgba(0,150,255,0.15);">
             </div>
         </div>
     </div>

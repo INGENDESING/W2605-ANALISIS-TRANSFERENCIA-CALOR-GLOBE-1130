@@ -2,7 +2,7 @@
 Rutas principales de la aplicación
 """
 from pathlib import Path
-from flask import Blueprint, render_template, jsonify, send_from_directory
+from flask import Blueprint, render_template, jsonify, send_from_directory, abort
 
 from .core.ciclo_12m3h import simular_ciclo_12m3h
 from .core.perdidas_aislamiento import (
@@ -17,6 +17,9 @@ main_bp = Blueprint('main', __name__)
 # Directorio de figuras generadas por los scripts de análisis
 FIGURES_DIR = (Path(__file__).resolve().parent.parent.parent
                / 'results' / 'figures')
+
+# Directorio de informes PDF
+REPORTS_DIR = Path(__file__).resolve().parent.parent.parent / 'docs' / 'report'
 
 
 @main_bp.route('/')
@@ -104,6 +107,14 @@ def escenarios():
 def serve_figure(filename):
     """Servir figuras generadas en results/figures/"""
     return send_from_directory(str(FIGURES_DIR), filename)
+
+
+@main_bp.route('/informes/<path:filename>')
+def serve_informe(filename):
+    """Servir informes PDF desde docs/report/ como descarga."""
+    if not filename.lower().endswith('.pdf'):
+        abort(404)
+    return send_from_directory(str(REPORTS_DIR), filename, as_attachment=True)
 
 
 @main_bp.route('/health')

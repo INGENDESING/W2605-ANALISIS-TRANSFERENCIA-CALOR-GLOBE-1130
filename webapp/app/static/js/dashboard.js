@@ -17,15 +17,15 @@ let estadoActual = {
     params: { ...ESCENARIOS['2'] }
 };
 
-// Layout base para Plotly
+// Layout base para Plotly — tema oscuro cyberpunk
 const plotlyLayout = {
-    font: { family: 'Georgia, serif', size: 12 },
-    paper_bgcolor: 'white',
-    plot_bgcolor: '#fafafa',
-    xaxis: { gridcolor: '#e0e0e0', showgrid: true },
-    yaxis: { gridcolor: '#e0e0e0', showgrid: true },
+    font: { family: 'Georgia, serif', size: 12, color: '#e0e6ed' },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    xaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, zerolinecolor: 'rgba(0,150,255,0.2)' },
+    yaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, zerolinecolor: 'rgba(0,150,255,0.2)' },
     margin: { l: 60, r: 20, t: 40, b: 50 },
-    legend: { orientation: 'h', y: -0.15 },
+    legend: { orientation: 'h', y: -0.15, font: { color: '#e0e6ed' } },
     hovermode: 'x unified'
 };
 
@@ -252,9 +252,9 @@ function renderizarGraficaTvsT(data) {
     // Shapes para fases
     const shapes = [];
     const colores = {
-        'calentamiento_inicial': 'rgba(33, 150, 243, 0.15)',
-        'descarga': 'rgba(255, 87, 34, 0.15)',
-        'mantenimiento': 'rgba(76, 175, 80, 0.1)'
+        'calentamiento_inicial': 'rgba(0, 150, 255, 0.12)',
+        'descarga': 'rgba(255, 94, 0, 0.12)',
+        'mantenimiento': 'rgba(57, 255, 20, 0.08)'
     };
     
     fases.forEach(f => {
@@ -279,9 +279,9 @@ function renderizarGraficaTvsT(data) {
         type: 'scatter',
         mode: 'lines',
         name: 'T Glucosa',
-        line: { color: '#1a3a6c', width: 2 },
+        line: { color: '#39ff14', width: 2 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(26, 58, 108, 0.05)'
+        fillcolor: 'rgba(57, 255, 20, 0.08)'
     };
     
     const layout = {
@@ -292,7 +292,7 @@ function renderizarGraficaTvsT(data) {
         annotations: [{
             x: 0.5, y: 1.1, xref: 'paper', yref: 'paper',
             text: estadoActual.params.nombre,
-            showarrow: false, font: { size: 12, color: '#666' }
+            showarrow: false, font: { size: 12, color: '#8b95a8' }
         }]
     };
     
@@ -317,7 +317,7 @@ function renderizarGantt(data) {
             base: [calIni.t_inicio_h],
             type: 'bar',
             orientation: 'h',
-            marker: { color: '#2196F3' },
+            marker: { color: '#0096ff' },
             text: [`${calIni.T_inicio}°C → ${calIni.T_fin}°C`],
             textposition: 'inside',
             hovertemplate: 'Inicio: %{base:.1f}h<br>Duración: %{x:.1f}h<br>T: %{text}<extra></extra>'
@@ -332,7 +332,7 @@ function renderizarGantt(data) {
             base: [d.t_inicio_h],
             type: 'bar',
             orientation: 'h',
-            marker: { color: d.T_fin >= 55 ? '#4CAF50' : (d.T_fin >= 50 ? '#FFC107' : '#F44336') },
+            marker: { color: d.T_fin >= 55 ? '#39ff14' : (d.T_fin >= 50 ? '#ffaa00' : '#ff2a6d') },
             text: [`${d.T_inicio}°C → ${d.T_fin}°C`],
             textposition: 'inside',
             hovertemplate: `Descarga ${d.descarga}<br>Inicio: %{base:.1f}h<br>Duración: %{x:.1f}h<br>Masa: ${d.masa_descargada_ton} ton<extra></extra>`
@@ -366,7 +366,7 @@ function renderizarGraficaU(data) {
         type: 'scatter',
         mode: 'lines',
         name: 'U (W/m²·°C)',
-        line: { color: '#1a3a6c', width: 2 },
+        line: { color: '#00f0ff', width: 2 },
         yaxis: 'y1'
     };
     
@@ -376,7 +376,7 @@ function renderizarGraficaU(data) {
         type: 'scatter',
         mode: 'lines',
         name: 'Q (kW)',
-        line: { color: '#e8750a', width: 2, dash: 'dash' },
+        line: { color: '#ff8c00', width: 2, dash: 'dash' },
         yaxis: 'y2'
     };
     

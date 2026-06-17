@@ -3,13 +3,13 @@
  * Análisis univariable de impacto de parámetros en KPIs
  */
 
-// Layout Plotly
+// Layout Plotly — tema oscuro cyberpunk
 const plotlyLayout = {
-    font: { family: 'Georgia, serif', size: 11 },
-    paper_bgcolor: 'white',
-    plot_bgcolor: '#fafafa',
-    xaxis: { gridcolor: '#e0e0e0', showgrid: true },
-    yaxis: { gridcolor: '#e0e0e0', showgrid: true },
+    font: { family: 'Georgia, serif', size: 11, color: '#e0e6ed' },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    xaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, zerolinecolor: 'rgba(0,150,255,0.2)' },
+    yaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, zerolinecolor: 'rgba(0,150,255,0.2)' },
     margin: { l: 60, r: 40, t: 30, b: 50 },
     hovermode: 'x unified'
 };
@@ -203,8 +203,8 @@ function renderizarGraficaU(valores, data, unidadX) {
         y: Uvals,
         type: 'scatter',
         mode: 'lines+markers',
-        line: { color: '#1a3a6c', width: 2 },
-        marker: { size: 6, color: '#e8750a' },
+        line: { color: '#00f0ff', width: 2 },
+        marker: { size: 6, color: '#ff8c00' },
         name: 'U'
     };
     
@@ -229,10 +229,10 @@ function renderizarGraficaTiempo(valores, data, unidadX) {
         y: tiempos,
         type: 'scatter',
         mode: 'lines+markers',
-        line: { color: '#2196F3', width: 2 },
+        line: { color: '#0096ff', width: 2 },
         marker: { size: 6 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(33, 150, 243, 0.1)'
+        fillcolor: 'rgba(0, 150, 255, 0.12)'
     };
     
     const layout = {
@@ -257,10 +257,10 @@ function renderizarGraficaCapacidad(valores, data, unidadX) {
         y: caps,
         type: 'scatter',
         mode: 'lines+markers',
-        line: { color: '#4CAF50', width: 2 },
+        line: { color: '#39ff14', width: 2 },
         marker: { size: 6 },
         fill: 'tozeroy',
-        fillcolor: 'rgba(76, 175, 80, 0.1)'
+        fillcolor: 'rgba(57, 255, 20, 0.10)'
     };
     
     // Línea de referencia a 120 ton (5 descargas x 24 ton)
@@ -269,7 +269,7 @@ function renderizarGraficaCapacidad(valores, data, unidadX) {
         y: [120, 120],
         type: 'scatter',
         mode: 'lines',
-        line: { color: '#F44336', width: 1, dash: 'dash' },
+        line: { color: '#ff2a6d', width: 1, dash: 'dash' },
         name: 'Meta 120 ton'
     };
     
@@ -295,7 +295,7 @@ function renderizarGraficaTFinal(valores, data, unidadX) {
         y: T finals,
         type: 'scatter',
         mode: 'lines+markers',
-        line: { color: '#e8750a', width: 2 },
+        line: { color: '#ff8c00', width: 2 },
         marker: { size: 6 }
     };
     
@@ -305,7 +305,7 @@ function renderizarGraficaTFinal(valores, data, unidadX) {
         y: [55, 55],
         type: 'scatter',
         mode: 'lines',
-        line: { color: '#F44336', width: 1, dash: 'dash' },
+        line: { color: '#ff2a6d', width: 1, dash: 'dash' },
         name: 'T mínima 55°C'
     };
     

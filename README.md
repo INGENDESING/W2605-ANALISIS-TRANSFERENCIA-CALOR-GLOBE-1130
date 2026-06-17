@@ -146,9 +146,21 @@ Los siguientes endpoints exponen los análisis técnicos en formato JSON:
 | `GET` | `/api/proyecto/calentamiento-24ton` | Tiempo de calentamiento de 24 ton desde 40 °C hasta 60 °C. |
 | `GET` | `/api/proyecto/capacidad-operativa` | Capacidad operativa diaria con área 13 m². |
 
-### Figuras
+### Figuras e informes
 
-Las gráficas generadas por los scripts de `src/` y guardadas en `results/figures/` se sirven estáticamente desde la ruta `/figures/<nombre_de_archivo>`.
+- Las gráficas generadas por los scripts de `src/` y guardadas en `results/figures/` se sirven estáticamente desde `/figures/<nombre_de_archivo>`.
+- Los informes oficiales ubicados en `docs/report/` pueden descargarse desde `/informes/<nombre_de_archivo>.pdf`:
+  - `/informes/W2605PRINF001.pdf` — Informe técnico principal.
+  - `/informes/W2605PRINF002.pdf` — Resumen ejecutivo.
+
+### Diseño visual
+
+La interfaz utiliza un tema oscuro **cyberpunk** con acentos neón:
+- Verde claro `#39ff14` para indicadores de cumplimiento y KPIs favorables.
+- Naranja translúcido `rgba(255, 140, 0, 0.15)` para advertencias y secciones destacadas.
+- Azul transparente `rgba(0, 150, 255, 0.12)` para paneles y bordes.
+- Fondo oscuro `#0a0a0f` con gradientes sutiles y sombras tipo *glow*.
+- Tipografía monoespaciada para valores numéricos técnicos.
 
 ---
 

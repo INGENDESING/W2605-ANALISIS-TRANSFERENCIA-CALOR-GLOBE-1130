@@ -3,13 +3,13 @@
  * Calentamiento inicial + ciclo de descargas
  */
 
-// Layout Plotly
+// Layout Plotly — tema oscuro cyberpunk
 const plotlyLayout = {
-    font: { family: 'Georgia, serif', size: 11 },
-    paper_bgcolor: 'white',
-    plot_bgcolor: '#fafafa',
-    xaxis: { gridcolor: '#e0e0e0', showgrid: true, title: 'Tiempo (h)' },
-    yaxis: { gridcolor: '#e0e0e0', showgrid: true },
+    font: { family: 'Georgia, serif', size: 11, color: '#e0e6ed' },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    xaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, title: 'Tiempo (h)', zerolinecolor: 'rgba(0,150,255,0.2)' },
+    yaxis: { gridcolor: 'rgba(0,150,255,0.12)', showgrid: true, zerolinecolor: 'rgba(0,150,255,0.2)' },
     margin: { l: 60, r: 60, t: 40, b: 50 },
     hovermode: 'x unified'
 };
@@ -154,9 +154,9 @@ function renderizarGraficaTyM(data) {
     // Shapes para fases
     const shapes = [];
     const coloresFase = {
-        'calentamiento_inicial': 'rgba(33, 150, 243, 0.08)',
-        'descarga': 'rgba(255, 87, 34, 0.08)',
-        'mantenimiento': 'rgba(76, 175, 80, 0.06)'
+        'calentamiento_inicial': 'rgba(0, 150, 255, 0.10)',
+        'descarga': 'rgba(255, 94, 0, 0.10)',
+        'mantenimiento': 'rgba(57, 255, 20, 0.08)'
     };
     
     fases.forEach(f => {
@@ -176,14 +176,14 @@ function renderizarGraficaTyM(data) {
         type: 'line',
         x0: 0, x1: 1, xref: 'paper',
         y0: T_min, y1: T_min,
-        line: { color: '#F44336', width: 1, dash: 'dash' }
+        line: { color: '#ff2a6d', width: 1, dash: 'dash' }
     });
     
     const traceT = {
         x: tiempo, y: temperatura,
         type: 'scatter', mode: 'lines',
         name: 'T Glucosa (°C)',
-        line: { color: '#1a3a6c', width: 2.5 },
+        line: { color: '#39ff14', width: 2.5 },
         yaxis: 'y1'
     };
     
@@ -191,7 +191,7 @@ function renderizarGraficaTyM(data) {
         x: tiempo, y: masa,
         type: 'scatter', mode: 'lines',
         name: 'Masa (ton)',
-        line: { color: '#e8750a', width: 2, dash: 'dash' },
+        line: { color: '#ff8c00', width: 2, dash: 'dash' },
         yaxis: 'y2'
     };
     
@@ -204,7 +204,7 @@ function renderizarGraficaTyM(data) {
         annotations: [{
             x: tiempo[tiempo.length-1], y: T_min,
             text: 'T mínima', showarrow: false,
-            yshift: -10, font: { size: 9, color: '#F44336' }
+            yshift: -10, font: { size: 9, color: '#ff2a6d' }
         }],
         legend: { orientation: 'h', y: -0.2 }
     };
@@ -230,7 +230,7 @@ function renderizarGantt(data) {
     if (calIni) {
         tareas.push(calIni.t_fin_h - calIni.t_inicio_h);
         etiquetas.push('🔥 Calentamiento Inicial');
-        colores.push('#2196F3');
+        colores.push('#0096ff');
         textos.push(`${calIni.T_inicio}°C → ${calIni.T_fin}°C`);
     }
     
@@ -241,7 +241,7 @@ function renderizarGantt(data) {
         // Descarga
         tareas.push(d.t_fin_h - d.t_inicio_h);
         etiquetas.push(`🚛 Descarga ${d.descarga}`);
-        colores.push(d.T_fin >= T_min ? '#4CAF50' : (d.T_fin >= T_min - 5 ? '#FFC107' : '#F44336'));
+        colores.push(d.T_fin >= T_min ? '#39ff14' : (d.T_fin >= T_min - 5 ? '#ffaa00' : '#ff2a6d'));
         textos.push(`${d.T_inicio}°C → ${d.T_fin}°C`);
         
         // Mantenimiento (si no es la última)
@@ -249,7 +249,7 @@ function renderizarGantt(data) {
         if (mant && i < descargas.length - 1) {
             tareas.push(mant.t_fin_h - mant.t_inicio_h);
             etiquetas.push(`⏱️ Mantenimiento ${d.descarga}`);
-            colores.push('#9E9E9E');
+            colores.push('#8b95a8');
             textos.push(`${mant.T_inicio}°C → ${mant.T_fin}°C`);
         }
     }
@@ -299,7 +299,7 @@ function renderizarGraficaUyQ(data) {
         x: tiempo, y: Uvals,
         type: 'scatter', mode: 'lines',
         name: 'U (W/m²·°C)',
-        line: { color: '#1a3a6c', width: 2 },
+        line: { color: '#00f0ff', width: 2 },
         yaxis: 'y1'
     };
     
@@ -307,7 +307,7 @@ function renderizarGraficaUyQ(data) {
         x: tiempo, y: Qvals,
         type: 'scatter', mode: 'lines',
         name: 'Q (kW)',
-        line: { color: '#e8750a', width: 2, dash: 'dash' },
+        line: { color: '#ff8c00', width: 2, dash: 'dash' },
         yaxis: 'y2'
     };
     

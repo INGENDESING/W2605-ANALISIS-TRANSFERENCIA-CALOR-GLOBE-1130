@@ -3,10 +3,10 @@
 {% block title %}Acerca de - W2605{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
+<div class="row justify-content-center fade-in">
     <div class="col-lg-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
+        <div class="card">
+            <div class="card-header card-accent-blue">
                 <h4 class="mb-0">
                     <i class="bi bi-info-circle me-2"></i>
                     Acerca del Proyecto W2605
@@ -14,128 +14,147 @@
             </div>
             <div class="card-body p-5">
                 <div class="text-center mb-4">
-                    <i class="bi bi-thermometer-half text-primary" style="font-size: 4rem;"></i>
+                    <i class="bi bi-thermometer-half text-neon-blue" style="font-size: 4rem;"></i>
                     <h2 class="mt-3">Balance de Materia y Energía</h2>
-                    <p class="lead text-muted">Sistema de calentamiento de glucosa</p>
+                    <p class="lead" style="color: var(--text-muted);">Sistema de calentamiento de glucosa</p>
                 </div>
-                
-                <hr class="my-4">
-                
+
+                <hr class="my-4" style="border-color: rgba(0,150,255,0.2);">
+
                 <h5>Descripción del Proyecto</h5>
-                <p>
-                    Esta aplicación web permite el análisis de transferencia de calor y balance de materia 
-                    en el sistema de calentamiento de glucosa <strong>Globe 42 DE</strong> mediante una chaqueta 
+                <p style="color: var(--text-muted);">
+                    Esta aplicación web permite el análisis de transferencia de calor y balance de materia
+                    en el sistema de calentamiento de glucosa <strong class="text-white">Globe 42 DE</strong> mediante una chaqueta
                     de media caña rectangular en espiral sobre fondo toriesférico.
                 </p>
-                
+
                 <h5 class="mt-4">Funcionalidades</h5>
-                <table class="table table-sm table-bordered mb-4">
-                    <thead class="table-light">
-                        <tr>
-                            <th style="width:25%;">Módulo</th>
-                            <th>Descripción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="fw-semibold">Factibilidad 5 descargas</td>
-                            <td>Demostración térmica del ciclo a 12 m³/h con chaqueta de 14 m² y agua a 75 °C.</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-semibold">Calculadora</td>
-                            <td>Cálculo del coeficiente global U, potencia térmica, tiempo de calentamiento y propiedades termofísicas.</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-semibold">Simulador</td>
-                            <td>Simulación del ciclo de descargas a carrotanques con escenarios operativos.</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-semibold">Dashboard</td>
-                            <td>Visualización de KPIs, gráficos interactivos y tablas de datos.</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-semibold">Pérdidas y Aislamiento</td>
-                            <td>Pérdidas térmicas con área real expuesta y comparativa de espesores de aislamiento.</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-semibold">Escenarios</td>
-                            <td>Resumen de los cinco escenarios térmicos y comparativa chaqueta dimple vs. media caña.</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-semibold">Exportación</td>
-                            <td>Descarga de resultados en formato JSON, CSV y Excel.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle mb-4">
+                        <thead>
+                            <tr>
+                                <th style="width:25%;">Módulo</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-semibold text-neon-green">Factibilidad 5 descargas</td>
+                                <td>Demostración térmica del ciclo a 12 m³/h con chaqueta de 14 m² y agua a 75 °C.</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-neon-blue">Calculadora</td>
+                                <td>Cálculo del coeficiente global U, potencia térmica, tiempo de calentamiento y propiedades termofísicas.</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-neon-cyan">Simulador</td>
+                                <td>Simulación del ciclo de descargas a carrotanques con escenarios operativos.</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-neon-orange">Dashboard</td>
+                                <td>Visualización de KPIs, gráficos interactivos y tablas de datos.</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-neon-blue">Pérdidas y Aislamiento</td>
+                                <td>Pérdidas térmicas con área real expuesta y comparativa de espesores de aislamiento.</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-neon-orange">Escenarios</td>
+                                <td>Resumen de los cinco escenarios térmicos y comparativa chaqueta dimple vs. media caña.</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-white">Exportación</td>
+                                <td>Descarga de resultados en formato JSON, CSV y Excel.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <h5>Datos Técnicos</h5>
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <div class="border rounded p-3">
-                            <div class="text-muted small">Tanque</div>
-                            <div class="fw-bold">Cilíndrico con fondo toriesférico</div>
-                            <div class="text-muted">SS316L, OD 5.28m</div>
+                        <div class="bg-card-blue rounded p-3 h-100">
+                            <div class="text-dim small">Tanque</div>
+                            <div class="fw-bold text-white">Cilíndrico con fondo toriesférico</div>
+                            <div class="text-dim">SS316L, OD 5.28m</div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="border rounded p-3">
-                            <div class="text-muted small">Chaqueta</div>
-                            <div class="fw-bold">Media caña rectangular en espiral</div>
-                            <div class="text-muted">45.5 x 141 mm, 13 m²</div>
+                        <div class="bg-card-green rounded p-3 h-100">
+                            <div class="text-dim small">Chaqueta</div>
+                            <div class="fw-bold text-white">Media caña rectangular en espiral</div>
+                            <div class="text-dim">45.5 x 141 mm, 13 m²</div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="border rounded p-3">
-                            <div class="text-muted small">Fluido Proceso</div>
-                            <div class="fw-bold">Glucosa Globe 42 DE</div>
-                            <div class="text-muted">~80.6°Brix</div>
+                        <div class="bg-card-orange rounded p-3 h-100">
+                            <div class="text-dim small">Fluido Proceso</div>
+                            <div class="fw-bold text-white">Glucosa Globe 42 DE</div>
+                            <div class="text-dim">~80.6°Brix</div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="border rounded p-3">
-                            <div class="text-muted small">Fluido Servicio</div>
-                            <div class="fw-bold">Agua caliente</div>
-                            <div class="text-muted">65-75°C</div>
+                        <div class="rounded p-3 h-100" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                            <div class="text-dim small">Fluido Servicio</div>
+                            <div class="fw-bold text-white">Agua caliente</div>
+                            <div class="text-dim">65-75°C</div>
                         </div>
                     </div>
                 </div>
-                
+
                 <h5>Información del Proyecto</h5>
-                <table class="table table-borderless">
-                    <tr>
-                        <td class="text-muted">Código:</td>
-                        <td class="fw-bold">W2605-PR-INF-001 R0</td>
-                    </tr>
-                    <tr>
-                        <td class="text-muted">Cliente:</td>
-                        <td>INGREDION S.A. - Planta Cali, Colombia</td>
-                    </tr>
-                    <tr>
-                        <td class="text-muted">Elaboró:</td>
-                        <td>DMV S.A.S.</td>
-                    </tr>
-                    <tr>
-                        <td class="text-muted">Versión webapp:</td>
-                        <td>2.0.0</td>
-                    </tr>
-                    <tr>
-                        <td class="text-muted">Fecha:</td>
-                        <td>2026</td>
-                    </tr>
-                </table>
-                
+                <div class="table-responsive mb-4">
+                    <table class="table table-borderless table-sm">
+                        <tr>
+                            <td class="text-dim" style="width:30%;">Código:</td>
+                            <td class="fw-bold text-white">W2605-PR-INF-001 R0</td>
+                        </tr>
+                        <tr>
+                            <td class="text-dim">Cliente:</td>
+                            <td>INGREDION S.A. - Planta Cali, Colombia</td>
+                        </tr>
+                        <tr>
+                            <td class="text-dim">Elaboró:</td>
+                            <td>DMV S.A.S.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-dim">Versión webapp:</td>
+                            <td class="mono text-neon-green">2.1.0 cyberpunk</td>
+                        </tr>
+                        <tr>
+                            <td class="text-dim">Fecha:</td>
+                            <td>2026</td>
+                        </tr>
+                    </table>
+                </div>
+
                 <h5 class="mt-4">Documentación de referencia</h5>
-                <p>
+                <p style="color: var(--text-muted);">
                     Los resultados presentados en esta aplicación se sustentan en el informe técnico
-                    <strong>W2605PRINF001</strong> y el resumen ejecutivo <strong>W2605PRINF002</strong>,
+                    <strong class="text-white">W2605PRINF001</strong> y el resumen ejecutivo <strong class="text-white">W2605PRINF002</strong>,
                     desarrollados por DMV SAS para Ingredion S.A. Las correlaciones termofísicas de la
                     glucosa Globe 42 DE se calibraron a partir de la ficha técnica Ingredion 011420.
                 </p>
-                <p>
-                    Las normas y referencias aplicables incluyen: API 650 (2020), ASME Section VIII
-                    Div. 1, ASME B31.3, ASME B31.1, RETIE, NSR-10, ASTM C547, y los textos de
-                    Incropera & DeWitt, Kern y Perry.
-                </p>
+
+                <!-- Descarga de informes -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <a href="{{ url_for('main.serve_informe', filename='W2605PRINF001.pdf') }}"
+                           class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-file-earmark-pdf fs-5"></i>
+                            <span>Descargar informe técnico</span>
+                        </a>
+                        <div class="text-dim small text-center mt-1">W2605PRINF001.pdf</div>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ url_for('main.serve_informe', filename='W2605PRINF002.pdf') }}"
+                           class="btn btn-outline-light w-100 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-file-earmark-pdf fs-5"></i>
+                            <span>Descargar resumen ejecutivo</span>
+                        </a>
+                        <div class="text-dim small text-center mt-1">W2605PRINF002.pdf</div>
+                    </div>
+                </div>
 
                 <div class="alert alert-info mt-4">
                     <i class="bi bi-lightbulb me-2"></i>

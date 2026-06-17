@@ -1265,3 +1265,89 @@ Ninguna desviación crítica. La agrupación de los wrappers de calentamiento de
 - Tests: `webapp/tests/test_api.py`
 - Scripts refactorizados: `src/ciclo_descargas_14m2_75C_12m3h.py`, `src/calentamiento_24ton_40_60.py`, `src/escenario4_capacidad.py`
 - Documentación: `README.md`, `contexto.md`
+
+---
+
+## Plan: rediseño dark cyberpunk de la webapp W2605 y despliegue en Render
+
+**Fecha del plan:** 17 de junio de 2026  
+**Estado:** Propuesto — a la espera de aprobación explícita  
+**Alcance:** Migrar la interfaz actual de la webapp a un tema oscuro cyberpunk con acentos verde claro, naranja translúcido y azul transparente; agregar descarga de informes PDF; preparar el despliegue en Render.
+
+---
+
+### Contexto
+- Objetivo: renovar la estética de `webapp/` y habilitar la descarga de los informes W2605PRINF001 y W2605PRINF002 desde el navegador.
+- Cliente / Proyecto DML: W2605 — Análisis térmico del fondo toriesférico del tanque de glucosa Tag 53A-90A-0056 (Ingredion Cali).
+- Normas aplicables: API 650, ASME VIII, ASME B31.3, RETIE, NSR-10 (documentadas en los informes; la webapp actúa como visualizador).
+
+---
+
+### Supuestos clave
+- [ ] Se mantendrán Bootstrap 5.3.2 y las librerías CDN actuales (Plotly, Chart.js, DataTables); se forzará `data-bs-theme="dark"` y se sobreescribirán variables/clases con CSS propio.
+- [ ] La paleta propuesta será: fondo `#0a0a0f` / `#0f111a`; acento verde claro `#39ff14`; naranja translúcido `rgba(255, 140, 0, 0.15)`; azul transparente `rgba(0, 150, 255, 0.12)`; texto `#e0e6ed`.
+- [ ] Los PDFs oficiales se encuentran en `docs/report/W2605PRINF001.pdf` y `docs/report/W2605PRINF002.pdf`.
+- [ ] Render despliega desde el repositorio completo; `wsgi.py` resuelve rutas relativas a la raíz del proyecto, por lo que `results/figures/` seguirá disponible.
+- [ ] Los gráficos Plotly/Chart.js se adaptarán a fondo oscuro mediante layouts/ opciones de tema; no se recalcularán los datos.
+
+---
+
+### Tareas
+- [x] **T1. Definir paleta y sistema de diseño en CSS.** Modificar `webapp/app/static/css/main.css`: rediseñar `:root` con colores cyberpunk, sombras neon, bordes translúcidos, tipografía monoespaciada para datos. (Impacto: 1 archivo CSS.)
+- [x] **T2. Actualizar layout base.** Modificar `webapp/app/templates/base.html`: aplicar `data-bs-theme="dark"`, clases del nuevo sistema, sidebar oscuro con acentos neon, footer actualizado. (Impacto: 1 archivo.)
+- [x] **T3. Rediseñar home (`index.html`).** Aplicar estilos cyberpunk, hero section con gradientes y tipografía destacada, tarjetas de acceso a módulos. (Impacto: 1 archivo.)
+- [x] **T4. Rediseñar dashboard (`dashboard.html`).** Adaptar KPIs, tarjetas, tablas y gráficos al tema oscuro; ajustar SVG del tanque a la paleta. (Impacto: 1 archivo.)
+- [x] **T5. Rediseñar páginas de análisis (`factibilidad.html`, `perdidas_aislamiento.html`, `escenarios.html`).** Unificar tarjetas, tablas, alertas y badges con el nuevo estilo. (Impacto: 3 archivos.)
+- [x] **T6. Actualizar JS de gráficos.** Ajustar `webapp/app/static/js/dashboard.js`, `calculadora.js`, `simulador.js`, `propiedades.js`, `sensibilidad.js` para layouts oscuros en Plotly/Chart.js. (Impacto: ≤ 5 archivos, cambios menores por archivo.)
+- [x] **T7. Agregar descarga de informes.** Añadir ruta `/informes/<filename>` en `webapp/app/routes.py` con `send_from_directory`; actualizar `about.html` (y/o home) con botones de descarga para W2605PRINF001 y W2605PRINF002. (Impacto: 2 archivos.)
+- [x] **T8. Preparar despliegue en Render.** Revisar `render.yaml`, `webapp/wsgi.py` y `webapp/requirements.txt`; confirmar health check, variables de entorno y rutas de archivos estáticos. (Impacto: 3 archivos como máximo.)
+- [x] **T9. Verificación local y tests.** Ejecutar `webapp/tests/test_api.py`, levantar servidor local y revisar visualmente las rutas principales. (Impacto: validación, sin cambios de código.)
+- [x] **T10. Actualizar documentación.** Reflejar el nuevo diseño, la descarga de informes y las instrucciones de despliegue en `README.md` y `contexto.md`. (Impacto: 2 archivos.)
+- [x] **T11. Commit y push.** Subir cambios a GitHub para activar/desplegar en Render. (Impacto: operación git.)
+
+---
+
+### Riesgos / Puntos de verificación
+- [ ] **R1. Coherencia visual:** verificar que no queden elementos con clases Bootstrap `bg-white`, `bg-light`, `text-muted` o `table-light` que rompan el tema oscuro.
+- [ ] **R2. Legibilidad de gráficos:** confirmar que colores de series en Plotly/Chart.js tengan contraste suficiente sobre fondo oscuro.
+- [ ] **R3. Rutas de archivos en producción:** validar que `/figures/<filename>` y `/informes/<filename>` funcionen tanto en local como en Render.
+- [ ] **R4. Rendimiento:** mantener el uso de CDN; no agregar dependencias pesadas sin necesidad.
+- [ ] **R5. Trazabilidad:** no alterar datos, supuestos de cálculo ni resultados numéricos del proyecto.
+
+---
+
+**Detente aquí. Notifica al usuario y espera aprobación explícita antes de ejecutar.**
+
+---
+
+## Revisión — rediseño dark cyberpunk de la webapp W2605
+
+**Fecha de revisión:** 17 de junio de 2026
+
+### Resumen de cambios
+- Se rediseñó completamente el sistema de estilos en `webapp/app/static/css/main.css` con paleta oscura cyberpunk: fondos `#0a0a0f`/`#0f111a`, verde neón `#39ff14`, naranja translúcido, azul transparente, tipografía monoespaciada para datos y efectos *glow*.
+- Se actualizó `base.html` con `data-bs-theme="dark"`, sidebar oscuro con acentos neón y footer renovado.
+- Se rediseñaron `index.html`, `dashboard.html`, `factibilidad.html`, `perdidas_aislamiento.html`, `escenarios.html` y `about.html` eliminando fondos claros, bordes Bootstrap genéricos y colores corporativos anteriores.
+- Se adaptaron `dashboard.js`, `calculadora.js`, `simulador.js`, `propiedades.js` y `sensibilidad.js` para usar layouts Plotly/Chart.js con fondo transparente, rejilla azul tenue y series en colores neón.
+- Se añadió la ruta `/informes/<filename>` en `webapp/app/routes.py` para descargar los informes PDF desde `docs/report/`.
+- Se añadieron botones de descarga en `about.html` para `W2605PRINF001.pdf` y `W2605PRINF002.pdf`.
+- Se actualizó `render.yaml` (nombre `w2605-webapp`, health check `/health`).
+- Se amplió `webapp/tests/test_api.py` de 14 a 16 tests, incluyendo validación de descarga de informes.
+- Se actualizaron `README.md` y `contexto.md`.
+
+### Desviaciones respecto al plan original
+Ninguna desviación crítica. Se mantuvo Bootstrap 5 y las librerías CDN existentes; solo se forzó el tema oscuro y se sobrescribieron variables/clases con CSS propio.
+
+### Limitaciones conocidas y trabajo futuro recomendado
+- Advertencia residual `ResourceWarning` por archivos no cerrados en `send_from_directory` durante los tests; no afecta funcionamiento.
+- Pendiente: despliegue en Render y validación de rutas `/figures` e `/informes` en producción.
+- Pendiente: definición del logo corporativo correcto de DMV SAS para el membrete de los informes PDF.
+
+### Archivos entregables y sus rutas
+- CSS tema: `webapp/app/static/css/main.css`
+- Layout y templates: `webapp/app/templates/base.html`, `index.html`, `dashboard.html`, `factibilidad.html`, `perdidas_aislamiento.html`, `escenarios.html`, `about.html`
+- JS de gráficos: `webapp/app/static/js/dashboard.js`, `calculadora.js`, `simulador.js`, `propiedades.js`, `sensibilidad.js`
+- Rutas y descargas: `webapp/app/routes.py`
+- Tests: `webapp/tests/test_api.py`
+- Despliegue: `render.yaml`
+- Documentación: `README.md`, `contexto.md`

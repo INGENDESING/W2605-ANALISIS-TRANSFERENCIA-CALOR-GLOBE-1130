@@ -3,10 +3,10 @@
 
 {% block content %}
 <!-- Cabecera -->
-<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4 fade-in">
     <div>
-        <h4 class="mb-0" style="color:var(--color-dmv);font-weight:700;">
-            <i class="bi bi-speedometer2 me-2" style="color:var(--color-ingredion);"></i>Dashboard de KPIs
+        <h4 class="mb-0">
+            <i class="bi bi-speedometer2 text-neon-orange me-2"></i>Dashboard de KPIs
         </h4>
         <small class="text-muted">Métricas clave calculadas dinámicamente por escenario</small>
     </div>
@@ -16,58 +16,58 @@
 </div>
 
 <!-- KPIs del proyecto -->
-<div class="row g-3 mb-4">
+<div class="row g-3 mb-4 fade-in">
     <div class="col-xl-3 col-md-6">
-        <div class="card border-success border-2 shadow-sm h-100">
+        <div class="card card-accent-green h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="text-muted small mb-1">T mínima ciclo 12 m³/h</div>
-                        <div class="fs-3 fw-bold text-success">{{ ciclo.metricas.T_min_C }} °C</div>
+                        <div class="text-dim small mb-1">T mínima ciclo 12 m³/h</div>
+                        <div class="fs-3 fw-bold text-neon-green mono">{{ ciclo.metricas.T_min_C }} °C</div>
                     </div>
-                    <i class="bi bi-check-circle-fill text-success fs-2"></i>
+                    <i class="bi bi-check-circle-fill text-neon-green fs-2"></i>
                 </div>
                 <div class="small text-muted mt-2">Ciclo factible (≥ 57 °C)</div>
             </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card border-primary border-2 shadow-sm h-100">
+        <div class="card card-accent-blue h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="text-muted small mb-1">Área real expuesta</div>
-                        <div class="fs-3 fw-bold text-primary">{{ perdidas.areas_m2.A_total|format_number(1) }} m²</div>
+                        <div class="text-dim small mb-1">Área real expuesta</div>
+                        <div class="fs-3 fw-bold text-neon-blue mono">{{ perdidas.areas_m2.A_total|format_number(1) }} m²</div>
                     </div>
-                    <i class="bi bi-shield-plus text-primary fs-2"></i>
+                    <i class="bi bi-shield-plus text-neon-blue fs-2"></i>
                 </div>
                 <div class="small text-muted mt-2">Al 80 % de llenado</div>
             </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card border-info border-2 shadow-sm h-100">
+        <div class="card card-accent-blue h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="text-muted small mb-1">Reducción de pérdidas</div>
-                        <div class="fs-3 fw-bold text-info">{{ perdidas.resultados[1].reduccion_porc }} %</div>
+                        <div class="text-dim small mb-1">Reducción de pérdidas</div>
+                        <div class="fs-3 fw-bold text-neon-cyan mono">{{ perdidas.resultados[1].reduccion_porc }} %</div>
                     </div>
-                    <i class="bi bi-arrow-down-circle-fill text-info fs-2"></i>
+                    <i class="bi bi-arrow-down-circle-fill text-neon-cyan fs-2"></i>
                 </div>
                 <div class="small text-muted mt-2">Con aislamiento 50,8 mm</div>
             </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card border-warning border-2 shadow-sm h-100">
+        <div class="card card-accent-orange h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="text-muted small mb-1">Capacidad diaria</div>
-                        <div class="fs-3 fw-bold text-warning">{{ capacidad.casos.mejorado_T55_a_T57.capacidad_dia_ton }} ton</div>
+                        <div class="text-dim small mb-1">Capacidad diaria</div>
+                        <div class="fs-3 fw-bold text-neon-orange mono">{{ capacidad.casos.mejorado_T55_a_T57.capacidad_dia_ton }} ton</div>
                     </div>
-                    <i class="bi bi-truck text-warning fs-2"></i>
+                    <i class="bi bi-truck text-neon-orange fs-2"></i>
                 </div>
                 <div class="small text-muted mt-2">Escenario 4 (55 °C → 57 °C)</div>
             </div>
@@ -76,27 +76,27 @@
 </div>
 
 <!-- Selector de escenario -->
-<div class="card mb-4 border-0 shadow-sm">
+<div class="card mb-4 fade-in">
     <div class="card-body py-3">
         <div class="d-flex align-items-center flex-wrap gap-3">
-            <span class="fw-semibold text-muted small">ESCENARIO ACTIVO:</span>
+            <span class="fw-semibold text-dim small text-uppercase">Escenario activo</span>
             <div class="scenario-tabs btn-group" role="group">
                 <input type="radio" class="btn-check" name="escenario" id="esc1" value="1" autocomplete="off">
-                <label class="btn btn-outline-primary btn-sm" for="esc1">Escenario 1</label>
+                <label class="btn btn-outline-light btn-sm" for="esc1">Escenario 1</label>
                 <input type="radio" class="btn-check" name="escenario" id="esc2" value="2" autocomplete="off" checked>
-                <label class="btn btn-outline-primary btn-sm" for="esc2">Escenario 2</label>
+                <label class="btn btn-outline-light btn-sm" for="esc2">Escenario 2</label>
                 <input type="radio" class="btn-check" name="escenario" id="esc3" value="3" autocomplete="off">
-                <label class="btn btn-outline-primary btn-sm" for="esc3">Escenario 3</label>
+                <label class="btn btn-outline-light btn-sm" for="esc3">Escenario 3</label>
                 <input type="radio" class="btn-check" name="escenario" id="escPersonalizado" value="custom" autocomplete="off">
                 <label class="btn btn-outline-secondary btn-sm" for="escPersonalizado">Personalizado</label>
             </div>
-            <span id="spinnerEscenario" class="spinner-border spinner-border-sm text-primary d-none" role="status"></span>
+            <span id="spinnerEscenario" class="spinner-border spinner-border-sm text-neon-green d-none" role="status"></span>
         </div>
     </div>
 </div>
 
 <!-- 8 KPI Cards -->
-<div class="row g-3 mb-4" id="kpiContainer">
+<div class="row g-3 mb-4 fade-in" id="kpiContainer">
     {% set kpis = [
         ('kpiU',        'Coeficiente U',         'W/m²·°C',  'bi-arrows-collapse',   'U global calculado por Sieder-Tate + Churchill-Chu'),
         ('kpiQ',        'Potencia Térmica',       'kW',        'bi-lightning-charge',   'Q = U·A·ΔT a temperatura actual'),
@@ -118,58 +118,58 @@
                 </div>
                 <i class="bi {{ icon }} kpi-icon"></i>
             </div>
-            <div class="kpi-trend mt-2" id="{{ kid }}Trend"></div>
+            <div class="kpi-trend mt-2 text-dim" id="{{ kid }}Trend"></div>
         </div>
     </div>
     {% endfor %}
 </div>
 
 <!-- Fila principal: SVG tanque + gráfica T vs t -->
-<div class="row g-4 mb-4">
+<div class="row g-4 mb-4 fade-in">
     <!-- SVG tanque -->
     <div class="col-lg-4">
         <div class="tank-svg-wrapper h-100">
-            <div class="fw-semibold text-muted small mb-2">Estado del Tanque</div>
+            <div class="fw-semibold text-dim small mb-2">Estado del Tanque</div>
             <svg id="svgTanque" viewBox="0 0 220 340" width="100%" style="max-height:320px;">
                 <!-- Fondo toriesférico -->
-                <ellipse cx="110" cy="295" rx="85" ry="28" fill="#ccc" stroke="#999" stroke-width="2"/>
+                <ellipse cx="110" cy="295" rx="85" ry="28" fill="rgba(255,255,255,0.10)" stroke="rgba(0,150,255,0.35)" stroke-width="2"/>
                 <!-- Cuerpo cilíndrico -->
-                <rect x="25" y="70" width="170" height="225" fill="#e0e0e0" stroke="#999" stroke-width="2"/>
+                <rect x="25" y="70" width="170" height="225" fill="rgba(255,255,255,0.06)" stroke="rgba(0,150,255,0.35)" stroke-width="2"/>
                 <!-- Nivel de glucosa (animado) -->
                 <clipPath id="clipCilindro">
                     <rect x="25" y="70" width="170" height="225"/>
                 </clipPath>
                 <rect id="nivelRect" x="26" y="200" width="168" height="95"
-                      fill="hsl(210,80%,60%)" opacity="0.85" clip-path="url(#clipCilindro)"
+                      fill="rgba(57,255,20,0.55)" opacity="0.9" clip-path="url(#clipCilindro)"
                       style="transition: y 0.6s ease, height 0.6s ease, fill 0.6s ease;"/>
                 <!-- Fondo toriesférico relleno -->
                 <ellipse id="nivelFondo" cx="110" cy="295" rx="84" ry="27"
-                         fill="hsl(210,80%,60%)" opacity="0.85"
+                         fill="rgba(57,255,20,0.55)" opacity="0.9"
                          style="transition: fill 0.6s ease;"/>
                 <!-- Chaqueta espiral (decorativa) -->
                 <path d="M 30 290 Q 50 275 70 290 Q 90 305 110 290 Q 130 275 150 290 Q 170 305 190 290"
-                      fill="none" stroke="var(--color-ingredion)" stroke-width="3" opacity="0.7"/>
+                      fill="none" stroke="var(--neon-orange)" stroke-width="3" opacity="0.7"/>
                 <path d="M 30 278 Q 50 263 70 278 Q 90 293 110 278 Q 130 263 150 278 Q 170 293 190 278"
-                      fill="none" stroke="var(--color-ingredion)" stroke-width="2.5" opacity="0.5"/>
+                      fill="none" stroke="var(--neon-orange)" stroke-width="2.5" opacity="0.5"/>
                 <!-- Boquilla salida 8" -->
-                <rect x="90" y="315" width="40" height="14" rx="3" fill="#888" stroke="#666" stroke-width="1"/>
-                <text x="110" y="336" text-anchor="middle" font-size="8" fill="#999">DN 8"</text>
+                <rect x="90" y="315" width="40" height="14" rx="3" fill="rgba(255,255,255,0.2)" stroke="rgba(0,150,255,0.4)" stroke-width="1"/>
+                <text x="110" y="336" text-anchor="middle" font-size="8" fill="var(--text-muted)">DN 8"</text>
                 <!-- Texto superpuesto -->
                 <text id="svgNivelPct" x="110" y="160" text-anchor="middle" font-size="13"
-                      font-weight="bold" fill="var(--color-dmv)">—%</text>
-                <text id="svgTemp" x="110" y="178" text-anchor="middle" font-size="11" fill="#555">— °C</text>
-                <text id="svgMasa" x="110" y="194" text-anchor="middle" font-size="10" fill="#777">— ton</text>
+                      font-weight="bold" fill="var(--neon-green)">—%</text>
+                <text id="svgTemp" x="110" y="178" text-anchor="middle" font-size="11" fill="var(--text-main)">— °C</text>
+                <text id="svgMasa" x="110" y="194" text-anchor="middle" font-size="10" fill="var(--text-muted)">— ton</text>
                 <!-- Marco -->
-                <rect x="24" y="69" width="172" height="227" fill="none" stroke="#999" stroke-width="2"/>
+                <rect x="24" y="69" width="172" height="227" fill="none" stroke="rgba(0,150,255,0.45)" stroke-width="2"/>
             </svg>
         </div>
     </div>
 
     <!-- Gráfica T vs t -->
     <div class="col-lg-8">
-        <div class="card border-0 shadow-sm h-100">
+        <div class="card h-100">
             <div class="card-body">
-                <div class="fw-semibold text-muted small mb-2">Temperatura vs Tiempo</div>
+                <div class="fw-semibold text-dim small mb-2">Temperatura vs Tiempo</div>
                 <div id="graficaTvsT" style="height:290px;"></div>
             </div>
         </div>
@@ -177,19 +177,19 @@
 </div>
 
 <!-- Fila: Gantt + U vs t -->
-<div class="row g-4">
+<div class="row g-4 fade-in">
     <div class="col-lg-7">
-        <div class="card border-0 shadow-sm">
+        <div class="card">
             <div class="card-body">
-                <div class="fw-semibold text-muted small mb-2">Diagrama de Gantt — Ciclo de Operación</div>
+                <div class="fw-semibold text-dim small mb-2">Diagrama de Gantt — Ciclo de Operación</div>
                 <div id="graficaGantt" style="height:260px;"></div>
             </div>
         </div>
     </div>
     <div class="col-lg-5">
-        <div class="card border-0 shadow-sm">
+        <div class="card">
             <div class="card-body">
-                <div class="fw-semibold text-muted small mb-2">Evolución del Coeficiente U</div>
+                <div class="fw-semibold text-dim small mb-2">Evolución del Coeficiente U</div>
                 <div id="graficaU" style="height:260px;"></div>
             </div>
         </div>
