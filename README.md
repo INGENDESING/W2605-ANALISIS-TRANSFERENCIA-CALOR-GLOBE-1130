@@ -116,6 +116,40 @@ cd webapp
 
 Abrir el navegador en `http://localhost:5000` (o el puerto indicado en la consola).
 
+### Páginas principales
+
+| Ruta | Descripción |
+|---|---|
+| `/` | Página de inicio con resumen del proyecto. |
+| `/dashboard` | Dashboard de KPIs con resultados del ciclo a 12 m³/h, pérdidas térmicas y capacidad operativa. |
+| `/calculadora` | Calculadora interactiva de transferencia de calor (área base 13 m²). |
+| `/simulador` | Simulador del ciclo de descargas. |
+| `/factibilidad` | Resultado del ciclo de 5 descargas diarias a 12 m³/h: área de chaqueta 14 m², agua a 75 °C, temperatura mínima alcanzada y verificación contra el límite de 57 °C. |
+| `/perdidas-aislamiento` | Pérdidas térmicas con el área real expuesta y comparativa de espesores de aislamiento. |
+| `/escenarios` | Resumen de escenarios del proyecto. |
+| `/sensibilidad` | Análisis de sensibilidad de parámetros. |
+| `/propiedades` | Propiedades termofísicas de la glucosa. |
+| `/about` | Información del proyecto, normas y metodología. |
+
+La calculadora (`/calculadora`) y el simulador base emplean el área histórica de **13 m²**. La página `/factibilidad` y el dashboard emplean el área de diseño del caso a 12 m³/h, **14 m²**, para el ciclo de descargas. Ambos valores se presentan de forma explícita para mantener la trazabilidad entre el modelo original y el caso de estudio.
+
+### API del proyecto
+
+Los siguientes endpoints exponen los análisis técnicos en formato JSON:
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| `GET` | `/api/proyecto/ciclo-12m3h` | Simulación del ciclo de 5 descargas a 12 m³/h con 14 m². |
+| `GET` | `/api/proyecto/perdidas-termicas` | Resumen de pérdidas térmicas con aislamiento de referencia. |
+| `GET` | `/api/proyecto/aislamiento/espesores` | Tabla comparativa de espesores de aislamiento. |
+| `GET` | `/api/proyecto/aislamiento/sensibilidad` | Sensibilidad del espesor de aislamiento a 60 °C. |
+| `GET` | `/api/proyecto/calentamiento-24ton` | Tiempo de calentamiento de 24 ton desde 40 °C hasta 60 °C. |
+| `GET` | `/api/proyecto/capacidad-operativa` | Capacidad operativa diaria con área 13 m². |
+
+### Figuras
+
+Las gráficas generadas por los scripts de `src/` y guardadas en `results/figures/` se sirven estáticamente desde la ruta `/figures/<nombre_de_archivo>`.
+
 ---
 
 ## Resultados clave
@@ -150,6 +184,6 @@ Este proyecto es propiedad de DMV SAS y está destinado exclusivamente a uso int
 
 ## Estado del proyecto
 
-Entrega final en preparación. Pendiente: definición del logo corporativo correcto de DMV SAS para el membrete de los informes y sincronización con el repositorio remoto.
+Entrega final en preparación. Sincronización con el repositorio remoto completada. Pendiente: definición del logo corporativo correcto de DMV SAS para el membrete de los informes.
 
 Última actualización: 17 de junio de 2026.

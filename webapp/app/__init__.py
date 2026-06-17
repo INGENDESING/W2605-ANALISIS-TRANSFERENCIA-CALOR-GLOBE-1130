@@ -23,11 +23,13 @@ def create_app(config_name='default'):
     from .api.calculos import api_calculos_bp
     from .api.simulacion import api_simulacion_bp
     from .api.exportar import api_exportar_bp
+    from .api.proyecto import api_proyecto_bp
     
     app.register_blueprint(main_bp)
     app.register_blueprint(api_calculos_bp, url_prefix='/api')
     app.register_blueprint(api_simulacion_bp, url_prefix='/api')
     app.register_blueprint(api_exportar_bp, url_prefix='/api')
+    app.register_blueprint(api_proyecto_bp, url_prefix='/api')
     
     # Filtros Jinja personalizados
     @app.template_filter('format_number')

@@ -264,7 +264,6 @@ def resumen_ciclo(t, estados):
 
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), '..', 'results')
 FIGURES_DIR = os.path.join(RESULTS_DIR, 'figures')
-os.makedirs(FIGURES_DIR, exist_ok=True)
 
 
 def graficar_ciclo(t, estados, fases):
@@ -452,6 +451,7 @@ def grafico_barras_resultados(resumen):
 # =============================================================================
 
 if __name__ == '__main__':
+    os.makedirs(FIGURES_DIR, exist_ok=True)
     print("=" * 80)
     print("CICLO DE DESCARGAS A 12 m³/h — Chaqueta 14 m², agua 75 °C")
     print("=" * 80)

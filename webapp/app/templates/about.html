@@ -29,27 +29,44 @@
                 </p>
                 
                 <h5 class="mt-4">Funcionalidades</h5>
-                <ul class="list-group list-group-flush mb-4">
-                    <li class="list-group-item">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <strong>Calculadora:</strong> Cálculo de coeficiente U, potencia térmica, 
-                        tiempo de calentamiento y propiedades termofísicas
-                    </li>
-                    <li class="list-group-item">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <strong>Simulador:</strong> Simulación del ciclo de descargas a carrotanques 
-                        con diferentes escenarios operativos
-                    </li>
-                    <li class="list-group-item">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <strong>Dashboard:</strong> Visualización de KPIs, gráficos interactivos y 
-                        tablas de datos
-                    </li>
-                    <li class="list-group-item">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <strong>Exportación:</strong> Descarga de resultados en formato JSON, CSV y Excel
-                    </li>
-                </ul>
+                <table class="table table-sm table-bordered mb-4">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:25%;">Módulo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-semibold">Factibilidad 5 descargas</td>
+                            <td>Demostración térmica del ciclo a 12 m³/h con chaqueta de 14 m² y agua a 75 °C.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold">Calculadora</td>
+                            <td>Cálculo del coeficiente global U, potencia térmica, tiempo de calentamiento y propiedades termofísicas.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold">Simulador</td>
+                            <td>Simulación del ciclo de descargas a carrotanques con escenarios operativos.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold">Dashboard</td>
+                            <td>Visualización de KPIs, gráficos interactivos y tablas de datos.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold">Pérdidas y Aislamiento</td>
+                            <td>Pérdidas térmicas con área real expuesta y comparativa de espesores de aislamiento.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold">Escenarios</td>
+                            <td>Resumen de los cinco escenarios térmicos y comparativa chaqueta dimple vs. media caña.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold">Exportación</td>
+                            <td>Descarga de resultados en formato JSON, CSV y Excel.</td>
+                        </tr>
+                    </tbody>
+                </table>
                 
                 <h5>Datos Técnicos</h5>
                 <div class="row g-3 mb-4">
@@ -98,8 +115,8 @@
                         <td>DMV S.A.S.</td>
                     </tr>
                     <tr>
-                        <td class="text-muted">Versión:</td>
-                        <td>1.0.0</td>
+                        <td class="text-muted">Versión webapp:</td>
+                        <td>2.0.0</td>
                     </tr>
                     <tr>
                         <td class="text-muted">Fecha:</td>
@@ -107,10 +124,24 @@
                     </tr>
                 </table>
                 
+                <h5 class="mt-4">Documentación de referencia</h5>
+                <p>
+                    Los resultados presentados en esta aplicación se sustentan en el informe técnico
+                    <strong>W2605PRINF001</strong> y el resumen ejecutivo <strong>W2605PRINF002</strong>,
+                    desarrollados por DMV SAS para Ingredion S.A. Las correlaciones termofísicas de la
+                    glucosa Globe 42 DE se calibraron a partir de la ficha técnica Ingredion 011420.
+                </p>
+                <p>
+                    Las normas y referencias aplicables incluyen: API 650 (2020), ASME Section VIII
+                    Div. 1, ASME B31.3, ASME B31.1, RETIE, NSR-10, ASTM C547, y los textos de
+                    Incropera & DeWitt, Kern y Perry.
+                </p>
+
                 <div class="alert alert-info mt-4">
                     <i class="bi bi-lightbulb me-2"></i>
-                    <strong>Nota:</strong> Esta aplicación utiliza las correlaciones termofísicas 
-                    calibradas a la ficha técnica Ingredion 011420 para glucosa Globe 42 DE.
+                    <strong>Nota:</strong> Los valores numéricos exhibidos provienen del modelo
+                    termodinámico validado en W2605PRINF001. Para decisiones de ingeniería de detalle
+                    se recomienda consultar la memoria de cálculo completa.
                 </div>
             </div>
         </div>

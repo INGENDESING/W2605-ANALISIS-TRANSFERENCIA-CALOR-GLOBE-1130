@@ -15,6 +15,66 @@
     </button>
 </div>
 
+<!-- KPIs del proyecto -->
+<div class="row g-3 mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-success border-2 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="text-muted small mb-1">T mínima ciclo 12 m³/h</div>
+                        <div class="fs-3 fw-bold text-success">{{ ciclo.metricas.T_min_C }} °C</div>
+                    </div>
+                    <i class="bi bi-check-circle-fill text-success fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Ciclo factible (≥ 57 °C)</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-primary border-2 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="text-muted small mb-1">Área real expuesta</div>
+                        <div class="fs-3 fw-bold text-primary">{{ perdidas.areas_m2.A_total|format_number(1) }} m²</div>
+                    </div>
+                    <i class="bi bi-shield-plus text-primary fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Al 80 % de llenado</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-info border-2 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="text-muted small mb-1">Reducción de pérdidas</div>
+                        <div class="fs-3 fw-bold text-info">{{ perdidas.resultados[1].reduccion_porc }} %</div>
+                    </div>
+                    <i class="bi bi-arrow-down-circle-fill text-info fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Con aislamiento 50,8 mm</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-warning border-2 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="text-muted small mb-1">Capacidad diaria</div>
+                        <div class="fs-3 fw-bold text-warning">{{ capacidad.casos.mejorado_T55_a_T57.capacidad_dia_ton }} ton</div>
+                    </div>
+                    <i class="bi bi-truck text-warning fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Escenario 4 (55 °C → 57 °C)</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Selector de escenario -->
 <div class="card mb-4 border-0 shadow-sm">
     <div class="card-body py-3">

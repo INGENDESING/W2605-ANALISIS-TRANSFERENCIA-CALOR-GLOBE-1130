@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block title %}Factibilidad 5 Descargas — W2605{% endblock %}
+
+{% block content %}
+<!-- Cabecera -->
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+    <div>
+        <h4 class="mb-0" style="color:var(--color-dmv);font-weight:700;">
+            <i class="bi bi-check-circle-fill me-2" style="color:var(--color-ingredion);"></i>
+            Factibilidad térmica: cinco descargas diarias
+        </h4>
+        <small class="text-muted">Ciclo a 12 m³/h con chaqueta de 14 m² y agua a 75 °C</small>
+    </div>
+    <div>
+        <span class="badge bg-success fs-6">
+            <i class="bi bi-shield-check me-1"></i>Factible: T<sub>mín</sub> = {{ ciclo.metricas.T_min_C }} °C
+        </span>
+    </div>
+</div>
+
+<!-- Resultado principal -->
+<div class="alert alert-success border-0 shadow-sm mb-4" role="alert">
+    <h5 class="alert-heading">
+        <i class="bi bi-thermometer-half me-2"></i>Conclusión del análisis
+    </h5>
+    <p class="mb-0">
+        Con el <strong>área de chaqueta diseñada de 14 m²</strong>, agua de calentamiento a
+        <strong>75 °C</strong>, velocidad de <strong>2,5 m/s</strong>, configuración de doble entrada y
+        aislamiento de lana mineral de 50,8 mm, el tanque Tag 53A-90A-0056 es capaz de mantener
+        <strong>cinco descargas diarias de 24 ton</strong> sin que la temperatura caiga por debajo del
+        límite de despacho de <strong>57 °C</strong>. La temperatura mínima alcanzada durante el ciclo de
+        24 h es <strong>{{ ciclo.metricas.T_min_C }} °C</strong> y la temperatura final es
+        <strong>{{ ciclo.metricas.T_final_C }} °C</strong>, lo que confirma la viabilidad térmica del
+        sistema bajo las condiciones evaluadas.
+    </p>
+</div>
+
+<!-- Configuración del análisis -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Configuración del caso evaluado</h5>
+    </div>
+    <div class="card-body">
+        <p>
+            El análisis corresponde al caso documentado en la Sección 15 del informe técnico
+            W2605PRINF001. Se modela un día de operación continua con cinco descargas de 24 ton
+            distribuidas uniformemente en 24 h. Entre descargas no se programa tiempo muerto; el
+            intervalo restante se destina exclusivamente a calentamiento. La Tabla 1 resume los
+            parámetros operativos y geométricos considerados.
+        </p>
+        <table class="table table-sm table-bordered align-middle" style="max-width:700px;">
+            <caption class="caption-top text-muted small">Tabla 1. Parámetros del ciclo de factibilidad.</caption>
+            <tbody>
+                <tr><td class="fw-semibold" style="width:55%;">Descargas por día</td><td>{{ ciclo.configuracion.n_descargas }}</td></tr>
+                <tr><td class="fw-semibold">Masa por descarga</td><td>{{ ciclo.configuracion.masa_por_descarga_kg|format_number(0) }} kg</td></tr>
+                <tr><td class="fw-semibold">Flujo volumétrico de descarga</td><td>{{ ciclo.configuracion.Q_vol_descarga_m3_h }} m³/h</td></tr>
+                <tr><td class="fw-semibold">Duración de cada descarga</td><td>{{ ciclo.configuracion.T_descarga_h|format_number(2) }} h</td></tr>
+                <tr><td class="fw-semibold">Período entre inicios de descarga</td><td>{{ ciclo.configuracion.T_ciclo_h|format_number(2) }} h</td></tr>
+                <tr><td class="fw-semibold">Tiempo de calentamiento disponible</td><td>{{ ciclo.configuracion.T_calentamiento_disponible_h|format_number(2) }} h</td></tr>
+                <tr><td class="fw-semibold">Área de transferencia de la chaqueta</td><td>{{ ciclo.configuracion.area_m2|format_number(1) }} m²</td></tr>
+                <tr><td class="fw-semibold">Temperatura del agua de calentamiento</td><td>{{ ciclo.configuracion.T_agua_C }} °C</td></tr>
+                <tr><td class="fw-semibold">Velocidad del agua en media caña</td><td>{{ ciclo.configuracion.v_agua_m_s }} m/s</td></tr>
+                <tr><td class="fw-semibold">Nivel inicial del tanque</td><td>{{ ciclo.configuracion.nivel_inicial_porc|format_number(0) }} %</td></tr>
+                <tr><td class="fw-semibold">Temperatura inicial del tanque</td><td>{{ ciclo.configuracion.T_inicial_C }} °C</td></tr>
+                <tr><td class="fw-semibold">Temperatura de alimentación</td><td>{{ ciclo.configuracion.T_entrada_C|default(55) }} °C</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Resultados por descarga -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0"><i class="bi bi-table me-2"></i>Resultados por descarga</h5>
+    </div>
+    <div class="card-body">
+        <p>
+            La Tabla 2 presenta la temperatura al inicio y al final de cada una de las cinco descargas.
+            El criterio de aceptación es que la temperatura final sea mayor o igual a 57 °C. En todos los
+            casos se cumple la condición, aunque el margen respecto al objetivo de 60 °C se reduce
+            progresivamente hacia el final del día.
+        </p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover align-middle" style="max-width:900px;">
+                <caption class="caption-top text-muted small">Tabla 2. Temperatura del tanque al inicio y fin de cada descarga.</caption>
+                <thead class="table-light">
+                    <tr>
+                        <th>Descarga</th>
+                        <th>t<sub>inicio</sub> [h]</th>
+                        <th>t<sub>fin</sub> [h]</th>
+                        <th>T<sub>inicial</sub> [°C]</th>
+                        <th>T<sub>final</sub> [°C]</th>
+                        <th>ΔT [°C]</th>
+                        <th>Cumple T ≥ 57 °C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in ciclo.resumen_descargas %}
+                    <tr>
+                        <td class="fw-semibold">{{ d.descarga }}</td>
+                        <td>{{ d.t_ini_h|format_number(2) }}</td>
+                        <td>{{ d.t_fin_h|format_number(2) }}</td>
+                        <td>{{ d.T_ini_C|format_number(2) }}</td>
+                        <td>{{ d.T_fin_C|format_number(2) }}</td>
+                        <td>{{ d.delta_T_C|format_number(2) }}</td>
+                        <td>
+                            {% if d.cumple_min %}
+                            <span class="badge bg-success">Sí</span>
+                            {% else %}
+                            <span class="badge bg-danger">No</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Gráficos -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0"><i class="bi bi-graph-up me-2"></i>Perfil transitorio de temperatura</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('main.serve_figure', filename='ciclo_12m3h_T_vs_t.png') }}"
+                     class="img-fluid rounded" alt="Ciclo 12 m³/h: temperatura vs tiempo">
+                <p class="text-muted small mt-2 mb-0">
+                    Evolución de la temperatura del tanque durante las 24 h de operación. Las bandas
+                    verticales corresponden a las fases de descarga y los tramos intermedios al
+                    calentamiento continuo.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0"><i class="bi bi-bar-chart-fill me-2"></i>Temperatura final por descarga</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('main.serve_figure', filename='ciclo_12m3h_barras_Tfin.png') }}"
+                     class="img-fluid rounded" alt="Temperatura final por descarga">
+                <p class="text-muted small mt-2 mb-0">
+                    Temperatura al finalizar cada descarga. La línea punteada indica el límite mínimo
+                    de despacho de 57 °C.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Diagramas de bloques -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0"><i class="bi bi-diagram-3 me-2"></i>Fase de calentamiento</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('main.serve_figure', filename='diagrama_bloques_calentamiento.png') }}"
+                     class="img-fluid rounded" alt="Diagrama de bloques: calentamiento">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0"><i class="bi bi-diagram-3 me-2"></i>Fase de descarga</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('main.serve_figure', filename='diagrama_bloques_descarga.png') }}"
+                     class="img-fluid rounded" alt="Diagrama de bloques: descarga">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Condiciones críticas -->
+<div class="card border-warning shadow-sm mb-4">
+    <div class="card-header bg-warning bg-opacity-10 py-3">
+        <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill me-2 text-warning"></i>Condiciones críticas para garantizar la factibilidad</h5>
+    </div>
+    <div class="card-body">
+        <p>
+            El margen térmico respecto al objetivo de 60 °C es reducido. Por tanto, la operación a
+            12 m³/h exige que se cumplan simultáneamente las siguientes condiciones:
+        </p>
+        <table class="table table-sm table-bordered align-middle" style="max-width:700px;">
+            <caption class="caption-top text-muted small">Tabla 3. Condiciones operativas indispensables.</caption>
+            <tbody>
+                <tr>
+                    <td class="fw-semibold" style="width:35%;">Nivel inicial</td>
+                    <td>Mínimo 80 % del volumen operativo a 60 °C antes de iniciar el ciclo.</td>
+                </tr>
+                <tr>
+                    <td class="fw-semibold">Agua de calentamiento</td>
+                    <td>Disponibilidad continua a 75 °C y 2,5 m/s durante todo el día.</td>
+                </tr>
+                <tr>
+                    <td class="fw-semibold">Aislamiento térmico</td>
+                    <td>Lana mineral de 50,8 mm sobre fondo y cuerpo cilíndrico para limitar pérdidas a ~14,7 MJ/h.</td>
+                </tr>
+                <tr>
+                    <td class="fw-semibold">Temperatura de alimentación</td>
+                    <td>Mantener la glucosa de ingreso a 55 °C o superior.</td>
+                </tr>
+                <tr>
+                    <td class="fw-semibold">Control</td>
+                    <td>Lazo de control de temperatura del agua y monitoreo continuo de T del tanque.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="mb-0">
+            Si se requiere garantizar estrictamente <strong>60 °C</strong> al final de cada descarga, sería
+            necesario incrementar el área de transferencia, reducir el flujo de descarga o elevar la
+            temperatura del agua de calentamiento.
+        </p>
+    </div>
+</div>
+
+<!-- Métricas clave -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <div class="text-muted small">Temperatura mínima</div>
+            <div class="fs-3 fw-bold text-success">{{ ciclo.metricas.T_min_C }} °C</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <div class="text-muted small">Temperatura final (24 h)</div>
+            <div class="fs-3 fw-bold text-primary">{{ ciclo.metricas.T_final_C }} °C</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <div class="text-muted small">Descargas/día</div>
+            <div class="fs-3 fw-bold text-dark">{{ ciclo.configuracion.n_descargas }}</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <div class="text-muted small">Capacidad diaria</div>
+            <div class="fs-3 fw-bold text-info">120 ton/día</div>
+        </div>
+    </div>
+</div>
+
+<!-- Referencia técnica -->
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0"><i class="bi bi-journal-text me-2"></i>Referencias</h5>
+    </div>
+    <div class="card-body">
+        <p class="mb-0">
+            Los detalles metodológicos, ecuaciones, correlaciones y validaciones se encuentran en el
+            informe técnico <strong>W2605PRINF001</strong>, Sección 15, y en el resumen ejecutivo
+            <strong>W2605PRINF002</strong>. El modelo de pérdidas térmicas utiliza el área real expuesta
+            del tanque (~{{ perdidas.areas_m2.A_total|format_number(1) }} m²) y el aislamiento de lana
+            mineral de 50,8 mm, con lo cual las pérdidas a 60 °C se reducen a
+            {{ perdidas.resultados[1].Q_con_aislamiento_MJ_h|format_number(1) }} MJ/h, equivalentes a
+            una caída de 3 °C cada {{ perdidas.resultados[1].tiempo_3C_d|format_number(1) }} días.
+        </p>
+    </div>
+</div>
+{% endblock %}

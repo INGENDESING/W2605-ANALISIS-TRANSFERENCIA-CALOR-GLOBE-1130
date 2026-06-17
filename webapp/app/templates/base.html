@@ -57,6 +57,12 @@
         <div class="nav-section-title">Módulos</div>
         <ul class="nav flex-column px-1">
             <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'main.factibilidad' %}active{% endif %}"
+                   href="{{ url_for('main.factibilidad') }}">
+                    <i class="bi bi-check-circle-fill"></i> Factibilidad 5 descargas
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {% if request.endpoint == 'main.calculadora' %}active{% endif %}"
                    href="{{ url_for('main.calculadora') }}">
                     <i class="bi bi-calculator"></i> Calculadora
@@ -69,9 +75,21 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'main.perdidas_aislamiento' %}active{% endif %}"
+                   href="{{ url_for('main.perdidas_aislamiento') }}">
+                    <i class="bi bi-shield-plus"></i> Pérdidas y Aislamiento
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'main.escenarios' %}active{% endif %}"
+                   href="{{ url_for('main.escenarios') }}">
+                    <i class="bi bi-collection"></i> Escenarios
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {% if request.endpoint == 'main.sensibilidad' %}active{% endif %}"
                    href="{{ url_for('main.sensibilidad') }}">
-                    <i class="bi bi-sliders"></i> Análisis Sensibilidad
+                    <i class="bi bi-sliders"></i> Sensibilidad
                 </a>
             </li>
             <li class="nav-item">

@@ -42,6 +42,10 @@ venv.bak/
 *.fls
 *.synctex.gz
 *.run.xml
+*.spl
+
+# Directorios temporales de verificaciÃ³n
+tmp_check/
 
 # OS generated files
 .DS_Store
@@ -69,11 +73,11 @@ results/figures/generated/*
 *.temp
 *.bak
 
-# Directorios y archivos de configuración local
+# Directorios y archivos de configuraciï¿½n local
 .claude/
 .vscode/
 *.local.json
-# Archivos de gestión local (no subir a GitHub)
+# Archivos de gestiï¿½n local (no subir a GitHub)
 docs/project-management/estado-avance.txt
 docs/project-management/ferrotex-issue.md
 DEPURACION_RESUMEN.md

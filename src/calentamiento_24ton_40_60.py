@@ -58,7 +58,6 @@ DT_MIN = 5                  # Paso de salida [min]
 # Directorios de salida
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), '..', 'results')
 FIGURES_DIR = os.path.join(RESULTS_DIR, 'figures')
-os.makedirs(FIGURES_DIR, exist_ok=True)
 
 # Paleta corporativa
 COLOR_65 = '#2E5AAC'
@@ -235,6 +234,7 @@ def guardar_csv(res, etiqueta):
 # EJECUCIÓN PRINCIPAL
 # =============================================================================
 if __name__ == '__main__':
+    os.makedirs(FIGURES_DIR, exist_ok=True)
     print("=" * 80)
     print("CALENTAMIENTO DE 24 TON DE GLUCOSA GLOBE 42 DE: 40 °C -> 60 °C")
     print(f"Área de transferencia: {AREA_TRANSFERENCIA} m²")

@@ -1,9 +1,9 @@
 # Contexto del proyecto: W2605 — Fondo de tanque de glucosa
 
 ## Estado actual
-- Última tarea completada: Integración de la sección 15 en W2605PRINF001 y adición de un resumen de la sesión en W2605PRINF002 (resumen ejecutivo), incluyendo tabla de resultados del ciclo a 12 m³/h; recompilación de ambos informes (W2605PRINF001: 71 páginas; W2605PRINF002: 5 páginas) y sincronización con GitHub.
+- Última tarea completada: Actualización de la aplicación web (`webapp/`): integración de los nuevos análisis del proyecto (ciclo a 12 m³/h con 14 m², pérdidas térmicas con área real, calentamiento de 24 ton, capacidad operativa), refactor import-safe de los scripts de `src/`, servicio estático de figuras desde `results/figures/`, ampliación de tests a 14 casos (OK), actualización de documentación y sincronización con GitHub.
 - Próxima tarea pendiente: Ninguna crítica pendiente; proyecto listo para entrega final.
-- Fecha de última actualización: 2026-06-17T16:07:00-05:00.
+- Fecha de última actualización: 2026-06-17T16:45:00-05:00.
 
 ## Bases de diseño congeladas
 - Capacidad operativa: máximo 5 descargas/día, 24 ton/descarga, 120 ton/día.
@@ -31,6 +31,12 @@
 - (2026-06-17) Se añadió la sección 15 al informe técnico con el análisis de factibilidad térmica del ciclo de 5 descargas diarias a 12 m³/h con chaqueta de 14 m² y agua a 75 °C; resultado: T_min = 58,55 °C (cumple ≥ 57 °C).
 - (2026-06-17) Se añadió al resumen ejecutivo W2605PRINF002 una sección de factibilidad térmica del ciclo a 12 m³/h con tabla resumen y referencia a la Sección 15 del informe técnico.
 - (2026-06-17) Se corrigió la justificación de párrafos en ambos informes; la causa raíz era un `\centering` suelto en `sections/00_portada.tex` que persistía para todo el documento.
+- (2026-06-17) Se refactorizaron `src/ciclo_descargas_14m2_75C_12m3h.py`, `src/calentamiento_24ton_40_60.py` y `src/escenario4_capacidad.py` para que sean import-safe desde Flask (directorios y `os.makedirs` dentro de `main()` o como parámetros).
+- (2026-06-17) Se crearon los wrappers `webapp/app/core/ciclo_12m3h.py`, `perdidas_aislamiento.py` y `escenarios_extras.py` para exponer los análisis del proyecto a la API y a las vistas HTML.
+- (2026-06-17) Se añadió el blueprint `webapp/app/api/proyecto.py` con endpoints JSON para ciclo 12 m³/h, pérdidas térmicas, espesores de aislamiento, calentamiento 24 ton y capacidad operativa.
+- (2026-06-17) Se implementó el servicio estático `/figures/<path:filename>` en `webapp/app/routes.py` para servir las gráficas generadas en `results/figures/`.
+- (2026-06-17) Se añadieron las páginas HTML `/factibilidad`, `/perdidas-aislamiento` y `/escenarios`, y se actualizaron `base.html`, `index.html`, `dashboard.html` y `about.html`.
+- (2026-06-17) Se amplió `webapp/tests/test_api.py` a 14 tests; todos pasan exitosamente.
 
 ## Archivos clave y su propósito
 - `docs/report/W2605PRINF001.tex` — Informe técnico principal (71 páginas).
@@ -45,7 +51,15 @@
 - `src/ciclo_descargas.py` — Simulación del ciclo de descargas a carrotanques.
 - `task/test_ciclo.py` — Test del ciclo oficial precalentado.
 - `task/test_simulacion_50C.py` — Test de simulación desde 50 °C.
-- `webapp/tests/test_api.py` — Tests de la API Flask.
+- `webapp/tests/test_api.py` — Tests de la API Flask (14 casos).
+- `webapp/app/routes.py` — Rutas HTML y servicio de figuras.
+- `webapp/app/api/proyecto.py` — Endpoints JSON de los análisis del proyecto.
+- `webapp/app/core/ciclo_12m3h.py` — Wrapper Flask del ciclo a 12 m³/h con 14 m².
+- `webapp/app/core/perdidas_aislamiento.py` — Wrapper Flask de pérdidas térmicas y espesores.
+- `webapp/app/core/escenarios_extras.py` — Wrapper Flask del calentamiento de 24 ton y de la capacidad operativa diaria.
+- `src/ciclo_descargas_14m2_75C_12m3h.py` — Simulación del ciclo a 12 m³/h y generación de figuras.
+- `src/calentamiento_24ton_40_60.py` — Simulación del calentamiento de 24 ton.
+- `src/escenario4_capacidad.py` — Cálculo de capacidad operativa diaria.
 - `auditoria1.md` — Auditoría crítica del informe de tercero.
 - `task/todo.md` — Plan de trabajo y registro de revisiones.
 
@@ -60,4 +74,5 @@ Ninguna crítica pendiente.
 - Compilar informe principal: `cd docs/report && pdflatex W2605PRINF001.tex && bibtex W2605PRINF001 && pdflatex W2605PRINF001.tex && pdflatex W2605PRINF001.tex`
 - Compilar resumen ejecutivo: `cd docs/report && pdflatex W2605PRINF002.tex && pdflatex W2605PRINF002.tex`
 - Ejecutar tests: `cd task && ../venv/Scripts/python.exe test_ciclo.py && ../venv/Scripts/python.exe test_simulacion_50C.py && cd ../webapp && ../venv/Scripts/python.exe tests/test_api.py`
+- Levantar servidor web: `cd webapp && ../venv/Scripts/python.exe run.py`
 - Generar figuras: ejecutar scripts en `src/` con `venv/Scripts/python.exe`.
