@@ -46,7 +46,11 @@
 - `task/todo.md` — Plan de trabajo y registro de revisiones.
 
 ## Preguntas abiertas / bloqueos
-- [ ] Evaluar si se renombra el repositorio remoto de `P2611-ANALISIS-CFD-Y-FEA-INGREDION` a uno acorde con W2605 (opcional).
+Ninguna crítica pendiente.
+
+## Repositorio remoto
+- URL: `https://github.com/INGENDESING/W2605-ANALISIS-TRANSFERENCIA-CALOR-GLOBE-1130.git`
+- Rama: `main`
 
 ## Comandos / workflows útiles
 - Compilar informe principal: `cd docs/report && pdflatex W2605PRINF001.tex && bibtex W2605PRINF001 && pdflatex W2605PRINF001.tex && pdflatex W2605PRINF001.tex`
