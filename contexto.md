@@ -1,8 +1,8 @@
 # Contexto del proyecto: W2605 — Fondo de tanque de glucosa
 
 ## Estado actual
-- Última tarea completada: Organización de 111 archivos generados/desactualizados en la carpeta `reciclaje/` de la raíz, con recompilación de informes y verificación de tests.
-- Próxima tarea pendiente: Actualización del repositorio en GitHub y definición del logo corporativo correcto de DMV SAS.
+- Última tarea completada: Confirmación del logo corporativo (`docs/report/logos/logo1.png`), actualización de `README.md` y sincronización del repositorio con GitHub.
+- Próxima tarea pendiente: Ninguna crítica pendiente; proyecto listo para entrega final.
 - Fecha de última actualización: 2026-06-17T13:15:00-05:00.
 
 ## Bases de diseño congeladas
@@ -46,9 +46,7 @@
 - `task/todo.md` — Plan de trabajo y registro de revisiones.
 
 ## Preguntas abiertas / bloqueos
-- [ ] Definir logo corporativo correcto de DMV SAS (el archivo actual `docs/report/logos/logo1.png` no es el logo esperado).
-- [ ] Actualizar repositorio en GitHub con la estructura limpia.
-- [ ] Actualizar `README.md` de la raíz, que permanece desactualizado.
+- [ ] Evaluar si se renombra el repositorio remoto de `P2611-ANALISIS-CFD-Y-FEA-INGREDION` a uno acorde con W2605 (opcional).
 
 ## Comandos / workflows útiles
 - Compilar informe principal: `cd docs/report && pdflatex W2605PRINF001.tex && bibtex W2605PRINF001 && pdflatex W2605PRINF001.tex && pdflatex W2605PRINF001.tex`
