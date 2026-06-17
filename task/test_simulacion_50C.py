@@ -1,6 +1,6 @@
 """
-Test: Parametros exactos del pantallazo del usuario
-T_inicial=50, T_agua=67 (segun pantallazo)
+Test de simulacion con parametros oficiales del ciclo W2605.
+Caso de referencia: T_inicial=50 C, T_agua=67 C (pantallazo historico).
 """
 import sys
 from pathlib import Path
@@ -12,13 +12,15 @@ from app.core.balance_energia import simular_ciclo_automatico
 from geometria_tanque import volumen_total
 
 vol_ini = volumen_total() * 0.80
+MASA_DESCARGA = 24000.0
+TIEMPO_DESCARGA = 2.0
+PERIODO_CICLO = 4.8
 
 print("=" * 60)
-print("TEST: Parametros del pantallazo")
+print("TEST: Parametros del pantallazo actualizados al ciclo oficial")
 print("T_inicial=50, T_agua=67, T_objetivo=57")
 print("=" * 60)
 
-# Con los parametros CORRECTOS (sin saltar calentamiento)
 r = simular_ciclo_automatico(
     T_inicial=50,
     T_objetivo_inicio_descarga=57,
@@ -26,9 +28,9 @@ r = simular_ciclo_automatico(
     v_agua=2.5,
     area=13.0,
     volumen_inicial_m3=vol_ini,
-    masa_por_descarga_kg=24000,
-    tiempo_descarga_h=1.5,
-    periodo_ciclo_h=3.0,
+    masa_por_descarga_kg=MASA_DESCARGA,
+    tiempo_descarga_h=TIEMPO_DESCARGA,
+    periodo_ciclo_h=PERIODO_CICLO,
     temp_minima_aceptable=55,
     tiempo_maximo_h=24
 )
@@ -47,21 +49,20 @@ for d in r['descargas']:
           f"T={d['T_inicio']:.1f}->{d['T_fin']:.1f}C  "
           f"Estado={d['estado']}")
 
-# Ahora con checkbox saltar calentamiento (bug anterior: enviaba T_inicial=57)
 print("\n" + "=" * 60)
-print("COMPARACION: Con bug antiguo (T_inicial=57, saltando calentamiento)")
+print("TEST: Ciclo oficial precalentado (T_inicial=57, T_agua=75)")
 print("=" * 60)
 
 r2 = simular_ciclo_automatico(
     T_inicial=57,
     T_objetivo_inicio_descarga=57,
-    T_agua=67,
+    T_agua=75,
     v_agua=2.5,
     area=13.0,
     volumen_inicial_m3=vol_ini,
-    masa_por_descarga_kg=24000,
-    tiempo_descarga_h=1.5,
-    periodo_ciclo_h=3.0,
+    masa_por_descarga_kg=MASA_DESCARGA,
+    tiempo_descarga_h=TIEMPO_DESCARGA,
+    periodo_ciclo_h=PERIODO_CICLO,
     temp_minima_aceptable=55,
     tiempo_maximo_h=24
 )

@@ -53,6 +53,6 @@ def health_check():
     """Endpoint de health check"""
     return jsonify({
         'status': 'ok',
-        'service': 'P2611 WebApp',
+        'service': 'W2605 WebApp',
         'version': '1.0.0'
     })

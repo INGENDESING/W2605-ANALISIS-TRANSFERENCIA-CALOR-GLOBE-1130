@@ -1,13 +1,36 @@
 \section{Introducci\'on}
 
-Ingredion S.A., en su planta de producci\'on ubicada en la ciudad de Cali, Colombia, opera un sistema de almacenamiento de jarabe de glucosa de alta concentraci\'on destinado al suministro de producto terminado mediante carrotanques de 24 toneladas de capacidad. El tanque de almacenamiento, de configuraci\'on cil\'indrica vertical con fondo toriesf\'erico y tapa c\'onica, tiene una capacidad nominal cercana a los 223~m\textsuperscript{3} y est\'a construido en acero inoxidable austen\'itico tipo 316L (UNS~S31603), material que satisface los requisitos de compatibilidad con alimentos establecidos por las normas 3-A Sanitary Standards y la regulaci\'on FDA~21~CFR~177.
+Ingredion S.A. opera en su planta de Cali, Colombia, un tanque de almacenamiento de jarabe de glucosa de alta concentraci\'on destinado al suministro de producto terminado mediante carrotanques. El equipo, tag 53A-90A-0056, es un recipiente vertical cil\'indrico con fondo toriesf\'erico y tapa c\'onica, con una capacidad geom\'etrica cercana a 223~m\textsuperscript{3} y construido en acero inoxidable austen\'itico 316L (UNS~S31603), material compatible con los requisitos sanitarios 3-A y la regulaci\'on FDA~21~CFR~177 para contacto con alimentos.
 
-El tanque cuenta con un fondo toriesf\'erico construido en acero inoxidable SS316L con un espesor de 9~mm, el cual incorpora un sistema de calentamiento mediante una chaqueta de media ca\~na de secci\'on rectangular, soldada al exterior de la superficie toriesf\'erica y desarrollada en configuraci\'on espiral desde la zona central del fondo hasta la curvatura perif\'erica. El sistema de calentamiento emplea agua caliente como fluido de servicio, la cual circula por el interior del perfil rectangular de la chaqueta (141~mm de ancho por 45.5~mm de alto), cubriendo un \'area de contacto t\'ermico de 13~m\textsuperscript{2}. El presente estudio incluye el c\'alculo del espesor \'optimo de aislamiento t\'ermico de lana mineral para la chaqueta de media ca\~na, como parte del an\'alisis de eficiencia energ\'etica de la Parte~I.
+El fondo toriesf\'erico del tanque incorpora una chaqueta de media ca\~na de secci\'on rectangular soldada en configuraci\'on espiral, que utiliza agua caliente como fluido de servicio. El perfil interno de la chaqueta tiene 141~mm de ancho y 45,5~mm de alto, con un \'area de transferencia de calor de 13~m\textsuperscript{2}. La configuraci\'on hidr\'aulica contempla una doble entrada de agua caliente, con el 45~\% del caudal dirigido a la zona central y el 55~\% a la zona perif\'erica, y una salida com\'un de agua fr\'ia ubicada al 45~\% del \'area, de modo que el \'area total de intercambio se conserva.
 
-La necesidad del calentamiento radica en las propiedades reol\'ogicas de la glucosa de alto grado Brix. A temperatura ambiente, la viscosidad del jarabe de glucosa Globe~1130 alcanza valores del orden de cientos de centipoise, lo que dificulta severamente las operaciones de bombeo y descarga. El calentamiento controlado del producto desde su temperatura de recepci\'on (aproximadamente 20\,°C) hasta una temperatura de descarga de 60\,°C resulta indispensable para reducir la viscosidad a niveles operativos que permitan cumplir con la frecuencia de despacho requerida: ocho cargas a carrotanque en un per\'iodo de 24 horas.
+El ciclo operativo oficial definido para el sistema se fundamenta en el despacho diario de cinco carrotanques de 24~toneladas de capacidad cada uno. La Tabla~\ref{tab:ciclo_operativo} resume los par\'ametros operativos adoptados en el presente estudio.
 
-Ingredion~S.A. encomend\'o a DML Ingenieros Consultores~S.A.S. la elaboraci\'on de un an\'alisis t\'ecnico independiente orientado a caracterizar el comportamiento t\'ermico del sistema de calentamiento y a evaluar la integridad mec\'anica del tanque bajo las condiciones de operaci\'on actuales. El objetivo central de este estudio es proporcionar a Ingredion~S.A. informaci\'on de ingenier\'ia de alta calidad que le permita tomar decisiones informadas sobre la optimizaci\'on de las condiciones de proceso con la infraestructura existente.
+\begin{table}[H]
+\centering
+\caption{Ciclo operativo oficial del sistema de almacenamiento y despacho de glucosa.}
+\label{tab:ciclo_operativo}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}Nlccl@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{\'Item}} & \textbf{Par\'ametro} & \textbf{Valor} & \textbf{Unidad} & \textbf{Observaci\'on} \\
+\midrule
+& Descargas por d\'ia & 5 & -- & Requerimiento operativo \\
+& Capacidad del carrotanque & 24 & ton & Veh\'iculo de transporte \\
+& Producci\'on diaria total & 120 & ton/d\'ia & 5 $\times$ 24~ton \\
+& Duraci\'on de cada descarga & 2 & h & Bombeo a carrotanque \\
+& Flujo de descarga & 12 & ton/h & 24~ton en 2~h \\
+& Intervalo entre inicios de descarga & 4,8 & h & 24~h~/~5 descargas \\
+& Tiempo de calentamiento entre descargas & 2,8 & h & Sin tiempo muerto \\
+& Flujo medio de glucosa & 5.000 & kg/h & 120~ton~/~24~h \\
+& Temperatura de suministro de glucosa al tanque & 55--60 & \textdegree C & Desde planta de producci\'on \\
+& Temperatura objetivo de despacho & 57--60 & \textdegree C & M\'inima para bombeo \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-El estudio se estructura en dos componentes. La Parte~I consiste en el an\'alisis de transferencia de calor del sistema de calentamiento por media ca\~na, incluyendo la determinaci\'on del coeficiente global de transferencia de calor $U$, los perfiles de temperatura en funci\'on del tiempo y del nivel del tanque, la evaluaci\'on del espesor \'optimo de aislamiento t\'ermico, y el an\'alisis de la din\'amica operativa de descarga a carrotanques bajo tres escenarios de operaci\'on. La Parte~II comprende el an\'alisis estructural del tanque de almacenamiento mediante c\'alculos de acuerdo con las normas API~650 y ASME~Section~VIII~Division~1, considerando las cargas de dise\~no (presi\'on hidrost\'atica, viento, sismo) y los criterios de corrosi\'on establecidos en el informe t\'ecnico P2543-PR-INF-002~REV0 elaborado previamente por DML para este cliente.
+La necesidad del calentamiento radica en las propiedades reol\'ogicas de la glucosa Globe~42~DE a 80,6~\textdegree Brix. A temperatura ambiente la viscosidad supera 200.000~cP, lo que dificulta severamente el bombeo y la descarga. El calentamiento controlado del producto desde la temperatura de recepci\'on, cercana a 25~\textdegree C, hasta el rango de despacho de 57--60~\textdegree C reduce la viscosidad a valores operativos y permite completar las cinco descargas diarias con continuidad.
 
-Adicionalmente, ambas partes del estudio contemplan una fase de validaci\'on mediante simulaci\'on num\'erica: din\'amica de fluidos computacional (CFD) con COMSOL Multiphysics para la transferencia de calor, y an\'alisis de elementos finitos (FEA) con ANSYS para el comportamiento estructural del tanque. Los resultados de estas simulaciones se presentan en las Secciones~9 y~10 del presente informe, donde se documenta la concordancia entre los modelos anal\'iticos y las simulaciones num\'ericas.
+Ingredion S.A. encomend\'o a DMV SAS la elaboraci\'on de un an\'alisis t\'ecnico independiente orientado a caracterizar el comportamiento t\'ermico del sistema de calentamiento y a evaluar su capacidad para sostener el ciclo operativo definido. El objetivo central es proporcionar informaci\'on de ingenier\'ia que permita optimizar las condiciones de proceso con la infraestructura existente.
+
+El presente informe se estructura en un \'unico componente t\'ermico. Se presenta el balance de materia y energ\'ia del sistema, las bases de dise\~no f\'isicas y termof\'isicas, la metodolog\'ia de c\'alculo del coeficiente global de transferencia de calor y de los perfiles transitorios de temperatura, los resultados para los escenarios de operaci\'on, el an\'alisis de la capacidad del sistema y las conclusiones y recomendaciones orientadas a la operaci\'on t\'ermica del tanque.

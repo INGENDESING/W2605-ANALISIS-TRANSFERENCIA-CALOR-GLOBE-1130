@@ -1,5 +1,5 @@
 /**
- * Dashboard Dinámico - P2611
+ * Dashboard Dinámico - W2605
  * KPIs calculados vía API, SVG animado, gráficas Plotly
  */
 
@@ -88,10 +88,10 @@ async function cargarEscenario(idEscenario) {
                 velocidad_m_s: params.v_agua,
                 area_m2: 13.0,
                 nivel_inicial_pct: params.nivel_pct,
-                num_descargas: 8,
+                num_descargas: 5,
                 masa_por_descarga_ton: 24,
                 tiempo_descarga_h: 1.5,
-                periodo_ciclo_h: 3.0,
+                periodo_ciclo_h: 4.8,
                 temp_minima_aceptable: 55
             })
         });

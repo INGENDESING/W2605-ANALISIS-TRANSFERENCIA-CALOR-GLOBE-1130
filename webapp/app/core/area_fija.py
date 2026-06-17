@@ -97,7 +97,7 @@ def calcular_flujo_maximo(temp_entrada, temp_salida, temp_agua, v_agua=V_AGUA_DE
 
 
 def calcular_capacidad_descarga(temp_inicial, temp_agua, 
-                                num_descargas=8, 
+                                num_descargas=5, 
                                 masa_por_descarga_kg=MASA_POR_DESCARGA_DEFAULT,
                                 tiempo_descarga_h=TIEMPO_DESCARGA_DEFAULT,
                                 nivel_inicial_pct=80,
@@ -163,12 +163,12 @@ def calcular_capacidad_descarga(temp_inicial, temp_agua,
 
 
 def simular_ciclo_descargas(temp_inicial, temp_agua, 
-                           num_descargas=8,
+                           num_descargas=5,
                            masa_por_descarga_kg=MASA_POR_DESCARGA_DEFAULT,
                            tiempo_descarga_h=TIEMPO_DESCARGA_DEFAULT,
                            nivel_inicial_pct=80,
                            v_agua=V_AGUA_DEFAULT,
-                           periodo_ciclo_h=3.0):
+                           periodo_ciclo_h=4.8):
     """
     Simular ciclo completo de descargas
     

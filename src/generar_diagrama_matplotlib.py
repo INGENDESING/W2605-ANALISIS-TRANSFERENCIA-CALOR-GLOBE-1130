@@ -1,5 +1,5 @@
 """
-Generador de Diagrama de Proceso PFD - Proyecto P2611
+Generador de Diagrama de Proceso PFD - Proyecto W2605
 Version Matplotlib (sin dependencia de Graphviz)
 Diagrama de flujo de proceso profesional con balance termico completo
 """
@@ -128,7 +128,7 @@ def generar_escenarios():
 # GENERACION DIAGRAMA CON MATPLOTLIB
 # =============================================================================
 
-def dibujar_diagrama_pfd(corrientes, output_path='../results/diagrama_proceso_P2611.png'):
+def dibujar_diagrama_pfd(corrientes, output_path='../results/diagrama_proceso_W2605.png'):
     """Genera diagrama PFD profesional usando matplotlib"""
     
     import matplotlib.pyplot as plt
@@ -339,7 +339,7 @@ Entalpia: {corrientes['h_agua_sal']/1000000:.2f} GJ/h'''
     # ============================================
     
     # Titulo principal
-    ax.text(10, 13.5, 'PROYECTO P2611 - DIAGRAMA DE FLUJO DE PROCESO (PFD)',
+    ax.text(10, 13.5, 'PROYECTO W2605 - DIAGRAMA DE FLUJO DE PROCESO (PFD)',
             fontsize=16, fontweight='bold', ha='center')
     ax.text(10, 13.0, 'Sistema de Almacenamiento y Carga de Glucosa Globe 42 DE',
             fontsize=12, ha='center', style='italic')
@@ -383,7 +383,7 @@ Entalpia: {corrientes['h_agua_sal']/1000000:.2f} GJ/h'''
 def guardar_tabla_escenarios(escenarios, corrientes_base):
     """Genera y guarda la tabla de escenarios en formato Markdown"""
     
-    md = '''# Analisis de Escenarios - Proyecto P2611
+    md = '''# Analisis de Escenarios - Proyecto W2605
 ## Sistema de Almacenamiento y Carga de Glucosa
 
 ### Condiciones de Operacion Base
@@ -480,7 +480,7 @@ Para poder cargar glucosa a 57C y mantener la temperatura de salida >=57C, se re
 
 ---
 
-*Documento generado automaticamente - Proyecto P2611*
+*Documento generado automaticamente - Proyecto W2605*
 *Fecha: 2026-04-10*
 '''
     
@@ -493,7 +493,7 @@ Para poder cargar glucosa a 57C y mantener la temperatura de salida >=57C, se re
 
 def main():
     print("=" * 78)
-    print("GENERADOR DE DIAGRAMA DE PROCESO PFD - PROYECTO P2611")
+    print("GENERADOR DE DIAGRAMA DE PROCESO PFD - PROYECTO W2605")
     print("Version Matplotlib (alta calidad tecnica)")
     print("=" * 78)
     
@@ -517,7 +517,7 @@ def main():
     
     # Generar diagrama
     print("\n3. Generando diagrama PFD con Matplotlib...")
-    output_path = '../results/diagrama_proceso_P2611.png'
+    output_path = '../results/diagrama_proceso_W2605.png'
     dibujar_diagrama_pfd(corrientes_base, output_path)
     print(f"   Guardado: {output_path}")
     print(f"   Guardado: {output_path.replace('.png', '.pdf')}")

@@ -1,5 +1,5 @@
 """
-Generador de Diagrama de Proceso PFD - Proyecto P2611
+Generador de Diagrama de Proceso PFD - Proyecto W2605
 Version 2.0 - Diagrama esquematico profesional con equipos realistas
 """
 
@@ -19,7 +19,7 @@ from propiedades_glucosa import rho_glucosa, Cp_glucosa
 # =============================================================================
 # PARAMETROS DEL PROCESO - ESCENARIO 3 OPTIMIZADO
 # =============================================================================
-# Basado en cálculos del proyecto P2611 con agua a 75°C
+# Basado en cálculos del proyecto W2605 con agua a 75°C
 
 M_GLUCOSA = 8000.0          # Flujo de glucosa [kg/h]
 T_GLUCOSA_ENT = 57.0        # Temperatura entrada glucosa [°C]
@@ -598,7 +598,7 @@ def generar_diagrama_completo():
                                linewidth=2, zorder=1)
     ax.add_patch(titulo_bg)
     
-    ax.text(11, 15.55, 'PROYECTO P2611 - DIAGRAMA DE FLUJO DE PROCESO (PFD)', 
+    ax.text(11, 15.55, 'PROYECTO W2605 - DIAGRAMA DE FLUJO DE PROCESO (PFD)', 
             fontsize=16, fontweight='bold', ha='center', color='white', zorder=2)
     ax.text(11, 15.0, 'Sistema de Almacenamiento y Carga de Glucosa Globe 42 DE', 
             fontsize=12, ha='center', color='#1E3A5F', style='italic', zorder=2)
@@ -667,18 +667,18 @@ def generar_diagrama_completo():
     # Guardar figura
     os.makedirs('../results', exist_ok=True)
     plt.tight_layout()
-    plt.savefig('../results/diagrama_proceso_P2611_v2.png', dpi=200, 
+    plt.savefig('../results/diagrama_proceso_W2605_v2.png', dpi=200, 
                 bbox_inches='tight', facecolor='white', pad_inches=0.3)
-    plt.savefig('../results/diagrama_proceso_P2611_v2.pdf', dpi=300,
+    plt.savefig('../results/diagrama_proceso_W2605_v2.pdf', dpi=300,
                 bbox_inches='tight', facecolor='white', pad_inches=0.3)
     plt.close()
     
-    return '../results/diagrama_proceso_P2611_v2.png'
+    return '../results/diagrama_proceso_W2605_v2.png'
 
 
 if __name__ == "__main__":
     print("=" * 78)
-    print("GENERADOR DE DIAGRAMA PFD v2.0 - PROYECTO P2611")
+    print("GENERADOR DE DIAGRAMA PFD v2.0 - PROYECTO W2605")
     print("Diagrama esquematico con equipos realistas")
     print("=" * 78)
     

@@ -1,5 +1,5 @@
 """
-Configuración de la aplicación Flask - Proyecto P2611
+Configuración de la aplicación Flask - Proyecto W2605
 """
 import os
 from pathlib import Path
@@ -11,7 +11,7 @@ SRC_DIR = BASE_DIR.parent / 'src'
 
 class Config:
     """Configuración base"""
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'p2611-dev-secret-key-cambiar-en-produccion'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'w2605-dev-secret-key-cambiar-en-produccion'
     
     # Flask
     DEBUG = False

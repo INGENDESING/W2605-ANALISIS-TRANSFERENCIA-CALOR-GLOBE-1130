@@ -1,7 +1,7 @@
 """
 Módulo de cálculo del coeficiente global de transferencia de calor U
 =====================================================================
-Proyecto P2611 — Tanque de glucosa INGREDION
+Proyecto W2605 — Tanque de glucosa INGREDION
 
 Modelo de resistencias en serie:
   1/U = 1/h_i + e_w/k_w + 1/h_o
@@ -231,7 +231,7 @@ def coeficiente_U(v_agua, T_agua_media, T_glucosa, T_pared=None, L_car=None):
 
 if __name__ == "__main__":
     print("=" * 75)
-    print("CALCULO DEL COEFICIENTE U — Proyecto P2611")
+    print("CALCULO DEL COEFICIENTE U — Proyecto W2605")
     print("=" * 75)
 
     # --- Escenario 1: Q = 30.9 m³/h → v = 1.34 m/s ---

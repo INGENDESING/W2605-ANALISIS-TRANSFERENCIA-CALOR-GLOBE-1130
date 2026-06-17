@@ -1,24 +1,24 @@
 """
-Modulo de simulacion del Escenario 4 — Proyecto P2611
+Modulo de simulacion del Escenario 4 — Proyecto W2605
 ======================================================
-Ciclo industrial de despacho: 192 toneladas de glucosa Globe 1130
-a 55°C, 8 descargas de 24 toneladas a carrotanque.
+Ciclo industrial de despacho: tanque cargado al 80 % de volumen operativo
+con glucosa Globe 42 DE a 55 °C, 5 descargas de 24 toneladas a carrotanque
+(descargas parciales).
 
 Parametros del Escenario 4:
-  Masa inicial:          192,000 kg (192 ton)
-  Temperatura inicial:   55°C
-  Temperatura agua:      75°C
+  Masa inicial:          volumen_total() * 0.80 * rho_glucosa(55 °C)
+  Temperatura inicial:   55 °C
+  Temperatura agua:      75 °C
   Velocidad agua:        2.5 m/s en la media cana
-  Temperatura descarga:  57°C (la glucosa debe alcanzar 57°C antes de descargar)
+  Temperatura descarga:  57 °C (la glucosa debe alcanzar 57 °C antes de descargar)
   Masa por descarga:     24,000 kg (24 ton)
-  Duracion descarga:     1.5 h
-  Numero descargas:      8 (total = 192 ton = vaciado completo)
+  Duracion descarga:     2.0 h
+  Numero descargas:      5
 
 Ciclo operativo:
-  1. Calentar glucosa de T_actual hasta 57°C (recalentamiento)
-  2. Descargar 24 ton en 1.5 h (calentamiento continua durante descarga)
+  1. Calentar glucosa de T_actual hasta 57 °C (recalentamiento)
+  2. Descargar 24 ton en 2.0 h (calentamiento continua durante descarga)
   3. Repetir desde paso 1 con masa reducida
-  4. Tras la 8va descarga, masa residual → 0 ton
 
 Refs:
   - Kern, Process Heat Transfer, Cap. 18
@@ -46,14 +46,30 @@ from geometria_tanque import A_CONTACTO, volumen_total
 # CONFIGURACION DE GRAFICAS ESTILO PUBLICACION
 # =============================================================================
 
+COLOR_GLUCOSA = '#2E5AAC'
+COLOR_AGUA = '#C44E28'
+COLOR_DESCARGA = '#3A7D44'
+COLOR_BANDA_DESCARGA = '#F4A261'
+COLOR_REJILLA = '#E5E5E5'
+COLOR_TEXTO = '#333333'
+
 plt.rcParams.update({
     'font.family': 'serif',
     'font.size': 11,
+    'axes.titlesize': 13,
     'axes.labelsize': 12,
-    'legend.fontsize': 9,
+    'legend.fontsize': 10,
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.02,
+    'axes.edgecolor': COLOR_TEXTO,
+    'axes.labelcolor': COLOR_TEXTO,
+    'xtick.color': COLOR_TEXTO,
+    'ytick.color': COLOR_TEXTO,
+    'text.color': COLOR_TEXTO,
 })
 
 
@@ -61,15 +77,18 @@ plt.rcParams.update({
 # CONSTANTES DEL ESCENARIO 4
 # =============================================================================
 
-MASA_INICIAL = 192000.0        # Masa inicial de glucosa [kg]
 T_GLUCOSA_INICIAL = 55.0       # Temperatura inicial [C]
 T_AGUA = 75.0                  # Temperatura del agua de calentamiento [C]
 V_AGUA = 2.5                   # Velocidad del agua en media cana [m/s]
 T_DESCARGA = 57.0              # Temperatura minima para descarga [C]
 MASA_POR_DESCARGA = 24000.0    # Masa por carrotanque [kg]
-T_DESCARGA_DURACION = 1.5      # Duracion de cada descarga [h]
-N_DESCARGAS = 8                # Numero total de descargas
+T_DESCARGA_DURACION = 2.0      # Duracion de cada descarga [h]
+N_DESCARGAS = 5                # Numero total de descargas
 A = A_CONTACTO                 # Area de transferencia [m2] = 13.0
+
+# Masa inicial: 80 % del volumen operativo del tanque a T_GLUCOSA_INICIAL
+V_80 = volumen_total() * 0.80
+MASA_INICIAL = V_80 * rho_glucosa(T_GLUCOSA_INICIAL)  # [kg]
 
 # Flujo masico durante descarga
 DOT_M_OUT = MASA_POR_DESCARGA / (T_DESCARGA_DURACION * 3600.0)  # kg/s
@@ -128,8 +147,8 @@ def simular_ciclo_esc4(dt_s=30.0):
     Simula el ciclo completo del Escenario 4.
 
     Ciclo por descarga:
-      1. Recalentar glucosa desde T_actual hasta T_DESCARGA (57°C)
-      2. Descargar 24 ton en 1.5 h (calentamiento continua)
+      1. Recalentar glucosa desde T_actual hasta T_DESCARGA (57 °C)
+      2. Descargar 24 ton en 2.0 h (calentamiento continua)
 
     Retorna
     -------
@@ -153,29 +172,29 @@ def simular_ciclo_esc4(dt_s=30.0):
 
     print(f"\n{'='*90}")
     print(f"ESCENARIO 4: Ciclo industrial de despacho")
-    print(f"192 ton de glucosa a 55°C, agua a 75°C, 8 descargas de 24 ton a 57°C")
+    print(f"Masa inicial al 80 % del volumen operativo, glucosa a 55 °C, agua a 75 °C,")
+    print(f"5 descargas de 24 ton a 57 °C")
     print(f"{'='*90}")
-    print(f"\n  Masa inicial:        {MASA_INICIAL/1000:.0f} ton")
+    print(f"\n  Masa inicial:        {MASA_INICIAL/1000:.1f} ton")
+    print(f"  Volumen inicial:     {V_80:.1f} m3 (80 %)")
     print(f"  T inicial:           {T_GLUCOSA_INICIAL:.0f} °C")
     print(f"  T agua:              {T_AGUA:.0f} °C")
     print(f"  T descarga:          {T_DESCARGA:.0f} °C")
     print(f"  Descargas:           {N_DESCARGAS} × {MASA_POR_DESCARGA/1000:.0f} ton")
     print(f"  Flujo descarga:      {DOT_M_OUT:.3f} kg/s")
     print(f"  Volumen tanque:      {volumen_total():.1f} m3")
-    V_ini = MASA_INICIAL / rho_glucosa(T_GLUCOSA_INICIAL)
-    print(f"  Volumen inicial:     {V_ini:.1f} m3 ({V_ini/volumen_total()*100:.0f}%)")
 
     for i_desc in range(N_DESCARGAS):
 
         # =================================================================
-        # FASE 1: RECALENTAMIENTO (hasta T_DESCARGA = 57°C)
+        # FASE 1: RECALENTAMIENTO (hasta T_DESCARGA = 57 °C)
         # =================================================================
         if T_actual < T_DESCARGA - 0.01:
             t_ini_cal_s = t_acum_s
             T_ini_cal = T_actual
 
             # Integrar hasta alcanzar T_DESCARGA
-            # Usamos un evento para detener la integracion a 57°C
+            # Usamos un evento para detener la integracion a 57 °C
             def evento_57(t, y):
                 return y[0] - T_DESCARGA
             evento_57.terminal = True
@@ -227,7 +246,7 @@ def simular_ciclo_esc4(dt_s=30.0):
             dt_recal_h = 0.0
 
         # =================================================================
-        # FASE 2: DESCARGA (1.5 h)
+        # FASE 2: DESCARGA (2.0 h)
         # =================================================================
         t_ini_desc_s = t_acum_s
         t_fin_desc_s = t_acum_s + T_DESCARGA_DURACION * 3600.0
@@ -359,37 +378,39 @@ def graficar_T_vs_tiempo(res, figures_dir):
     T_g = res['T_g']
 
     # Panel superior: Temperatura
-    ax1.plot(t_h, T_g, 'b-', linewidth=1.8, label='T glucosa', zorder=3)
-    ax1.axhline(y=T_AGUA, color='red', linestyle='--', alpha=0.5, linewidth=0.8,
-                label=f'T agua = {T_AGUA:.0f} °C')
-    ax1.axhline(y=T_DESCARGA, color='green', linestyle=':', alpha=0.6, linewidth=1.0,
-                label=f'T descarga = {T_DESCARGA:.0f} °C')
+    ax1.plot(t_h, T_g, color=COLOR_GLUCOSA, linewidth=2, label='T glucosa', zorder=3)
+    ax1.axhline(y=T_AGUA, color=COLOR_AGUA, linestyle='--', alpha=0.8,
+                linewidth=1.5, label=f'T agua = {T_AGUA:.0f} °C')
+    ax1.axhline(y=T_DESCARGA, color=COLOR_DESCARGA, linestyle='-.', alpha=0.8,
+                linewidth=1.5, label=f'T descarga = {T_DESCARGA:.0f} °C')
+    ax1.axhline(y=60, color=COLOR_TEXTO, linestyle=':', alpha=0.7,
+                linewidth=1.2, label='Tope termostatico = 60 °C')
 
-    colores = plt.cm.Oranges(np.linspace(0.25, 0.65, N_DESCARGAS))
     for i, desc in enumerate(res['descargas']):
         ax1.axvspan(desc['t_inicio_h'], desc['t_fin_h'],
-                    alpha=0.20, color=colores[i], zorder=1)
+                    alpha=0.25, color=COLOR_BANDA_DESCARGA, zorder=1)
         t_mid = (desc['t_inicio_h'] + desc['t_fin_h']) / 2
-        ax1.annotate(f"D{i+1}", xy=(t_mid, desc['T_inicio']), fontsize=7,
-                     fontweight='bold', color='darkorange', ha='center', va='bottom',
-                     bbox=dict(boxstyle='round,pad=0.12', facecolor='white',
-                               edgecolor='orange', alpha=0.8))
+        y_text = ax1.get_ylim()[0] + (ax1.get_ylim()[1] - ax1.get_ylim()[0]) * 0.08
+        ax1.annotate(f"D{i+1}", xy=(t_mid, y_text), fontsize=9,
+                     fontweight='bold', color=COLOR_TEXTO, ha='center', va='bottom',
+                     bbox=dict(boxstyle='round,pad=0.18', facecolor='white',
+                               edgecolor=COLOR_BANDA_DESCARGA, alpha=0.9))
 
     ax1.set_ylabel('Temperatura [°C]')
     ax1.set_title(f'Escenario 4: Ciclo de {N_DESCARGAS} descargas de '
                   f'{MASA_POR_DESCARGA/1000:.0f} ton '
                   f'(T$_{{agua}}$ = {T_AGUA:.0f} °C, T$_{{desc}}$ = {T_DESCARGA:.0f} °C)')
-    ax1.legend(loc='upper left', framealpha=0.9, fontsize=9)
-    ax1.grid(True, alpha=0.3)
+    ax1.legend(loc='upper right', framealpha=0.95)
+    ax1.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
 
     # Panel inferior: Masa
-    ax2.plot(t_h, res['m_g'] / 1000, 'b-', linewidth=1.8)
-    for i, desc in enumerate(res['descargas']):
+    ax2.plot(t_h, res['m_g'] / 1000, color=COLOR_GLUCOSA, linewidth=1.5)
+    for desc in res['descargas']:
         ax2.axvspan(desc['t_inicio_h'], desc['t_fin_h'],
-                    alpha=0.15, color=colores[i])
+                    alpha=0.25, color=COLOR_BANDA_DESCARGA)
     ax2.set_xlabel('Tiempo [h]')
     ax2.set_ylabel('Masa [ton]')
-    ax2.grid(True, alpha=0.3)
+    ax2.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
 
     plt.tight_layout()
     plt.savefig(os.path.join(figures_dir, 'escenario4_ciclo_T.pdf'))
@@ -404,8 +425,8 @@ def graficar_gantt(res, figures_dir):
 
     bar_height = 0.5
     y_pos = 0.0
-    color_cal = '#2E6EAB'
-    color_desc = '#E8833A'
+    color_cal = COLOR_GLUCOSA
+    color_desc = COLOR_BANDA_DESCARGA
 
     for fase in res['fases']:
         t_ini = fase['t_inicio_h']
@@ -414,40 +435,38 @@ def graficar_gantt(res, figures_dir):
         if fase['tipo'] == 'recalentamiento':
             color = color_cal
             hatch = ''
-            ec = 'navy'
+            ec = COLOR_TEXTO
         else:
             color = color_desc
             hatch = '///'
-            ec = 'darkorange'
+            ec = COLOR_AGUA
 
         ax.barh(y_pos, duracion, left=t_ini, height=bar_height,
-                color=color, edgecolor=ec, linewidth=0.5,
+                color=color, edgecolor=ec, linewidth=0.6,
                 hatch=hatch, alpha=0.85)
 
-    # Anotar temperaturas en las descargas
+    # Etiquetas D1-D5 centradas en cada descarga
     for desc in res['descargas']:
         t_mid = (desc['t_inicio_h'] + desc['t_fin_h']) / 2
-        ax.text(t_mid, y_pos + bar_height / 2 + 0.05,
-                f"{desc['T_inicio']:.1f}→{desc['T_fin']:.1f} °C\n"
-                f"Δt_recal={desc['dt_recalentamiento_h']*60:.0f} min",
-                ha='center', va='bottom', fontsize=6, color='black',
-                bbox=dict(boxstyle='round,pad=0.1', facecolor='white',
-                          edgecolor='gray', alpha=0.85))
-
+        ax.text(t_mid, y_pos,
+                f"D{desc['descarga']}",
+                ha='center', va='center', fontsize=10, color=COLOR_TEXTO,
+                fontweight='bold')
     ax.set_yticks([y_pos])
     ax.set_yticklabels([f'Esc. 4 ({T_AGUA:.0f} °C)'], fontsize=11)
     ax.set_xlabel('Tiempo [h]')
     ax.set_title(f'Diagrama de Gantt — Escenario 4: {N_DESCARGAS} descargas de '
                  f'{MASA_POR_DESCARGA/1000:.0f} ton (T$_{{desc}}$ = {T_DESCARGA:.0f} °C)')
-    ax.set_ylim(-0.5, 1.2)
-    ax.grid(True, axis='x', alpha=0.3)
+    ax.set_xlim(0, res['t_total_h'] * 1.05)
+    ax.set_ylim(-0.6, 0.6)
+    ax.grid(True, axis='x', linestyle='-', alpha=0.6, color=COLOR_REJILLA)
 
     leyenda = [
-        Patch(facecolor=color_cal, edgecolor='navy', label='Recalentamiento'),
-        Patch(facecolor=color_desc, edgecolor='darkorange', hatch='///',
+        Patch(facecolor=color_cal, edgecolor=COLOR_TEXTO, label='Recalentamiento'),
+        Patch(facecolor=color_desc, edgecolor=COLOR_AGUA, hatch='///',
               label='Descarga a carrotanque'),
     ]
-    ax.legend(handles=leyenda, loc='upper right', framealpha=0.9)
+    ax.legend(handles=leyenda, loc='upper right', framealpha=0.95)
 
     plt.tight_layout()
     plt.savefig(os.path.join(figures_dir, 'escenario4_gantt.pdf'))

@@ -1,7 +1,7 @@
 """
 Escenario 02B-1 - Calculo de temperatura de salida de glucosa
 Agua de servicio a 75°C con velocidad aumentada a 2.5 m/s
-Proyecto P2611 - Analisis Termico del Tanque de Glucosa
+Proyecto W2605 - Analisis Termico del Tanque de Glucosa
 
 Este script calcula la temperatura de salida de glucosa considerando:
 - Balance de energia en estado estacionario
@@ -258,7 +258,7 @@ def main():
     print("=" * 78)
     print("ESCENARIO 02B-1 - Calculo de temperatura de salida de glucosa")
     print("Agua de servicio a 75°C, velocidad 2.5 m/s")
-    print("Proyecto P2611 - Analisis Termico del Tanque de Glucosa")
+    print("Proyecto W2605 - Analisis Termico del Tanque de Glucosa")
     print("=" * 78)
     print()
     print("Parametros del escenario:")

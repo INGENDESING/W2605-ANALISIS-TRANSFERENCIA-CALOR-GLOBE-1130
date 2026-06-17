@@ -1,5 +1,5 @@
 """
-Generador de tablas de áreas tonelada por tonelada — Proyecto P2611
+Generador de tablas de áreas tonelada por tonelada — Proyecto W2605
 ====================================================================
 Genera tablas LaTeX 24 y 25 con detalle de flujo de 1 a 16 ton/h,
 tonelada por tonelada, para toma de decisiones.

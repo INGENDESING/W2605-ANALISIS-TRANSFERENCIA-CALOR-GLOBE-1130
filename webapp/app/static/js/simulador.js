@@ -1,5 +1,5 @@
 /**
- * Simulador de Ciclo Completo - P2611
+ * Simulador de Ciclo Completo - W2605
  * Calentamiento inicial + ciclo de descargas
  */
 

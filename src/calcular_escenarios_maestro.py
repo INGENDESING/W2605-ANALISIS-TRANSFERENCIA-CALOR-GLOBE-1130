@@ -1,5 +1,5 @@
 """
-Script maestro de calculo termico para todos los subescenarios del Proyecto P2611.
+Script maestro de calculo termico para todos los subescenarios del Proyecto W2605.
 Genera archivos CSV con resultados para v_viento = [1.0, 1.5, 3.0] m/s.
 """
 

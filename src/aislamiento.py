@@ -1,5 +1,5 @@
 """
-Modulo de calculo de espesor de aislamiento termico — Proyecto P2611
+Modulo de calculo de espesor de aislamiento termico — Proyecto W2605
 =====================================================================
 Determina el espesor optimo de aislamiento de lana mineral para la
 chaqueta de media cana del fondo toriesferico del tanque de glucosa.
@@ -43,16 +43,19 @@ h_EXT_NATURAL = 8.0        # Coef. conveccion natural aire exterior [W/m2.K]
 # Ambiente
 T_AMBIENTE = 26.5           # Temperatura ambiente Cali [C]
 
+# Geometría de la chaqueta (importada para evitar duplicación)
+from geometria_tanque import (
+    W_PERFIL, H_PERFIL, A_CONTACTO, L_ESPIRAL_TOTAL as L_ESPIRAL
+)
+
 # Area de la chaqueta expuesta al ambiente (aproximacion)
 # La media cana cubre 13 m2 de contacto con el tanque; la superficie
 # exterior del perfil (3 lados) es aproximadamente:
 # Perimetro expuesto = ancho + 2*alto = 0.141 + 2*0.0455 = 0.232 m
 # Longitud total espiral ~ A_contacto / ancho = 13 / 0.141 = 92.2 m
 # Area expuesta ~ perimetro * longitud = 0.232 * 92.2 = 21.4 m2
-L_ESPIRAL = 13.0 / 0.141   # Longitud de la espiral [m]
-P_EXPUESTO = 0.141 + 2 * 0.0455  # Perimetro exterior del perfil [m]
-A_EXPUESTA = P_EXPUESTO * L_ESPIRAL  # Area expuesta al ambiente [m2]
-A_CONTACTO = 13.0           # Area de contacto con el tanque [m2]
+P_EXPUESTO = W_PERFIL + 2 * H_PERFIL  # Perimetro exterior del perfil [m]
+A_EXPUESTA = P_EXPUESTO * L_ESPIRAL   # Area expuesta al ambiente [m2]
 
 
 # =============================================================================
@@ -319,7 +322,7 @@ def tabla_espesores(T_agua=75.0):
 
 if __name__ == "__main__":
     print("=" * 78)
-    print("CALCULO DE ESPESOR DE AISLAMIENTO — Proyecto P2611")
+    print("CALCULO DE ESPESOR DE AISLAMIENTO — Proyecto W2605")
     print("=" * 78)
 
     print(f"\nParametros del modelo:")

@@ -1,110 +1,60 @@
 \section{An\'alisis de Resultados}
 
-\subsection{Parte I: Interpretaci\'on del An\'alisis T\'ermico}
+\subsection{Interpretaci\'on del An\'alisis T\'ermico}
 
-\subsubsection{Dominancia Estructural de la Resistencia T\'ermica}
+\subsubsection{Dominancia de la Resistencia T\'ermica del Lado de la Glucosa}
 
-El an\'alisis de resistencias t\'ermicas permite identificar con claridad el factor limitante del sistema de calentamiento. Al evaluar el coeficiente global $U$ para la condici\'on representativa ($T_g = 40$~°C, $T_w = 75$~°C), se determin\'o que la \textbf{convecci\'on natural de la glucosa concentra el 98.0\,\% de la resistencia t\'ermica total}, relegando la contribuci\'on de la pared del tanque (1.7\,\%) y del lado del agua (0.3\,\%) a niveles insignificantes (Figura~\ref{fig:pie_resistencias}). Este resultado descarta de antemano cualquier optimizaci\'on sobre la chaqueta de media ca\~na como v\'ia efectiva para mejorar el intercambio de calor. 
+El an\'alisis de resistencias t\'ermicas permite identificar con claridad el factor limitante del sistema de calentamiento. Al evaluar el coeficiente global $U$ para la condici\'on representativa ($T_g = 40$~\textdegree C, $T_w = 75$~\textdegree C), se determin\'o que la convecci\'on natural de la glucosa concentra el 98,0~\% de la resistencia t\'ermica total, relegando la contribuci\'on de la pared del tanque (1,7~\%) y del lado del agua (0,3~\%) a niveles insignificantes (Figura~\ref{fig:pie_resistencias}). Este resultado descarta de antemano cualquier optimizaci\'on sobre la chaqueta de media ca\~na como v\'ia efectiva para mejorar el intercambio de calor.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\textwidth]{../../results/figures/resistencias_termicas.png}
-	\caption{Distribuci\'on porcentual de las resistencias t\'ermicas del sistema de calentamiento por media ca\~na. La alta viscosidad de la glucosa sin agitaci\'on concentra el 98\,\% de la resistencia total, constituyendo el factor limitante del coeficiente global $U$.}
-	\label{fig:pie_resistencias}
+\centering
+\includegraphics[width=0.7\textwidth]{../../results/figures/resistencias_termicas.png}
+\caption{Distribuci\'on porcentual de las resistencias t\'ermicas del sistema de calentamiento por media ca\~na. La alta viscosidad de la glucosa sin agitaci\'on concentra el 98~\% de la resistencia total, constituyendo el factor limitante del coeficiente global $U$.}
+\label{fig:pie_resistencias}
 \end{figure}
 
-Este resultado implica que cualquier modificaci\'on en el lado del agua caliente (incremento de caudal, transici\'on a mayor Re o cambio de geometr\'ia del canal) aportar\'a mejoras marginales inferiores al 2\,\%, dado que la resistencia del agua representa apenas el 0.3\,\% del total. En consecuencia, la \textbf{\'unica v\'ia efectiva de optimizaci\'on} reside en: (a) incrementar la temperatura de suministro ($T_{w,in}$), lo que aumenta directamente la fuerza motriz ($\Delta T$) del sistema, o (b) incorporar agitaci\'on mec\'anica dentro del tanque, lo que transformar\'ia el mecanismo de transferencia de convecci\'on natural a convecci\'on forzada, reduciendo la resistencia t\'ermica dominante en uno o dos \'ordenes de magnitud.
+Este resultado implica que cualquier modificaci\'on en el lado del agua caliente, como incrementar el caudal o cambiar la geometr\'ia del canal, aportar\'a mejoras marginales inferiores al 2~\%, dado que la resistencia del agua representa apenas el 0,3~\% del total. En consecuencia, la \'unica v\'ia efectiva de optimizaci\'on dentro del sistema de calentamiento reside en incrementar la temperatura de suministro del agua $T_{w,in}$, lo que aumenta directamente la fuerza motriz $\Delta T$, o en incorporar agitaci\'on mec\'anica dentro del tanque, lo que transformar\'ia el mecanismo de transferencia de convecci\'on natural a convecci\'on forzada, reduciendo la resistencia t\'ermica dominante en uno o dos \'ordenes de magnitud.
 
 \subsubsection{S\'intesis Anal\'itica Multi-Escenario}
 
 Las simulaciones transitorias y c\'iclicas revelaron un comportamiento t\'ermico gobernado principalmente por la masa del producto y el gradiente de temperatura disponible. La Tabla~\ref{tab:sintesis_termica} resume la interpretaci\'on de los resultados obtenidos para cada escenario de operaci\'on.
 
 \begin{table}[H]
-	\centering
-	\caption{S\'intesis del comportamiento t\'ermico por escenario de operaci\'on.}
-	\label{tab:sintesis_termica}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}lX@{}}
-		\toprule
-		\textbf{Factor Operativo} & \textbf{An\'alisis y Comportamiento del Sistema} \\
-		\midrule
-		\textbf{Fuerza Motriz ($\Delta T$)} &
-		Comprobada como la palanca cr\'itica del modelo. Subir el umbral del agua $65 \rightarrow 75$°C otorga un 15\% de margen delta inicial, pero contrae los tiempos de calentamiento total en un 46\% (de 32.2 a 17.3~d\'ias para los 57°C operativos). \\
-		\midrule
-		\textbf{Inercia por Descarga (Esc. 1)} &
-		La purga de volumen act\'ua positivamente: El desalojo r\'apido (1.5h) eleva la ratio $A/m_g$. Aunque extrayendo toneladas energizadas, la disminuci\'on geom\'etrica masiva favorece un calentamiento excedente final (+0.2°C detectados en descenso). \\
-		\midrule
-		\textbf{Retroalimentaci\'on Constante (Esc. 2-3)} &
-		Sistemas a $80\%$ de carga inicial estabilizan temperaturas y las elevan progresivamente ante descargas. Con agua a $75$°C, la T de la glucosa permanece entre 57.0 y 59.3°C durante el ciclo de 8 descargas, no alcanzando el l\'imite recomendado de 60°C gracias a la elevada resistencia t\'ermica de la viscosidad. Se recomienda instrumentar un lazo de control a 60°C como medida preventiva. \\
-		\midrule
-		\textbf{Viabilidad C\'iclica (Esc. 4)} &
-		Para ciclos completos de despacho continuo ($192$ ton), la preparaci\'on \textbf{inicial} (25.5h) demanda log\'istica stand-by prolongada, causada por la viscosidad de $\sim$4\,870~cP a 55°C. Los siguientes 7 baches ocurren consecutivamente; la disminuci\'on geom\'etrica contrarresta y la T asciende hasta 60.0°C s\'olo en la \'ultima descarga. \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{S\'intesis del comportamiento t\'ermico por escenario de operaci\'on.}
+\label{tab:sintesis_termica}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Factor Operativo} & \textbf{An\'alisis y Comportamiento del Sistema} \\
+\midrule
+\textbf{Fuerza Motriz ($\Delta T$)} & Comprobada como la palanca cr\'itica del modelo. Subir la temperatura del agua de 65~\textdegree C a 75~\textdegree C reduce el tiempo de calentamiento desde 25~\textdegree C hasta 57~\textdegree C de 772,8~h a 415,2~h, una reducci\'on del 46~\%. \\
+\midrule
+\textbf{Inercia por Descarga (Esc.\ 1)} & La descarga r\'apida de 24~ton en 2~h reduce la masa en el tanque y mejora la relaci\'on \'area/masa. Durante la descarga, la temperatura del producto se incrementa ligeramente porque el calor aportado por la chaqueta act\'ua sobre un volumen menor. \\
+\midrule
+\textbf{Calentamiento entre Descargas (Esc.\ 5)} & El intervalo de 2,8~h entre descargas permite compensar las p\'erdidas t\'ermicas y el enfriamiento por mezcla con la glucosa de alimentaci\'on. Con agua a 75~\textdegree C y alimentaci\'on a 55--57~\textdegree C, la temperatura del inventario se mantiene en el rango operativo durante las cinco descargas diarias. \\
+\midrule
+\textbf{Viabilidad C\'iclica (Esc.\ 4)} & El flujo medio requerido de 5,0~ton/h est\'a dentro de la capacidad de mantenimiento del sistema con \'area de 13~m\textsuperscript{2} y agua a 75~\textdegree C. El flujo m\'aximo continuo alcanzable es 5,1~ton/h para entrada a 54~\textdegree C y 7,5~ton/h para entrada a 55~\textdegree C. \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
-\textbf{Limitaciones del modelo num\'erico}: La soluci\'on transitoria mediante Runge-Kutta supone temperatura uniforme en el volumen de glucosa en cada paso de tiempo (modelo de par\'ametros concentrados). Sin embargo, en ausencia de agitaci\'on mec\'anica existir\'a una \textbf{estratificaci\'on t\'ermica vertical} por convecci\'on natural: las capas inferiores, m\'as cercanas al fondo calentado, alcanzar\'an temperaturas mayores que el volumen superior. Esto implica que la glucosa extra\'ida por la boquilla de fondo se encontrar\'a a una temperatura ligeramente superior a la predicha por el modelo homog\'eneo, resultando en m\'argenes operativos m\'as conservadores. Este fen\'omeno de estratificaci\'on ha sido examinado mediante la simulaci\'on CFD descrita a continuaci\'on.
+Las limitaciones del modelo num\'erico transitorio deben reconocerse. La soluci\'on mediante Runge-Kutta supone temperatura uniforme en el volumen de glucosa en cada paso de tiempo, correspondiente a un modelo de par\'ametros concentrados. Sin embargo, en ausencia de agitaci\'on mec\'anica existe estratificaci\'on t\'ermica vertical por convecci\'on natural: las capas inferiores, m\'as cercanas al fondo calentado, alcanzan temperaturas mayores que el volumen superior. Esto implica que la glucosa extra\'ida por la boquilla de fondo se encontrar\'a a una temperatura ligeramente superior a la predicha por el modelo homog\'eneo, resultando en m\'argenes operativos m\'as conservadores. Este fen\'omeno de estratificaci\'on ha sido examinado mediante la simulaci\'on CFD descrita en la Secci\'on~\ref{sec:resultados_cfd_fea}.
 
 \subsubsection{Interpretaci\'on de la Comparativa de Configuraciones de Chaqueta}
 
-El análisis cuantitativo de las dos configuraciones de chaqueta —dimple actual (28\,m\textsuperscript{2}) y media caña del fondo construido (13\,m\textsuperscript{2})— permite extraer conclusiones de alto valor ingenieril para la toma de decisiones sobre el diseño del sistema de calentamiento del tanque de almacenamiento de glucosa Tag 53A-90A-0056.
+El an\'alisis cuantitativo de las dos configuraciones de chaqueta, dimple actual (28~m\textsuperscript{2}) y media ca\~na del fondo de reemplazo (13~m\textsuperscript{2}), permite extraer conclusiones de alto valor ingenieril para la toma de decisiones sobre el dise\~no del sistema de calentamiento del tanque.
 
-El resultado más significativo del análisis batch es la proporcionalidad exacta entre los tiempos de calentamiento y el inverso del área: el cociente $t_{reemp}/t_{actual} = 2.153 \approx A_{actual}/A_{reemp} = 28/13 = 2.154$ se verifica con una desviación inferior al 0.05\,\% para ambos rangos de temperatura analizados (25–57\,°C y 55–57\,°C). Esta proporcionalidad no es una coincidencia numérica; es una consecuencia directa de la estructura del balance de energía transitorio, donde el tiempo de calentamiento satisface $t \propto m_g\,C_p / (U \cdot A)$. Dado que $U$ es invariante entre configuraciones (la resistencia del lado de la glucosa domina el 98\,\% de $R_{total}$), el tiempo escala exclusivamente con $1/A$. Este resultado confirma con precisión que \textbf{el tipo de chaqueta —dimple o media caña— no introduce ninguna ventaja o desventaja sobre el coeficiente de transferencia de calor}; la única palanca de diseño disponible en el lado de la chaqueta es el área de contacto.
+El resultado m\'as significativo del an\'alisis \textit{batch} es la proporcionalidad exacta entre los tiempos de calentamiento y el inverso del \'area. El cociente $t_{reemp}/t_{actual} = 2,15$ se verifica para ambos rangos de temperatura analizados (25--57~\textdegree C y 55--57~\textdegree C), con una desviaci\'on inferior al 0,1~\% respecto al ratio de \'areas $A_{actual}/A_{reemp} = 28/13 = 2,15$. Esta proporcionalidad no es una coincidencia num\'erica, sino una consecuencia directa de la estructura del balance de energ\'ia transitorio, donde el tiempo de calentamiento satisface $t \propto m_g C_p / (U \cdot A)$. Dado que $U$ es invariante entre configuraciones, el tiempo escala exclusivamente con $1/A$. Este resultado confirma con precisi\'on que el tipo de chaqueta no introduce ninguna ventaja o desventaja sobre el coeficiente de transferencia de calor; la \'unica palanca de dise\~no disponible en el lado de la chaqueta es el \'area de contacto.
 
-Para el modo de calentamiento continuo, la interpretación es igualmente directa. En el calentamiento desde frío (25\,°C), la alta viscosidad de la glucosa —que a 25\,°C supera los 95\,000\,cP— impone una resistencia convectiva tan severa que ni siquiera la chaqueta actual (28\,m\textsuperscript{2}) permite alcanzar los 57\,°C de salida a flujos superiores a 1.47~ton/h. Para la operación de mantenimiento (55\,°C), la situación se invierte favorablemente: la viscosidad se reduce a aproximadamente 2\,600\,cP y la chaqueta actual satisface la especificación en todo el rango de flujos industriales (hasta más de 16\,ton/h), mientras que la del fondo de reemplazo cubre solo hasta 7.54\,ton/h. Esta diferencia de capacidad operativa —un factor 2.15× en flujo continuo desde 55\,°C— es consecuencia directa del ratio de áreas disponibles.
+Para el modo de calentamiento continuo, la interpretaci\'on es igualmente directa. En el calentamiento desde fr\'io (25~\textdegree C), la alta viscosidad de la glucosa impone una resistencia convectiva tan severa que ni siquiera la chaqueta actual (28~m\textsuperscript{2}) permite alcanzar los 57~\textdegree C de salida a flujos superiores a 1,47~ton/h. Para la operaci\'on de mantenimiento (55~\textdegree C), la situaci\'on se invierte favorablemente: la viscosidad se reduce a aproximadamente 2{.}600~cP y la chaqueta actual satisface la especificaci\'on en todo el rango de flujos industriales, mientras que la del fondo de reemplazo cubre solo hasta 7,54~ton/h. Esta diferencia de capacidad operativa, un factor 2,15 en flujo continuo desde 55~\textdegree C, es consecuencia directa del ratio de \'areas disponibles.
 
-Una implicación práctica relevante es que si el diseño de la nueva instalación requiere capacidad de calentamiento continuo desde frío a flujos superiores a 1.5\,ton/h, ninguna de las dos configuraciones de chaqueta analizadas resulta suficiente por sí sola. En ese escenario, la vía de optimización pasa exclusivamente por la incorporación de agitación mecánica, que elevaría $h_o$ varios órdenes de magnitud y rompería la dominancia absoluta de la resistencia de la glucosa. La selección de la configuración de chaqueta (dimple vs.\ media caña) es secundaria frente a esta decisión de proceso.
+Una implicaci\'on pr\'actica relevante es que si el dise\~no requiriese capacidad de calentamiento continuo desde fr\'io a flujos superiores a 1,5~ton/h, ninguna de las dos configuraciones de chaqueta analizadas resultar\'ia suficiente por s\'i sola. En ese escenario, la v\'ia de optimizaci\'on pasa exclusivamente por la incorporaci\'on de agitaci\'on mec\'anica, que elevar\'ia $h_o$ varios \'ordenes de magnitud y romper\'ia la dominancia absoluta de la resistencia de la glucosa. La selecci\'on de la configuraci\'on de chaqueta es secundaria frente a esta decisi\'on de proceso.
 
 \subsubsection{Validaci\'on CFD del Coeficiente Global de Transferencia de Calor}
 
-La simulaci\'on en COMSOL Multiphysics~6.4 del Escenario~3 permiti\'o evaluar cuantitativamente la fiabilidad del modelo anal\'itico basado en las correlaciones de Churchill~\& Chu~(1975) para convecci\'on natural en la glucosa y Sieder-Tate para flujo turbulento del agua en la media ca\~na. El coeficiente global promedio obtenido por la simulaci\'on CFD en estado estable fue $U_{\text{CFD}} = 38$\,W/m\textsuperscript{2}$\cdot$°C, lo que representa una desviaci\'on del 5\,\% respecto al valor anal\'itico de 36.2\,W/m\textsuperscript{2}$\cdot$°C ($T_g = 60$\,°C). Esta concordancia del 95\,\% constituye una validaci\'on robusta del modelo para ingenier\'ia de proceso sin agitaci\'on mec\'anica en fluidos de alta viscosidad. La diferencia es atribuible a que el modelo anal\'itico emplea correlaciones desarrolladas para geometr\'ias ideales planas, mientras que la simulaci\'on CFD captura la geometr\'ia tridimensional real del fondo toriesf\'erico, la naturaleza espiral de la chaqueta y la estratificaci\'on local de temperatura.
+La simulaci\'on en COMSOL Multiphysics~6.4 del Escenario~3 permiti\'o evaluar cuantitativamente la fiabilidad del modelo anal\'itico basado en las correlaciones de Churchill-Chu para convecci\'on natural en la glucosa y Sieder-Tate para flujo turbulento del agua en la media ca\~na. El coeficiente global promedio obtenido por la simulaci\'on CFD en estado estable fue $U_{\text{CFD}} = 38$~W/m\textsuperscript{2}$\cdot$\textdegree C, lo que representa una desviaci\'on del 5~\% respecto al valor anal\'itico de 36,2~W/m\textsuperscript{2}$\cdot$\textdegree C ($T_g = 60$~\textdegree C). Esta concordancia del 95~\% constituye una validaci\'on robusta del modelo para ingenier\'ia de proceso sin agitaci\'on mec\'anica en fluidos de alta viscosidad. La diferencia es atribuible a que el modelo anal\'itico emplea correlaciones desarrolladas para geometr\'ias ideales planas, mientras que la simulaci\'on CFD captura la geometr\'ia tridimensional real del fondo toriesf\'erico, la naturaleza espiral de la chaqueta y la estratificaci\'on local de temperatura.
 
-M\'as all\'a de la concordancia num\'erica, la simulaci\'on aporta informaci\'on espacial que el modelo de par\'ametros concentrados no puede proporcionar. El campo de temperaturas tridimensional (Figura~\ref{fig:cfd1}) confirma visualmente la dominancia de la resistencia t\'ermica de la glucosa: el volumen del jarabe permanece pr\'oximo a la temperatura inicial durante las primeras horas del calentamiento, mientras que el agua en la chaqueta exhibe gradientes pronunciados ya desde la primera espira. Este comportamiento es plenamente consistente con la distribuci\'on de resistencias calculada anal\'iticamente, donde la glucosa concentra el 98\,\% de la resistencia total. La simulaci\'on valida adem\'as que el mecanismo de convecci\'on natural es efectivamente el proceso limitante, y no la conductividad de la pared de SS316L ni el coeficiente convectivo del agua, tal como concluye el modelo anal\'itico.
+M\'as all\'a de la concordancia num\'erica, la simulaci\'on aporta informaci\'on espacial que el modelo de par\'ametros concentrados no puede proporcionar. El campo de temperaturas tridimensional (Figura~\ref{fig:cfd1}) confirma visualmente la dominancia de la resistencia t\'ermica de la glucosa: el volumen del jarabe permanece pr\'oximo a la temperatura inicial durante las primeras horas del calentamiento, mientras que el agua en la chaqueta exhibe gradientes pronunciados ya desde la primera espira. Este comportamiento es consistente con la distribuci\'on de resistencias calculada anal\'iticamente, donde la glucosa concentra el 98~\% de la resistencia total.
 
-El fen\'omeno de enfriamiento concentrado del agua en las primeras espiras interiores de la chaqueta, identificado en el campo de temperaturas de la Figura~\ref{fig:cfd1}, no altera de forma significativa los tiempos de calentamiento globales, pero s\'i revela una ineficiencia en la distribuci\'on del intercambio de calor a lo largo de la superficie disponible. Las espiras exteriores operan con un $\Delta T$ reducido y, por tanto, con una tasa de transferencia de calor local sensiblemente inferior a la de las espiras centrales. Esta observaci\'on sustenta la recomendaci\'on de dise\~no de incorporar m\'ultiples puntos de alimentaci\'on de agua caliente a la chaqueta en futuras instalaciones, con el fin de homogeneizar la tasa local de transferencia de calor sobre el \'area de contacto de 13\,m\textsuperscript{2} y maximizar la eficiencia global del sistema de calentamiento.
-
-\subsection{Parte II: Interpretaci\'on del An\'alisis Estructural}
-
-El an\'alisis estructural del tanque de almacenamiento, basado en los criterios de API~650 para el cuerpo cil\'indrico y ASME~VIII Div.~1~UG-32(e) para el fondo toriesf\'erico, revela m\'argenes de seguridad heterog\'eneos que dependen de la zona geom\'etrica y del nivel de llenado. La Tabla~\ref{tab:sintesis_estructural} consolida los resultados por componente.
-
-\begin{table}[H]
-	\centering
-	\small
-	\caption{Estado estructural consolidado de los componentes del tanque de almacenamiento de glucosa Tag 53A-90A-0056.}
-	\label{tab:sintesis_estructural}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}p{3.0cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{2.6cm}>{\centering\arraybackslash}p{2.2cm}X@{}}
-		\toprule
-		\textbf{Componente} & \textbf{Normativa} & \textbf{Espesor Nominal} & \textbf{L\'imite M\'in.} & \textbf{Vida Util Remanente} & \textbf{Interpretaci\'on Cr\'itica} \\
-		\midrule
-		\textbf{Cilindro (Virola 1)} & API 650 & 6.0 mm & 5.01 mm & $\sim$15.8 a\~nos &
-		Dise\~no conservador. Considerando sus 20 a\~nos operativos, el margen residual (0.99~mm) avala la operaci\'on ininterrumpida a mediano plazo frente a picos hidrost\'aticos. \\
-		\midrule
-		\textbf{Fondo Toriesf\'erico} & ASME VIII & 9.0 mm & 6.64 mm (90\%) & $\sim$37.8 a\~nos &
-		Componente cr\'itico restrictivo. El an\'alisis FEA establece que el l\'imite operativo seguro es el 80\% de llenado ($FS \geq 1.3$), mientras que al 100\% el factor de seguridad cae a 0.71 (sobreesfuerzo local en el nudillo). \\
-		\midrule
-		\textbf{Anclajes / Base} & NSR-10 & -- & -- & -- &
-		Dominancia del vector s\'ismico: la fuerza s\'ismica (993.5~kN) supera en 49 veces la carga de viento (20.3~kN), exigiendo atenci\'on prioritaria al momento volcante en la cimentaci\'on. \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
-
-Los resultados consolidados demuestran que el tanque conserva factores de seguridad adecuados para la operaci\'on continua siempre y cuando se establezca un \textbf{l\'imite operativo m\'aximo de llenado del 90\,\%} del volumen neto.
-
-\subsubsection{Validaci\'on FEA del An\'alisis Estructural}
-
-La simulaci\'on FEA en ANSYS Mechanical refuerza y extiende las conclusiones del an\'alisis anal\'itico de espesores con una perspectiva tridimensional que el m\'etodo One-Foot de API~650 y la f\'ormula UG-32(e) de ASME~VIII no pueden proporcionar. Mientras que los c\'alculos anal\'iticos establecen si el espesor nominal es globalmente suficiente para una presi\'on de dise\~no uniforme, la simulaci\'on FEA identifica la distribuci\'on espacial real de esfuerzos y revela cu\'ales zonas geom\'etricas espec\'ificas concentran la demanda estructural bajo la carga combinada (hidrost\'atica m\'as t\'ermica a 75\,°C).
-
-El hallazgo central de la simulaci\'on, el factor de seguridad m\'inimo de aproximadamente 0.71 en el nudillo fondo-cil\'indro (Figura~\ref{fig:fea3}), es plenamente coherente con el resultado anal\'itico: el fondo toriesf\'erico de 9.0~mm no cumple el requisito de espesor de ASME~VIII al 100\% de llenado ($t_{req} = 9.16$~mm). El FEA va un paso m\'as all\'a al localizar geogr\'aficamente el sobreesfuerzo en la zona de cambio de curvatura entre el fondo y el cilindro, que es donde la teor\'ia de caparazones delgados predice el m\'aximo de esfuerzo de flexi\'on asociado a la discontinuidad geom\'etrica. Esta zona, conocida como nudillo o knuckle, es un concentrador estructural intr\'inseco de los fondos toriesf\'ericos y su criticidad se acent\'ua cuando la carga hidrost\'atica se combina con el gradiente t\'ermico diferencial generado por el calentamiento localizado del fondo frente a un cuerpo cil\'indrico a temperatura ambiente.
-
-Los puntos de anclaje de la chaqueta de media ca\~na al fondo (Figura~\ref{fig:fea2}) representan un segundo foco de esfuerzos elevados, atribuible a las discontinuidades geom\'etricas propias de las soldaduras de filete que unen el perfil rectangular de la chaqueta a la lámina del fondo. Aunque este fen\'omeno es esperado en dise\~nos de chaquetas soldadas, confirma la importancia de garantizar la calidad de las soldaduras en esos puntos y de incluirlos expl\'icitamente en los programas de inspecci\'on por Ensayos No Destructivos (END).
-
-La deformaci\'on m\'axima de aproximadamente 4.1~mm en el centro del fondo (Figura~\ref{fig:fea4}) es el resultado de la superposici\'on de dos efectos: la flexi\'on mec\'anica del cabezal bajo la presi\'on hidrost\'atica y la expansi\'on t\'ermica diferencial entre el fondo calentado a 75\,°C y el cuerpo cil\'indrico a temperatura ambiente. Este nivel de deformaci\'on es aceptable en t\'erminos de integridad global del tanque, pero debe tenerse en cuenta en el dise\~no de las conexiones de tuber\'ia al fondo, en particular la boquilla de salida de glucosa de 8'', para garantizar que los sistemas de tuber\'ia admitan esta deformaci\'on diferencial sin generar cargas excesivas sobre la boquilla.
-
-En s\'intesis, la simulaci\'on FEA valida los m\'etodos anal\'iticos empleados, establece el l\'imite operativo seguro al 80\% de llenado ($FS \geq 1.3$) y a\~nade el mapa de esfuerzos tridimensional necesario para orientar futuras acciones de refuerzo estructural en la zona del nudillo, tal como se detalla en las recomendaciones del presente informe.
-
-\newpage
-
-
-
-
+El fen\'omeno de enfriamiento concentrado del agua en las primeras espiras interiores de la chaqueta, identificado en el campo de temperaturas, no altera de forma significativa los tiempos de calentamiento globales, pero s\'i revela una ineficiencia en la distribuci\'on del intercambio de calor a lo largo de la superficie disponible. Las espiras exteriores operan con un $\Delta T$ reducido y, por tanto, con una tasa de transferencia de calor local sensiblemente inferior a la de las espiras centrales. Esta observaci\'on sustenta la recomendaci\'on de dise\~no de incorporar m\'ultiples puntos de alimentaci\'on de agua caliente a la chaqueta en futuras instalaciones, con el fin de homogeneizar la tasa local de transferencia de calor sobre el \'area de contacto de 13~m\textsuperscript{2} y maximizar la eficiencia global del sistema.

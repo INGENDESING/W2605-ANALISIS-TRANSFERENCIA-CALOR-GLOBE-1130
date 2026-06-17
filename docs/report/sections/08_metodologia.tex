@@ -1,269 +1,150 @@
-\section{Metodología}
+\section{Metodolog\'ia}
 
-El presente estudio emplea una metodología de cálculo analítico complementada con simulación numérica. Los cálculos se desarrollan en el lenguaje de programación Python utilizando las bibliotecas científicas NumPy y SciPy, y se presentan en este informe con el procedimiento paso a paso para que el lector pueda verificar cada resultado de forma independiente. A continuación se describe la metodología para cada componente del estudio.
+El presente estudio emplea una metodolog\'ia de c\'alculo anal\'itico complementada con simulaci\'on num\'erica. Los c\'alculos se desarrollan en el lenguaje de programaci\'on Python utilizando las bibliotecas cient\'ificas NumPy y SciPy, y se presentan en este informe con el procedimiento paso a paso para que el lector pueda verificar cada resultado de forma independiente. A continuaci\'on se describe la metodolog\'ia para el an\'alisis de transferencia de calor del sistema de media ca\~na.
 
-\subsection{Parte I: Análisis de Transferencia de Calor}
+\subsection{Determinaci\'on del Coeficiente Global de Transferencia de Calor}
+\label{sec:metodologia_U}
 
-\subsubsection{Determinación del Coeficiente Global de Transferencia de Calor}
-
-El coeficiente global de transferencia de calor $U$ del sistema de media caña se determina mediante el modelo de resistencias térmicas en serie. Para una pared cilíndrica plana (aproximación válida dado que el espesor de la lámina del tanque es pequeño comparado con su diámetro), la expresión general es:
-
-\begin{equation}
-	\frac{1}{U} = \frac{1}{h_i} + \frac{e_{w}}{k_{w}} + \frac{1}{h_o}
-	\label{eq:U_global}
-\end{equation}
-
-donde $h_i$ es el coeficiente de convección del lado del agua caliente (interior de la media caña), $e_{w}$ es el espesor de la pared del tanque, $k_{w}$ es la conductividad térmica del acero inoxidable SS316L, y $h_o$ es el coeficiente de convección del lado de la glucosa (exterior del tanque, convección natural).
-
-\textbf{Coeficiente del lado del agua ($h_i$).} El agua caliente circula por un canal de sección rectangular (141~mm $\times$ 45.5~mm) en configuración espiral. El coeficiente convectivo se calcula mediante la correlación de Sieder-Tate para flujo turbulento en conductos no circulares, empleando el diámetro hidráulico del canal rectangular:
+El coeficiente global de transferencia de calor $U$ del sistema de media ca\~na se determina mediante el modelo de resistencias t\'ermicas en serie. Para una pared cil\'indrica plana, aproximaci\'on v\'alida dado que el espesor de l\'amina del tanque es peque\~no comparado con su di\'ametro, la expresi\'on general es:
 
 \begin{equation}
-	D_h = \frac{4 \cdot A_c}{P_m} = \frac{4 \cdot a \cdot b}{2(a+b)}
-	\label{eq:Dh}
+\frac{1}{U} = \frac{1}{h_i} + \frac{e_{w}}{k_{w}} + \frac{1}{h_o}
+\label{eq:U_global}
 \end{equation}
 
-donde $a$ y $b$ son las dimensiones internas del perfil rectangular, $A_c$ es el área de la sección transversal de flujo y $P_m$ es el perímetro mojado. La correlación de Sieder-Tate se expresa como:
+donde $h_i$ es el coeficiente de convecci\'on del lado del agua caliente en el interior de la media ca\~na, $e_{w}$ es el espesor de la pared del tanque, $k_{w}$ es la conductividad t\'ermica del acero inoxidable SS316L, y $h_o$ es el coeficiente de convecci\'on del lado de la glucosa por convecci\'on natural.
+
+El coeficiente del lado del agua se calcula mediante la correlaci\'on de Sieder-Tate para flujo turbulento en conductos no circulares, empleando el di\'ametro hidr\'aulico del canal rectangular:
 
 \begin{equation}
-	\text{Nu} = 0.027 \cdot \text{Re}^{0.8} \cdot \text{Pr}^{1/3} \cdot \left(\frac{\mu}{\mu_w}\right)^{0.14}
-	\label{eq:sieder_tate}
+D_h = \frac{4 \cdot A_c}{P_m} = \frac{4 \cdot a \cdot b}{2(a+b)}
+\label{eq:Dh}
 \end{equation}
 
-válida para $\text{Re} > 10\,000$, $0.7 < \text{Pr} < 16\,700$ y $L/D_h > 10$. El número de Reynolds se evalúa con las propiedades del agua a la temperatura media del fluido y el diámetro hidráulico del canal. La correlaci\'on de Sieder-Tate corresponde a la Ec.~8.62 de \citet{Incropera2011}.
-
-\textbf{Coeficiente del lado de la glucosa ($h_o$).} La glucosa se encuentra en reposo dentro del tanque (sin agitación mecánica), por lo que el mecanismo de transferencia de calor dominante es la convección natural. Para una superficie plana caliente orientada hacia arriba en contacto con un fluido viscoso, se emplea la correlación de Churchill y Chu~\citep{churchill1975} para convección natural:
+donde $a$ y $b$ son las dimensiones internas del perfil rectangular, $A_c$ es el \'area de la secci\'on transversal de flujo y $P_m$ es el per\'imetro mojado. La correlaci\'on de Sieder-Tate se expresa como:
 
 \begin{equation}
-	\text{Nu}_L = \left[0.825 + \frac{0.387 \cdot \text{Ra}_L^{1/6}}{\left(1 + (0.492/\text{Pr})^{9/16}\right)^{8/27}}\right]^2
-	\label{eq:churchill_chu}
+\text{Nu} = 0,027 \cdot \text{Re}^{0,8} \cdot \text{Pr}^{1/3} \cdot \left(\frac{\mu}{\mu_w}\right)^{0,14}
+\label{eq:sieder_tate}
 \end{equation}
 
-donde $\text{Ra}_L = \text{Gr}_L \cdot \text{Pr}$ es el número de Rayleigh, evaluado con la longitud característica de la superficie de contacto y las propiedades de la glucosa a la temperatura de película $T_f = (T_s + T_\infty)/2$. Las propiedades de la glucosa Globe~1130, particularmente la viscosidad (que es fuertemente dependiente de la temperatura), se evalúan según los datos del fabricante y la literatura técnica especializada.
+v\'alida para $\text{Re} > 10{.}000$, $0,7 < \text{Pr} < 16{.}700$ y $L/D_h > 10$.
 
-Es pertinente se\~nalar que la correlaci\'on de Churchill~\& Chu~(1975) fue desarrollada originalmente para \textbf{placas verticales isotermas}. Su aplicaci\'on al fondo toriesf\'erico del tanque representa una aproximaci\'on conservadora, dado que la geometr\'ia curva calentada desde abajo favorece la convecci\'on natural respecto a una placa plana vertical. La longitud caracter\'istica se toma como $L = 1.0$~m, valor representativo de la escala vertical del fondo. Esta elecci\'on metodol\'ogica es coherente con la pr\'actica de ingenier\'ia para fondos toriesf\'ericos de grandes di\'ametros y fue validada mediante la simulaci\'on CFD, la cual arroj\'o una desviaci\'on del 5\,\% respecto al modelo anal\'itico.
-
-\subsubsection{Modelo de Calentamiento Transitorio}
-
-El calentamiento de la glucosa en el tanque se modela mediante un balance de energía transitorio. Para el caso de glucosa en reposo (sin descarga), la ecuación diferencial gobernante es:
+El coeficiente del lado de la glucosa se obtiene mediante la correlaci\'on de Churchill y Chu para convecci\'on natural sobre una superficie plana:
 
 \begin{equation}
-	m_{g} \cdot C_{p,g} \cdot \frac{dT_g}{dt} = U \cdot A \cdot \Delta T_{lm}
-	\label{eq:balance_transitorio}
+\text{Nu}_L = \left[0,825 + \frac{0,387 \cdot \text{Ra}_L^{1/6}}{\left(1 + (0,492/\text{Pr})^{9/16}\right)^{8/27}}\right]^2
+\label{eq:churchill_chu}
 \end{equation}
 
-donde $m_g$ es la masa de glucosa en el tanque, $C_{p,g}$ es el calor específico de la glucosa, $T_g$ es la temperatura media de la glucosa, $A$ es el área de contacto de la media caña (13~m\textsuperscript{2}) y $\Delta T_{lm}$ es la diferencia de temperatura media logarítmica entre el agua de calentamiento y la glucosa:
+donde $\text{Ra}_L = \text{Gr}_L \cdot \text{Pr}$ es el n\'umero de Rayleigh, evaluado con la longitud caracter\'istica de la superficie de contacto y las propiedades de la glucosa a la temperatura de pel\'icula. La correlaci\'on fue desarrollada originalmente para placas verticales isotermas; su aplicaci\'on al fondo toriesf\'erico representa una aproximaci\'on conservadora, dado que la geometr\'ia curva calentada desde abajo favorece la convecci\'on natural respecto a una placa plana vertical.
+
+\subsection{Modelo de Calentamiento Transitorio}
+
+El calentamiento de la glucosa en el tanque se modela mediante un balance de energ\'ia transitorio. Para el caso de glucosa en reposo, sin descarga, la ecuaci\'on diferencial gobernante es:
 
 \begin{equation}
-	\Delta T_{lm} = \frac{(T_{w,in} - T_g) - (T_{w,out} - T_g)}{\ln\left(\frac{T_{w,in} - T_g}{T_{w,out} - T_g}\right)}
-	\label{eq:LMTD}
+m_{g} \cdot C_{p,g} \cdot \frac{dT_g}{dt} = U \cdot A \cdot \Delta T_{lm}
+\label{eq:balance_transitorio}
 \end{equation}
 
-La ecuación~\ref{eq:balance_transitorio} se integra numéricamente mediante el método de Runge-Kutta de cuarto orden (implementado en \texttt{scipy.integrate.solve\_ivp}) con paso de tiempo adaptativo, actualizando las propiedades dependientes de la temperatura en cada paso.
+donde $m_g$ es la masa de glucosa en el tanque, $C_{p,g}$ es el calor espec\'ifico de la glucosa, $T_g$ es la temperatura media de la glucosa, $A$ es el \'area de contacto de la media ca\~na (13~m\textsuperscript{2}) y $\Delta T_{lm}$ es la diferencia de temperatura media logar\'itmica entre el agua de calentamiento y la glucosa:
+
+\begin{equation}
+\Delta T_{lm} = \frac{(T_{w,in} - T_g) - (T_{w,out} - T_g)}{\ln\left(\frac{T_{w,in} - T_g}{T_{w,out} - T_g}\right)}
+\label{eq:LMTD}
+\end{equation}
+
+La ecuaci\'on se integra num\'ericamente mediante el m\'etodo de Runge-Kutta de cuarto orden con paso de tiempo adaptativo, actualizando las propiedades dependientes de la temperatura en cada paso.
 
 Para los escenarios con descarga simult\'anea a carrotanque, el balance de energ\'ia se modifica para incluir el t\'ermino de salida de masa:
 
 \begin{equation}
-	m_g \cdot C_{p,g} \cdot \frac{dT_g}{dt} = U \cdot A \cdot \Delta T_{lm} - \dot{m}_{out} \cdot C_{p,g} \cdot (T_g - T_{ref})
-	\label{eq:balance_descarga}
+m_g \cdot C_{p,g} \cdot \frac{dT_g}{dt} = U \cdot A \cdot \Delta T_{lm} - \dot{m}_{out} \cdot C_{p,g} \cdot (T_g - T_{ref})
+\label{eq:balance_descarga}
 \end{equation}
 
 donde $\dot{m}_{out}$ es el flujo m\'asico de descarga al carrotanque y $T_{ref}$ es la temperatura de referencia. Simult\'aneamente, la masa de glucosa var\'ia seg\'un:
 
 \begin{equation}
-	\frac{dm_g}{dt} = -\dot{m}_{out}
-	\label{eq:balance_masa}
+\frac{dm_g}{dt} = -\dot{m}_{out}
+\label{eq:balance_masa}
 \end{equation}
 
-El sistema de Ecs.~\ref{eq:balance_descarga} y \ref{eq:balance_masa} constituye un sistema de ecuaciones diferenciales ordinarias acopladas que se resuelve con el m\'etodo RK45 adaptativo.
+El sistema de ecuaciones diferenciales ordinarias acopladas se resuelve con el m\'etodo RK45 adaptativo.
 
-\subsubsection{Determinaci\'on del \'Area de Transferencia Requerida}
+\subsection{Determinaci\'on del \'Area de Transferencia Requerida}
 \label{sec:area_continuo}
 
-Para evaluar la capacidad del sistema de chaqueta en modo de calentamiento continuo, se desarrolló un modelo de dimensionamiento basado en el método de la Diferencia de Temperatura Media Logarítmica (LMTD) con integración numérica del coeficiente global variable. El calor requerido por unidad de tiempo para calentar un flujo másico de glucosa $\dot{m}$ desde una temperatura de entrada $T_{g,in}$ hasta una temperatura de salida $T_{g,out}$ se expresa como:
+Para evaluar la capacidad del sistema de chaqueta en modo de calentamiento continuo, se desarroll\'o un modelo de dimensionamiento basado en el m\'etodo de la diferencia de temperatura media logar\'itmica con integraci\'on num\'erica del coeficiente global variable. El calor requerido por unidad de tiempo para calentar un flujo m\'asico de glucosa $\dot{m}$ desde una temperatura de entrada $T_{g,in}$ hasta una temperatura de salida $T_{g,out}$ se expresa como:
 
 \begin{equation}
-    \dot{Q} = \dot{m} \cdot C_{p,prom} \cdot (T_{g,out} - T_{g,in})
-    \label{eq:calor_continuo}
+\dot{Q} = \dot{m} \cdot C_{p,prom} \cdot (T_{g,out} - T_{g,in})
+\label{eq:calor_continuo}
 \end{equation}
 
-donde $C_{p,prom}$ se evalúa a la temperatura media del rango de calentamiento. La diferencia de temperatura media logarítmica, considerando el agua a temperatura prácticamente constante $T_w$ a lo largo de la chaqueta, se determina mediante:
+donde $C_{p,prom}$ se eval\'ua a la temperatura media del rango de calentamiento. La diferencia de temperatura media logar\'itmica, considerando el agua a temperatura pr\'acticamente constante $T_w$ a lo largo de la chaqueta, se determina mediante:
 
 \begin{equation}
-    \Delta T_{lm} = \frac{(T_w - T_{g,in}) - (T_w - T_{g,out})}{\ln\!\left(\dfrac{T_w - T_{g,in}}{T_w - T_{g,out}}\right)}
-    \label{eq:LMTD_continuo}
+\Delta T_{lm} = \frac{(T_w - T_{g,in}) - (T_w - T_{g,out})}{\ln\!\left(\dfrac{T_w - T_{g,in}}{T_w - T_{g,out}}\right)}
+\label{eq:LMTD_continuo}
 \end{equation}
 
-Dado que $U$ varía de manera significativa con la temperatura de la glucosa —de 23.7 a 36.2~W/m\textsuperscript{2}$\cdot$°C en el rango de operación de 25 a 57\,°C—, el coeficiente global efectivo se obtiene mediante integración trapezoidal de la resistencia específica sobre el rango de temperatura~\citep{Incropera2011}:
+Dado que $U$ var\'ia de manera significativa con la temperatura de la glucosa, el coeficiente global efectivo se obtiene mediante integraci\'on trapezoidal de la resistencia espec\'ifica sobre el rango de temperatura:
 
 \begin{equation}
-    \frac{1}{U_{ef}} = \frac{1}{\Delta T_{g}} \int_{T_{g,in}}^{T_{g,out}} \frac{1}{U(T)} \, dT
-    \label{eq:U_efectivo}
+\frac{1}{U_{ef}} = \frac{1}{\Delta T_{g}} \int_{T_{g,in}}^{T_{g,out}} \frac{1}{U(T)} \, dT
+\label{eq:U_efectivo}
 \end{equation}
 
-Este enfoque, conforme a la Sección~11.4 de Incropera et al.~\citep{Incropera2011}, es termodinámicamente riguroso cuando $U$ varía con la temperatura del fluido frío, y es considerablemente más preciso que el simple promedio aritmético de $U$, especialmente para fluidos de alta viscosidad donde la variación de $U$ con la temperatura supera el 50\,\%. El área de transferencia requerida para alcanzar la temperatura de salida especificada resulta entonces:
+El \'area de transferencia requerida para alcanzar la temperatura de salida especificada resulta entonces:
 
 \begin{equation}
-    A_{req} = \frac{\dot{Q}}{U_{ef} \cdot \Delta T_{lm}}
-    \label{eq:area_requerida}
+A_{req} = \frac{\dot{Q}}{U_{ef} \cdot \Delta T_{lm}}
+\label{eq:area_requerida}
 \end{equation}
 
-Se analizan dos rangos de temperatura de la glucosa: calentamiento completo desde 25\,°C hasta 57\,°C ($\Delta T_g = 32$\,°C) y calentamiento de mantenimiento desde 55\,°C hasta 57\,°C ($\Delta T_g = 2$\,°C). Para el segundo rango, la variación relativa de $U$ es de apenas 0.6\,\%, inferior al criterio del 10\,\% establecido por~\citet{Incropera2011}, por lo que el uso de un $U$ constante evaluado a la temperatura media del rango es plenamente justificado.
+Se analizan dos rangos de temperatura de la glucosa: calentamiento completo desde 25~\textdegree C hasta 57~\textdegree C y calentamiento de mantenimiento desde 54~\textdegree C hasta 57~\textdegree C o desde 55~\textdegree C hasta 57~\textdegree C.
 
-\subsubsection{Ciclo de Descargas a Carrotanque}
+\subsection{Ciclo de Descargas a Carrotanque}
 
-Para los Escenarios~2 y 3, el ciclo de descargas se simula con un per\'iodo de 3~horas (1.5~h de descarga + 1.5~h de calentamiento) durante 24~horas. Para el Escenario~4 (ciclo industrial a 57~°C), se implementa un esquema adaptativo: la glucosa se calienta hasta alcanzar la temperatura de descarga (57~°C) y se descarga inmediatamente. El flujo m\'asico de descarga a carrotanque es $\dot{m}_{out} = 24\,000 / (1.5 \times 3\,600) = 4.444$~kg/s, correspondiente a la descarga de 24~toneladas en 1.5~horas por boquilla de 8''.
+El ciclo operativo oficial consiste en cinco descargas diarias de 24~toneladas cada una. Cada descarga tiene una duraci\'on de 2~horas, lo que implica un flujo de descarga de 12~ton/h. El intervalo entre inicios de descarga es de 4,8~horas, de modo que el tiempo disponible para calentamiento entre el fin de una descarga y el inicio de la siguiente es de 2,8~horas. Durante las descargas, el calentamiento contin\'ua operando y la glucosa de alimentaci\'on ingresa al tanque a la temperatura de suministro. Entre descargas, no hay flujo de entrada ni salida y el sistema recupera la temperatura del inventario.
 
-\subsubsection{Comparativa de Configuraciones de Chaqueta}
+El flujo medio del ciclo resulta:
+
+\begin{equation}
+\dot{m}_{promedio} = \frac{5 \times 24{.}000~\text{kg}}{24~\text{h}} = 5{.}000~\text{kg/h}
+\end{equation}
+
+El ciclo se simula resolviendo las ecuaciones de balance transitorio con las condiciones de flujo variable: durante la descarga se impone $\dot{m}_{out} = 12{.}000$~kg/h y entre descargas $\dot{m}_{out} = 0$.
+
+\subsection{Comparativa de Configuraciones de Chaqueta}
 \label{sec:comp_chaquetas}
 
-El estudio contempla la comparación cuantitativa entre la configuración de chaqueta actualmente instalada en el fondo toriesférico y la configuración del fondo de reemplazo. La chaqueta actual corresponde a un diseño tipo \textit{dimple} con un área efectiva de transferencia de $A_{actual} = 28$\,m\textsuperscript{2} distribuida en tres circuitos de agua en paralelo (tres entradas y tres salidas), mientras que la chaqueta del fondo de reemplazo es una espiral de media caña rectangular de paso único con $A_{reemp} = 13$\,m\textsuperscript{2}. Ambas operan con las mismas condiciones de servicio: $T_w = 75$\,°C y $v = 2.5$\,m/s.
+El estudio contempla la comparaci\'on cuantitativa entre la configuraci\'on de chaqueta actualmente instalada en el fondo toriesf\'erico y la configuraci\'on del fondo de reemplazo. La chaqueta actual corresponde a un dise\~no tipo \textit{dimple} con un \'area efectiva de transferencia de $A_{actual} = 28$~m\textsuperscript{2} distribuida en tres circuitos de agua en paralelo, mientras que la chaqueta del fondo de reemplazo es una espiral de media ca\~na rectangular de paso \'unico con $A_{reemp} = 13$~m\textsuperscript{2}. Ambas operan con las mismas condiciones de servicio: $T_w = 75$~\textdegree C y $v = 2,5$~m/s.
 
-Una consideración metodológica fundamental es que el coeficiente global de transferencia de calor $U$ es prácticamente invariante entre ambas configuraciones. Esta condición se sustenta en que la resistencia del lado de la glucosa —gobernada por convección natural y controlada por la viscosidad del jarabe— concentra entre el 97.7\,\% y el 98.8\,\% de la resistencia térmica total del sistema, con independencia de la geometría de la chaqueta. Por consiguiente, la única diferencia operacional cuantificable entre las dos configuraciones es el área de contacto $A$.
+El coeficiente global de transferencia de calor $U$ es pr\'acticamente invariante entre ambas configuraciones, porque la resistencia del lado de la glucosa concentra entre el 97,7~\% y el 98,8~\% de la resistencia t\'ermica total del sistema. En consecuencia, la \'unica diferencia operacional cuantificable entre las dos configuraciones es el \'area de contacto $A$.
 
-La comparativa se desarrolla en dos modos de operación. En el \textbf{modo \textit{batch}}, con la glucosa estática en el tanque al 80\,\% de su capacidad, se integra la Ec.~\ref{eq:balance_transitorio} con $A$ como parámetro libre, determinando los tiempos de calentamiento desde 25\,°C y desde 55\,°C hasta 57\,°C para cada configuración. En el \textbf{modo continuo}, para flujos de glucosa de 1 a 16~ton/h, se resuelve la ecuación diferencial espacial:
-
-\begin{equation}
-    \dot{m} \cdot C_{p,g}(T) \cdot \frac{dT}{dA} = U(T) \cdot (T_w - T)
-    \label{eq:ode_espacial}
-\end{equation}
-
-donde la variable independiente es la coordenada de área $A$, integrada desde cero hasta el área disponible de la chaqueta para obtener la temperatura de salida $T_{out}$. El flujo máximo continuo que permite alcanzar $T_{out} = 57$\,°C se determina mediante búsqueda numérica con el método de Brent sobre la ecuación implícita $T_{out}(\dot{m}) = 57$\,°C.
-
-\subsection{Parte II: An\'alisis Estructural del Tanque}
-
-\subsubsection{Espesor del Cuerpo Cilíndrico — Método One-Foot (API 650)}
-
-El espesor requerido para cada virola del cuerpo cilíndrico se calcula mediante el método One-Foot de la norma API~650~\citep{api650_2020}, Sección~5.6.3.2:
+La comparativa se desarrolla en dos modos de operaci\'on. En el modo \textit{batch}, con la glucosa est\'atica en el tanque al 80~\% de su capacidad, se integra la ecuaci\'on de balance transitorio con $A$ como par\'ametro, determinando los tiempos de calentamiento desde 25~\textdegree C y desde 55~\textdegree C hasta 57~\textdegree C para cada configuraci\'on. En el modo continuo, para flujos de glucosa de 1 a 16~ton/h, se resuelve la ecuaci\'on diferencial espacial:
 
 \begin{equation}
-	t_d = \frac{2.6 \cdot D \cdot (H - 1) \cdot G}{S_d} + CA
-	\label{eq:api650_one_foot}
+\dot{m} \cdot C_{p,g}(T) \cdot \frac{dT}{dA} = U(T) \cdot (T_w - T)
+\label{eq:ode_espacial}
 \end{equation}
 
-donde $t_d$ es el espesor de diseño [in], $D$ es el diámetro nominal del tanque [ft], $H$ es la altura del líquido medida desde el fondo de la virola en consideración [ft], $G$ es la gravedad específica de la glucosa ($G \approx 1.41$), $S_d$ es el esfuerzo admisible del material para condiciones de diseño [psi] y $CA$ es el espesor adicional por corrosión (1.875~mm = 0.074~in).
-
-\subsubsection{Espesor del Fondo Toriesférico — ASME Section VIII Div. 1}
-
-El espesor mínimo requerido para el fondo toriesférico se calcula según ASME~VIII~Div.~1~\citep{asme_viii_2021}, UG-32(e), para cabezales toriesféricos sometidos a presión interna:
-
-\begin{equation}
-	t = \frac{0.885 \cdot P \cdot L}{S \cdot E - 0.1 \cdot P} + CA
-	\label{eq:asme_torisferico}
-\end{equation}
-
-donde $P$ es la presión de diseño interna, $L$ es el radio de corona interior, $S$ es el esfuerzo admisible del SS316L a temperatura de diseño (según ASME~Section~II~Part~D), y $E$ es la eficiencia de la junta soldada. Dado que el tanque opera a presión atmosférica, la presión de diseño se toma como la presión hidrostática de la columna de glucosa más un margen de seguridad.
-
-\subsubsection{Cargas Adicionales}
-
-El an\'alisis estructural incluye adicionalmente las siguientes cargas, evaluadas de acuerdo con las normas aplicables:
-
-\begin{table}[H]
-	\centering
-	\caption{Cargas de diseño consideradas en el an\'alisis estructural.}
-	\label{tab:cargas_diseno}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NXcc@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Tipo de Carga} & \textbf{Valor} & \textbf{Norma} \\
-		\midrule
-		& Presión hidrostática (llenado al 80\%, condición operativa segura) & Variable por virola & API 650 §5.6 \\
-		& Peso propio del tanque y contenido & Calculado & API 650 §5.2 \\
-		& Carga de viento (velocidad máxima) & 120 km/h & NSR-10 \\
-		& Carga sísmica (zona intermedia, Cali) & Según coeficientes & NSR-10 / API 650 App. E \\
-		& Temperatura de operación del fondo & 75\,°C & Especificación del proyecto \\
-		& Tasa de corrosi\'on (campo, fondo nuevo) & 0.12~mm/a\~no & An\'alisis de espesores \\
-		& Corrosion allowance (fondo, 7.5~a\~nos) & 0.9~mm & 10\% espesor nominal \\
-		& Corrosion allowance (cuerpo, 30~a\~nos) & 1.875~mm & P2543-PR-INF-002~REV0 \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
+donde la variable independiente es la coordenada de \'area $A$, integrada desde cero hasta el \'area disponible de la chaqueta para obtener la temperatura de salida $T_{out}$. El flujo m\'aximo continuo que permite alcanzar $T_{out} = 57$~\textdegree C se determina mediante b\'usqueda num\'erica sobre la ecuaci\'on impl\'icita $T_{out}(\dot{m}) = 57$~\textdegree C.
 
 \subsection{Espesor de Aislamiento T\'ermico}
 
 El espesor \'optimo de aislamiento de lana mineral se determina mediante un modelo de resistencias t\'ermicas en serie desde el agua caliente en la media ca\~na hasta el aire ambiente. La p\'erdida de calor por unidad de \'area se calcula como:
 
 \begin{equation}
-	q = \frac{T_w - T_{amb}}{R_{conv,i} + R_{perfil} + R_{aisl} + R_{conv,e}}
-	\label{eq:aislamiento}
+q = \frac{T_w - T_{amb}}{R_{conv,i} + R_{perfil} + R_{aisl} + R_{conv,e}}
+\label{eq:aislamiento}
 \end{equation}
 
-donde $R_{conv,i} = 1/h_i$ es la resistencia de convecci\'on interna, $R_{perfil} = t_p/k_{SS}$ es la resistencia de conducci\'on de la l\'amina del perfil, $R_{aisl} = \delta/k_{aisl}$ es la resistencia del aislamiento de lana mineral ($k_{aisl} = 0.040$~W/(m$\cdot$K) a 50\,°C, ASTM~C547) y $R_{conv,e} = 1/h_e$ es la resistencia de convecci\'on natural en el aire exterior ($h_e \approx 8$~W/m\textsuperscript{2}$\cdot$K para superficies al aire libre). Se eval\'ua el espesor m\'inimo requerido para que la temperatura superficial exterior no exceda 60\,°C (criterio de seguridad al contacto) y se comparan las p\'erdidas de calor para espesores comerciales est\'andar.
+donde $R_{conv,i} = 1/h_i$ es la resistencia de convecci\'on interna, $R_{perfil} = t_p/k_{SS}$ es la resistencia de conducci\'on de la l\'amina del perfil, $R_{aisl} = \delta/k_{aisl}$ es la resistencia del aislamiento de lana mineral y $R_{conv,e} = 1/h_e$ es la resistencia de convecci\'on natural en el aire exterior. Se eval\'ua el espesor m\'inimo requerido para que la temperatura superficial exterior no exceda 60~\textdegree C y se comparan las p\'erdidas de calor para espesores comerciales est\'andar.
 
-\subsection{Simulaci\'on Num\'erica}
+\subsection{Validaci\'on Mediante Simulaci\'on CFD}
 
-\subsubsection{CFD --- COMSOL Multiphysics (Parte I)}
-
-La simulaci\'on CFD tiene como objetivo complementar los c\'alculos anal\'iticos con la distribuci\'on espacial de temperaturas y velocidades en el tanque. A continuaci\'on se describe la metodolog\'ia de simulaci\'on paso a paso.
-
-\textbf{Paso 1: Geometr\'ia.} Se construir\'a un modelo 3D del fondo toriesf\'erico con las dimensiones reales ($D_i = 5264$~mm, $t = 9$~mm, $H = 1266$~mm) incluyendo la chaqueta de media ca\~na en espiral (perfil rectangular 141~mm $\times$ 45.5~mm, paso 196~mm). El dominio del fluido comprender\'a tres regiones: (a)~el canal de la media ca\~na (agua), (b)~la pared del tanque (s\'olido SS316L) y (c)~el volumen interior del tanque (glucosa). La geometr\'ia se importar\'a desde un modelo CAD o se construir\'a mediante las herramientas param\'etricas de COMSOL. Si el costo computacional del modelo completo resulta excesivo, se evaluar\'a un modelo 2D axisim\'etrico con la espiral proyectada como anillos conc\'entricos equivalentes.
-
-\textbf{Paso 2: Modelo reol\'ogico de la glucosa.} La viscosidad de la glucosa Globe~1130 se definir\'a como funci\'on de la temperatura mediante el modelo de Arrhenius: $\mu(T) = A \cdot \exp(E_a/RT)$, con $A = 1.5 \times 10^{-16}$~Pa$\cdot$s y $E_a/R = 10\,500$~K. Las dem\'as propiedades (densidad, calor espec\'ifico, conductividad t\'ermica) se definir\'an como funciones polinomiales de $T$ seg\'un las correlaciones del m\'odulo \texttt{propiedades\_glucosa.py}. Se emplear\'a la aproximaci\'on de Boussinesq para el t\'ermino de flotabilidad en las ecuaciones de momento, necesaria para capturar la convecci\'on natural.
-
-\textbf{Paso 3: F\'isica y ecuaciones gobernantes.} Se resolver\'an las ecuaciones de Navier-Stokes para fluido incompresible con la ecuaci\'on de energ\'ia acoplada, en r\'egimen transitorio. Los m\'odulos de COMSOL utilizados ser\'an: \textit{Laminar Flow} o \textit{Turbulent Flow (k-$\epsilon$)} para el dominio del agua en la media ca\~na; \textit{Laminar Flow} con t\'ermino de Boussinesq para la glucosa en el tanque (Re bajo, convecci\'on natural); \textit{Heat Transfer in Solids} para la pared del tanque; \textit{Heat Transfer in Fluids} para los dominios del agua y la glucosa; y \textit{Non-Isothermal Flow} para el acoplamiento bidireccional flujo-temperatura.
-
-\textbf{Paso 4: Condiciones de frontera.} En la entrada de la media ca\~na se impondr\'a velocidad uniforme $v = 2.5$~m/s con $T = 75$~°C (Escenario~3), y en la salida, presi\'on atmosf\'erica con condici\'on de flujo desarrollado. La superficie exterior del aislamiento se modelar\'a con convecci\'on natural ($h_e = 8$~W/m\textsuperscript{2}$\cdot$K, $T_{amb} = 26.5$~°C). La superficie libre de la glucosa se tratar\'a como adiab\'atica (condici\'on conservadora) y la pared lateral del cuerpo cil\'indrico con convecci\'on natural al aire exterior. La condici\'on inicial ser\'a glucosa a 25\,°C, agua a 75\,°C, tanque al 80\% de capacidad.
-
-\textbf{Paso 5: Mallado.} Se emplear\'a una malla de elementos tetra\'edricos con refinamiento en las capas l\'imite de la glucosa adyacentes al fondo calentado (al menos 5~capas de \textit{boundary layer} con raz\'on de crecimiento $\leq 1.2$) y en el canal de la media ca\~na. Se realizar\'a un an\'alisis de independencia de malla con al menos tres niveles de refinamiento (grueso, medio, fino), verificando que la variaci\'on de la temperatura media de la glucosa sea inferior al 2\% entre los dos niveles m\'as finos.
-
-\textbf{Paso 6: Solver y convergencia.} Se utilizar\'a un solver transitorio impl\'icito (BDF de orden variable) con paso de tiempo adaptativo. El criterio de convergencia para cada paso ser\'a residuos normalizados $< 10^{-4}$ para velocidad y $< 10^{-6}$ para energ\'ia. El tiempo de simulaci\'on ser\'a de al menos 96~horas de tiempo f\'isico para capturar la curva de calentamiento completa.
-
-\textbf{Paso 7: Post-procesamiento.} Se extraer\'an: (a)~temperatura media de la glucosa vs.\ tiempo (para comparaci\'on con el modelo anal\'itico), (b)~campos de temperatura en cortes transversales a $t = 12$, 24, 48 y 96~h, (c)~l\'ineas de flujo y vectores de velocidad de la convecci\'on natural, (d)~perfil de temperatura vertical (gradiente de estratificaci\'on).
-
-\subsubsection{FEA --- ANSYS (Parte II)}
-
-La simulaci\'on FEA tiene como objetivo evaluar la distribuci\'on de esfuerzos y deformaciones en el tanque bajo las condiciones de carga combinadas. A continuaci\'on se describe la metodolog\'ia de simulaci\'on.
-
-\textbf{Paso 1: Geometr\'ia CAD.} Se construir\'a un modelo 3D del tanque completo, incluyendo: (a)~fondo toriesf\'erico ($D_i = 5264$~mm, $t = 9$~mm, radio de corona $L = D_i$, radio de nudillo $r = 0.06 D_i$), (b)~cuerpo cil\'indrico ($D_i = 5264$~mm, $t = 6$~mm, $H = 9670$~mm), (c)~chaqueta de media ca\~na en espiral ($t_{perfil} = 4.5$~mm). Los espesores del modelo corresponder\'an a los espesores originales de fabricaci\'on (sin descontar corrosi\'on), ya que el modelo FEA representa la condici\'on del tanque tal como fue construido. La evaluaci\'on del efecto de la corrosi\'on se realizar\'a mediante comparaci\'on de los esfuerzos calculados con los esfuerzos admisibles reducidos.
-
-\textbf{Paso 2: Tipo de elementos.} Se emplear\'an elementos tipo \textit{shell} (SHELL181 o SHELL281) para las paredes del tanque y la media ca\~na, lo que permite modelar geometr\'ias de pared delgada con precisi\'on y eficiencia computacional. En la zona de transici\'on fondo-cilindro, donde se esperan concentraciones de esfuerzos, se evaluar\'a el uso de elementos s\'olidos 3D (SOLID186) con al menos 3~elementos a trav\'es del espesor.
-
-\textbf{Paso 3: Propiedades del material.} Comportamiento el\'astico lineal isotr\'opico del SS316L a temperatura de operaci\'on (75\,°C): m\'odulo de elasticidad $E = 191$~GPa, coeficiente de Poisson $\nu = 0.30$, l\'imite el\'astico $F_y = 147$~MPa, resistencia a la tracci\'on $F_u = 470$~MPa, coeficiente de expansi\'on t\'ermica $\alpha = 16.0 \times 10^{-6}$~°C$^{-1}$ (ASME~Section~II~Part~D). Para la condici\'on a temperatura ambiente (montaje): $E = 195$~GPa, $F_y = 170$~MPa.
-
-\textbf{Paso 4: Condiciones de contacto.} La uni\'on entre la media ca\~na y el fondo del tanque se modelar\'a como contacto \textit{bonded} (soldadura continua). La conexi\'on entre el fondo toriesf\'erico y el cuerpo cil\'indrico se modelar\'a igualmente como uni\'on soldada continua.
-
-\textbf{Paso 5: Condiciones de carga.} Se evaluar\'an cuatro combinaciones de carga, presentadas en la Tabla~\ref{tab:casos_carga_fea}.
-
-\begin{table}[H]
-	\centering
-	\caption{Combinaciones de carga para el an\'alisis FEA.}
-	\label{tab:casos_carga_fea}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NlX@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Caso de Carga} & \textbf{Descripci\'on} \\
-		\midrule
-		& Caso 1 --- Operaci\'on normal & Presi\'on hidrost\'atica de glucosa (llenado al 80\%, $\rho = 1410$~kg/m\textsuperscript{3}, $FS \geq 1.3$), peso propio, presi\'on del agua en la media ca\~na y gradiente t\'ermico ($\Delta T = 48.5$~°C en el fondo). \\
-		& Caso 2 --- Operaci\'on + viento & Caso~1 m\'as presi\'on de viento (120~km/h, perfil seg\'un API~650). \\
-		& Caso 3 --- Operaci\'on + sismo & Caso~1 m\'as carga s\'ismica (NSR-10, $C_s = 0.391$, distribuci\'on impulsiva seg\'un API~650 Ap\'endice~E). \\
-		& Caso 4 --- Prueba hidrost\'atica & Llenado al 100\% con agua ($\rho = 1000$~kg/m\textsuperscript{3}) a temperatura ambiente, sin cargas t\'ermicas. \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
-
-\textbf{Paso 6: Condiciones de apoyo.} El tanque se apoya sobre un anillo de soporte externo sobre losa de concreto. Se modelar\'a como apoyo r\'igido en la base del anillo (desplazamiento vertical nulo) con restricci\'on tangencial por fricci\'on o anclaje.
-
-\textbf{Paso 7: Mallado.} Tama\~no de elemento objetivo: 50~mm en el cuerpo cil\'indrico, 25~mm en el fondo toriesf\'erico, 10~mm en la zona de transici\'on fondo-cilindro y en las soldaduras de la media ca\~na. Se verificar\'a la calidad de los elementos (aspect ratio $< 5$, Jacobian ratio $> 0.5$) y se realizar\'a an\'alisis de convergencia de malla.
-
-\textbf{Paso 8: Solver y post-procesamiento.} An\'alisis est\'atico lineal para cada caso de carga. Se extraer\'an: (a)~esfuerzos de von Mises y esfuerzos principales, (b)~deformaciones totales y desplazamientos, (c)~distribuci\'on de esfuerzos de membrana y de flexi\'on (para clasificaci\'on seg\'un ASME~VIII~Div.~2 si es pertinente).
-
-\textbf{Paso 9: Criterios de aceptaci\'on.} Los criterios de aceptaci\'on se resumen en la Tabla~\ref{tab:criterios_fea}.
-
-\begin{table}[H]
-	\centering
-	\caption{Criterios de aceptaci\'on para el an\'alisis FEA (ASME VIII a 75\,°C).}
-	\label{tab:criterios_fea}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NXcc@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Criterio} & \textbf{L\'imite} & \textbf{Valor [MPa]} \\
-		\midrule
-		& Esfuerzo de membrana general & $\sigma_m \leq S$ & 115 \\
-		& Esfuerzo de membrana + flexi\'on & $\sigma_m + \sigma_b \leq 1.5 S$ & 172.5 \\
-		& Esfuerzo pico local & $\sigma_{peak} \leq 3 S$ & 345 \\
-		& Deformaci\'on m\'axima & $\delta_{max} \leq L/200$ & -- \\
-		& Factor de seguridad global & $FS \geq 2.0$ & -- \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
-
-Las simulaciones CFD y FEA fueron ejecutadas conforme a la metodolog\'ia descrita, y sus resultados se presentan integrados en la Secci\'on~\ref{sec:resultados_cfd_fea} correspondiente.
+La simulaci\'on de din\'amica de fluidos computacional (CFD) se realiz\'o en COMSOL Multiphysics~6.4 para complementar los c\'alculos anal\'iticos. El modelo resuelve las ecuaciones de Navier-Stokes acopladas con la ecuaci\'on de energ\'ia en r\'egimen transitorio, incluyendo el flujo de agua en la media ca\~na, la conducci\'on a trav\'es de la pared de SS316L y la convecci\'on natural de la glucosa en el fondo toriesf\'erico. El objetivo de la simulaci\'on fue obtener un valor promedio del coeficiente global de transferencia de calor $U$ bajo condiciones representativas del Escenario~3, con el fin de compararlo con el modelo anal\'itico y validar la metodolog\'ia empleada.

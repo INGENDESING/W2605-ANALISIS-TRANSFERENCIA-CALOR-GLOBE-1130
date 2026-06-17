@@ -1,5 +1,5 @@
 """
-Modulo de calculo de espesores del tanque — Proyecto P2611
+Modulo de calculo de espesores del tanque — Proyecto W2605
 ==========================================================
 Calculo de espesores requeridos para el cuerpo cilindrico (API 650) y
 el fondo toriesferico (ASME VIII Div.1 UG-32(e)).
@@ -379,7 +379,7 @@ def carga_sismica_nsr10(masa_total_kg, zona='intermedia'):
 
 if __name__ == "__main__":
     print("=" * 78)
-    print("ANALISIS DE ESPESORES — Proyecto P2611")
+    print("ANALISIS DE ESPESORES — Proyecto W2605")
     print("=" * 78)
 
     # --- Cuerpo cilindrico ---

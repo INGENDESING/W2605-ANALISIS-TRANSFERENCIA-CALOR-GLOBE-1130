@@ -1,5 +1,5 @@
 """
-Módulo de cálculo de áreas de transferencia - Proyecto P2611
+Módulo de cálculo de áreas de transferencia - Proyecto W2605
 =================================================================
 Calcula áreas requeridas para chaqueta de calentamiento continua
 con flujos de glucosa variables (1-16 toneladas/hora).
@@ -45,6 +45,37 @@ except ImportError as e:
     print(f"ERROR: No se pudo importar módulos del proyecto: {e}")
     print("Asegúrate de ejecutar desde el directorio raíz del proyecto")
     sys.exit(1)
+
+
+# =============================================================================
+# CONFIGURACIÓN DE GRÁFICAS ESTILO PUBLICACIÓN
+# =============================================================================
+
+COLOR_GLUCOSA = '#2E5AAC'
+COLOR_AGUA = '#C44E28'
+COLOR_DESCARGA = '#3A7D44'
+COLOR_BANDA_DESCARGA = '#F4A261'
+COLOR_REJILLA = '#E5E5E5'
+COLOR_TEXTO = '#333333'
+
+plt.rcParams.update({
+    'font.family': 'serif',
+    'font.size': 11,
+    'axes.titlesize': 13,
+    'axes.labelsize': 12,
+    'legend.fontsize': 10,
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
+    'figure.dpi': 300,
+    'savefig.dpi': 300,
+    'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.02,
+    'axes.edgecolor': COLOR_TEXTO,
+    'axes.labelcolor': COLOR_TEXTO,
+    'xtick.color': COLOR_TEXTO,
+    'ytick.color': COLOR_TEXTO,
+    'text.color': COLOR_TEXTO,
+})
 
 
 # =============================================================================
@@ -436,16 +467,21 @@ def configurar_estilo_graficos():
     plt.rcParams.update({
         'font.family': 'serif',
         'font.size': 11,
-        'axes.labelsize': 12,
         'axes.titlesize': 13,
+        'axes.labelsize': 12,
         'legend.fontsize': 10,
         'xtick.labelsize': 10,
         'ytick.labelsize': 10,
         'figure.dpi': 300,
         'savefig.dpi': 300,
         'savefig.bbox': 'tight',
+        'savefig.pad_inches': 0.02,
+        'axes.edgecolor': COLOR_TEXTO,
+        'axes.labelcolor': COLOR_TEXTO,
+        'xtick.color': COLOR_TEXTO,
+        'ytick.color': COLOR_TEXTO,
+        'text.color': COLOR_TEXTO,
         'lines.linewidth': 2,
-        'grid.alpha': 0.3
     })
 
 
@@ -471,11 +507,11 @@ def graficar_areas(df, figures_dir='../results/figures'):
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 12))
     
     # Área vs Flujo
-    ax1.plot(df['Flujo_ton_h'], df['A_req_m2'], 'b-o', markersize=6, linewidth=2)
+    ax1.plot(df['Flujo_ton_h'], df['A_req_m2'], color=COLOR_GLUCOSA, marker='o', linestyle='-', markersize=6, linewidth=2)
     ax1.set_xlabel('Flujo de glucosa [toneladas/hora]')
     ax1.set_ylabel('Área de transferencia [m²]')
     ax1.set_title('Área requerida vs Flujo de masa')
-    ax1.grid(True, alpha=0.3)
+    ax1.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax1.set_xlim(0, df['Flujo_ton_h'].max() * 1.1)
     ax1.set_ylim(0, df['A_req_m2'].max() * 1.1)
     
@@ -488,24 +524,24 @@ def graficar_areas(df, figures_dir='../results/figures'):
                         fontsize=8, alpha=0.8)
     
     # U_promedio vs Flujo
-    ax2.plot(df['Flujo_ton_h'], df['U_prom_W/m2K'], 'r-s', markersize=6, linewidth=2)
+    ax2.plot(df['Flujo_ton_h'], df['U_prom_W/m2K'], color=COLOR_AGUA, marker='s', linestyle='-', markersize=6, linewidth=2)
     ax2.set_xlabel('Flujo de glucosa [toneladas/hora]')
     ax2.set_ylabel('Coeficiente U promedio [W/m²·°C]')
     ax2.set_title('U promedio vs Flujo de masa')
-    ax2.grid(True, alpha=0.3)
+    ax2.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax2.set_xlim(0, df['Flujo_ton_h'].max() * 1.1)
     
     # Agregar línea de referencia
-    ax2.axhline(y=df['U_prom_W/m2K'].mean(), color='gray', linestyle='--', alpha=0.5,
+    ax2.axhline(y=df['U_prom_W/m2K'].mean(), color=COLOR_TEXTO, linestyle='--', alpha=0.5,
                 label=f'Promedio: {df["U_prom_W/m2K"].mean():.1f} W/m²·°C')
     ax2.legend()
     
     # Q_dot vs Flujo (debería ser lineal)
-    ax3.plot(df['Flujo_ton_h'], df['Q_dot_kW'], 'g-^', markersize=6, linewidth=2)
+    ax3.plot(df['Flujo_ton_h'], df['Q_dot_kW'], color=COLOR_DESCARGA, marker='^', linestyle='-', markersize=6, linewidth=2)
     ax3.set_xlabel('Flujo de glucosa [toneladas/hora]')
     ax3.set_ylabel('Potencia térmica [kW]')
     ax3.set_title('Potencia requerida vs Flujo de masa')
-    ax3.grid(True, alpha=0.3)
+    ax3.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax3.set_xlim(0, df['Flujo_ton_h'].max() * 1.1)
     ax3.set_ylim(0, df['Q_dot_kW'].max() * 1.1)
     
@@ -514,7 +550,7 @@ def graficar_areas(df, figures_dir='../results/figures'):
     p = Polynomial.fit(df['Flujo_ton_h'], df['Q_dot_kW'], 1)
     x_fit = np.linspace(0, df['Flujo_ton_h'].max(), 100)
     y_fit = p(x_fit)
-    ax3.plot(x_fit, y_fit, 'k--', alpha=0.5, label=f'Ajuste lineal: {p.convert().coef[1]:.1f} kW·h/ton')
+    ax3.plot(x_fit, y_fit, color=COLOR_TEXTO, linestyle='--', alpha=0.5, label=f'Ajuste lineal: {p.convert().coef[1]:.1f} kW·h/ton')
     ax3.legend()
     
     plt.tight_layout()
@@ -528,12 +564,12 @@ def graficar_areas(df, figures_dir='../results/figures'):
     # Guardar gráficos individuales
     # Figura 1: Área vs Flujo
     fig1, ax1 = plt.subplots(figsize=(10, 6))
-    ax1.plot(df['Flujo_ton_h'], df['A_req_m2'], 'b-o', markersize=8, linewidth=2.5)
+    ax1.plot(df['Flujo_ton_h'], df['A_req_m2'], color=COLOR_GLUCOSA, marker='o', linestyle='-', markersize=8, linewidth=2.5)
     ax1.set_xlabel('Flujo de glucosa [toneladas/hora]', fontsize=12)
     ax1.set_ylabel('Área de transferencia [m²]', fontsize=12)
     ax1.set_title('Area requerida vs Flujo de masa\n(Agua 75C, v=2.5 m/s, Glucosa 25->57C)',
                   fontsize=13, fontweight='bold')
-    ax1.grid(True, alpha=0.3, linestyle='--')
+    ax1.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax1.set_xlim(0, df['Flujo_ton_h'].max() * 1.05)
     ax1.set_ylim(0, df['A_req_m2'].max() * 1.05)
     
@@ -552,19 +588,19 @@ def graficar_areas(df, figures_dir='../results/figures'):
     
     # Figura 2: U vs Flujo
     fig2, ax2 = plt.subplots(figsize=(10, 6))
-    ax2.plot(df['Flujo_ton_h'], df['U_prom_W/m2K'], 'r-s', markersize=8, linewidth=2.5)
+    ax2.plot(df['Flujo_ton_h'], df['U_prom_W/m2K'], color=COLOR_AGUA, marker='s', linestyle='-', markersize=8, linewidth=2.5)
     ax2.set_xlabel('Flujo de glucosa [toneladas/hora]', fontsize=12)
     ax2.set_ylabel('Coeficiente U promedio [W/m²·°C]', fontsize=12)
     ax2.set_title('Coeficiente U promedio vs Flujo de masa\n(Variacion por temperatura de glucosa)',
                   fontsize=13, fontweight='bold')
-    ax2.grid(True, alpha=0.3, linestyle='--')
+    ax2.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax2.set_xlim(0, df['Flujo_ton_h'].max() * 1.05)
     
     # Agregar banda de rango típico
     rango_tipico = (15, 35)  # W/m²·°C típico para glucosa
-    ax2.axhspan(rango_tipico[0], rango_tipico[1], alpha=0.2, color='green', 
+    ax2.axhspan(rango_tipico[0], rango_tipico[1], alpha=0.2, color=COLOR_DESCARGA, 
                 label='Rango típico literatura')
-    ax2.axhline(y=df['U_prom_W/m2K'].mean(), color='gray', linestyle='--', linewidth=2,
+    ax2.axhline(y=df['U_prom_W/m2K'].mean(), color=COLOR_TEXTO, linestyle='--', linewidth=2,
                 label=f'Promedio: {df["U_prom_W/m2K"].mean():.1f} W/m²·°C')
     ax2.legend(loc='best', fontsize=10)
     
@@ -575,18 +611,18 @@ def graficar_areas(df, figures_dir='../results/figures'):
     
     # Figura 3: Q vs Flujo
     fig3, ax3 = plt.subplots(figsize=(10, 6))
-    ax3.plot(df['Flujo_ton_h'], df['Q_dot_kW'], 'g-^', markersize=8, linewidth=2.5)
+    ax3.plot(df['Flujo_ton_h'], df['Q_dot_kW'], color=COLOR_DESCARGA, marker='^', linestyle='-', markersize=8, linewidth=2.5)
     ax3.set_xlabel('Flujo de glucosa [toneladas/hora]', fontsize=12)
     ax3.set_ylabel('Potencia térmica requerida [kW]', fontsize=12)
     ax3.set_title('Potencia requerida vs Flujo de masa\n(Relacion lineal esperada)',
                   fontsize=13, fontweight='bold')
-    ax3.grid(True, alpha=0.3, linestyle='--')
+    ax3.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax3.set_xlim(0, df['Flujo_ton_h'].max() * 1.05)
     ax3.set_ylim(0, df['Q_dot_kW'].max() * 1.05)
     
     # Linea de referencia ideal
     Q_ideal = df['Flujo_ton_h'] * df['Q_dot_kW'].iloc[0]  # Lineal desde el primer punto
-    ax3.plot(df['Flujo_ton_h'], Q_ideal, 'k--', alpha=0.5, linewidth=1.5,
+    ax3.plot(df['Flujo_ton_h'], Q_ideal, color=COLOR_TEXTO, linestyle='--', alpha=0.5, linewidth=1.5,
              label='Proporcional directa')
     ax3.legend()
     
@@ -658,10 +694,10 @@ def graficar_U_vs_T(figures_dir='../results/figures'):
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
     
     # Panel superior: U vs T
-    ax1.plot(T_range, U_values, 'b-', linewidth=2.5, label='$U(T_g)$')
-    ax1.axvline(x=55, color='orange', linestyle='--', alpha=0.7, label='$T_{g}=55$°C')
-    ax1.axvline(x=57, color='red', linestyle='--', alpha=0.7, label='$T_{g}=57$°C')
-    ax1.axhspan(23, 37, alpha=0.1, color='green')
+    ax1.plot(T_range, U_values, color=COLOR_GLUCOSA, linestyle='-', linewidth=2.5, label='$U(T_g)$')
+    ax1.axvline(x=55, color=COLOR_BANDA_DESCARGA, linestyle='--', alpha=0.7, label='$T_{g}=55$°C')
+    ax1.axvline(x=57, color=COLOR_DESCARGA, linestyle='--', alpha=0.7, label='$T_{g}=57$°C')
+    ax1.axhspan(23, 37, alpha=0.1, color=COLOR_DESCARGA)
     
     # Anotar valores clave - posiciones ajustadas para evitar superposicion
     anotaciones = [
@@ -676,23 +712,23 @@ def graficar_U_vs_T(figures_dir='../results/figures'):
         ax1.annotate(f'U({T_mark}°C) = {U_mark:.1f}',
                     xy=(T_mark, U_mark), xytext=(x_off, y_off),
                     textcoords='offset points', fontsize=9,
-                    arrowprops=dict(arrowstyle='->', color='gray'),
+                    arrowprops=dict(arrowstyle='->', color=COLOR_TEXTO),
                     bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
     
     ax1.set_xlabel('Temperatura de la glucosa, $T_g$ [°C]', fontsize=12)
     ax1.set_ylabel('Coeficiente global $U$ [W/m²·°C]', fontsize=12)
     ax1.set_title('Coeficiente global $U$ vs temperatura de glucosa', fontsize=13, fontweight='bold')
-    ax1.grid(True, alpha=0.3, linestyle='--')
+    ax1.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax1.legend(loc='lower right', fontsize=10)
     ax1.set_xlim(24, 61)
     
     # Panel inferior: h_o vs T (muestra la dominancia)
-    ax2.semilogy(T_range, h_i_values, 'r-', linewidth=2, label='$h_i$ (agua, Sieder-Tate)')
-    ax2.semilogy(T_range, h_o_values, 'b-', linewidth=2, label='$h_o$ (glucosa, Churchill-Chu)')
+    ax2.semilogy(T_range, h_i_values, color=COLOR_AGUA, linestyle='-', linewidth=2, label='$h_i$ (agua, Sieder-Tate)')
+    ax2.semilogy(T_range, h_o_values, color=COLOR_GLUCOSA, linestyle='-', linewidth=2, label='$h_o$ (glucosa, Churchill-Chu)')
     ax2.set_xlabel('Temperatura de la glucosa, $T_g$ [°C]', fontsize=12)
     ax2.set_ylabel('Coeficiente convectivo $h$ [W/m²·°C]', fontsize=12)
     ax2.set_title('Coeficientes convectivos individuales ($h_o \\ll h_i$)', fontsize=13, fontweight='bold')
-    ax2.grid(True, alpha=0.3, linestyle='--')
+    ax2.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax2.legend(loc='center right', fontsize=10)
     ax2.set_xlim(24, 61)
     
@@ -820,54 +856,54 @@ def _graficar_comparacion(df_25_57, df_55_57, figures_dir):
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(14, 10))
     
     # 1. Área vs Flujo (comparación)
-    ax1.plot(df_25_57['Flujo_ton_h'], df_25_57['A_req_m2'], 'b-o', 
+    ax1.plot(df_25_57['Flujo_ton_h'], df_25_57['A_req_m2'], color=COLOR_GLUCOSA, marker='o', linestyle='-', 
              markersize=6, linewidth=2, label='25→57°C (ΔT=32°C)')
-    ax1.plot(df_55_57['Flujo_ton_h'], df_55_57['A_req_m2'], 'r-s', 
+    ax1.plot(df_55_57['Flujo_ton_h'], df_55_57['A_req_m2'], color=COLOR_AGUA, marker='s', linestyle='-', 
              markersize=6, linewidth=2, label='55→57°C (ΔT=2°C)')
     ax1.set_xlabel('Flujo de glucosa [ton/h]')
     ax1.set_ylabel('Área requerida [m²]')
     ax1.set_title('Área de transferencia — Comparación de escenarios')
     ax1.legend()
-    ax1.grid(True, alpha=0.3, linestyle='--')
+    ax1.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     
     # 2. Q_dot vs Flujo (comparación)
-    ax2.plot(df_25_57['Flujo_ton_h'], df_25_57['Q_dot_kW'], 'b-o', 
+    ax2.plot(df_25_57['Flujo_ton_h'], df_25_57['Q_dot_kW'], color=COLOR_GLUCOSA, marker='o', linestyle='-', 
              markersize=6, linewidth=2, label='25→57°C')
-    ax2.plot(df_55_57['Flujo_ton_h'], df_55_57['Q_dot_kW'], 'r-s', 
+    ax2.plot(df_55_57['Flujo_ton_h'], df_55_57['Q_dot_kW'], color=COLOR_AGUA, marker='s', linestyle='-', 
              markersize=6, linewidth=2, label='55→57°C')
     ax2.set_xlabel('Flujo de glucosa [ton/h]')
     ax2.set_ylabel('Potencia térmica [kW]')
     ax2.set_title('Potencia requerida — Q̇ ∝ ṁ·Cp·ΔT')
     ax2.legend()
-    ax2.grid(True, alpha=0.3, linestyle='--')
+    ax2.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     
     # 3. Ratio Área/Q (eficiencia térmica)
     ratio_25 = df_25_57['A_req_m2'] / df_25_57['Q_dot_kW']
     ratio_55 = df_55_57['A_req_m2'] / df_55_57['Q_dot_kW']
-    ax3.plot(df_25_57['Flujo_ton_h'], ratio_25, 'b-o', 
+    ax3.plot(df_25_57['Flujo_ton_h'], ratio_25, color=COLOR_GLUCOSA, marker='o', linestyle='-', 
              markersize=6, linewidth=2, label='25→57°C')
-    ax3.plot(df_55_57['Flujo_ton_h'], ratio_55, 'r-s', 
+    ax3.plot(df_55_57['Flujo_ton_h'], ratio_55, color=COLOR_AGUA, marker='s', linestyle='-', 
              markersize=6, linewidth=2, label='55→57°C')
     ax3.set_xlabel('Flujo de glucosa [ton/h]')
     ax3.set_ylabel('Área / Potencia [m²/kW]')
     ax3.set_title('Eficiencia de superficie — $A/\\dot{Q}$\n'
                   '(menor LMTD → más área por kW)')
     ax3.legend()
-    ax3.grid(True, alpha=0.3, linestyle='--')
+    ax3.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     
     # 4. U promedio comparativo
-    ax4.plot(df_25_57['Flujo_ton_h'], df_25_57['U_prom_W/m2K'], 'b-o', 
+    ax4.plot(df_25_57['Flujo_ton_h'], df_25_57['U_prom_W/m2K'], color=COLOR_GLUCOSA, marker='o', linestyle='-', 
              markersize=6, linewidth=2, label='25→57°C (U integrado)')
-    ax4.plot(df_55_57['Flujo_ton_h'], df_55_57['U_prom_W/m2K'], 'r-s', 
+    ax4.plot(df_55_57['Flujo_ton_h'], df_55_57['U_prom_W/m2K'], color=COLOR_AGUA, marker='s', linestyle='-', 
              markersize=6, linewidth=2, label='55→57°C (U ≈ cte)')
     ax4.set_xlabel('Flujo de glucosa [ton/h]')
     ax4.set_ylabel('$U_{eff}$ [W/m²·°C]')
     ax4.set_title('Coeficiente global efectivo\n'
                   '(55→57°C: U mayor porque la glucosa es menos viscosa)')
     ax4.legend()
-    ax4.grid(True, alpha=0.3, linestyle='--')
+    ax4.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     
-    fig.suptitle('Proyecto P2611 — Comparación de Escenarios de Calentamiento',
+    fig.suptitle('Proyecto W2605 — Comparación de Escenarios de Calentamiento',
                  fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
     
@@ -881,7 +917,7 @@ def _graficar_comparacion(df_25_57, df_55_57, figures_dir):
 def main():
     """Función principal que ejecuta todo el análisis."""
     print("=" * 80)
-    print("CÁLCULO DE ÁREAS DE TRANSFERENCIA - PROYECTO P2611")
+    print("CÁLCULO DE ÁREAS DE TRANSFERENCIA - PROYECTO W2605")
     print("Nueva Chaqueta para Flujos 1-16 ton/h")
     print("VERSIÓN MEJORADA — INTEGRACIÓN TRAPEZOIDAL + ESCENARIO 55→57°C")
     print("=" * 80)
@@ -898,7 +934,7 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_dir = os.path.dirname(script_dir)
     results_dir = os.path.join(project_dir, 'results')
-    figures_dir = os.path.join(project_dir, 'figures')
+    figures_dir = os.path.join(project_dir, 'results', 'figures')
     
     # =============================================
     # ESCENARIO ORIGINAL: 25°C → 57°C

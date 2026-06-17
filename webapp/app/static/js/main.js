@@ -1,5 +1,5 @@
 /**
- * JavaScript Principal - P2611 WebApp
+ * JavaScript Principal - W2605 WebApp
  * Funciones compartidas entre todos los módulos
  */
 
@@ -222,5 +222,5 @@ document.addEventListener('DOMContentLoaded', function() {
         return new bootstrap.Popover(popoverTriggerEl);
     });
     
-    console.log('P2611 WebApp - Cargada correctamente');
+    console.log('W2605 WebApp - Cargada correctamente');
 });

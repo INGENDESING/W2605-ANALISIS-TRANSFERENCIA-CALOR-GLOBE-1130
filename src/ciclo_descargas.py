@@ -1,12 +1,12 @@
 """
-Modulo de simulacion del ciclo de descargas a carrotanque — Proyecto P2611
+Modulo de simulacion del ciclo de descargas a carrotanque — Proyecto W2605
 ==========================================================================
-Simula la operacion ciclica de 8 descargas de 24 toneladas de glucosa
-Globe 1130 a carrotanques en un periodo de 24 horas, para los Escenarios
+Simula la operacion ciclica de 5 descargas de 24 toneladas de glucosa
+Globe 42 DE a carrotanques en un periodo de 24 horas, para los Escenarios
 2 (agua a 65 C) y 3 (agua a 75 C).
 
 Modelo fisico:
-  Durante descarga (1.5 h por carga):
+  Durante descarga (2.0 h por carga):
     m_g(t) * Cp_g * dT_g/dt = U(T_g) * A * (T_agua - T_g)
     dm_g/dt = -dot_m_out
 
@@ -15,7 +15,7 @@ Modelo fisico:
     dm_g/dt = 0
 
 Donde:
-  dot_m_out = 24,000 kg / (1.5 * 3600 s) = 4.444 kg/s durante descarga
+  dot_m_out = 24,000 kg / (2.0 * 3600 s) = 3.333 kg/s durante descarga
   A = 13.0 m2 (area de contacto media cana con tanque)
   U = f(T_g) — coeficiente global dependiente de temperatura
 
@@ -48,14 +48,30 @@ from geometria_tanque import A_CONTACTO, volumen_total
 # CONFIGURACION DE GRAFICAS ESTILO PUBLICACION
 # =============================================================================
 
+COLOR_GLUCOSA = '#2E5AAC'
+COLOR_AGUA = '#C44E28'
+COLOR_DESCARGA = '#3A7D44'
+COLOR_BANDA_DESCARGA = '#F4A261'
+COLOR_REJILLA = '#E5E5E5'
+COLOR_TEXTO = '#333333'
+
 plt.rcParams.update({
     'font.family': 'serif',
     'font.size': 11,
+    'axes.titlesize': 13,
     'axes.labelsize': 12,
-    'legend.fontsize': 9,
+    'legend.fontsize': 10,
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.02,
+    'axes.edgecolor': COLOR_TEXTO,
+    'axes.labelcolor': COLOR_TEXTO,
+    'xtick.color': COLOR_TEXTO,
+    'ytick.color': COLOR_TEXTO,
+    'text.color': COLOR_TEXTO,
 })
 
 
@@ -63,10 +79,10 @@ plt.rcParams.update({
 # CONSTANTES DEL CICLO OPERATIVO
 # =============================================================================
 
-N_DESCARGAS = 8               # Numero de descargas a carrotanque en 24 h
+N_DESCARGAS = 5               # Numero de descargas a carrotanque en 24 h
 MASA_POR_DESCARGA = 24000.0   # Masa de glucosa por descarga [kg] (24 ton)
-T_DESCARGA = 1.5              # Duracion de cada descarga [h]
-T_CICLO = 3.0                 # Periodo entre descargas [h]
+T_DESCARGA = 2.0              # Duracion de cada descarga [h]
+T_CICLO = 4.8                 # Periodo entre descargas [h] (24 h / 5 descargas)
 T_TOTAL = 24.0                # Duracion total de la simulacion [h]
 V_AGUA = 2.5                  # Velocidad del agua en la media cana [m/s]
 A = A_CONTACTO                # Area de transferencia [m2] = 13.0
@@ -102,7 +118,7 @@ def ode_sistema(t, y, T_agua, descargando):
 
     Ecuaciones:
       dT_g/dt = U(T_g) * A * (T_agua - T_g) / (m_g * Cp_g)
-      dm_g/dt = -dot_m_out (si descargando) o 0 (si no)
+      dm_g/dt = -dot_m_out (si descargando) o 0
 
     Parametros
     ----------
@@ -152,12 +168,12 @@ def ode_sistema(t, y, T_agua, descargando):
 def simular_ciclo(T_agua, T_g0=T_GLUCOSA_INICIAL, m_g0=MASA_INICIAL,
                   n_descargas=N_DESCARGAS, dt_salida_s=30.0):
     """
-    Simula el ciclo completo de 8 descargas en 24 horas.
+    Simula el ciclo completo de 5 descargas en 24 horas.
 
     El ciclo se divide en fases:
-      - Fase de descarga (1.5 h): glucosa sale a dot_m_out, calentamiento continua
-      - Fase de calentamiento (1.5 h): sin descarga, calentamiento puro
-    Cada ciclo dura 3 h; 8 ciclos = 24 h.
+      - Fase de descarga (2.0 h): glucosa sale a dot_m_out, calentamiento continua
+      - Fase de calentamiento (2.8 h): sin descarga, calentamiento puro
+    Cada ciclo dura 4.8 h; 5 ciclos = 24 h.
 
     Parametros
     ----------
@@ -193,7 +209,7 @@ def simular_ciclo(T_agua, T_g0=T_GLUCOSA_INICIAL, m_g0=MASA_INICIAL,
         t_inicio_ciclo_h = i_descarga * T_CICLO
 
         # =====================================================================
-        # FASE 1: DESCARGA (1.5 h)
+        # FASE 1: DESCARGA (2.0 h)
         # =====================================================================
         t_ini_desc_s = t_actual_s
         t_fin_desc_s = t_actual_s + T_DESCARGA * 3600.0
@@ -247,7 +263,7 @@ def simular_ciclo(T_agua, T_g0=T_GLUCOSA_INICIAL, m_g0=MASA_INICIAL,
         m_actual = m_fin_desc
 
         # =====================================================================
-        # FASE 2: CALENTAMIENTO PURO (1.5 h)
+        # FASE 2: CALENTAMIENTO PURO (2.8 h)
         # =====================================================================
         t_ini_cal_s = t_actual_s
         t_fin_cal_s = t_actual_s + (T_CICLO - T_DESCARGA) * 3600.0
@@ -345,42 +361,43 @@ def graficar_T_vs_tiempo(res, escenario_num, figures_dir):
     T_agua = res['T_agua']
 
     # --- Panel superior: Temperatura ---
-    ax1.plot(t_h, T_g, 'b-', linewidth=1.8, label='T glucosa', zorder=3)
-    ax1.axhline(y=T_agua, color='red', linestyle='--', alpha=0.6,
-                linewidth=1.0, label=f'T agua = {T_agua:.0f} $\\degree$C')
-    ax1.axhline(y=60, color='gray', linestyle=':', alpha=0.5,
-                linewidth=0.8, label='T inicial = 60 $\\degree$C')
+    ax1.plot(t_h, T_g, color=COLOR_GLUCOSA, linewidth=2, label='T glucosa', zorder=3)
+    ax1.axhline(y=T_agua, color=COLOR_AGUA, linestyle='--', alpha=0.8,
+                linewidth=1.5, label=f'T agua = {T_agua:.0f} °C')
+    ax1.axhline(y=60, color=COLOR_TEXTO, linestyle=':', alpha=0.7,
+                linewidth=1.2, label='Tope termostatico = 60 °C')
+    ax1.axhline(y=57, color=COLOR_DESCARGA, linestyle='-.', alpha=0.8,
+                linewidth=1.2, label='T descarga = 57 °C')
 
     # Sombrear descargas
-    colores_desc = plt.cm.Oranges(np.linspace(0.25, 0.65, N_DESCARGAS))
     for i, desc in enumerate(res['descargas']):
         ax1.axvspan(desc['t_inicio_h'], desc['t_fin_h'],
-                    alpha=0.20, color=colores_desc[i], zorder=1)
+                    alpha=0.25, color=COLOR_BANDA_DESCARGA, zorder=1)
         # Anotar numero de descarga
         t_mid = (desc['t_inicio_h'] + desc['t_fin_h']) / 2
-        T_mid = (desc['T_inicio'] + desc['T_fin']) / 2
+        y_text = ax1.get_ylim()[0] + (ax1.get_ylim()[1] - ax1.get_ylim()[0]) * 0.08
         ax1.annotate(f"D{i+1}",
-                     xy=(t_mid, T_mid), fontsize=8, fontweight='bold',
-                     color='darkorange', ha='center', va='bottom',
-                     bbox=dict(boxstyle='round,pad=0.15', facecolor='white',
-                               edgecolor='orange', alpha=0.8))
+                     xy=(t_mid, y_text), fontsize=9, fontweight='bold',
+                     color=COLOR_TEXTO, ha='center', va='bottom',
+                     bbox=dict(boxstyle='round,pad=0.18', facecolor='white',
+                               edgecolor=COLOR_BANDA_DESCARGA, alpha=0.9))
 
-    ax1.set_ylabel('Temperatura [$\\degree$C]')
+    ax1.set_ylabel('Temperatura [°C]')
     ax1.set_title(f'Escenario {escenario_num}: Ciclo de {N_DESCARGAS} descargas '
                   f'de {MASA_POR_DESCARGA/1000:.0f} ton '
-                  f'(T$_{{agua}}$ = {T_agua:.0f} $\\degree$C, v = {V_AGUA} m/s)')
-    ax1.legend(loc='upper left', framealpha=0.9)
-    ax1.grid(True, alpha=0.3)
+                  f'(T$_{{agua}}$ = {T_agua:.0f} °C, v = {V_AGUA} m/s)')
+    ax1.legend(loc='upper right', framealpha=0.95)
+    ax1.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     ax1.set_xlim(0, T_TOTAL)
 
     # --- Panel inferior: Coeficiente U ---
-    ax2.plot(t_h, res['U_hist'], 'g-', linewidth=1.2)
-    for i, desc in enumerate(res['descargas']):
+    ax2.plot(t_h, res['U_hist'], color=COLOR_DESCARGA, linewidth=1.5)
+    for desc in res['descargas']:
         ax2.axvspan(desc['t_inicio_h'], desc['t_fin_h'],
-                    alpha=0.15, color=colores_desc[i])
+                    alpha=0.25, color=COLOR_BANDA_DESCARGA)
     ax2.set_xlabel('Tiempo [h]')
-    ax2.set_ylabel('U [W/m$^2\\cdot\\degree$C]')
-    ax2.grid(True, alpha=0.3)
+    ax2.set_ylabel('U [W/m$^2$·°C]')
+    ax2.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     ax2.set_xlim(0, T_TOTAL)
 
     plt.tight_layout()
@@ -404,21 +421,21 @@ def graficar_masa_nivel(res2, res3, figures_dir):
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 7), sharex=True)
 
     # --- Panel 1: Masa ---
-    ax1.plot(res2['t_h'], res2['m_g'] / 1000, 'b-', linewidth=1.8,
-             label=f'Esc. 2 (T$_{{agua}}$ = {res2["T_agua"]:.0f} $\\degree$C)')
-    ax1.plot(res3['t_h'], res3['m_g'] / 1000, 'r-', linewidth=1.8,
-             label=f'Esc. 3 (T$_{{agua}}$ = {res3["T_agua"]:.0f} $\\degree$C)')
+    ax1.plot(res2['t_h'], res2['m_g'] / 1000, color=COLOR_GLUCOSA, linewidth=2,
+             label=f'Esc. 2 (T$_{{agua}}$ = {res2["T_agua"]:.0f} °C)')
+    ax1.plot(res3['t_h'], res3['m_g'] / 1000, color=COLOR_AGUA, linewidth=2,
+             label=f'Esc. 3 (T$_{{agua}}$ = {res3["T_agua"]:.0f} °C)')
 
     # Marcar descargas con bandas
     for desc in res2['descargas']:
         ax1.axvspan(desc['t_inicio_h'], desc['t_fin_h'],
-                    alpha=0.10, color='orange')
+                    alpha=0.25, color=COLOR_BANDA_DESCARGA)
 
     ax1.set_ylabel('Masa de glucosa [ton]')
     ax1.set_title(f'Masa y nivel del tanque durante ciclo de {N_DESCARGAS} '
                   f'descargas de {MASA_POR_DESCARGA/1000:.0f} ton')
-    ax1.legend(loc='upper right', framealpha=0.9)
-    ax1.grid(True, alpha=0.3)
+    ax1.legend(loc='upper right', framealpha=0.95)
+    ax1.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     ax1.set_xlim(0, T_TOTAL)
 
     # --- Panel 2: Nivel (porcentaje) ---
@@ -427,19 +444,19 @@ def graficar_masa_nivel(res2, res3, figures_dir):
     nivel_2 = (res2['m_g'] / rho_glucosa(res2['T_g'])) / V_tot * 100
     nivel_3 = (res3['m_g'] / rho_glucosa(res3['T_g'])) / V_tot * 100
 
-    ax2.plot(res2['t_h'], nivel_2, 'b-', linewidth=1.8,
-             label=f'Esc. 2 (T$_{{agua}}$ = {res2["T_agua"]:.0f} $\\degree$C)')
-    ax2.plot(res3['t_h'], nivel_3, 'r-', linewidth=1.8,
-             label=f'Esc. 3 (T$_{{agua}}$ = {res3["T_agua"]:.0f} $\\degree$C)')
+    ax2.plot(res2['t_h'], nivel_2, color=COLOR_GLUCOSA, linewidth=2,
+             label=f'Esc. 2 (T$_{{agua}}$ = {res2["T_agua"]:.0f} °C)')
+    ax2.plot(res3['t_h'], nivel_3, color=COLOR_AGUA, linewidth=2,
+             label=f'Esc. 3 (T$_{{agua}}$ = {res3["T_agua"]:.0f} °C)')
 
     for desc in res2['descargas']:
         ax2.axvspan(desc['t_inicio_h'], desc['t_fin_h'],
-                    alpha=0.10, color='orange')
+                    alpha=0.25, color=COLOR_BANDA_DESCARGA)
 
     ax2.set_xlabel('Tiempo [h]')
     ax2.set_ylabel('Nivel del tanque [%]')
-    ax2.legend(loc='upper right', framealpha=0.9)
-    ax2.grid(True, alpha=0.3)
+    ax2.legend(loc='upper right', framealpha=0.95)
+    ax2.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     ax2.set_xlim(0, T_TOTAL)
 
     plt.tight_layout()
@@ -462,12 +479,12 @@ def graficar_gantt(res2, res3, figures_dir):
     """
     fig, ax = plt.subplots(figsize=(14, 5))
 
-    y_positions = {'Esc. 3 (75 $\\degree$C)': 1.0, 'Esc. 2 (65 $\\degree$C)': 0.0}
+    y_positions = {'Esc. 3 (75 °C)': 1.0, 'Esc. 2 (65 °C)': 0.0}
     bar_height = 0.35
 
     for label, y_pos, res, color_cal, color_desc in [
-        ('Esc. 2 (65 $\\degree$C)', 0.0, res2, '#4A90D9', '#E8833A'),
-        ('Esc. 3 (75 $\\degree$C)', 1.0, res3, '#2E6EAB', '#C96A2B'),
+        ('Esc. 2 (65 °C)', 0.0, res2, COLOR_GLUCOSA, COLOR_BANDA_DESCARGA),
+        ('Esc. 3 (75 °C)', 1.0, res3, '#1f3f7a', '#d9834f'),
     ]:
         for fase in res['fases']:
             t_ini = fase['t_inicio_h']
@@ -476,25 +493,29 @@ def graficar_gantt(res2, res3, figures_dir):
             if fase['tipo'] == 'descarga':
                 color = color_desc
                 hatch = '///'
-                edgecolor = 'darkorange'
+                edgecolor = COLOR_AGUA
             else:
                 color = color_cal
                 hatch = ''
-                edgecolor = 'navy'
+                edgecolor = COLOR_TEXTO
 
             ax.barh(y_pos, duracion, left=t_ini, height=bar_height,
-                    color=color, edgecolor=edgecolor, linewidth=0.5,
+                    color=color, edgecolor=edgecolor, linewidth=0.6,
                     hatch=hatch, alpha=0.85)
 
-        # Anotar temperaturas en las descargas
+        # Etiquetas D1-D5 centradas en cada descarga (temperaturas arriba)
         for desc in res['descargas']:
             t_mid = (desc['t_inicio_h'] + desc['t_fin_h']) / 2
+            ax.text(t_mid, y_pos,
+                    f"D{desc['descarga']}",
+                    ha='center', va='center', fontsize=9, color=COLOR_TEXTO,
+                    fontweight='bold')
             ax.text(t_mid, y_pos + bar_height / 2 + 0.02,
-                    f"{desc['T_inicio']:.1f}$\\rightarrow${desc['T_fin']:.1f} $\\degree$C",
-                    ha='center', va='bottom', fontsize=6.5, color='black',
+                    f"{desc['T_inicio']:.1f}→{desc['T_fin']:.1f} °C",
+                    ha='center', va='bottom', fontsize=7, color=COLOR_TEXTO,
                     fontweight='bold',
                     bbox=dict(boxstyle='round,pad=0.1', facecolor='white',
-                              edgecolor='gray', alpha=0.85))
+                              edgecolor=COLOR_REJILLA, alpha=0.9))
 
     ax.set_yticks(list(y_positions.values()))
     ax.set_yticklabels(list(y_positions.keys()), fontsize=11)
@@ -503,16 +524,16 @@ def graficar_gantt(res2, res3, figures_dir):
                  f'de {MASA_POR_DESCARGA/1000:.0f} ton en {T_TOTAL:.0f} h')
     ax.set_xlim(0, T_TOTAL)
     ax.set_ylim(-0.5, 1.8)
-    ax.grid(True, axis='x', alpha=0.3)
+    ax.grid(True, axis='x', linestyle='-', alpha=0.6, color=COLOR_REJILLA)
 
     # Leyenda manual
     from matplotlib.patches import Patch
     leyenda = [
-        Patch(facecolor='#4A90D9', edgecolor='navy', label='Calentamiento'),
-        Patch(facecolor='#E8833A', edgecolor='darkorange', hatch='///',
+        Patch(facecolor=COLOR_GLUCOSA, edgecolor=COLOR_TEXTO, label='Calentamiento'),
+        Patch(facecolor=COLOR_BANDA_DESCARGA, edgecolor=COLOR_AGUA, hatch='///',
               label='Descarga a carrotanque'),
     ]
-    ax.legend(handles=leyenda, loc='upper right', framealpha=0.9)
+    ax.legend(handles=leyenda, loc='upper right', framealpha=0.95)
 
     plt.tight_layout()
     plt.savefig(os.path.join(figures_dir, 'ciclo_gantt.pdf'))
@@ -586,7 +607,7 @@ def imprimir_resumen(res, escenario_num):
 
 if __name__ == "__main__":
     print("=" * 90)
-    print("SIMULACION DEL CICLO DE DESCARGAS A CARROTANQUE — Proyecto P2611")
+    print("SIMULACION DEL CICLO DE DESCARGAS A CARROTANQUE — Proyecto W2605")
     print("=" * 90)
     print(f"\nParametros del ciclo:")
     print(f"  Descargas:       {N_DESCARGAS} carrotanques de "
@@ -627,23 +648,25 @@ if __name__ == "__main__":
     # --- Comparativa ---
     print("\n\nGenerando grafica comparativa...")
     fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(res2['t_h'], res2['T_g'], 'b-', linewidth=1.8,
-            label=f'Escenario 2: T$_{{agua}}$ = 65 $\\degree$C')
-    ax.plot(res3['t_h'], res3['T_g'], 'r-', linewidth=1.8,
-            label=f'Escenario 3: T$_{{agua}}$ = 75 $\\degree$C')
-    ax.axhline(y=60, color='gray', linestyle=':', alpha=0.5,
-               label='T inicial = 60 $\\degree$C')
+    ax.plot(res2['t_h'], res2['T_g'], color=COLOR_GLUCOSA, linewidth=2,
+            label=f'Escenario 2: T$_{{agua}}$ = 65 °C')
+    ax.plot(res3['t_h'], res3['T_g'], color=COLOR_AGUA, linewidth=2,
+            label=f'Escenario 3: T$_{{agua}}$ = 75 °C')
+    ax.axhline(y=60, color=COLOR_TEXTO, linestyle=':', alpha=0.7,
+               label='Tope termostatico = 60 °C')
+    ax.axhline(y=57, color=COLOR_DESCARGA, linestyle='-.', alpha=0.8,
+               label='T descarga = 57 °C')
 
     for desc in res2['descargas']:
         ax.axvspan(desc['t_inicio_h'], desc['t_fin_h'],
-                   alpha=0.10, color='orange')
+                   alpha=0.25, color=COLOR_BANDA_DESCARGA)
 
     ax.set_xlabel('Tiempo [h]')
-    ax.set_ylabel('Temperatura de la glucosa [$\\degree$C]')
-    ax.set_title(f'Comparación de escenarios: Ciclo de {N_DESCARGAS} '
+    ax.set_ylabel('Temperatura de la glucosa [°C]')
+    ax.set_title(f'Comparacion de escenarios: Ciclo de {N_DESCARGAS} '
                  f'descargas de {MASA_POR_DESCARGA/1000:.0f} ton en {T_TOTAL:.0f} h')
-    ax.legend(loc='best', framealpha=0.9)
-    ax.grid(True, alpha=0.3)
+    ax.legend(loc='upper right', framealpha=0.95)
+    ax.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     ax.set_xlim(0, T_TOTAL)
     plt.tight_layout()
     plt.savefig(os.path.join(figures_dir, 'ciclo_comparacion_esc2_esc3.pdf'))

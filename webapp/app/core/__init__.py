@@ -1,5 +1,5 @@
 """
-Core de cálculos - Proyecto P2611
+Core de cálculos - Proyecto W2605
 """
 from .balance_energia import (
     calcular_transferencia_calor,

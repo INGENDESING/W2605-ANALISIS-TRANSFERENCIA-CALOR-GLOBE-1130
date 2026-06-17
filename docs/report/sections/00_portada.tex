@@ -1,72 +1,71 @@
 % ===================== PORTADA MINIMALISTA CON TABLAS ESTÉTICAS =====================
-\begin{titlepage}
-	\thispagestyle{corporativo}
+\thispagestyle{corporativo}
 
+\begingroup
+\centering
+\vspace*{1cm}
+
+{\Large\bfseries \documenttype}
+
+\vspace{0.6cm}
+\rule{\linewidth}{0.4pt}
+
+\vspace{0.4cm}
+{\huge\bfseries \projecttitle}
+
+\vspace{0.4cm}
+\rule{\linewidth}{0.4pt}
+
+\vspace{1cm}
+
+% Tabla de informaci\'on del proyecto
+\begin{table}[H]
+	\raggedright
+	\begin{tabular}{@{}ll@{}}
+		\toprule
+		\rowcolor{green!15}
+		\textbf{Cliente:} & INGREDION SA \\
+		\textbf{C\'odigo:} & \documentcode \\
+		\textbf{Fecha:} & \today \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\vspace{0.5cm}
+
+% Tabla de equipo de trabajo
+\begin{table}[H]
+	\raggedright
+	\begin{tabular}{@{}ll@{}}
+		\toprule
+		\rowcolor{green!15}
+		\textbf{Ingeniero Principal:} & \firmaAprobo \\
+		\textbf{Especialista T\'cnico:} & \firmaElaboro \\
+		\textbf{Revisor T\'cnico:} & \firmaReviso \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\vfill
+
+% Tabla de control de revisiones
+\begin{table}[H]
 	\centering
-	\vspace*{1cm}
-
-	{\Large\bfseries \documenttype}
-
-	\vspace{0.6cm}
-	\rule{\linewidth}{0.4pt}
-
-	\vspace{0.4cm}
-	{\huge\bfseries \projecttitle}
-
-	\vspace{0.4cm}
-	\rule{\linewidth}{0.4pt}
-
-	\vspace{1cm}
-
-	% Tabla de información del proyecto
-	\begin{table}[h]
-		\raggedright
-		\begin{tabular}{@{}ll@{}}
-			\toprule
-			\rowcolor{green!15}
-			\textbf{Cliente:} & INGREDION SA \\
-			\textbf{Código:} & \documentcode \\
-			\textbf{Fecha:} & \today \\
-			\bottomrule
-		\end{tabular}
-	\end{table}
-
-	\vspace{0.5cm}
-
-	% Tabla de equipo de trabajo
-	\begin{table}[h]
-		\raggedright
-		\begin{tabular}{@{}ll@{}}
-			\toprule
-			\rowcolor{green!15}
-			\textbf{Ingeniero Principal:} & \firmaAprobo \\
-			\textbf{Especialista Técnico:} & \firmaElaboro \\
-			\textbf{Revisor Técnico:} & \firmaReviso \\
-			\bottomrule
-		\end{tabular}
-	\end{table}
-
-	\vfill
-
-	% Tabla de control de revisiones
-	\begin{table}[h]
-		\centering
-		\caption*{\textbf{Control de Revisiones}}
-		\label{tab:control_revisiones}
-		\begin{tabularx}{\textwidth}{@{}llXlll@{}}
-			\toprule
-			\rowcolor{green!15}
-			\textbf{Rev.} & \textbf{Fecha} & \textbf{Descripción} & \textbf{Elaboró} & \textbf{Revisó} & \textbf{Aprobó} \\
-			\midrule
-			0 & \fechaRevCero & \descRevCero & \firmaElaboro & \firmaReviso & \firmaAprobo \\
-			1 & \fechaRevUno & \descRevUno & -- & -- & -- \\
-			2 & \fechaRevDos & \descRevDos & -- & -- & -- \\
-			3 & \fechaRevTres & \descRevTres & -- & -- & -- \\
-			4 & \fechaRevCuatro & \descRevCuatro & -- & -- & -- \\
-			\bottomrule
-		\end{tabularx}
-	\end{table}
-
-\end{titlepage}
+	\caption*{\textbf{Control de Revisiones}}
+	\label{tab:control_revisiones}
+	\begin{tabularx}{\textwidth}{@{}llXlll@{}}
+		\toprule
+		\rowcolor{green!15}
+		\textbf{Rev.} & \textbf{Fecha} & \textbf{Descripci\'on} & \textbf{Elabor\'o} & \textbf{Revis\'o} & \textbf{Aprob\'o} \\
+		\midrule
+		0 & \fechaRevCero & \descRevCero & \firmaElaboro & \firmaReviso & \firmaAprobo \\
+		1 & \fechaRevUno & \descRevUno & -- & -- & -- \\
+		2 & \fechaRevDos & \descRevDos & -- & -- & -- \\
+		3 & \fechaRevTres & \descRevTres & -- & -- & -- \\
+		4 & \fechaRevCuatro & \descRevCuatro & -- & -- & -- \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+\endgroup
 
 \newpage

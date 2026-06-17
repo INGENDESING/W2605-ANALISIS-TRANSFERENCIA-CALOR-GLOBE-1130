@@ -1,5 +1,5 @@
 """
-Comparativa de Configuraciones de Chaqueta — Proyecto P2611
+Comparativa de Configuraciones de Chaqueta — Proyecto W2605
 ===========================================================
 Compara la chaqueta dimple actual (A = 28 m², 3 entradas/3 salidas) con la
 chaqueta de media caña rectangular en espiral propuesta (A = 13 m², paso único).
@@ -32,6 +32,7 @@ import matplotlib.pyplot as plt
 import os
 import sys
 import io
+import shutil
 from scipy.integrate import solve_ivp
 from scipy.optimize import brentq
 
@@ -49,6 +50,37 @@ try:
 except ImportError as e:
     print(f"ERROR de importacion: {e}")
     sys.exit(1)
+
+
+# =============================================================================
+# CONFIGURACIÓN DE GRÁFICAS ESTILO PUBLICACIÓN
+# =============================================================================
+
+COLOR_GLUCOSA = '#2E5AAC'
+COLOR_AGUA = '#C44E28'
+COLOR_DESCARGA = '#3A7D44'
+COLOR_BANDA_DESCARGA = '#F4A261'
+COLOR_REJILLA = '#E5E5E5'
+COLOR_TEXTO = '#333333'
+
+plt.rcParams.update({
+    'font.family': 'serif',
+    'font.size': 11,
+    'axes.titlesize': 13,
+    'axes.labelsize': 12,
+    'legend.fontsize': 10,
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
+    'figure.dpi': 300,
+    'savefig.dpi': 300,
+    'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.02,
+    'axes.edgecolor': COLOR_TEXTO,
+    'axes.labelcolor': COLOR_TEXTO,
+    'xtick.color': COLOR_TEXTO,
+    'ytick.color': COLOR_TEXTO,
+    'text.color': COLOR_TEXTO,
+})
 
 
 # =============================================================================
@@ -379,18 +411,23 @@ def comparacion_flujo_continuo():
 def configurar_estilo():
     """Estilo publicación: serif, 300 dpi."""
     plt.rcParams.update({
-        'font.family':      'serif',
-        'font.size':        11,
-        'axes.labelsize':   12,
-        'axes.titlesize':   13,
-        'legend.fontsize':  10,
-        'xtick.labelsize':  10,
-        'ytick.labelsize':  10,
-        'figure.dpi':       150,
-        'savefig.dpi':      300,
-        'savefig.bbox':     'tight',
-        'lines.linewidth':  2.0,
-        'grid.alpha':       0.3,
+        'font.family': 'serif',
+        'font.size': 11,
+        'axes.titlesize': 13,
+        'axes.labelsize': 12,
+        'legend.fontsize': 10,
+        'xtick.labelsize': 10,
+        'ytick.labelsize': 10,
+        'figure.dpi': 300,
+        'savefig.dpi': 300,
+        'savefig.bbox': 'tight',
+        'savefig.pad_inches': 0.02,
+        'axes.edgecolor': COLOR_TEXTO,
+        'axes.labelcolor': COLOR_TEXTO,
+        'xtick.color': COLOR_TEXTO,
+        'ytick.color': COLOR_TEXTO,
+        'text.color': COLOR_TEXTO,
+        'lines.linewidth': 2.0,
     })
 
 
@@ -403,8 +440,8 @@ def graficar_batch(resultados, figures_dir):
 
     # Colores y estilos para las dos chaquetas
     estilos = {
-        'Actual (dimple, 28 m\u00b2)':         {'color': '#1f77b4', 'ls': '-',  'marker': None},
-        'Propuesta (media ca\u00f1a, 13 m\u00b2)': {'color': '#d62728', 'ls': '--', 'marker': None},
+        'Actual (dimple, 28 m\u00b2)':         {'color': COLOR_GLUCOSA, 'ls': '-',  'marker': None},
+        'Propuesta (media ca\u00f1a, 13 m\u00b2)': {'color': COLOR_AGUA, 'ls': '--', 'marker': None},
     }
 
     # --- Figura 1: T vs t ---
@@ -425,13 +462,13 @@ def graficar_batch(resultados, figures_dir):
                     color=est['color'], linestyle=est['ls'],
                     linewidth=2.2, label=label_txt)
 
-        ax.axhline(y=57, color='gray', linestyle=':', linewidth=1.5,
+        ax.axhline(y=57, color=COLOR_DESCARGA, linestyle=':', linewidth=1.5,
                    label='Objetivo: 57°C')
         ax.set_xlabel('Tiempo [h]', fontsize=12)
         ax.set_ylabel('Temperatura de la glucosa [°C]', fontsize=12)
         ax.set_title(titulo, fontsize=13, fontweight='bold')
         ax.legend(loc='lower right', fontsize=10)
-        ax.grid(True, alpha=0.3, linestyle='--')
+        ax.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
 
         # Marcar los tiempos de llegada a 57°C
         for nombre_chaqueta, est in estilos.items():
@@ -466,7 +503,7 @@ def graficar_batch(resultados, figures_dir):
 
     x = np.arange(len(nombres_casos))
     width = 0.35
-    colors = ['#1f77b4', '#d62728']
+    colors = [COLOR_GLUCOSA, COLOR_AGUA]
 
     fig2, ax2 = plt.subplots(figsize=(9, 6))
     for j, (nch, col) in enumerate(zip(nombres_chaq, colors)):
@@ -486,7 +523,7 @@ def graficar_batch(resultados, figures_dir):
     ax2.set_xticks(x)
     ax2.set_xticklabels(nombres_casos)
     ax2.legend(fontsize=10)
-    ax2.grid(True, axis='y', alpha=0.3, linestyle='--')
+    ax2.grid(True, axis='y', color=COLOR_REJILLA, linestyle='-', alpha=0.6)
 
     ratio_label = f'Ratio capacidad: {A_ACTUAL}/{A_PROPUESTA} = {A_ACTUAL/A_PROPUESTA:.2f}\u00d7'
     ax2.text(0.98, 0.97, ratio_label, transform=ax2.transAxes,
@@ -518,15 +555,15 @@ def graficar_flujo_continuo(df_25C, df_55C, flujos_max, figures_dir):
 
     for ax, (df, T_in_label, fmax) in zip(axes, datasets):
         flujos = df['Flujo_ton_h']
-        ax.plot(flujos, df['T_sal_actual_C'], 'b-o', markersize=5,
+        ax.plot(flujos, df['T_sal_actual_C'], color=COLOR_GLUCOSA, marker='o', linestyle='-', markersize=5,
                 linewidth=2, label=f'Actual (dimple, {A_ACTUAL:.0f} m²)')
-        ax.plot(flujos, df['T_sal_propuesta_C'], 'r--s', markersize=5,
+        ax.plot(flujos, df['T_sal_propuesta_C'], color=COLOR_AGUA, marker='s', linestyle='--', markersize=5,
                 linewidth=2, label=f'Propuesta (media caña, {A_PROPUESTA:.0f} m²)')
-        ax.axhline(y=57, color='gray', linestyle=':', linewidth=1.5,
+        ax.axhline(y=57, color=COLOR_DESCARGA, linestyle=':', linewidth=1.5,
                    label='Objetivo: 57°C')
 
         # Líneas verticales en flujos máximos
-        for key, col, ls in [('actual', 'b', ':'), ('propuesta', 'r', ':')]:
+        for key, col, ls in [('actual', COLOR_GLUCOSA, ':'), ('propuesta', COLOR_AGUA, ':')]:
             fm = fmax.get(key)
             if fm and fm <= 16:
                 ax.axvline(x=fm, color=col, linestyle=ls, alpha=0.7,
@@ -543,7 +580,7 @@ def graficar_flujo_continuo(df_25C, df_55C, flujos_max, figures_dir):
                      f'(agua 75°C, v = 2.5 m/s)',
                      fontsize=13, fontweight='bold')
         ax.legend(loc='lower left', fontsize=10)
-        ax.grid(True, alpha=0.3, linestyle='--')
+        ax.grid(True, color=COLOR_REJILLA, linestyle='-', alpha=0.6)
         ax.set_xlim(0, 16.5)
 
     plt.tight_layout()
@@ -559,7 +596,7 @@ def graficar_flujo_continuo(df_25C, df_55C, flujos_max, figures_dir):
     nombres_chaq  = ['actual', 'propuesta']
     labels_chaq   = [f'Actual (dimple, {A_ACTUAL:.0f} m²)',
                      f'Propuesta (media caña, {A_PROPUESTA:.0f} m²)']
-    colors = ['#1f77b4', '#d62728']
+    colors = [COLOR_GLUCOSA, COLOR_AGUA]
 
     fmax_vals = np.zeros((len(claves_fmax), 2))
     for i, clave in enumerate(claves_fmax):
@@ -588,7 +625,7 @@ def graficar_flujo_continuo(df_25C, df_55C, flujos_max, figures_dir):
     ax2.set_xticks(x)
     ax2.set_xticklabels(nombres_casos)
     ax2.legend(fontsize=10)
-    ax2.grid(True, axis='y', alpha=0.3, linestyle='--')
+    ax2.grid(True, axis='y', color=COLOR_REJILLA, linestyle='-', alpha=0.6)
     ax2.set_ylim(0, 20)
 
     plt.tight_layout()
@@ -690,7 +727,7 @@ def imprimir_resumen(resultados_batch, flujos_max):
 
 def main():
     print("=" * 70)
-    print("COMPARATIVA DE CONFIGURACIONES DE CHAQUETA — PROYECTO P2611")
+    print("COMPARATIVA DE CONFIGURACIONES DE CHAQUETA — PROYECTO W2605")
     print(f"Chaqueta actual: Dimple, A = {A_ACTUAL} m²  (3 entradas/3 salidas)")
     print(f"Chaqueta propuesta: Media cana, A = {A_PROPUESTA} m²  (1 paso en espiral)")
     print(f"Condiciones agua: T = {T_AGUA}°C, v = {V_AGUA} m/s")
@@ -701,8 +738,10 @@ def main():
     project_dir = os.path.dirname(script_dir)
     results_dir = os.path.join(project_dir, 'results')
     figures_dir = os.path.join(project_dir, 'figures')
+    results_figures_dir = os.path.join(results_dir, 'figures')
     os.makedirs(results_dir, exist_ok=True)
     os.makedirs(figures_dir, exist_ok=True)
+    os.makedirs(results_figures_dir, exist_ok=True)
 
     # Análisis A — Batch
     resultados_batch = comparacion_batch()
@@ -714,6 +753,21 @@ def main():
     print("\nGenerando graficas...")
     graficar_batch(resultados_batch, figures_dir)
     graficar_flujo_continuo(df_25C, df_55C, flujos_max, figures_dir)
+
+    # Copiar figuras a results/figures para coherencia con el documento LaTeX
+    nombres_figuras = [
+        'comp_batch_T_vs_t',
+        'comp_batch_tiempo_bar',
+        'comp_flujo_T_out_vs_mdot',
+        'comp_flujo_maximo_bar',
+    ]
+    for nombre in nombres_figuras:
+        for ext in ('.png', '.pdf'):
+            src = os.path.join(figures_dir, nombre + ext)
+            dst = os.path.join(results_figures_dir, nombre + ext)
+            if os.path.exists(src):
+                shutil.copy2(src, dst)
+    print(f"\u2713 Figuras copiadas a: {results_figures_dir}")
 
     # Guardar CSV
     guardar_resultados(resultados_batch, df_25C, df_55C, flujos_max, results_dir)

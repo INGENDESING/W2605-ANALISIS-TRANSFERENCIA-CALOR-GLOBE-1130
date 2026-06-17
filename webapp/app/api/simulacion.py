@@ -57,7 +57,7 @@ def api_capacidad():
     {
         "temp_inicial": 57,
         "temp_agua": 65,
-        "num_descargas": 8,
+        "num_descargas": 5,
         "masa_por_descarga_ton": 24,
         "tiempo_descarga_h": 1.5,
         "nivel_inicial_pct": 80
@@ -68,7 +68,7 @@ def api_capacidad():
     try:
         temp_inicial = float(data.get('temp_inicial', 57))
         temp_agua = float(data.get('temp_agua', 65))
-        num_descargas = int(data.get('num_descargas', 8))
+        num_descargas = int(data.get('num_descargas', 5))
         masa_por_descarga = float(data.get('masa_por_descarga_ton', 24)) * 1000
         tiempo_descarga = float(data.get('tiempo_descarga_h', 1.5))
         nivel_inicial = float(data.get('nivel_inicial_pct', 80))
@@ -97,11 +97,11 @@ def api_ciclo_descargas():
     {
         "temp_inicial": 57,
         "temp_agua": 65,
-        "num_descargas": 8,
+        "num_descargas": 5,
         "masa_por_descarga_ton": 24,
         "tiempo_descarga_h": 1.5,
         "nivel_inicial_pct": 80,
-        "periodo_ciclo_h": 3.0
+        "periodo_ciclo_h": 4.8
     }
     """
     data = request.get_json()
@@ -109,12 +109,12 @@ def api_ciclo_descargas():
     try:
         temp_inicial = float(data.get('temp_inicial', 57))
         temp_agua = float(data.get('temp_agua', 65))
-        num_descargas = int(data.get('num_descargas', 8))
+        num_descargas = int(data.get('num_descargas', 5))
         masa_por_descarga = float(data.get('masa_por_descarga_ton', 24)) * 1000
         tiempo_descarga = float(data.get('tiempo_descarga_h', 1.5))
         nivel_inicial = float(data.get('nivel_inicial_pct', 80))
         v_agua = float(data.get('v_agua', 2.5))
-        periodo = float(data.get('periodo_ciclo_h', 3.0))
+        periodo = float(data.get('periodo_ciclo_h', 4.8))
         
         resultado = simular_ciclo_descargas(
             temp_inicial, temp_agua, num_descargas,
@@ -138,14 +138,14 @@ def api_comparar_escenarios():
     Request JSON:
     {
         "temp_inicial": 57,
-        "num_descargas": 8
+        "num_descargas": 5
     }
     """
     data = request.get_json()
     
     try:
         temp_inicial = float(data.get('temp_inicial', 57))
-        num_descargas = int(data.get('num_descargas', 8))
+        num_descargas = int(data.get('num_descargas', 5))
         
         # Simular escenario 2 (65°C)
         resultado_65 = simular_ciclo_descargas(

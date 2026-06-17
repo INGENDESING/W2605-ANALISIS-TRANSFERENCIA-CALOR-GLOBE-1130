@@ -1,6 +1,6 @@
 """
 Escenario 01C - Calculo de temperatura de salida de glucosa
-Proyecto P2611 - Analisis Termico del Tanque de Glucosa
+Proyecto W2605 - Analisis Termico del Tanque de Glucosa
 
 Este script calcula la temperatura de salida de glucosa considerando:
 - Balance de energia en estado estacionario
@@ -256,7 +256,7 @@ def calcular_T_salida(v_viento):
 def main():
     print("=" * 78)
     print("ESCENARIO 01A - Calculo de temperatura de salida de glucosa")
-    print("Proyecto P2611 - Analisis Termico del Tanque de Glucosa")
+    print("Proyecto W2605 - Analisis Termico del Tanque de Glucosa")
     print("=" * 78)
     print()
     print("Parametros del escenario:")

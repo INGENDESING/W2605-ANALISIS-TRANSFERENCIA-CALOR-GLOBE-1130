@@ -1,5 +1,5 @@
 /**
- * Propiedades Termofísicas - P2611
+ * Propiedades Termofísicas - W2605
  * Glucosa Globe 1130 (85 Brix)
  */
 

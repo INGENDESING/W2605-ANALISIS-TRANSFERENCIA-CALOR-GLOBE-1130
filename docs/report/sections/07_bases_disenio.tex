@@ -1,289 +1,220 @@
 \section{Bases de Dise\~no}
 
-El presente estudio se fundamenta en los datos de geometr\'ia del tanque, las propiedades termof\'isicas del fluido almacenado, las condiciones operacionales reportadas por INGREDION~SA y las normativas internacionales aplicables. A continuaci\'on se detallan las bases de dise\~no que sustentan los c\'alculos de transferencia de calor (Parte~I) y el an\'alisis estructural (Parte~II).
+El presente estudio se fundamenta en los datos de geometr\'ia del tanque, las propiedades termof\'isicas del fluido almacenado y las condiciones operacionales reportadas por Ingredion~S.A. A continuaci\'on se detallan las bases de dise\~no que sustentan los c\'alculos de transferencia de calor.
 
 \subsection{Condiciones Ambientales del Sitio}
 
-La planta de INGREDION~SA se ubica en la zona industrial de Cali, Valle del Cauca, Colombia. Las condiciones ambientales de dise\~no se resumen en la Tabla~\ref{tab:environmental_conditions}.
+La planta de Ingredion~S.A. se ubica en la zona industrial de Cali, Valle del Cauca, Colombia. Las condiciones ambientales de dise\~no se resumen en la Tabla~\ref{tab:environmental_conditions}.
 
 \begin{table}[H]
-	\centering
-	\caption{Condiciones ambientales del sitio de instalaci\'on (Cali, Colombia).}
-	\label{tab:environmental_conditions}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NXclc@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Par\'ametro Ambiental} & \textbf{Valor} & \textbf{Unidad} & \textbf{Referencia} \\
-		\midrule
-		& Temperatura ambiente m\'axima & 38.0 & °C & IDEAM 2023 \\
-		& Temperatura ambiente m\'inima & 15.0 & °C & IDEAM 2023 \\
-		& Temperatura ambiente promedio & 26.5 & °C & IDEAM 2023 \\
-		& Humedad relativa m\'axima & 85.0 & \% & IDEAM 2023 \\
-		& Humedad relativa m\'inima & 45.0 & \% & IDEAM 2023 \\
-		& Presi\'on atmosf\'erica & 101.3 & kPa & NOAA 2022 \\
-		& Altitud sobre el nivel del mar & 960 & msnm & IGAC 2021 \\
-		& Velocidad m\'axima del viento & 120.0 & km/h & Estaci\'on local 2022 \\
-		& Direcci\'on predominante del viento & -- & Noreste & Estaci\'on local 2022 \\
-		& Coordenadas geogr\'aficas (latitud) & -- & 3°27' N & GPS 2023 \\
-		& Coordenadas geogr\'aficas (longitud) & -- & 76°31' O & GPS 2023 \\
-		& Zona s\'ismica & -- & Intermedia & NSR-10 2010 \\
-		& Precipitaci\'on m\'axima anual & 1200.0 & mm & IDEAM 2023 \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{Condiciones ambientales del sitio de instalaci\'on (Cali, Colombia).}
+\label{tab:environmental_conditions}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NXclc@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{\'Item}} & \textbf{Par\'ametro Ambiental} & \textbf{Valor} & \textbf{Unidad} & \textbf{Referencia} \\
+\midrule
+& Temperatura ambiente m\'axima & 38,0 & \textdegree C & IDEAM 2023 \\
+& Temperatura ambiente m\'inima & 15,0 & \textdegree C & IDEAM 2023 \\
+& Temperatura ambiente promedio & 26,5 & \textdegree C & IDEAM 2023 \\
+& Humedad relativa m\'axima & 85,0 & \% & IDEAM 2023 \\
+& Humedad relativa m\'inima & 45,0 & \% & IDEAM 2023 \\
+& Presi\'on atmosf\'erica & 101,3 & kPa & NOAA 2022 \\
+& Altitud sobre el nivel del mar & 960 & msnm & IGAC 2021 \\
+& Precipitaci\'on m\'axima anual & 1200,0 & mm & IDEAM 2023 \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
 \subsection{Geometr\'ia del Tanque de Almacenamiento}
 
-El tanque de almacenamiento de glucosa es un recipiente vertical cil\'indrico con fondo toriesf\'erico y tapa c\'onica, fabricado en acero inoxidable SS316L. El fondo toriesf\'erico es de fabricaci\'on nueva y constituye el elemento principal de este estudio. La Tabla~\ref{tab:tank_geometry} resume las dimensiones principales.
+El tanque de almacenamiento de glucosa es un recipiente vertical cil\'indrico con fondo toriesf\'erico y tapa c\'onica, fabricado en acero inoxidable SS316L. El fondo toriesf\'erico constituye el elemento principal de este estudio porque aloja la chaqueta de media ca\~na. La Tabla~\ref{tab:tank_geometry} resume las dimensiones principales.
 
 \begin{table}[H]
-	\centering
-	\caption{Dimensiones principales del tanque de almacenamiento de glucosa.}
-	\label{tab:tank_geometry}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NXclc@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Par\'ametro Geom\'etrico} & \textbf{Valor} & \textbf{Unidad} & \textbf{Componente} \\
-		\midrule
-		& Di\'ametro exterior del cuerpo (OD) & 5276 & mm & Cuerpo cil\'indrico \\
-		& Di\'ametro interior del cuerpo (ID) & 5264 & mm & Cuerpo cil\'indrico \\
-		& Espesor del cuerpo cil\'indrico & 6.0 & mm & Cuerpo (existente) \\
-		& Altura de la secci\'on cil\'indrica & 9670 & mm & Cuerpo cil\'indrico \\
-		& Di\'ametro exterior del fondo (OD) & 5282 & mm & Fondo toriesf\'erico \\
-		& Espesor del fondo toriesf\'erico & 9.0 & mm & Fondo (construido) \\
-		& Altura del fondo toriesf\'erico & 1266 & mm & Fondo toriesf\'erico \\
-		& Radio de corona $L$ (ASME F\&D) & 5264 & mm & Fondo toriesf\'erico \\
-		& Radio de nudillo $r$ (ASME F\&D) & 315.8 & mm & Fondo toriesf\'erico \\
-		\midrule
-		& \textbf{Capacidad Nominal (100\%)} & \textbf{222.8} & \textbf{m\textsuperscript{3}} & \textbf{Cilindro + Fondo} \\
-		& Volumen al 80\% de llenado & 178.2 & m\textsuperscript{3} & Operaci\'on normal \\
-		& \textbf{L\'imite de Seguridad (80\%)} & \textbf{178.2} & \textbf{m\textsuperscript{3}} & \textbf{Restricci\'on Operativa ($FS \geq 1.3$)} \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{Dimensiones principales del tanque de almacenamiento de glucosa.}
+\label{tab:tank_geometry}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NXclc@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{\'Item}} & \textbf{Par\'ametro Geom\'etrico} & \textbf{Valor} & \textbf{Unidad} & \textbf{Componente} \\
+\midrule
+& Di\'ametro exterior del cuerpo (OD) & 5.276 & mm & Cuerpo cil\'indrico \\
+& Di\'ametro interior del cuerpo (ID) & 5.264 & mm & Cuerpo cil\'indrico \\
+& Espesor del cuerpo cil\'indrico & 6,0 & mm & Cuerpo (existente) \\
+& Altura de la secci\'on cil\'indrica & 9.670 & mm & Cuerpo cil\'indrico \\
+& Di\'ametro exterior del fondo (OD) & 5.282 & mm & Fondo toriesf\'erico \\
+& Espesor del fondo toriesf\'erico & 9,0 & mm & Fondo (construido) \\
+& Altura del fondo toriesf\'erico & 1.266 & mm & Fondo toriesf\'erico \\
+& Radio de corona $L$ (ASME F\&D) & 5.264 & mm & Fondo toriesf\'erico \\
+& Radio de nudillo $r$ (ASME F\&D) & 315,8 & mm & Fondo toriesf\'erico \\
+\midrule
+& \textbf{Capacidad nominal (100\%)} & \textbf{222,8} & \textbf{m\textsuperscript{3}} & \textbf{Cilindro + Fondo} \\
+& Volumen al 80\% de llenado & 178,2 & m\textsuperscript{3} & Operaci\'on normal \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
-Es fundamental precisar que la \textbf{Capacidad Nominal (100\%)} se define técnicamente como el volumen contenido desde la base del fondo toriesférico hasta el nivel superior del cuerpo cilíndrico (\textit{Top of Shell}). El volumen de la tapa cónica superior (\textit{Top Head}) no se considera dentro de la capacidad de almacenamiento y debe reservarse estrictamente como espacio de vapor (\textit{ullage}). El análisis estructural mediante elementos finitos (FEA) ha demostrado que el llenado al 100\% genera un factor de seguridad de 0.71 en el nudillo (sobreesfuerzo local), mientras que al 80\% de llenado se garantiza un factor de seguridad $FS \geq 1.3$. Por tanto, se establece el límite de \textbf{178.2 m\textsuperscript{3} (80\%)} como la cota máxima permitida de operación segura.
-
-La Figura~\ref{fig:fondo_toriesferico} presenta el plano de elevaci\'on del fondo toriesf\'erico con las dimensiones principales y el detalle de la transici\'on cuerpo--fondo. Complementariamente, la Figura~\ref{fig:render_isometria} proporciona una visualizaci\'on isom\'etrica conceptual del conjunto para facilitar la interpretaci\'on de la geometr\'ia del tanque de almacenamiento de glucosa Tag 53A-90A-0056.
+La capacidad nominal se define t\'ecnicamente como el volumen contenido desde la base del fondo toriesf\'erico hasta el nivel superior del cuerpo cil\'indrico. El volumen de la tapa c\'onica superior se reserva como espacio de vapor. La Figura~\ref{fig:fondo_toriesferico} presenta el plano de elevaci\'on del fondo toriesf\'erico con las dimensiones principales y el detalle de la transici\'on cuerpo--fondo.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.85\textwidth]{../../Data/planos/fondo.png}
-	\caption{Plano de elevaci\'on del fondo toriesf\'erico del tanque de glucosa. Se indican las dimensiones principales del radio de corona, radio de nudillo y la transici\'on con el cuerpo cil\'indrico (Detail~E).}
-	\label{fig:fondo_toriesferico}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.80\textwidth]{../../results/figures/IsoT1.png}
-	\caption{Render conceptual e isométrica del tanque de almacenamiento de glucosa Tag 53A-90A-0056. Se aprecia la configuración vertical cilíndrica con fondo toriesférico y la disposición de las boquillas de descarga y venteo.}
-	\label{fig:render_isometria}
+\centering
+\includegraphics[width=0.85\textwidth]{../../Data/planos/fondo.png}
+\caption{Plano de elevaci\'on del fondo toriesf\'erico del tanque de glucosa. Se indican las dimensiones principales del radio de corona, radio de nudillo y la transici\'on con el cuerpo cil\'indrico.}
+\label{fig:fondo_toriesferico}
 \end{figure}
 
 El sistema de calentamiento consiste en una chaqueta de media ca\~na de perfil rectangular soldada en espiral sobre la superficie exterior del fondo toriesf\'erico. Las caracter\'isticas de la media ca\~na se presentan en la Tabla~\ref{tab:halfpipe_geometry}.
 
 \begin{table}[H]
-	\centering
-	\caption{Geometr\'ia de la chaqueta de media ca\~na rectangular en espiral.}
-	\label{tab:halfpipe_geometry}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NXclc@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Par\'ametro} & \textbf{Valor} & \textbf{Unidad} & \textbf{Observaci\'on} \\
-		\midrule
-		& Ancho interno del perfil rectangular & 141.0 & mm & Lado mayor \\
-		& Altura interna del perfil rectangular & 45.5 & mm & Lado menor \\
-		& Espesor de l\'amina del perfil & 4.5 & mm & Acero SS316L \\
-		& Paso de la espiral & 196 & mm & Centro a centro \\
-		& \'Area de contacto con el tanque & 13.0 & m\textsuperscript{2} & Superficie efectiva \\
-		& Di\'ametro hidr\'aulico $D_h$ & 68.8 & mm & $4A_c/P_m$ \\
-		& \'Area de secci\'on transversal $A_c$ & 64.16 & cm\textsuperscript{2} & $141 \times 45.5$ mm \\
-		& Espesor de aislamiento recomendado & 50.8 & mm & Lana mineral (2''), calculado \\
-		& Tuber\'ia de alimentaci\'on de agua & 2'' & Sch 40 & Entrada/salida \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{Geometr\'ia de la chaqueta de media ca\~na rectangular en espiral.}
+\label{tab:halfpipe_geometry}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NXclc@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{\'Item}} & \textbf{Par\'ametro} & \textbf{Valor} & \textbf{Unidad} & \textbf{Observaci\'on} \\
+\midrule
+& Ancho interno del perfil rectangular & 141,0 & mm & Lado mayor \\
+& Altura interna del perfil rectangular & 45,5 & mm & Lado menor \\
+& Espesor de l\'amina del perfil & 4,5 & mm & Acero SS316L \\
+& Paso de la espiral & 196 & mm & Centro a centro \\
+& \'Area de contacto con el tanque & 13,0 & m\textsuperscript{2} & Superficie efectiva \\
+& Entrada central de agua caliente & 45 & \% & Zona central del \'area total \\
+& Entrada perif\'erica de agua caliente & 55 & \% & Zona perif\'erica del \'area total \\
+& Salida com\'un de agua fr\'ia & 45 & \% & Retorno \'unico \\
+& Di\'ametro hidr\'aulico $D_h$ & 68,8 & mm & $4A_c/P_m$ \\
+& \'Area de secci\'on transversal $A_c$ & 64,16 & cm\textsuperscript{2} & $141 \times 45,5$~mm \\
+& Espesor de aislamiento recomendado & 50,8 & mm & Lana mineral (2''), calculado \\
+& Tuber\'ia de alimentaci\'on de agua & 2'' & Sch 40 & Entrada/salida \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
 La Figura~\ref{fig:espiral_mediacana} muestra la vista en planta de la distribuci\'on en espiral de la media ca\~na sobre el fondo toriesf\'erico, incluyendo las conexiones de entrada y salida de agua caliente y el detalle del paso entre espiras.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.85\textwidth]{../../Data/planos/espiral.png}
-	\caption{Vista en planta (View~T'--T') de la chaqueta de media ca\~na en espiral sobre el fondo toriesf\'erico. Se indica la entrada de agua caliente (inlet) cerca del centro, la salida (outlet) en la periferia y el paso de la espiral de 196~mm (Detail~D).}
-	\label{fig:espiral_mediacana}
+\centering
+\includegraphics[width=0.85\textwidth]{../../Data/planos/espiral.png}
+\caption{Vista en planta de la chaqueta de media ca\~na en espiral sobre el fondo toriesf\'erico. Se indica la doble entrada de agua caliente (45~\% en zona central y 55~\% en zona perif\'erica), la salida com\'un de agua fr\'ia al 45~\% del \'area y el paso de la espiral de 196~mm.}
+\label{fig:espiral_mediacana}
 \end{figure}
 
-\subsection{Propiedades Fisicoqu\'imicas de la Glucosa Globe 1130}
+\subsection{Propiedades Fisicoqu\'imicas de la Glucosa Globe~42~DE}
 
-El fluido almacenado es glucosa Globe~1130, un jarabe de glucosa de alta concentraci\'on fabricado por INGREDION~SA. Seg\'un la ficha t\'ecnica oficial del fabricante (Globe\textsuperscript{\textregistered}~42~DE Corn Syrup/Glucose~011420, Ingredion~2017), se trata de un jarabe de ma\'iz de conversi\'on regular, intercambio i\'onico, con equivalente de dextrosa (DE) de 40.5--46.5 y concentraci\'on de s\'olidos seca (Dry Substance) de 79.7--81.5\%. La Tabla~\ref{tab:ingredion_spec} resume las especificaciones oficiales del producto.
-
-\begin{table}[H]
-	\centering
-	\caption{Especificaciones oficiales del jarabe Globe\textsuperscript{\textregistered}~42~DE (ficha t\'ecnica Ingredion~011420, 2017).}
-	\label{tab:ingredion_spec}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NlccX@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Propiedad} & \textbf{M\'in} & \textbf{M\'ax} & \textbf{Observaci\'on} \\
-		\midrule
-		& Sustancia seca [\%] & 79.7 & 81.5 & °Brix equivalente \\
-		& Equivalente de dextrosa (DE) & 40.5 & 46.5 & Conversi\'on regular \\
-		& Color, CP & -- & 1.2 & -- \\
-		& SO\textsubscript{2} [ppm] & -- & $<$ 10 & -- \\
-		& Cenizas [\%] & -- & 0.05 & -- \\
-		& Almid\'on aparente & \multicolumn{2}{c}{Negativo} & -- \\
-		\midrule
-		\multicolumn{5}{@{}l}{\textit{Perfil de carbohidratos (\% base seca, t\'ipico):}} \\
-		& Dextrosa & \multicolumn{2}{c}{21\%} & -- \\
-		& Maltosa & \multicolumn{2}{c}{13\%} & -- \\
-		& Maltotriosa & \multicolumn{2}{c}{11\%} & -- \\
-		& Sacaridos superiores (DP4+) & \multicolumn{2}{c}{55\%} & -- \\
-		\midrule
-		\multicolumn{5}{@{}l}{\textit{Densidad y viscosidad vs.\ temperatura (ficha t\'ecnica):}} \\
-		& 26.7~°C (80~°F) & \multicolumn{2}{c}{$\rho = 1.421$~kg/L, $\mu = 74\,000$~cP} & -- \\
-		& 37.8~°C (100~°F) & \multicolumn{2}{c}{$\rho = 1.415$~kg/L, $\mu = 17\,400$~cP} & -- \\
-		& 48.9~°C (120~°F) & \multicolumn{2}{c}{$\rho = 1.409$~kg/L, $\mu = 5\,400$~cP} & -- \\
-		\midrule
-		& T de almacenamiento recomendada & 49 & 54 & °C (120--130~°F) \\
-		& Certificaciones & \multicolumn{2}{c}{Kosher pareve, Halal} & FCC, 21~CFR~168.120 \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
-
-La concentraci\'on de dise\~no se establece en 80.6~°Brix (valor nominal medio de la ficha t\'ecnica: 79.7--81.5\% de sustancia seca), lo cual corresponde al producto tal como es suministrado por INGREDION. A temperaturas inferiores a 40~°C, la glucosa Globe~42~DE es extremadamente viscosa ($>$13\,500~cP) y se comporta pr\'acticamente como un fluido semis\'olido; a temperaturas superiores a 50~°C, su viscosidad disminuye significativamente y el fluido puede ser bombeado y descargado con facilidad. Esta dependencia de la viscosidad con la temperatura es el factor determinante en el dise\~no del sistema de calentamiento.
-
-La Tabla~\ref{tab:glucose_properties} presenta las propiedades termof\'isicas de la glucosa Globe~42~DE a 80.6~°Brix en funci\'on de la temperatura. La viscosidad se obtuvo mediante un modelo de Vogel-Fulcher-Tammann (VFT)~\citep{telis2007} calibrado a los tres puntos de la ficha t\'ecnica (Tabla~\ref{tab:ingredion_spec}); la densidad proviene del ajuste lineal a los mismos tres puntos. El calor espec\'ifico y la conductividad t\'ermica se calcularon con las correlaciones de Choi~\&~Okos~\citep{choi1986} para soluciones de carbohidratos.
+El fluido almacenado es glucosa Globe~1130, un jarabe de glucosa de alta concentraci\'on. Seg\'un la ficha t\'ecnica oficial del fabricante (Globe\textsuperscript{\textregistered}~42~DE Corn Syrup/Glucose~011420, Ingredion~2017), se trata de un jarabe de ma\'iz de conversi\'on regular, intercambio i\'onico, con equivalente de dextrosa (DE) de 40,5--46,5 y concentraci\'on de s\'olidos seca de 79,7--81,5~\%. La Tabla~\ref{tab:ingredion_spec} resume las especificaciones oficiales del producto.
 
 \begin{table}[H]
-	\centering
-	\caption{Propiedades termof\'isicas de la glucosa Globe~42~DE ($\sim$80.6~°Brix) en funci\'on de la temperatura.}
-	\label{tab:glucose_properties}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NcccccX@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{$T$ [°C]} & \textbf{$\rho$ [kg/m\textsuperscript{3}]} & \textbf{$\mu$ [cP]} & \textbf{$C_p$ [J/(kg$\cdot$°C)]} & \textbf{$k$ [W/(m$\cdot$°C)]} & \textbf{Fuente} \\
-		\midrule
-		& 20 & 1424.6 & 212\,000 & 2088 & 0.301 & Modelo VFT \\
-		& 26.7 & 1421.0 & 74\,000 & 2095 & 0.306 & Ficha t\'ecnica \\
-		& 37.8 & 1415.0 & 17\,400 & 2106 & 0.316 & Ficha t\'ecnica \\
-		& 48.9 & 1409.0 & 5\,400 & 2117 & 0.327 & Ficha t\'ecnica \\
-		& 60 & 1403.0 & 2\,060 & 2134 & 0.344 & Modelo VFT \\
-		& 70 & 1397.6 & 986 & 2143 & 0.352 & Modelo VFT \\
-		& 80 & 1392.2 & 522 & 2151 & 0.359 & Modelo VFT \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{Especificaciones oficiales del jarabe Globe\textsuperscript{\textregistered}~42~DE (ficha t\'ecnica Ingredion~011420, 2017).}
+\label{tab:ingredion_spec}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NlccX@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{\'Item}} & \textbf{Propiedad} & \textbf{M\'in} & \textbf{M\'ax} & \textbf{Observaci\'on} \\
+\midrule
+& Sustancia seca [\%] & 79,7 & 81,5 & \textdegree Brix equivalente \\
+& Equivalente de dextrosa (DE) & 40,5 & 46,5 & Conversi\'on regular \\
+& Color, CP & -- & 1,2 & -- \\
+& SO\textsubscript{2} [ppm] & -- & $<$ 10 & -- \\
+& Cenizas [\%] & -- & 0,05 & -- \\
+& Almid\'on aparente & \multicolumn{2}{c}{Negativo} & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Perfil de carbohidratos (\% base seca, t\'ipico):}} \\
+& Dextrosa & \multicolumn{2}{c}{21\%} & -- \\
+& Maltosa & \multicolumn{2}{c}{13\%} & -- \\
+& Maltotriosa & \multicolumn{2}{c}{11\%} & -- \\
+& Sac\'aridos superiores (DP4+) & \multicolumn{2}{c}{55\%} & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Densidad y viscosidad vs.\ temperatura (ficha t\'ecnica):}} \\
+& 26,7~\textdegree C (80~\textdegree F) & \multicolumn{2}{c}{$\rho = 1,421$~kg/L, $\mu = 74{.}000$~cP} & -- \\
+& 37,8~\textdegree C (100~\textdegree F) & \multicolumn{2}{c}{$\rho = 1,415$~kg/L, $\mu = 17{.}400$~cP} & -- \\
+& 48,9~\textdegree C (120~\textdegree F) & \multicolumn{2}{c}{$\rho = 1,409$~kg/L, $\mu = 5{.}400$~cP} & -- \\
+\midrule
+& Temperatura de almacenamiento recomendada & 49 & 54 & \textdegree C (120--130~\textdegree F) \\
+& Certificaciones & \multicolumn{2}{c}{Kosher pareve, Halal} & FCC, 21~CFR~168.120 \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
-La caracter\'istica m\'as relevante de la glucosa Globe~42~DE para este estudio es la ca\'ida dram\'atica de la viscosidad con la temperatura: de 212\,000~cP a 20~°C a 2\,060~cP a 60~°C, lo que representa una reducci\'on de dos \'ordenes de magnitud. Este comportamiento se modela mediante una ecuaci\'on de Vogel-Fulcher-Tammann (VFT):
+La concentraci\'on de dise\~no se establece en 80,6~\textdegree Brix, valor nominal medio de la ficha t\'ecnica. A temperaturas inferiores a 40~\textdegree C la glucosa Globe~42~DE es extremadamente viscosa y se comporta pr\'acticamente como un fluido semis\'olido; a temperaturas superiores a 50~\textdegree C su viscosidad disminuye significativamente y el fluido puede ser bombeado y descargado con facilidad. Esta dependencia de la viscosidad con la temperatura es el factor determinante en el dise\~no del sistema de calentamiento.
+
+La Tabla~\ref{tab:glucose_properties} presenta las propiedades termof\'isicas de la glucosa Globe~42~DE a 80,6~\textdegree Brix en funci\'on de la temperatura. La viscosidad se obtuvo mediante un modelo de Vogel-Fulcher-Tammann (VFT) calibrado a los tres puntos de la ficha t\'ecnica; la densidad proviene del ajuste lineal a los mismos tres puntos. El calor espec\'ifico y la conductividad t\'ermica se calcularon con las correlaciones de Choi y Okos para soluciones de carbohidratos.
+
+\begin{table}[H]
+\centering
+\caption{Propiedades termof\'isicas de la glucosa Globe~42~DE ($\sim$80,6~\textdegree Brix) en funci\'on de la temperatura.}
+\label{tab:glucose_properties}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NcccccX@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{\'Item}} & \textbf{$T$ [\textdegree C]} & \textbf{$\rho$ [kg/m\textsuperscript{3}]} & \textbf{$\mu$ [cP]} & \textbf{$C_p$ [J/(kg$\cdot$\textdegree C)]} & \textbf{$k$ [W/(m$\cdot$\textdegree C)]} & \textbf{Fuente} \\
+\midrule
+& 25 & 1.421,6 & 212{.}000 & 2.092 & 0,304 & Modelo VFT \\
+& 26,7 & 1.421,0 & 74{.}000 & 2.095 & 0,306 & Ficha t\'ecnica \\
+& 37,8 & 1.415,0 & 17{.}400 & 2.106 & 0,316 & Ficha t\'ecnica \\
+& 48,9 & 1.409,0 & 5{.}400 & 2.117 & 0,327 & Ficha t\'ecnica \\
+& 57 & 1.404,6 & 2{.}600 & 2.131 & 0,340 & Modelo VFT \\
+& 60 & 1.403,0 & 2{.}060 & 2.134 & 0,344 & Modelo VFT \\
+& 70 & 1.397,6 & 986 & 2.143 & 0,352 & Modelo VFT \\
+& 80 & 1.392,2 & 522 & 2.151 & 0,359 & Modelo VFT \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La caracter\'istica m\'as relevante de la glucosa Globe~42~DE para este estudio es la ca\'ida dram\'atica de la viscosidad con la temperatura: de 212{.}000~cP a 25~\textdegree C a 2{.}060~cP a 60~\textdegree C, lo que representa una reducci\'on de dos \'ordenes de magnitud. Este comportamiento se modela mediante una ecuaci\'on de Vogel-Fulcher-Tammann (VFT):
 \begin{equation}
 \ln(\mu) = A + \frac{B}{T + C}
 \label{eq:vft}
 \end{equation}
-donde $A = -9.350$, $B = 1\,278.0$~°C y $C = 66.90$~°C, con $\mu$ en Pa$\cdot$s y $T$ en °C. Los tres par\'ametros se determinaron mediante ajuste exacto a los tres puntos de densidad y viscosidad de la ficha t\'ecnica Ingredion~011420 (Tabla~\ref{tab:ingredion_spec}), obteniendo residuales del orden de $10^{-14}$\%.
+donde $A = -9,350$, $B = 1{.}278,0$~\textdegree C y $C = 66,90$~\textdegree C, con $\mu$ en Pa$\cdot$s y $T$ en \textdegree C. Los tres par\'ametros se determinaron mediante ajuste exacto a los tres puntos de densidad y viscosidad de la ficha t\'ecnica Ingredion~011420.
 
 \subsection{Propiedades del Agua de Calentamiento}
 
-El fluido de servicio en la chaqueta de media ca\~na es agua caliente proveniente del sistema de servicios industriales de la planta. Las propiedades del agua se eval\'uan a la temperatura media de operaci\'on en cada escenario mediante correlaciones simplificadas validadas en el rango de 40 a 80~°C. La Tabla~\ref{tab:water_properties} presenta valores representativos.
+El fluido de servicio en la chaqueta de media ca\~na es agua caliente proveniente del sistema de servicios industriales de la planta. Las propiedades del agua se eval\'uan a la temperatura media de operaci\'on en cada escenario mediante correlaciones simplificadas validadas en el rango de 40 a 80~\textdegree C. La Tabla~\ref{tab:water_properties} presenta valores representativos.
 
 \begin{table}[H]
-	\centering
-	\caption{Propiedades termof\'isicas del agua de calentamiento en el rango de operaci\'on.}
-	\label{tab:water_properties}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NcccccX@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{$T$ [°C]} & \textbf{$\rho$ [kg/m\textsuperscript{3}]} & \textbf{$\mu$ [cP]} & \textbf{$C_p$ [J/(kg$\cdot$°C)]} & \textbf{$k$ [W/(m$\cdot$°C)]} & \textbf{Pr} \\
-		\midrule
-		& 50 & 989.6 & 0.547 & 4167 & 0.641 & 3.56 \\
-		& 60 & 985.3 & 0.467 & 4164 & 0.650 & 2.99 \\
-		& 65 & 982.9 & 0.433 & 4163 & 0.654 & 2.75 \\
-		& 70 & 980.3 & 0.404 & 4161 & 0.657 & 2.56 \\
-		& 75 & 977.5 & 0.378 & 4160 & 0.660 & 2.38 \\
-		& 80 & 974.4 & 0.355 & 4158 & 0.662 & 2.23 \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{Propiedades termof\'isicas del agua de calentamiento en el rango de operaci\'on.}
+\label{tab:water_properties}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NcccccX@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{\'Item}} & \textbf{$T$ [\textdegree C]} & \textbf{$\rho$ [kg/m\textsuperscript{3}]} & \textbf{$\mu$ [cP]} & \textbf{$C_p$ [J/(kg$\cdot$\textdegree C)]} & \textbf{$k$ [W/(m$\cdot$\textdegree C)]} & \textbf{Pr} \\
+\midrule
+& 50 & 989,6 & 0,547 & 4.167 & 0,641 & 3,56 \\
+& 60 & 985,3 & 0,467 & 4.164 & 0,650 & 2,99 \\
+& 65 & 982,9 & 0,433 & 4.163 & 0,654 & 2,75 \\
+& 70 & 980,3 & 0,404 & 4.161 & 0,657 & 2,56 \\
+& 75 & 977,5 & 0,378 & 4.160 & 0,660 & 2,38 \\
+& 80 & 974,4 & 0,355 & 4.158 & 0,662 & 2,23 \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
 \subsection{Condiciones de Operaci\'on y Escenarios de An\'alisis}
 
-El tanque de glucosa opera a presi\'on atmosf\'erica sin agitaci\'on mec\'anica. El calentamiento se realiza exclusivamente por medio de agua caliente que circula por la chaqueta de media ca\~na en espiral sobre el fondo toriesf\'erico. La glucosa se calienta desde una temperatura de recepci\'on (20--25~°C) hasta una temperatura de descarga de aproximadamente 60~°C, necesaria para reducir su viscosidad a niveles que permitan el bombeo y la descarga a carrotanque.
+El tanque de glucosa opera a presi\'on atmosf\'erica sin agitaci\'on mec\'anica. El calentamiento se realiza exclusivamente por medio de agua caliente que circula por la chaqueta de media ca\~na en espiral sobre el fondo toriesf\'erico. La glucosa se recibe a temperaturas entre 55 y 60~\textdegree C y se despacha a carrotanque en el rango de 57 a 60~\textdegree C, necesario para reducir la viscosidad a niveles que permitan el bombeo.
 
-Se definieron cuatro escenarios de an\'alisis para evaluar el desempe\~no t\'ermico del sistema, los cuales se resumen en la Tabla~\ref{tab:escenarios}.
-
-\begin{table}[H]
-	\centering
-	\caption{Escenarios de an\'alisis t\'ermico definidos para el estudio.}
-	\label{tab:escenarios}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NlccccX@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Escenario} & \textbf{$V_g$ [m\textsuperscript{3}]} & \textbf{$T_{w,in}$ [°C]} & \textbf{$v_w$ [m/s]} & \textbf{$Q_w$ [m\textsuperscript{3}/h]} & \textbf{Observaci\'on} \\
-		\midrule
-		& Escenario 1 & 24.0 & 65 & 1.34 & 30.9 & Volumen parcial + descarga \\
-		& Escenario 2 & 178.2 & 65 & 2.50 & 57.7 & Tanque al 80\% \\
-		& Escenario 3 & 178.2 & 75 & 2.50 & 57.7 & Tanque al 80\% \\
-		& Escenario 4 & 136.9 & 75 & 2.50 & 57.7 & 192 ton, 8 carrotanques \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
-
-El Escenario~1 eval\'ua el calentamiento de un volumen parcial de 24~m\textsuperscript{3} de glucosa con un caudal de agua de 30.9~m\textsuperscript{3}/h, incluyendo la descarga de 24~toneladas a carrotanque al alcanzar la temperatura objetivo. Los Escenarios~2 y 3 representan la condici\'on m\'as exigente del sistema: el tanque al 80\% de su capacidad (178.2~m\textsuperscript{3}, equivalentes a 253~toneladas de glucosa), con una velocidad del agua en la media ca\~na de 2.5~m/s. La diferencia entre los Escenarios~2 y 3 es la temperatura del agua de entrada (65~°C vs.~75~°C). El Escenario~4 modela el ciclo industrial de despacho: 192~toneladas de glucosa a 55~°C, calentamiento con agua a 75~°C, y 8~descargas consecutivas de 24~toneladas a carrotanque cuando la glucosa alcanza 57~°C.
-
-\subsection{Propiedades Mec\'anicas del Material}
-
-Todos los componentes del tanque est\'an fabricados en acero inoxidable austen\'itico tipo 316L (UNS~S31603). Las propiedades mec\'anicas utilizadas para el an\'alisis estructural se presentan en la Tabla~\ref{tab:mecanicas_ss316l}.
+Se definieron cinco escenarios de an\'alisis para evaluar el desempe\~no t\'ermico del sistema, los cuales se resumen en la Tabla~\ref{tab:escenarios}.
 
 \begin{table}[H]
-	\centering
-	\caption{Propiedades mec\'anicas del acero SS316L (UNS S31603) a temperatura ambiente y a 75~°C.}
-	\label{tab:mecanicas_ss316l}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NXclc@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Propiedad} & \textbf{Valor} & \textbf{Unidad} & \textbf{Referencia} \\
-		\midrule
-		& L\'imite el\'astico $F_y$ (20~°C) & 170 & MPa & ASME II-D \\
-		& Resistencia a la tracci\'on $F_u$ (20~°C) & 485 & MPa & ASME II-D \\
-		& L\'imite el\'astico $F_y$ (75~°C) & 147 & MPa & ASME II-D (interp.) \\
-		& Esfuerzo admisible $S_d$ (API 650) & 113.3 & MPa & API 650 Tabla 5-2a \\
-		& Esfuerzo admisible $S$ (ASME VIII, 75~°C) & 115 & MPa & ASME II-D Tabla 1A \\
-		& Conductividad t\'ermica $k_w$ (100~°C) & 16.3 & W/(m$\cdot$°C) & ASME II-D TCD \\
-		& Tasa de corrosi\'on (campo) & 0.1200 & mm/a\~no & An\'alisis de espesores \\
-		& Corrosion allowance $CA$ (Fondo, 7.5 a\~nos) & 0.900 & mm & 10\% Espesor Nominal \\
-		& Eficiencia de junta soldada $E$ & 0.85 & -- & ASME VIII UW-12 \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{Escenarios de an\'alisis t\'ermico definidos para el estudio.}
+\label{tab:escenarios}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NlccccX@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{\'Item}} & \textbf{Escenario} & \textbf{$V_g$ [m\textsuperscript{3}]} & \textbf{$T_{w,in}$ [\textdegree C]} & \textbf{$v_w$ [m/s]} & \textbf{$Q_w$ [m\textsuperscript{3}/h]} & \textbf{Observaci\'on} \\
+\midrule
+& Escenario 1 & 24,0 & 65 & 1,34 & 30,9 & Descarga continua con alimentaci\'on simult\'anea \\
+& Escenario 2 & 178,2 & 65 & 2,50 & 57,7 & Calentamiento desde 25~\textdegree C, tanque al 80\% \\
+& Escenario 3 & 178,2 & 75 & 2,50 & 57,7 & Calentamiento desde 25~\textdegree C, tanque al 80\% \\
+& Escenario 4 & 136,9 & 75 & 2,50 & 57,7 & Capacidad operativa diaria: 5 descargas de 24~ton \\
+& Escenario 5 & 178,2 & 75 & 2,50 & 57,7 & Ciclo de 5 descargas con recalentamiento entre descargas \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
-La tasa de corrosi\'on de dise\~no del fondo toriesf\'erico se estableci\'o en \textbf{0.12~mm/a\~no}, valor determinado a partir de un \textbf{an\'alisis de espesores en campo} mediante mediciones ultras\'onicas. A partir del espesor nominal de fabricaci\'on, el tiempo de operaci\'on acumulado y el espesor residual medido, se calcul\'o la tasa media de p\'erdida de material. Este valor integra impl\'icitamente los efectos de la temperatura de operaci\'on (75\,°C), la acidez del medio y la ciclicidad mec\'anica del proceso (2\,920~ciclos/a\~no). Bajo el criterio del 10\,\% de margen de sacrificio para el nuevo fondo (9.0~mm), se proyecta una vida \'util de \textbf{7.5~a\~nos}, requiriendo un programa de inspecci\'on acelerado con frecuencia bianual.
-
-\subsection{Normativas Aplicables}
-
-El dise\~no y la verificaci\'on del tanque se rigen por las normativas internacionales y nacionales aplicables, las cuales se resumen en la Tabla~\ref{tab:normativas}.
-
-\begin{table}[H]
-	\centering
-	\caption{Normativas y est\'andares aplicables al proyecto.}
-	\label{tab:normativas}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}NlX@{}}
-		\toprule
-		\multicolumn{1}{c}{\textbf{Item}} & \textbf{Norma} & \textbf{Aplicaci\'on} \\
-		\midrule
-		& API 650 (2020)~\citep{api650_2020} & Dise\~no de tanques de almacenamiento soldados (cuerpo cil\'indrico) \\
-		& ASME VIII Div.~1 (2021)~\citep{asme_viii_2021} & Dise\~no de cabezales toriesf\'ericos bajo presi\'on \\
-		& ASME Section II Part D~\citep{asme_iid_2021} & Propiedades mec\'anicas y esfuerzos admisibles del material \\
-		& ASME B31.1~\citep{asme_b311_2020} & Tuber\'ias de potencia (sistema de agua caliente) \\
-		& NSR-10~\citep{nsr10_2010} & Norma sismo resistente de Colombia (cargas s\'ismicas) \\
-		& 3-A Sanitary Standards~\citep{3a_standards} & Est\'andares sanitarios para equipos en contacto con alimentos \\
-		& FDA 21 CFR 177~\citep{fda_21cfr} & Materiales en contacto con alimentos \\
-		& Codex Alimentarius & Pr\'acticas de higiene para alimentos \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
-
-\newpage
-
-
-
-
+El Escenario~1 eval\'ua el calentamiento de un volumen parcial de 24~m\textsuperscript{3} de glucosa con un caudal de agua de 30,9~m\textsuperscript{3}/h, incluyendo la descarga de 24~toneladas a carrotanque al alcanzar la temperatura objetivo. Los Escenarios~2 y 3 representan la condici\'on de arranque desde fr\'io: el tanque al 80~\% de su capacidad (178,2~m\textsuperscript{3}, equivalentes a 253~toneladas de glucosa), con velocidad del agua en la media ca\~na de 2,5~m/s. La diferencia entre ambos escenarios es la temperatura del agua de entrada (65~\textdegree C frente a 75~\textdegree C). El Escenario~4 modela la capacidad operativa diaria del sistema: cinco descargas consecutivas de 24~toneladas dentro de un ciclo de 24~horas, con flujo medio de 5.000~kg/h. El Escenario~5 simula el ciclo din\'amico completo de cinco descargas con recalentamiento entre descargas, partiendo de un inventario caliente.

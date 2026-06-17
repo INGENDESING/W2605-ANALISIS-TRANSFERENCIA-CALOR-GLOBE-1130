@@ -1,5 +1,5 @@
 """
-Generador de tablas detalladas por tonelada — Proyecto P2611
+Generador de tablas detalladas por tonelada — Proyecto W2605
 ===========================================================
 Genera tablas LaTeX con detalle tonelada por tonelada (1 a 16)
 para los Escenarios 2 y 3, facilitando la toma de decisiones operativas.
@@ -29,7 +29,7 @@ A = A_CONTACTO  # 13.0 m2
 V_AGUA = 2.5    # m/s
 T_DESCARGA = 1.5  # h por descarga de 24 ton
 DOT_M_OUT = 24000.0 / (T_DESCARGA * 3600.0)  # kg/s
-T_CICLO = 3.0  # h
+T_CICLO = 4.8  # h (24 h / 5 descargas)
 
 # Condiciones iniciales
 NIVEL_INICIAL = 0.80

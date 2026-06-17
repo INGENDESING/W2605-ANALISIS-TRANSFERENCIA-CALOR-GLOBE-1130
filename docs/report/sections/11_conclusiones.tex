@@ -1,93 +1,69 @@
 \section{Conclusiones}
 
-A partir del análisis independiente de transferencia de calor y el análisis estructural del tanque de almacenamiento de glucosa Tag 53A-90A-0056, se establecen las siguientes conclusiones técnicas.
+A partir del an\'alisis independiente de transferencia de calor del tanque de almacenamiento de glucosa Tag 53A-90A-0056, se establecen las siguientes conclusiones t\'ecnicas.
 
-\subsection{Parte I: Transferencia de Calor}
+\subsection{Transferencia de Calor}
 
-Los hallazgos principales del análisis térmico demuestran que el sistema de calentamiento está gobernado por la resistencia convectiva del producto. La Tabla~\ref{tab:conclusiones_termicas} resume las conclusiones fundamentales de esta sección.
+Los hallazgos principales del an\'alisis t\'ermico demuestran que el sistema de calentamiento est\'a gobernado por la resistencia convectiva del producto. La Tabla~\ref{tab:conclusiones_termicas} resume las conclusiones fundamentales de esta secci\'on.
 
 \begin{table}[H]
-	\centering
-	\caption{Conclusiones del análisis de transferencia de calor.}
-	\label{tab:conclusiones_termicas}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}lX@{}}
-		\toprule
-		\textbf{Parámetro} & \textbf{Conclusión Técnica} \\
-		\midrule
-		Mecanismo Limitante & La convección natural de la glucosa representa entre el 97.7\% y el 98.8\% de la resistencia térmica total debido a su elevada viscosidad ($>212,000$ cP). \\
-		Eficacia del Sistema & El coeficiente global $U$ se sitúa en el rango de 18 a 36 W/m$^2\cdot$°C.El orden de magnitud del número de Prandtl ($\mathrm{Pr} \sim 10^4$) refleja la dominancia de la difusión viscosa sobre la térmica, estableciendo la convección natural como mecanismo limitante del proceso, con independencia de la geometría de la chaqueta. \\
-		Optimización de Gradiente & El uso de agua a 75°C reduce el tiempo de preparación logística en un 46\% frente a la operación a 65°C, permitiendo alcanzar los 57°C operativos en 415.2 horas (Escenario 3). \\
-		Eficiencia Energética & El aislamiento de lana mineral de 2'' reduce las pérdidas al ambiente en un 91\%, garantizando una temperatura superficial de seguridad de 30.8°C. \\
-		Validación CFD & La simulación en COMSOL Multiphysics 6.4 validó el modelo analítico con una concordancia del 95\% ($U_{CFD} = 38$ W/m$^2\cdot$°C vs.\ $U_{cal} = 36.2$ W/m$^2\cdot$°C), confirmando la precisión de las estimaciones transitorias. \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{Conclusiones del an\'alisis de transferencia de calor.}
+\label{tab:conclusiones_termicas}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Par\'ametro} & \textbf{Conclusi\'on T\'ecnica} \\
+\midrule
+Mecanismo Limitante & La convecci\'on natural de la glucosa representa entre el 97,7~\% y el 98,8~\% de la resistencia t\'ermica total debido a su elevada viscosidad ($\sim$212{.}000~cP a 25~\textdegree C). \\
+Eficacia del Sistema & El coeficiente global $U$ se sit\'ua en el rango de 21 a 36~W/m\textsuperscript{2}$\cdot$\textdegree C. El n\'umero de Prandtl ($\mathrm{Pr} \sim 10^{4}$) refleja la dominancia de la difusi\'on viscosa sobre la t\'ermica, estableciendo la convecci\'on natural como mecanismo limitante del proceso, con independencia de la geometr\'ia de la chaqueta. \\
+Optimizaci\'on de Gradiente & El uso de agua a 75~\textdegree C reduce el tiempo de preparaci\'on log\'istica en un 46~\% frente a la operaci\'on a 65~\textdegree C, permitiendo alcanzar los 57~\textdegree C operativos en 415,2~h (Escenario~3). \\
+Eficiencia Energ\'etica & El aislamiento de lana mineral de 2~pulgadas reduce las p\'erdidas al ambiente en un 91,6~\%, garantizando una temperatura superficial de seguridad de 28,3~\textdegree C y un balance neto positivo de 15,3~MJ/h para el flujo medio de 5.000~kg/h a 60~\textdegree C. \\
+Validaci\'on CFD & La simulaci\'on en COMSOL Multiphysics~6.4 valid\'o el modelo anal\'itico con una concordancia del 95~\% ($U_{\text{CFD}} = 38$~W/m\textsuperscript{2}$\cdot$\textdegree C vs.\ $U_{\text{anal\'itico}} = 36,2$~W/m\textsuperscript{2}$\cdot$\textdegree C), confirmando la precisi\'on de las estimaciones transitorias. \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
 Los resultados primarios referentes a los tiempos de calentamiento requeridos para la disponibilidad operativa del fluido se consolidan en la Tabla~\ref{tab:resumen_tiempos}.
 
 \begin{table}[H]
-	\centering
-	\caption{Consolidado de resultados operacionales por escenario limitados a $<60.0^\circ\mathrm{C}$.}
-	\label{tab:resumen_tiempos}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}lccccX@{}}
-		\toprule
-		\textbf{Escenario} & \textbf{Llenado} & \textbf{T$_{agua}$ [°C]} & \textbf{T$_{fin}$ [°C]} & \textbf{Tiempo Total} & \textbf{Comportamiento de Descarga} \\
-		\midrule
-		\textbf{Escenario 1} & 24 m$^3$ (7.6\%) & 65 & 60 & 132.0 h & Incremento ligero (+0.2°C) durante descarga de 1.5h. \\
-		\textbf{Escenario 2} & 178 m$^3$ (80\%) & 65 & 57 & 772.8 h & Durante ciclo log\'istico, T topa l\'imite al modelar la restricci\'on On/Off a 60.0°C. \\
-		\textbf{Escenario 3} & 178 m$^3$ (80\%) & 75 & 57 & 415.2 h & Reducci\'on del 46\% vs.\ Escenario~2; la recomendaci\'on termost\'atica se activa a las 472.8~horas. \\
-		\textbf{Escenario 4} & 136 m$^3$ (192 ton) & 75 & 57 & 37.5 h (ciclo full) & Recalentamiento inicial de 25.5h; descargas subsecuentes \textbf{sin} requerir parada. \\
-		\bottomrule
-	\end{tabularx}
+\centering
+\caption{Consolidado de resultados operacionales por escenario.}
+\label{tab:resumen_tiempos}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}lccccX@{}}
+\toprule
+\textbf{Escenario} & \textbf{Llenado} & \textbf{$T_{agua}$ [\textdegree C]} & \textbf{$T_{fin}$ [\textdegree C]} & \textbf{Tiempo Total} & \textbf{Comportamiento de Descarga} \\
+\midrule
+\textbf{Escenario 1} & 24~m\textsuperscript{3} (7,6~\%) & 65 & 60 & $\sim$110~h & Incremento ligero durante descarga de 2~h. \\
+\textbf{Escenario 2} & 178~m\textsuperscript{3} (80~\%) & 65 & 57 & 772,8~h & Arranque desde fr\'io con agua a 65~\textdegree C. \\
+\textbf{Escenario 3} & 178~m\textsuperscript{3} (80~\%) & 75 & 57 & 415,2~h & Reducci\'on del 46~\% vs.\ Escenario~2; cota m\'axima recomendada a 472,8~h. \\
+\textbf{Escenario 4} & Capacidad diaria 120~ton & 75 & 57 & Ciclo diario & 5 descargas/d\'ia; flujo medio 5,0~ton/h dentro de capacidad de mantenimiento. \\
+\textbf{Escenario 5} & Inventario caliente & 75 & 57 & Ciclo diario & 5 descargas con recalentamiento entre descargas; temperatura estable en 56,6--57,0~\textdegree C. \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
 \subsubsection{Comparativa de Configuraciones de Chaqueta}
 
-El análisis comparativo entre la chaqueta dimple actual ($A_{actual} = 28$\,m\textsuperscript{2}) y la media caña del fondo construido ($A_{reemp} = 13$\,m\textsuperscript{2}) establece con precisión cuantitativa el impacto de la reducción de área sobre la capacidad de calentamiento del sistema. La Tabla~\ref{tab:conclusiones_chaquetas} consolida los hallazgos principales.
+El an\'alisis comparativo entre la chaqueta dimple actual ($A_{actual} = 28$~m\textsuperscript{2}) y la media ca\~na del fondo construido ($A_{reemp} = 13$~m\textsuperscript{2}) establece con precisi\'on cuantitativa el impacto de la reducci\'on de \'area sobre la capacidad de calentamiento del sistema. La Tabla~\ref{tab:conclusiones_chaquetas} consolida los hallazgos principales.
 
 \begin{table}[H]
-    \centering
-    \caption{Conclusiones de la comparativa de configuraciones de chaqueta ($T_w = 75$\,°C, $v = 2.5$\,m/s, tanque al 80\,\%).}
-    \label{tab:conclusiones_chaquetas}
-    \setcounter{itemcount}{0}
-    \begin{tabularx}{\textwidth}{@{}lX@{}}
-        \toprule
-        \textbf{Parámetro} & \textbf{Conclusión} \\
-        \midrule
-        Invarianza de $U$ & El coeficiente global $U$ es idéntico para ambas configuraciones ($\Delta U / U < 0.3$\,\%); la resistencia del lado de la glucosa concentra el 97.7–98.8\,\% de $R_{total}$, con independencia de la geometría de la chaqueta. \\
-        \midrule
-        Ratio de capacidad batch & $t_{reemp}/t_{actual} = 2.153 \approx A_{actual}/A_{reemp} = 2.154$. La reducción del 54\,\% en el área conlleva una reducción en la misma proporción del calentamiento batch. Calentamiento 25–57\,°C: actual 170.7\,h vs.\ fondo de reemplazo 367.5\,h. Calentamiento 55–57\,°C: actual 15.5\,h vs.\ fondo de reemplazo 33.2\,h. \\
-        \midrule
-        Flujo continuo desde 55\,°C & Chaqueta actual: flujo máximo $> 16$\,ton/h. Chaqueta del fondo de reemplazo: flujo máximo 7.54\,ton/h. Para operación de mantenimiento a flujos superiores a 7.5\,ton/h, la chaqueta del fondo de reemplazo resulta insuficiente. \\
-        \midrule
-        Flujo continuo desde 25\,°C & Ambas configuraciones son insuficientes para flujos industriales: la chaqueta actual alcanza solo 1.47\,ton/h y la del fondo de reemplazo solo 0.69\,ton/h. El calentamiento desde frío en modo continuo requiere agitación mecánica para ser viable a escala industrial. \\
-        \midrule
-        Palanca de optimización & La selección del tipo de chaqueta (dimple vs.\ media caña) es irrelevante para el coeficiente $U$. La única palanca en el lado de la chaqueta es el área. La mejora sustancial requiere actuar sobre $h_o$ mediante agitación mecánica. \\
-        \bottomrule
-    \end{tabularx}
+\centering
+\caption{Conclusiones de la comparativa de configuraciones de chaqueta ($T_w = 75$~\textdegree C, $v = 2,5$~m/s, tanque al 80~\%).}
+\label{tab:conclusiones_chaquetas}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Par\'ametro} & \textbf{Conclusi\'on} \\
+\midrule
+Invarianza de $U$ & El coeficiente global $U$ es id\'entico para ambas configuraciones ($\Delta U / U < 0,3$~\%); la resistencia del lado de la glucosa concentra el 97,7--98,8~\% de $R_{total}$, con independencia de la geometr\'ia de la chaqueta. \\
+Ratio de Capacidad \textit{Batch} & $t_{reemp}/t_{actual} = 2,15 \approx A_{actual}/A_{reemp} = 2,15$. Calentamiento 25--57~\textdegree C: actual 170,7~h vs.\ fondo de reemplazo 367,5~h. Calentamiento 55--57~\textdegree C: actual 15,5~h vs.\ fondo de reemplazo 33,2~h. \\
+Flujo Continuo desde 55~\textdegree C & Chaqueta actual: flujo m\'aximo $>$ 16~ton/h. Chaqueta del fondo de reemplazo: flujo m\'aximo 7,54~ton/h. Para operaci\'on de mantenimiento a flujos superiores a 7,5~ton/h, la chaqueta del fondo de reemplazo resulta insuficiente. \\
+Flujo Continuo desde 25~\textdegree C & Ambas configuraciones son insuficientes para flujos industriales: la chaqueta actual alcanza solo 1,47~ton/h y la del fondo de reemplazo solo 0,69~ton/h. El calentamiento desde fr\'io en modo continuo requiere agitaci\'on mec\'anica para ser viable a escala industrial. \\
+Palanca de Optimizaci\'on & La selecci\'on del tipo de chaqueta (dimple vs.\ media ca\~na) es irrelevante para el coeficiente $U$. La \'unica palanca en el lado de la chaqueta es el \'area. La mejora sustancial requiere actuar sobre $h_o$ mediante agitaci\'on mec\'anica. \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
-\subsection{Parte II: Análisis Estructural}
-
-La evaluación de integridad mecánica bajo normativas internacionales permite establecer los límites operativos seguros del activo. La Tabla~\ref{tab:conclusiones_estructurales} sintetiza los resultados del análisis estructural.
-
-\begin{table}[H]
-	\centering
-	\caption{Conclusiones del análisis de integridad estructural.}
-	\label{tab:conclusiones_estructurales}
-	\setcounter{itemcount}{0}
-	\begin{tabularx}{\textwidth}{@{}lX@{}}
-		\toprule
-		\textbf{Componente} & \textbf{Conclusión Técnica} \\
-		\midrule
-		Cuerpo Cilíndrico & Cumple integralmente con API 650 (espesor evaluado 6.0 mm). Se garantiza un mínimo de 16.3 años remanentes de vida útil estructural bajo la tasa de corrosión actual. \\
-		Fondo Toriesférico & Presenta una vida útil proyectada limitada a \textbf{7.5 años} bajo el criterio del 10\% de margen de diseño, considerando una tasa de corrosión de 0.12~mm/año determinada mediante análisis de espesores en campo. La degradación está gobernada por la sinergia entre la acidez de la glucosa, la temperatura de 75°C y la alta ciclicidad operativa (2\,920 ciclos/año). \\
-		Estabilidad Lateral & La carga sísmica (NSR-10, Cali) es el factor dominante de diseño lateral, con una fuerza horizontal de 993.5 kN y un momento basal de 5,434 kN$\cdot$m. \\
-		Integridad FEA & Las simulaciones en ANSYS identificaron que al 100\% de llenado el factor de seguridad en el nudillo es 0.71 (sobreesfuerzo local), mientras que al 80\% de llenado se garantiza $FS \geq 1.3$ (condición operativa segura). Se establece la restricción operativa mandatoria al 80\% (178.2~m$^3$). \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
-
-\newpage
+En s\'intesis, el sistema de calentamiento por media ca\~na de 13~m\textsuperscript{2} es t\'ecnicamente capaz de sostener el ciclo operativo oficial de cinco descargas diarias de 24~toneladas, siempre que la glucosa de alimentaci\'on ingrese al tanque dentro del rango 57--60~\textdegree C, se opere con agua de calentamiento a 75~\textdegree C y se mantenga instalado el aislamiento t\'ermico de 50,8~mm. El arranque desde fr\'io del tanque completo no es viable en un ciclo diario, por lo que la operaci\'on debe basarse en el mantenimiento de un inventario caliente.

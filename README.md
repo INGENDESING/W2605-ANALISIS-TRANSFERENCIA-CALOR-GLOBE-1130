@@ -1,177 +1,155 @@
-# Proyecto P2611 - Análisis Térmico y Estructural del Fondo Toriesférico
+# Proyecto W2605 — Análisis térmico del fondo toriesférico del tanque de glucosa
 
 ## Descripción
 
-Estudio de transferencia de calor y análisis estructural del fondo toriesférico de un tanque de almacenamiento de glucosa para INGREDION S.A. (Planta Cali, Colombia).
+Estudio de transferencia de calor del fondo toriesférico del tanque de almacenamiento de glucosa **Tag 53A-90A-0056** en la planta **Ingredion S.A.** de Cali, Colombia. El proyecto evalúa el desempeño térmico de la chaqueta de media caña rectangular en espiral, las pérdidas térmicas con aislamiento de lana mineral y el ciclo operativo de descargas a carrotanques.
 
-**Código del documento**: `P2611-PR-INF-001 R0`
+**Empresa ejecutora:** DMV SAS  
+**Cliente:** Ingredion S.A., Planta Cali  
+**Fluido:** Glucosa Globe 42 DE (~80,6 °Brix)  
+**Material del fondo:** Acero inoxidable SS316L
 
-### Alcance Técnico
-- **Parte I**: Transferencia de calor en chaqueta de media caña (espiral rectangular) sobre fondo toriesférico
-  - Cálculo del coeficiente global de transferencia de calor (U)
-  - Perfiles de temperatura y análisis de ciclo de descargas a carrotanques
-  
-- **Parte II**: Validación de espesores del tanque
-  - Normas API 650 y ASME VIII
-  - Cargas hidrostáticas, viento (120 km/h), sismo (NSR-10 zona intermedia)
-  - Corrosión en SS316L
+---
 
-## Estructura del Proyecto
+## Documentos oficiales
 
-```
-.
-├── src/                          # Código fuente Python
-│   ├── propiedades_glucosa.py   # Propiedades termofísicas de glucosa Globe 42 DE
-│   ├── coeficiente_U.py         # Cálculo del coeficiente global U
-│   ├── geometria_tanque.py      # Parámetros geométricos del tanque
-│   ├── espesores_tanque.py      # Cálculos API 650 y ASME VIII
-│   ├── escenarios.py            # Escenarios 1-3 de calentamiento
-│   ├── escenario4_ciclo.py      # Escenario 4: ciclo de descargas
-│   ├── ciclo_descargas.py       # Funciones para análisis de ciclo
-│   ├── graficar_resistencias.py # Visualización de resistencias térmicas
-│   ├── aislamiento.py           # Cálculos del aislamiento
-│   └── ciclo_vida.py            # Análisis de vida útil por corrosión
-│
-├── data/                        # Datos de referencia y documentación técnica
-│   ├── datasheets/              # Fichas técnicas (PDF)
-│   ├── planos/                  # Planos de referencia (PNG/PDF)
-│   ├── normas/                  # Referencias normativas
-│   └── properties/              # Propiedades de materiales
-│
-├── docs/                        # Documentación y reportes
-│   ├── report/                  # Documento principal LaTeX
-│   │   ├── P2611-PR-INF-001_R0.tex
-│   │   ├── sections/            # Capítulos del informe
-│   │   ├── config/              # Configuración LaTeX
-│   │   ├── references/          # Bibliografía
-│   │   └── assets/              # Figuras específicas del informe
-│   └── project-management/      # Planes y seguimiento del proyecto
-│
-├── results/                     # Resultados y análisis
-│   ├── figures/                 # Figuras generadas (PDF/PNG)
-│   └── analysis/                # Análisis intermedios y logs
-│
-├── examples/                    # Ejemplos y demos
-│   └── web-demo/                # Demo Flask interactiva
-│
-├── notebooks/                   # Jupyter notebooks (opcional)
-├── tests/                       # Pruebas unitarias (si se implementan)
-│
-├── .gitignore                   # Archivos a ignorar en Git
-├── README.md                    # Este archivo
-└── LICENSE                      # Licencia del proyecto
+| Código | Documento | Ubicación |
+|---|---|---|
+| W2605PRINF001 | Informe técnico principal (memoria descriptiva) | `docs/report/W2605PRINF001.tex` / `.pdf` |
+| W2605PRINF002 | Resumen ejecutivo gerencial | `docs/report/W2605PRINF002.tex` / `.pdf` |
 
-```
+---
 
-## Tecnologías Utilizadas
+## Estructura del proyecto
 
-### Stack Principal
-- **Python 3.12**: Cálculos científicos y numéricos
-- **MiKTeX**: Compilación de documentos LaTeX
-- **VS Code**: Editor de código con extensiones LaTeX Workshop y Python
+| Carpeta | Contenido |
+|---|---|
+| `docs/report/` | Maestros LaTeX, secciones, configuración, bibliografía y logos del informe oficial. |
+| `src/` | Scripts Python de cálculo, simulación y generación de figuras. |
+| `results/` | Figuras (PDF/PNG) y tablas (CSV) generadas por los scripts. |
+| `Data/` | Datasheets, planos, normas y documentos de referencia del proyecto. |
+| `webapp/` | Aplicación Flask interactiva para simulación de balance de materia y energía. |
+| `task/` | Plan de trabajo, tests de validación y scripts de soporte. |
+| `InformeTercero/` | Informe técnico de tercero auditado y documento de auditoría crítica. |
+| `reciclaje/` | Archivos generados, auxiliares, duplicados o desactualizados conservados por trazabilidad. |
 
-### Bibliotecas Python
-- `numpy`, `scipy`: Cálculos numéricos
-- `matplotlib`, `plotly`: Generación de gráficas
-- `thermo`, `CoolProp`: Propiedades termofísicas
-- `pandas`: Procesamiento de datos
+---
+
+## Tecnologías
+
+### Cálculo y simulación
+- **Python 3.12** con `numpy`, `scipy` y `matplotlib`.
+- Correlaciones de transferencia de calor: Sieder-Tate (lado agua) y Churchill-Chu (lado glucosa).
+- Propiedades termofísicas de la glucosa mediante implementación propia ajustada a ficha técnica Ingredion.
 
 ### Documentación
-- **Clase LaTeX**: `elsarticle.cls` (Elsevier)
-- **Paquetes**: `siunitx`, `mhchem`, `graphicx`, `booktabs`, `tikz`
-- **Compilador**: `pdflatex`
+- **MiKTeX** con `pdflatex` y `bibtex`.
+- Clase `elsarticle` y paquetes `booktabs`, `siunitx`, `graphicx` y `tikz`.
+
+### Aplicación web
+- **Flask 3.0.3** con CORS, exportación a PDF (`reportlab`) y Excel (`openpyxl`, `xlsxwriter`).
+
+---
 
 ## Requisitos
 
-- Python 3.12 o superior
-- MiKTeX (Windows) o TeX Live (Linux/Mac)
-- Git (opcional, para control de versiones)
+- Python 3.12 o superior.
+- MiKTeX (Windows) o TeX Live (Linux/Mac) para compilar los informes LaTeX.
+- Git para control de versiones.
 
-### Instalación de Dependencias Python
+---
 
-El proyecto usa las siguientes bibliotecas Python:
-- `numpy` (2.4.3)
-- `scipy` (1.17.1)
-- `matplotlib` (3.10.8)
+## Instalación de dependencias
 
-Para instalar todas las dependencias automáticamente:
+Para el núcleo de cálculo:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Para instalar manualmente o ver detalles completos, ver `INSTALACION_DEPENDENCIAS.md`.
-
-## Uso
-
-**IMPORTANTE**: Antes de ejecutar los cálculos, asegúrate de tener instaladas las dependencias:
+Para la aplicación web:
 
 ```bash
-pip install -r requirements.txt
+pip install -r webapp/requirements.txt
 ```
 
-### Ejecución de Cálculos
+---
+
+## Compilación de los informes
+
+Desde `docs/report/`:
 
 ```bash
-# Activar Python 3.12
-python src/escenarios.py
-python src/espesores_tanque.py
+# Informe técnico principal
+pdflatex -interaction=nonstopmode W2605PRINF001.tex
+bibtex W2605PRINF001
+pdflatex -interaction=nonstopmode W2605PRINF001.tex
+pdflatex -interaction=nonstopmode W2605PRINF001.tex
+
+# Resumen ejecutivo
+pdflatex -interaction=nonstopmode W2605PRINF002.tex
+pdflatex -interaction=nonstopmode W2605PRINF002.tex
 ```
 
-### Compilación del Informe
+---
+
+## Ejecución de tests
 
 ```bash
-cd docs/report
-pdflatex P2611-PR-INF-001_R0.tex
-pdflatex P2611-PR-INF-001_R0.tex  # Segunda pasada para referencias
+# Tests del ciclo operativo oficial
+venv/Scripts/python.exe task/test_ciclo.py
+venv/Scripts/python.exe task/test_simulacion_50C.py
+
+# Tests de la API web
+cd webapp
+../venv/Scripts/python.exe tests/test_api.py
 ```
 
-O usando LaTeX Workshop en VS Code:
-- Abrir el archivo `.tex`
-- Usar `Ctrl+Alt+B` (Build LaTeX project)
-- Compilar 2 veces para resolver referencias
+---
 
-### Demo Web (Opcional)
+## Uso de la aplicación web
 
 ```bash
-cd examples/web-demo
-python app.py
+cd webapp
+../venv/Scripts/python.exe run.py
 ```
 
-Abrir navegador en `http://localhost:5000`
+Abrir el navegador en `http://localhost:5000` (o el puerto indicado en la consola).
 
-## Resultados Clave
+---
 
-- **Coeficiente U**: 18-36 W/m²·°C (promedio ponderado)
-- **Tiempos de calentamiento**:
-  - Escenario 1: 5.5 días
-  - Escenario 2: 32.2 días
-  - Escenario 3: 17.3 días
-- **Espesores**: Cumplen API 650 y ASME VIII con márgenes positivos
-- **Vida útil**: ≥30 años considerando tasa de corrosión
+## Resultados clave
 
-## Autores
+| Parámetro | Valor |
+|---|---|
+| Temperatura objetivo de la glucosa | 60 °C |
+| Ciclo operativo | 5 descargas/día, 24 ton/descarga, 2,0 h de descarga, período 4,8 h |
+| Flujo medio de glucosa | 5 000 kg/h |
+| Área de transferencia de la chaqueta | 13 m² (base); 14 m² (caso de estudio 24 ton) |
+| Coeficiente global con aislamiento (U) | ~0,38 W/(m²·°C) |
+| Pérdidas térmicas con aislamiento a 60 °C | 14,7 MJ/h |
+| Pérdidas térmicas sin aislamiento a 60 °C | 175,4 MJ/h |
+| Reducción de pérdidas por aislamiento | 91,6 % |
+| Balance neto a 60 °C | +15,3 MJ/h |
+| Tiempo para perder 3 °C en parada | ~4,5 días |
 
-- **Elaboró**: J. Arboleda, H. Rosero
-- **Revisó**: W. Camelo
-- **Aprobó**: H. Rosero (Gerente de Ingeniería)
+---
 
-## Cliente
+## Autoría y contacto
 
-**INGREDION S.A.** - Planta Cali, Colombia
+**Elaboró, revisó y aprobó:** DMV SAS  
+**Contacto técnico:** [correo@dmvsas.com]
+
+---
 
 ## Licencia
 
-Este proyecto es propiedad de DML S.A.S. y se encuentra destinado exclusivamente para uso interno y entrega al cliente INGREDION S.A.
+Este proyecto es propiedad de DMV SAS y está destinado exclusivamente a uso interno y entrega al cliente Ingredion S.A.
 
-## Contacto
+---
 
-Para consultas técnicas:
-- proyectos2@dmlsas.com
-- herminsul.rosero@dmlsas.com
+## Estado del proyecto
 
-## Estado del Proyecto
+Entrega final en preparación. Pendiente: definición del logo corporativo correcto de DMV SAS para el membrete de los informes y sincronización con el repositorio remoto.
 
-**Estado**: Completado y entregado (03 de abril de 2026)
-
-Última actualización: Recalibración del modelo a ficha técnica Ingredion 011420
+Última actualización: 17 de junio de 2026.

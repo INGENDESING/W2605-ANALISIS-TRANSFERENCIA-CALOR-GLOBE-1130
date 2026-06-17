@@ -1,5 +1,5 @@
 /**
- * Análisis de Sensibilidad - P2611
+ * Análisis de Sensibilidad - W2605
  * Análisis univariable de impacto de parámetros en KPIs
  */
 
@@ -168,7 +168,7 @@ function leerParamsFijos() {
         num_descargas: parseInt(document.getElementById('fijoNumDesc').value),
         masa_por_descarga_ton: parseFloat(document.getElementById('fijoMasa').value),
         tiempo_descarga_h: 1.5,
-        periodo_ciclo_h: 3.0
+        periodo_ciclo_h: 4.8
     };
 }
 
@@ -263,14 +263,14 @@ function renderizarGraficaCapacidad(valores, data, unidadX) {
         fillcolor: 'rgba(76, 175, 80, 0.1)'
     };
     
-    // Línea de referencia a 192 ton
+    // Línea de referencia a 120 ton (5 descargas x 24 ton)
     const traceRef = {
         x: [valores[0], valores[valores.length-1]],
-        y: [192, 192],
+        y: [120, 120],
         type: 'scatter',
         mode: 'lines',
         line: { color: '#F44336', width: 1, dash: 'dash' },
-        name: 'Meta 192 ton'
+        name: 'Meta 120 ton'
     };
     
     const layout = {

@@ -9,6 +9,16 @@ headheight=4cm, headsep=0.5cm]{geometry}
 \usepackage[spanish,es-tabla]{babel}
 \usepackage{tgtermes}
 \usepackage{microtype}
+\usepackage{textcase}
+\usepackage{ragged2e}
+\AtBeginDocument{\justifying}
+
+% Forzar justificaci\'on expl\'icita en todo el documento
+\tolerance=1000
+\emergencystretch=3em
+\hyphenpenalty=50
+\exhyphenpenalty=50
+\justifying
 
 % ===================== ELIMINAR SANGRÍAS =====================
 \setlength{\parindent}{0pt}
@@ -19,6 +29,8 @@ headheight=4cm, headsep=0.5cm]{geometry}
 \titleformat{\section}{\bfseries\fontsize{12}{14}\selectfont}{\thesection}{1em}{}
 \titleformat{\subsection}{\bfseries\fontsize{12}{14}\selectfont}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\bfseries\fontsize{12}{14}\selectfont}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}{\bfseries\fontsize{11}{13}\selectfont}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{2.5ex plus 0.5ex minus 0.2ex}{1ex plus 0.2ex}
 
 % ===================== PAQUETES MATEMÁTICOS =====================
 \usepackage{amsmath,amssymb,amsfonts,mathtools}
@@ -57,6 +69,12 @@ headheight=4cm, headsep=0.5cm]{geometry}
 
 % ===================== CONFIGURACIÓN DEL ENCABEZADO =====================
 \usepackage{fancyhdr}
+
+% Desactivar marcas de secci\'on para evitar conflictos con acentos en
+% los encabezados generados autom\'aticamente por elsarticle
+\renewcommand{\sectionmark}[1]{}
+\renewcommand{\subsectionmark}[1]{}
+\renewcommand{\subsubsectionmark}[1]{}
 
 % ===================== INFORMACIÓN DEL DOCUMENTO =====================
 % Nota: El archivo de datos del proyecto se carga externamente en el

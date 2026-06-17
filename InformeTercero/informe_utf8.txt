@@ -1,0 +1,726 @@
+Project   GTTP- Page                  1/18
+
+Job       1004b                       13/01/2026
+Version                               04/06/2026
+Designer         Updated              R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+MEMORIA DE CALCULO TANQUE - GLUCOSA - INGREDION: TÉRMICA Y SIMULACIÓN
+                                         04/06/2026 Rev.5
+
+La información consignada en el presente documento fue suministrada por Ingresión
+el día 18 de diciembre de 2025, mediante comunicación electrónica a través de la
+aplicación WhatsApp. Como soporte, se adjunta la evidencia correspondiente de dicha
+comunicación, así como los cuadros informativos relacionados, los cuales forman parte
+integral del presente informe.
+
+              INFORMACION SUMINISTRADA POR  TANQUE ALMACENAMIENTO
+                              INGREDION       GLUCOSA 53A-90A-0056
+
+          FLUIDO O CALENTAR                             GLUCOSA
+
+          PROPIEDADES FISICAS                   GLUCOSA GLOBE 1130
+          TEMPERATURA OBJETIVO DE
+          ALMACENAMIENTO EN EL FONDO DEL                  60 °C
+          TANQUE
+          MATERIAL FONDO                           SS316L THK9.0M
+                                                   5 cargues diarios
+          FRECUENCIA DE DESCARGA Y VOLUMEN      23- 24 M3 / descargue
+
+          TEMPERTURA DE AGUA CALIENTE                     65°C
+          FLUJO                                        20.3 m3/h
+          PRESION
+          DIAMETRO TUBERIA DE ALIMENTACION                30 PSI
+                                                        2" 304 SS
+
+                          Glucosa Globe 1130
+
+             Jarabe obtenido por hidrólisis controlada de
+
+                          maíz grado alimenticio
+
+             Especificaciones Físico - Químicas Mín Máx
+
+             Densidad aparente                    1,43
+
+             Sustancia seca, %                    80,5 81,6
+
+             Dextrosa Equivalente, %              38 42
+
+             pH (1% p/v)                          4,8 5,2
+             SO2, ppm                             100 250
+
+             Viscosidad (cP a 60 °C)              5000
+
+             Color (Densidad Óptica)              1,0
+Project   GTTP- Page            2/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+RESUMEN
+Fue evaluado térmicamente la capacidad del fondo del tanque nuevo, el cual posee un
+serpentín de sección rectangular, en forma de espiral, con un área de transferencia de
+calor de 14,192m2, para calentar el equivalente a 24 m de glucosa Globe 1130, por
+descarga, se estiman (5 despachos diarios).
+El serpentín tiene la capacidad de calentar hasta 34320 Kg de glucosa, con agua
+caliente a 65°C, con un flujo de 20.3 m /h@1 bar.
+Utilizando Simulación y Computación basada en FEM fue evaluado la media coil
+rectangular U150x50 de espesor de 4.5 mm. La presión de diseño fueron 1 bar
+alcanzando un esfuerzo máximo de 38 MPa.
+Las condiciones finales para el sistema de calentamiento, chaquetas, fueron:
+Agua Caliente a 65°C y una presión de 2 bar,
+Estas condiciones aseguran que un volumen de 24m3 de glucosa en el fondo del
+tanque se conservara a 60°C.
+
+1 MANUALES Y REFERENCIAS
+1.1 Documentos de referencia
+I. GTTP-1004-DOC-MC-1-1.pdf
+II. CAL237-IN-CL-53A-02-DRW-MEC-00802.pdf
+III. - [USMAN19] - : M.Usman, Sikandar. (2019). Design of Helical Coil Heat Exchanger
+
+      for a mini powerplant. International Journal of Scientific and Engineering
+      Research. 10. 303-313. 10.14299/ijser.2019.12.
+IV. -[NSR10b]-: ASOCIACIÓN COLOMBIANA DE INGENIERÍA SÍSMICA. Normas
+      Colombianas de Diseño y Construcción Sismo-Resistente, NSR-10. Bogotá, AIS,
+      2010.
+V. -[PVDM]-: Dennis R. Moss (2013). Pressure Vessel Design Manual (Fourth
+      Edition). Butterworth-Heinemann.
+VI. -[ASMEVIII1]-: Carter, W. J., Ball, B. E., & ASME Boiler and Pressure Vessel
+      Committee. (2000). ASME Section VIII Div. 1, Pressure vessels. Edmonton,
+      Alberta: CASTI Pub.
+VII. - [ORTEGA16] - : Ortega, Fabián A, Pérez, Omar A, & López, Emiro A. (2016).
+      Modelo Semifísico de Base Fenomenológica del Proceso Continuo de
+      Fermentación Alcohólica. Información tecnológica, 27(1), 21-32.
+      https://dx.doi.org/10.4067/S0718-07642016000100004
+Project   GTTP- Page                3/18
+
+Job       1004b                     13/01/2026
+Version                             04/06/2026
+Designer         Updated            R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+1.2 Software y Licencias
+I. QCAD
+II. FREECADy SALOME
+III. OpenFOAM, CALCULIX y Paraview
+Project   GTTP- Page            4/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+2 GENERALIDADES
+· Calculo Térmico basado en los cambios de temperatura de los fluidos.
+· Calculo Estructural basado en la resistencia a la fluencia del material.
+· Cálculo de Carcasa y Chaqueta asume que hay presión interna en cada uno de
+
+      ellos.
+· El sistema de alimentación del serpentín, se mantienen con una bomba en
+
+      paralelo que alimenta a ambos tanques. (Glucosa y dextrosa)
+·
+Project       GTTP- Page               5/18
+
+Job           1004b                    13/01/2026
+Version                                04/06/2026
+Designer              Updated          R. Gaviria
+
+              5       Reviewed
+
+              B. Quintero Reviewer
+
+3 TÉRMICA
+
+3.1 Propiedades físicas y termodinámicas
+
+Propiedades:
+
+Propiedad             Glucosa Globe 1130 Agua Caliente@
+Densidad, 
+Calor especifico,     1430 kg/m           980.6 kg/m
+
+                      837,36 J/kg-C       4186 J/kg-C
+
+Conductividad térmica  0.50 W/m-C         0.65 W/m-C
+
+Viscosidad dinámica  5.0 kg/m-s           0.00042 kg/m-s
+
+Viscosidad cinemática  0.0033 m /s        4.2 × 10 m /s
+
+Numero Prandtl,       15000               2.705
+
+3.2 Datos de Entrada
+
+Los parámetros de entrada son:
+
+                                          Coil
+
+Parámetro                                 ( @  )           Shell (Glucosa)
+masa Jugo,                                                 34320 kg (24 m3)
+
+Delta de calentamiento del Jugo,                           40 °C
+
+Duración del calentamiento del Jugo,                       17280 s (4.8h)
+
+Flujo de Jugo,                                             1.986 kg/s
+
+Capacidad,                                65 C             119 kW
+                                          63 C             20C
+                                                           60C
+
+Diferencia de Temp. Media Logarítmica,
+
+LMTD
+
+Presión                                   1 kg/cm          1 kg/cm
+Temperatura media                         65.5 C           40 C
+
+Velocidad máxima                          1.0 m/s          0.10× 10 m/s
+
+D.I.                                      0.12 m           5.263 m
+
+F.S.                                      1.2
+
+A partir de [USMAN19] La Capacidad de calentamiento,  es:
+
+                                 =       . .
+
+ = 76,2.0 kW
+
+Note que el factor de seguridad tiene en cuenta las perdidas por radiación y
+convección. Para este caso esas pérdidas no superan los 23 kW.
+Project   GTTP- Page            6/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer            Updated     R. Gaviria
+
+          5         Reviewed
+
+          B. Quintero Reviewer
+
+3.3 Flujo de Agua
+A partir de [USMAN19] el flujo de masa del  @  es:
+
+                                                          
+                                               =
+
+                                                       LMTD
+
+ = 2.10 kg/s
+
+3.3.1 Velocidad del @
+Para el Media Coil de Area,  = 5.65 × 10 m , la velocidad,  , es determinada
+mediante la siguiente ecuación:
+
+                                                         
+                                                   = 
+ = 2.10 kg/s
+ = 980.6 kg/m
+ = 0.38 m/s
+
+Sin embargo, la velocidad elegida para el agua en el Media Coil fue mayor.
+
+Velocidad Elegida:
+ = 1.0 m/s
+
+3.3.2 Numero de Reynolds, @
+Para el Agua  @  es:
+
+                                                             
+                                            @  = 
+ = 980.6 kg/m
+ = 0.00042 kg/m-s
+ = 0.12 m
+ = 1.5 m/s
+ @  = 280171
+
+3.4 Numero de Nusset,    = 0.023 .  .
+De [USMAN19]  es:
+
+ = 280171
+ = 2.705
+ = 781
+Project      GTTP- Page            7/18
+
+Job          1004b                 13/01/2026
+Version                            04/06/2026
+Designer            Updated        R. Gaviria
+
+             5      Reviewed
+
+             B. Quintero Reviewer
+
+Note que por definición  es equivalente a:
+                                                         
+
+                                                  =
+                                                          
+
+3.4.1 Coeficiente de convección Interna, 
+ puede calcularse a partir de  como sigue:
+
+                                                        
+                                                 =
+
+                                                         
+
+ = 781
+ = 0.65 W/m-C
+
+ = 0.12 m
+ = 4229 W/m -C
+
+3.5 Numero de Grashof, 
+
+Cuantifica la convección natural dentro del tanque y es calculado como sigue:
+
+                                ( -  )
+                          =
+
+                                        
+
+ = 9.81 m/s
+
+ = 0.002 ()
+
+ = 68 C
+
+ = 60 C
+
+ = 10 m
+
+ = 0.0033 m /s
+
+ = 8.0 × 10
+
+3.5.1 Coeficiente de convección en el tanque, 
+
+Para una convección natural laminar,  < 10 ,  :
+
+                     =  0.68 .  .                                     .
+                            
+                                                            0.816 + 
+
+ = 6.010 m
+ = 0.50 W/m-
+
+ = 8.0 × 10
+
+ = 15000
+
+ = 3300 W/m -C
+Project   GTTP- Page            8/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+3.6 Coeficiente Global de transferencia de Calor, 
+
+De [ORTEGA16] el coeficiente  es:
+                                        1 1 1  1
+                                           =+ + +
+                                            
+
+ = 4229 W/m -C
+ = 5680 W/m -C
+
+ = 0.009 m
+ = 16.8 W/m-C
+ = 3300 W/m -C
+ = 783 W/m -C [137,89 Btu/hr ft2-°F]
+
+Nota
+
+     Note que para el cálculo del coeficiente fue considerado la conductiva del acero
+         inoxidable,  .
+
+SELECCIÓN DEL COEFICIENTE GLOBAL DE TRANSFERENCIA DE CALOR (U)
+Para la determinación preliminar del coeficiente global de transferencia de calor (U)
+utilizado en el diseño y análisis térmico, se tomó como referencia la información
+contenida en la tabla "Ordinary Ranges of U", incluida en la Sección 14 ­ Technical
+Section del libro CRANE, en el cual se evidencia que el U calculado, es consecuente con
+el teórico. [Btu/hr ft2-°F]
+Project     GTTP- Page                    9/18
+
+Job         1004b                         13/01/2026
+Version                                   04/06/2026
+Designer           Updated                R. Gaviria
+
+            5      Reviewed
+
+            B. Quintero Reviewer
+
+3.7 Mínimo Calor intercambiado a la Glucosa,  
+De [ORTEGA16]  es:
+
+                                              =   LMTD
+ = 783 W/m -C
+
+ = 13,95 m +0,192 m = 14,142 m
+LMTD = 16.23 C
+ = 179.72 kW
+Note que  es el área de los Coil en el fondo. Aquí el área alcanza los 14.142 m
+
+3.8 Verificación del tiempo de calentamiento, 
+
+                              ln  -  ,    =   ,     , - 1
+                                    -  ,       ,                   
+
+ = 783W/m -C                                          ,
+ = 14.192 m
+ = 68 C
+ , = 20 C
+ , = 60 C
+ = 2.10 kg/s
+ = 34320 kg
+ , = 4186 J/kg-C
+ , = 837,32 J/kg-C
+ = 14677 s (4h)
+
+3.9 Caída de presión en el Media-Coil, 
+
+                                                     
+                                           = 
+
+                                                     2
+
+ = 0.02
+
+ = 90 m
+
+ = 0.12 m
+
+ = 1.0 m/s
+
+ = 980.6 kg/m
+Project       GTTP- Page               10/18
+
+Job           1004b                    13/01/2026
+Version                                04/06/2026
+Designer             Updated           R. Gaviria
+
+              5      Reviewed
+
+              B. Quintero Reviewer
+
+ = 7350 Pa
+
+4 CALCULO DE TIEMPO MINIMO PARA LA GLUCOSA DE 40°C A 60°C
+4.1 Cálculo de Temperatura media logarítmica
+
+TML = (Dmáxima - Dmínima)/2.3 log(Dmáxima/Dmínima)
+
+                                Lado Glucosa                     Lado Agua
+
+                          Fahrenheit Centígrados         Fahrenheit Centígrados
+
+Temperatura inicial             104                  40          149        65
+Temperatura final
+                                140                  60         145,4       63
+
+Diferencias de Temperatura de fluidos
+
+                     DMaxima         Fahrenheit [°F]     Centígrados [°C]
+                     DMaxima                  45                  25
+                                              5,4                  3
+
+                     TML               18,697 °F                 10,387 °C
+
+                                       39,6                           22
+
+                                       8,33                      8,33
+
+                                       0,92                      0,92
+
+4.2 CALCULO DE CARGA TERMICA TOTAL A TRANSFERIR
+
+Q = m*cp* dt
+
+          m = masa total de glucosa                        24                 m3
+                     Densidad                             1425              Kg/m3
+                                                         34.200
+               Carga másica total                        75.240               Kg
+                                                 m=                           Lb
+
+              Calor Especifico                       0,541 - 0,569          Btu/lb °F
+              Calor Especifico                                              Btu/lb °F
+                                     Cp =                0,555
+               seleccionado
+
+                                     dt =                36                 °F
+
+                                       Q = 1.503.295,20                     Btu
+Project   GTTP- Page                   11/18
+
+Job       1004b                        13/01/2026
+Version                                04/06/2026
+Designer         Updated               R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+4.3 CAPACIDAD DE TRANSFERENCIA DEL SERPENTIN
+
+Q = A U TML                            A=          14,192  m2
+              A = Area del Serpentín
+                                                   152,76  ft2
+            U = Coeficiente Global de
+                    transferencia      U=          137,89  Btu/hr ft2-°F
+                                                                 °F
+                                       TML =       18,70
+                                                              Btu/hr
+                                       Q= 393.898,22
+
+4.4 TIEMPO REQUERDO PARA TRANFERENCIA TERMICA TOTAL PARA
+    CALENTAR LA GLUCOSA DE 40°C A 60°.  = 393.898,22BTU
+
+                           Carga térmica Total
+Tiempo = --------------------------------------------------------------------
+
+                  CAPACIDAD DE TRANSFERENCIA SERPENTIN,
+
+                  1.503.295,20 BTU/H
+Tiempo = -----------------------------------= 3,82 horas en condiciones ideales
+
+                  393,898,22 BTU
+Project   GTTP- Page            12/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+5 DISEÑO
+5.1 Carcasa S-1 y Chaqueta J-1
+Carcasa S-1 fabricada en Lamina de 9 mm y Chaqueta en U150x50x4.5 mm de espesor.
+5.1.1 Carcasa S-1
+De [ASMEVIII1] el espesor,  de la Carcasa es:
+
+                                                    0.885
+                                               =
+
+                                                    - 0.1
+ =  = 14.7 psi
+ = 104 in
+ = 1.0
+ = 16690 psi
+ = 0.082 in
+Presion permisible en la Chaqueta,  .
+De [ASMEVIII1] la presión permisible,  es:
+
+                                                          
+                                                    =
+
+                                                          
+ = 1.5 -  = 23364 psi
+ = 70
+ = 0.177 in (4.5 mm)
+
+ = 334 psi
+
+5.1.2 Chaqueta J-1
+De [ASMEVIII1] el espesor,  de la Chaqueta es:
+
+                                                         
+                                            =
+
+                                                 0.85 - 0.6
+ =  = 14.7 psi
+ = 2.4 in
+ = 16700 psi
+ = 0.0025 in
+
+5.1.3 Espesores de Soldadura
+Para Filetes de la Carcasa  = 1/2 in y para la Chaqueta  = 1/8 in.
+Project   GTTP- Page            13/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+6 SIMULACIÓN Y COMPUTACIÓN MECANICA TANQUE
+A continuación, se presenta la evaluación de la Chaqueta, pero utilizando el Método de
+Elementos Finitos (FEM) en una condición de presión interna. Las herramientas de
+computación para realizar esta evaluación son listadas en la sub-sección de
+REFERENCIAS.
+6.1 Estructura y Fuerzas
+Son las serpentines o Chaqueta los cuales están fabricadas en U150x50x4.5 mm de
+Espesor y en Acero SA-240 316L.
+La estructura en sus serpentines está sometida a las siguientes fuerzas:
+· Presión interna,  : 0.2 kN/m
+Note que  también actuá en la carcasa, presionándola hacia su interior.
+6.2 MODELADO
+6.2.1 CAD
+El cálculo está basado en los modelos CAD de la geometría del Tanque suministrados.
+Sobre la carcasa fueron modelados los serpentines para someterlos a la presión que
+experimentan.
+6.2.2 MALLA
+Para la evaluación de las chaquetas es necesario elaborar una malla para poder
+establecer el estado de esfuerzos y fuerzas resultantes sobre los elementos
+estructurales que conforman el Tanque. Los elementos estructurales son la Carcasa
+con espesor,  = 0.007 m y los serpentines de espesor  = 4.0 mm. El tamaño mínimo
+del elemento fue 1.5 mm.
+Project   GTTP- Page            14/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+ MALLA
+ CUERP
+ O
+6.2.3 CONDICIONES DE FRONTERA
+El modelo fue soportado en todo su borde Inferior y superior asi como en los borde
+que se unen al cabezal.
+ Soport
+
+     e
+ vertica
+
+     l
+
+  Borde
+ Inferio
+
+     r
+Project   GTTP- Page            15/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+6.3 RESULTADOS
+El desplazamiento máximo de la chaqueta fue 0.1 mm a la presión de diseño.
+Por el lado de esfuerzos, la chaqueta experimentos esfuerzo menores al límite de
+fluencia del material,  en toda su longitud. El valor máximo fue de 37 MPa.
+A continuación, se presenta en imágenes los resultados mencionados anteriormente.
+6.3.1 Desplazamientos
+
+ Tota
+ l
+6.3.2 Esfuerzos
+En la chaqueta:
+
+Misse
+s
+Project   GTTP- Page            16/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+7 SIMULACIÓN Y COMPUTACIÓN TERMICA DEL TANQUE
+Para verificar la transferencia de calor en el fondo del tanque un modelo basado en
+dinámica computacional de fluido CFD fue realizado. Este modelo permite calcular el
+flujo de calor hacia la glucosa, así como la caída de temperatura en el media coil:
+
+Este flujo de calor debe ser igual o mayor al requerido por la glucosa según el número
+de descargas. En este sentido los modelos realizados fueron los siguientes:
+
+    1. Temperatura en el interior del tanque.  = 313 K (40°C)
+    2. Temperatura en el interior del tanque.  = 333 K (60°C)
+    3. Coeficiente de Convección,  = 3000 W/m2-K, y  = 313 K (40°C)
+    4. Coeficiente de Convección,  = 700 W/m2-K, y  = 313 K (40°C)
+    5. Coeficiente de Convección,  = 30 W/m2-K, y  = 313 K (40°C)
+La Ilustración 1 y la Ilustración 2 muestran el comportamiento de los media-coil en el
+suministro de la potencia para una  = 313 K (40°C) y  = 333 K (60°C),
+respectivamente, en el tanque. En la primera ilustración la potencia suministrada
+alcanza los 312 kW, mientras en el segundo fueron solamente 88 kW. Por otra parte,
+las caídas de temperatura en el media-coil están dentro de valores esperados, 10°C,
+para el primero, y, 3°, para el segundo. Note que el sistema requiere alrededor de 160
+kW para calentar 23 m3 en casi 5 horas.
+La Ilustración 3, Ilustración 4y Ilustración 5 muestran el comportamiento de los
+serpentines, pero ahora variando el coeficiente de transferencia de calor por
+convección en el lado del tanque,  = 3000 W/m2-K,  = 700 W/m2-K y  = 30
+W/m2-K, respectivamente. Las potencias suministradas alcanzaron los 234 kW, 38
+kW y 11 kW, respectivamente. Coeficientes por debajo de 900 W/m2-°C y
+Temperaturas de 40°C en el fondo del tanque son insuficientes para elevar la
+Project   GTTP- Page            17/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+temperatura hasta en 20°C, por lo cual el movimiento de la masa de glucosa durante la
+carga y descarga son fundamentales para lograr el calentamiento del bache en el
+tiempo requerido.
+
+                 Ilustración 1. Modelo 1 -  = 313 K (40°C)
+
+                 Ilustración 2. Modelo 2 -  = 333 K (60°C)
+
+          Ilustración 3. Modelo 3 -  = 3000 W/m2-K, y  = 313 K (40°C)
+Project   GTTP- Page            18/18
+
+Job       1004b                 13/01/2026
+Version                         04/06/2026
+Designer         Updated        R. Gaviria
+
+          5      Reviewed
+
+          B. Quintero Reviewer
+
+               Ilustración 4. Modelo 4 -  = 700 W/m2-K, y  = 313 K (40°C)
+
+                Ilustración 5. Modelo 5 -  = 30 W/m2-K, y  = 313 K (40°C)
+
+8 CONCLUSIÓN
+Térmicamente el tanque con serpentín con sus 11 espiras, puede calentar hasta de 24
+m3 de glucosa por descarga o 120 m3/día. (5 descargas diarias 24h).
+Para lograr esto el Tanque utilizó un área de transferencia de calor de 13,95 m con
+una velocidad del agua de 1.0 m/s, para un caudal de 20 m3/h en el serpentín.
+La presión de operación en la chaqueta alcanzo 1 bar.
+Las simulaciones térmicas vía CFD del tanque muestran que el sistema tiene la
+capacidad de sostener la temperatura del fondo, así como calentarlo siempre que el
+coeficiente de convección en el interior del tanque supere los 900 W/m2-°C.
+Fue evaluado analíticamente y vía simulación las chaquetas mostrando que soportan
+la presión de diseño de 2 bar. el doble de la operación.
+El tiempo de calentamiento de una masa de glucosa de 24m3, de 40°C a 60°C, tarda
+aproximadamente 3,82 horas.
+

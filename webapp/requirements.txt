@@ -1,4 +1,4 @@
-# Proyecto P2611 - Aplicación Web Balance de Materia y Energía
+# Proyecto W2605 - Aplicación Web Balance de Materia y Energía
 # Python 3.12+ compatible
 
 # Núcleo de cálculo científico (existentes)

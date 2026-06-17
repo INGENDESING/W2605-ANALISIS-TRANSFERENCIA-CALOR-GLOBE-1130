@@ -1,5 +1,5 @@
 """
-Generador de Diagrama de Proceso PFD - Proyecto P2611
+Generador de Diagrama de Proceso PFD - Proyecto W2605
 Diagrama de flujo de proceso profesional con balance termico completo
 """
 
@@ -151,7 +151,7 @@ def generar_dot(corrientes):
     qper = corrientes['q_perdida'] / 1000  # MJ/h
     qcha = corrientes['q_chaqueta'] / 1000  # MJ/h
     
-    dot = f'''digraph PFD_P2611 {{
+    dot = f'''digraph PFD_W2605 {{
     // Configuracion general
     graph [fontname="Arial", fontsize=12, rankdir=LR, bgcolor=white, 
            margin="20,20", nodesep=0.6, ranksep=1.2];
@@ -265,7 +265,7 @@ def generar_dot(corrientes):
     // ============================================
     
     label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="4" BGCOLOR="#f8f8f8">
-        <TR><TD COLSPAN="2"><B>PROYECTO P2611 - DIAGRAMA DE FLUJO DE PROCESO</B></TD></TR>
+        <TR><TD COLSPAN="2"><B>PROYECTO W2605 - DIAGRAMA DE FLUJO DE PROCESO</B></TD></TR>
         <TR><TD COLSPAN="2">Sistema de Almacenamiento y Carga de Glucosa Globe 42 DE</TD></TR>
         <TR><TD>Tanque:</TD><TD>Fondo Torisferico ASME F&D + Tapa Eliptica API 650</TD></TR>
         <TR><TD>Aislamiento:</TD><TD>Lana Mineral (especificado sin espesor)</TD></TR>
@@ -292,7 +292,7 @@ def generar_dot(corrientes):
 def guardar_tabla_escenarios(escenarios, corrientes_base):
     """Genera y guarda la tabla de escenarios en formato Markdown"""
     
-    md = '''# Analisis de Escenarios - Proyecto P2611
+    md = '''# Analisis de Escenarios - Proyecto W2605
 ## Sistema de Almacenamiento y Carga de Glucosa
 
 ### Condiciones de Operacion Base
@@ -389,7 +389,7 @@ Para poder cargar glucosa a 57°C y mantener la temperatura de salida ≥57°C, 
 
 ---
 
-*Documento generado automaticamente - Proyecto P2611*
+*Documento generado automaticamente - Proyecto W2605*
 *Fecha: 2026-04-10*
 '''
     
@@ -402,7 +402,7 @@ Para poder cargar glucosa a 57°C y mantener la temperatura de salida ≥57°C, 
 
 def main():
     print("=" * 78)
-    print("GENERADOR DE DIAGRAMA DE PROCESO PFD - PROYECTO P2611")
+    print("GENERADOR DE DIAGRAMA DE PROCESO PFD - PROYECTO W2605")
     print("=" * 78)
     
     # Calcular corrientes para caso base (57°C entrada)
@@ -429,14 +429,14 @@ def main():
     
     # Guardar archivo DOT
     os.makedirs('../results', exist_ok=True)
-    dot_path = '../results/diagrama_proceso_P2611.dot'
+    dot_path = '../results/diagrama_proceso_W2605.dot'
     with open(dot_path, 'w') as f:
         f.write(dot_code)
     print(f"   Guardado: {dot_path}")
     
     # Convertir a SVG
     print("\n4. Convirtiendo a SVG...")
-    svg_path = '../results/diagrama_proceso_P2611.svg'
+    svg_path = '../results/diagrama_proceso_W2605.svg'
     try:
         subprocess.run(['dot', '-Tsvg', dot_path, '-o', svg_path], check=True)
         print(f"   Guardado: {svg_path}")
@@ -446,7 +446,7 @@ def main():
     
     # Convertir a PNG
     print("\n5. Convirtiendo a PNG...")
-    png_path = '../results/diagrama_proceso_P2611.png'
+    png_path = '../results/diagrama_proceso_W2605.png'
     try:
         subprocess.run(['dot', '-Tpng', '-Gdpi=300', dot_path, '-o', png_path], check=True)
         print(f"   Guardado: {png_path}")

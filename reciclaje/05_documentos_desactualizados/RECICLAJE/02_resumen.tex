@@ -1,0 +1,660 @@
+% ===================== RESUMEN EJECUTIVO =====================
+% Nueva estructura: Dos secciones principales
+% I. Análisis Térmico y Balances de Materia y Energía
+% II. Análisis Estructural e Integridad Mecánica
+% Estilo: Science Direct + KPI Dashboard
+% =============================================================
+
+\newpage
+\section*{Resumen Ejecutivo}
+\addcontentsline{toc}{section}{Resumen Ejecutivo}
+
+\noindent\rule{\textwidth}{0.5pt}
+
+El presente estudio corresponde a la evaluación de validación y verificación solicitada por \textbf{Ingredion S.A.} a \textbf{DML Ingenieros Consultores S.A.S.}, respecto al diseño integral del sistema de calentamiento y el fondo toriesférico de reemplazo del tanque de almacenamiento de glucosa \textbf{Tag 53A-90A-0056} en la planta de Cali, Colombia. La información base del diseño se obtuvo de los planos mecánicos \textbf{REV0DMI17160102} (febrero de 2026) y la memoria de cálculo térmico \textbf{GTTP-1004b Rev.~1} (enero de 2026), suministrados por Ingredion S.A. El fondo de reemplazo, actualmente en fase de construcción, incluye una chaqueta de media caña con un área de transferencia de calor de 13~m$^2$, operando con agua de servicio a 65°C para mantener la glucosa a temperatura de despacho.
+
+\noindent\rule{\textwidth}{0.5pt}
+
+% =============================================================================
+% SECCIÓN I: ANÁLISIS TÉRMICO Y BALANCES DE MATERIA Y ENERGÍA
+% =============================================================================
+\subsection*{I. Análisis Térmico y Balances de Materia y Energía}
+
+\subsubsection*{I.1 Parámetros de Diseño del Sistema Térmico}
+
+El sistema de calentamiento del tanque de almacenamiento de glucosa Tag 53A-90A-0056 opera mediante una chaqueta de media caña en espiral instalada sobre el fondo toriesférico. La Tabla~\ref{tab:resumen_parametros_sistema} consolida las especificaciones técnicas del sistema evaluado.
+
+\begin{table}[H]
+\centering
+\caption{Especificaciones técnicas del sistema de calentamiento por media caña.}
+\label{tab:resumen_parametros_sistema}
+\setcounter{itemcount}{0}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}XcccX@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} & \textbf{Nota} & \textbf{Fuente} \\
+\midrule
+Área de transferencia de calor ($A$) & 13.0 & m$^2$ & Media caña del fondo construido & Base de diseño$^{(a)}$ \\
+Dimensiones del canal (ancho $\times$ alto) & 141 $\times$ 45.5 & mm & Perfil rectangular & Base de diseño$^{(a)}$ \\
+Diámetro hidráulico ($D_h$) & 68.8 & mm & Calculado como $D_h = 2ab/(a+b)$ & Este estudio \\
+Material de construcción & SS316L & -- & Norma ASTM A240 & Base de diseño$^{(a)}$ \\
+Espesor de la pared del fondo & 9.0 & mm & Incluye tolerancia & Base de diseño$^{(a)}$ \\
+Conductividad térmica SS316L ($k_w$) & 16.3 & W/(m$\cdot$°C) & ASME Section II Part D & Este estudio \\
+Temperatura agua entrada ($T_{w,in}$) & 65 & °C & Base de diseño original & Base de diseño$^{(a)}$ \\
+Velocidad agua en canal ($v_w$) & 1.5 & m/s & Flujo base (Re $\approx$ 270,000) & Base de diseño$^{(a)}$ \\
+Caudal de agua base ($Q_w$) & 30.6 & m$^3$/h & Para $v = 1.5$~m/s & Base de diseño$^{(a)}$ \\
+Temperatura agua optimizada & 75 & °C & Escenario optimizado (Este estudio) & Este estudio \\
+Velocidad agua optimizada & 2.5 & m/s & Mayor capacidad (Re $\approx$ 448,000) & Este estudio \\
+Caudal agua optimizado & 57.7 & m$^3$/h & Para $v = 2.5$~m/s & Este estudio \\
+Temperatura objetivo glucosa & 57 & °C & Mínimo para despacho & Este estudio \\
+Límite superior seguridad & 60 & °C & Corte sistema (máx. diseño) & Base de diseño$^{(a)}$ \\
+Gravedad específica glucosa & 1.42 & -- & 80.6°Brix a 25°C & Ficha técnica Ingredion \\
+Viscosidad glucosa a 25°C & 212,000 & cP & Extrapolación modelo VFT & Este estudio \\
+Viscosidad glucosa a 57°C & 2,870 & cP & Modelo VFT calibrado & Este estudio \\
+\bottomrule
+\multicolumn{5}{@{}p{\dimexpr\textwidth-2\tabcolsep\relax}@{}}{\footnotesize $^{(a)}$ Datos suministrados por Ingredion S.A. en la memoria de cálculo térmico GTTP-1004b Rev.~1 y los planos mecánicos REV0DMI17160102.}
+\end{tabularx}
+\end{table}
+
+La Tabla~\ref{tab:resumen_parametros_sistema} distingue los parámetros base de diseño suministrados por Ingredion S.A. (correspondientes al diseño del fondo de reemplazo: agua a 65°C, velocidad 1.5~m/s, temperatura de glucosa 60°C) de los valores analizados en el presente estudio. La configuración con agua a 75°C y velocidad 2.5~m/s representa una optimización técnica que incrementa la capacidad de transferencia de calor del sistema.
+
+\subsubsection*{I.2 Balance de Materia y Energía del Sistema}
+
+El análisis del balance térmico del sistema de almacenamiento considera el flujo medio de operación de 8,000~kg/h de glucosa, que corresponde al flume necesario para completar 5 descargas de 24~toneladas cada una durante un turno de 24~horas. La Figura~\ref{fig:resumen_pfd_balance} presenta el diagrama de flujo de proceso (PFD) con los valores de balance de materia y energía para el escenario optimizado.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{../../results/diagrama_proceso_W2605_v2.png}
+\caption{Diagrama de flujo de proceso (PFD) del sistema de almacenamiento y carga de glucosa con balance de materia y energía. Escenario optimizado: agua de servicio a 75°C, flujo de glucosa 8,000~kg/h, área de transferencia 13~m$^2$.}
+\label{fig:resumen_pfd_balance}
+\end{figure}
+
+El balance de materia consolidado para el escenario de operación continua se presenta en la Tabla~\ref{tab:resumen_balance_materia}. El sistema opera con una alimentación continua de 8,000~kg/h de glucosa a 57°C, manteniendo el inventario del tanque T-101 al 80\% de su capacidad (254~ton).
+
+\begin{table}[H]
+\centering
+\caption{Balance de materia del sistema de almacenamiento y carga de glucosa (escenario optimizado).}
+\label{tab:resumen_balance_materia}
+\footnotesize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Corriente} & \textbf{Flujo (kg/h)} & \textbf{Vol. (m$^3$/h)} & \textbf{T ($^\circ$C)} & \textbf{Entalpia (MJ/h)} \\
+\midrule
+1 --- Glucosa Entrada & 8,000 & 5.7 & 57.0 & 971.7 \\
+4 --- Glucosa Salida & 8,000 & 5.7 & 55.1 & 939.5 \\
+\midrule
+2 --- Agua Entrada & 56,258 & 57.7 & 75.0 & 17,690 \\
+3 --- Agua Salida & 56,258 & 57.7 & 74.9 & 17,670 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El balance de energía, presentado en la Tabla~\ref{tab:resumen_balance_energia}, revela una condición crítica del sistema: las pérdidas térmicas al ambiente (51.1~MJ/h) exceden el calor transferido desde la chaqueta (18.9~MJ/h), resultando en un balance neto negativo de $-32.2$~MJ/h. Esta condición implica que, bajo operación continua a 8,000~kg/h, la temperatura de la glucosa tiende a disminuir a lo largo del tiempo si no se compensa mediante mayor capacidad de transferencia o reducción de pérdidas térmicas.
+
+\begin{table}[H]
+\centering
+\caption{Balance de energía del sistema de transferencia de calor.}
+\label{tab:resumen_balance_energia}
+\footnotesize
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} & \textbf{Notas} \\
+\midrule
+Calor Transferido (Chaqueta) & 18.9 & MJ/h & $U = 36.2$~W/m$^2\cdot^\circ$C; $A = 13$~m$^2$ \\
+Pérdidas Térmicas & 51.1 & MJ/h & $\Delta T = 3^\circ$C (conservador) \\
+\midrule
+\textbf{Balance Neto} & \textbf{$-$32.2} & \textbf{MJ/h} & Pérdidas $>$ Aporte de calor \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Hallazgo crítico del balance:} El coeficiente global de pérdidas al ambiente $U_{\text{pérdidas}} = 0.81$~W/(m$^2\cdot^\circ$C), calculado mediante modelo de resistencias térmicas (convección interna, pared de acero, aislamiento de 50.8~mm, convección externa), indica que el sistema pierde aproximadamente 2.7 veces más energía de la que recibe desde la chaqueta. El tiempo característico para perder 3°C de temperatura, partiendo de condiciones de equilibrio térmico, se estima en aproximadamente 25 días, lo cual es aceptable para operación batch pero insuficiente para mantenimiento térmico continuo sin recalentamiento periódico.
+
+\subsubsection*{I.4 Escenarios de Operación Evaluados}
+
+Se definieron cinco escenarios para caracterizar la respuesta térmica del sistema bajo diferentes condiciones operativas, considerando el área de transferencia de calor del fondo instalado (13~m$^2$). La Tabla~\ref{tab:resumen_escenarios_detallado} presenta la matriz completa de parámetros por escenario.
+
+\begin{table}[H]
+\centering
+\caption{Matriz de escenarios de simulación térmica con parámetros operativos.}
+\label{tab:resumen_escenarios_detallado}
+\setcounter{itemcount}{0}
+\scriptsize
+\begin{tabularx}{\textwidth}{@{}clcccccX@{}}
+\toprule
+\textbf{Esc.} & \textbf{Descripción} & \textbf{$T_{w}$ [°C]} & \textbf{$T_{g}$ [°C]} & \textbf{Llenado} & \textbf{Masa [ton]} & \textbf{$v_w$ [m/s]} & \textbf{Observaciones} \\
+\midrule
+1 & Lote inicial & 65 & 20$\rightarrow$60 & 7.6\% & 34 & 1.34 & Volumen parcial \\
+2 & Inventario masivo & 65 & 25$\rightarrow$57 & 80\% & 254 & 2.5 & Línea base \\
+3 & Inventario masivo & 75 & 25$\rightarrow$57 & 80\% & 254 & 2.5 & Mayor $\Delta T$ \\
+4 & Capacidad diaria & 75 & 54/55$\rightarrow$57 & Variable & Variable & 2.5 & Descargas \\
+5 & Ciclo desde frío & 75 & 25$\rightarrow$57 & Variable & 192 & 2.5 & Arranque frío \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La Tabla~\ref{tab:resumen_proposito_escenarios} describe las condiciones de operación y el objetivo técnico de cada escenario evaluado.
+
+\begin{table}[H]
+\centering
+\caption{Definición de los escenarios de análisis térmico: condiciones de operación y propósito.}
+\label{tab:resumen_proposito_escenarios}
+\setcounter{itemcount}{0}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}clX@{}}
+\toprule
+\textbf{Escenario} & \textbf{Condiciones de operación} & \textbf{Objetivo del análisis} \\
+\midrule
+1 & Carga parcial (7.6\ \% de llenado, 34~ton, $T_w$~=~65°C). & Evaluar el comportamiento térmico del tanque bajo volumen reducido de glucosa. \\
+2 & Inventario masivo a 65°C (80\ \% de llenado, 254~ton, $v_w$~=~2.5~m/s). & Establecer la línea base de desempeño térmico con la temperatura de diseño original del agua de servicio. \\
+3 & Inventario masivo a 75°C (80\ \% de llenado, 254~ton, $v_w$~=~2.5~m/s). & Cuantificar la mejora en la capacidad de transferencia de calor al incrementar la temperatura del agua de servicio. \\
+4 & Descarga continua con temperatura variable (54/55~$\rightarrow$~57°C, $T_w$~=~75°C). & Determinar la capacidad operativa real de descarga a carrotanques con el área de transferencia disponible (13~m$^2$). \\
+5 & Arranque desde frío (25~$\rightarrow$~57°C, 192~ton, $T_w$~=~75°C). & Modelar el ciclo completo de calentamiento inicial y descargas consecutivas desde temperatura ambiente. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection*{I.3 Análisis de Transferencia de Calor y Coeficiente Global}
+
+El coeficiente global de transferencia de calor $U$ se determinó mediante el modelo de resistencias térmicas en serie. La Tabla~\ref{tab:resumen_U_vs_T} resume los valores calculados para el Escenario~3 (agua a 75°C) a diferentes temperaturas de la glucosa.
+
+\begin{table}[H]
+\centering
+\caption{Coeficiente global $U$ y parámetros de transferencia (Escenario~3, $T_w$ = 75°C, $v_w$ = 2.5~m/s).}
+\label{tab:resumen_U_vs_T}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}cccccc@{}}
+\toprule
+\textbf{$T_g$ [°C]} & \textbf{$h_i$ [W/m$^2$°C]} & \textbf{$h_o$ [W/m$^2$°C]} & \textbf{$U$ [W/m$^2$°C]} & \textbf{Pr$_g$ [--]} & \textbf{$R_o/R_T$ [\%]} \\
+\midrule
+20 & 10,867 & 21.4 & 21.1 & 147,300 & 98.6 \\
+30 & 10,997 & 26.7 & 26.3 & 48,200 & 98.3 \\
+40 & 11,122 & 31.7 & 31.1 & 17,200 & 98.0 \\
+50 & 11,241 & 35.7 & 34.9 & 6,890 & 97.8 \\
+57 & 11,356 & 37.1 & 36.2 & 3,980 & 97.7 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Hallazgo crítico:} El coeficiente del lado del agua ($h_i \approx$ 10,200--11,400~W/m$^2$°C) es entre 290 y 610 veces mayor que el coeficiente del lado de la glucosa ($h_o \approx$ 18--37~W/m$^2$°C). La resistencia térmica del lado de la glucosa concentra el 97.7\%--98.8\% de la resistencia total, lo que determina que la convección natural del jarabe viscoso constituye el mecanismo limitante del proceso de transferencia de calor.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/figures/U_vs_T_glucosa.png}
+\caption{Variación del coeficiente global $U$ y coeficientes convectivos individuales $h_i$ (agua) y $h_o$ (glucosa) con la temperatura de la glucosa ($T_w$ = 75°C, $v$ = 2.5~m/s). La dominancia de la resistencia de la glucosa ($R_o/R_T >$ 97.7\%) es evidente en todo el rango operativo.}
+\label{fig:resumen_U_vs_T}
+\end{figure}
+
+La validación mediante simulación CFD en COMSOL Multiphysics~6.4 confirmó un coeficiente $U_{CFD}$ = 38~W/m$^2$°C en estado estable, concordando con el modelo analítico ($U_{cal}$ = 36.2~W/m$^2$°C a 60°C) con una desviación del 5\%.
+
+Las Figuras~\ref{fig:resumen_cfd2} y \ref{fig:resumen_cfd3} presentan los campos de temperatura y velocidad obtenidos mediante CFD a los 240~minutos (4~horas) de operación del Escenario~3. A este tiempo, el agua en las espiras interiores de la chaqueta mantiene temperaturas de 65--75°C (tonos rojo/naranja), mientras que la glucosa en el fondo del tanque ha alcanzado temperaturas de 35--45°C en la zona próxima a la superficie calentada. El campo de velocidad revela la convección natural desarrollada en el jarabe, con velocidades máximas por conveccion de 2--3~mm/s en las zonas de mayor gradiente térmico, confirmando el régimen laminar de convección natural dominado por la alta viscosidad del fluido.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/figures/cfd2.png}
+\caption{Campo de temperatura (°C) a los 240~minutos de operación (Escenario~3, $T_{g,0}$=25°C, $T_w$=75°C). La escala cromática evidencia el avance del frente térmico desde las espiras de la chaqueta hacia el volumen de glucosa.}
+\label{fig:resumen_cfd2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/figures/cfd3.png}
+\caption{Campo de velocidad (m/s) de la convección natural a los 240~minutos. Los vectores de velocidad indican el patrón de recirculación térmica con velocidades máximas del orden de $10^{-3}$~m/s, característico de fluidos de alta viscosidad.}
+\label{fig:resumen_cfd3}
+\end{figure}
+
+\subsubsection*{I.5 Capacidad Operativa de Descarga a Carrotanques}
+
+\paragraph{Escenario 4: Capacidad Operativa Diaria con Área 13~m$^2$}
+
+El Escenario~4 evalúa cuántas descargas de 24~toneladas se pueden completar por día con el área de transferencia de calor del fondo instalado (13~m$^2$), bajo diferentes condiciones de temperatura de entrada de la glucosa. Se analizan dos casos: (a) entrada conservadora a 54°C, que considera pérdidas térmicas por exposición externa del tanque, y (b) entrada optimizada a 55°C, que requiere mantener la glucosa almacenada a temperatura elevada.
+
+\begin{table}[H]
+\centering
+\caption{Escenario~4: Comparativa detallada de capacidad operativa con área 13~m$^2$ ($T_w$ = 75°C, $v_w$ = 2.5~m/s).}
+\label{tab:resumen_esc4_capacidad}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}Xccc@{}}
+\toprule
+\textbf{Parámetro de Desempeño} & \textbf{Caso A (54$\rightarrow$57°C)} & \textbf{Caso B (55$\rightarrow$57°C)} & \textbf{Diferencia} \\
+\midrule
+Gradiente térmico ($\Delta T$) & 3°C & 2°C & $-$33\% \\
+Coeficiente global $U$ promedio & 36.0 & 36.2 & W/m$^2$°C ($\sim$0\%) \\
+LMTD (diferencia log media) & 19.4 & 19.3 & °C \\
+Flujo máximo alcanzable ($\dot{m}_{max}$) & 5.1 & 7.5 & ton/h (+47\%) \\
+Tiempo para llenar 24~ton & 4.7 & 3.2 & h ($-$32\%) \\
+\midrule
+\textbf{Descargas por día (24~h)} & \textbf{5} & \textbf{7} & +40\% \\
+\textbf{Capacidad diaria total} & \textbf{120} & \textbf{168} & ton/día (+40\%) \\
+\textbf{Requerimiento operativo} & 192 & 192 & ton/día (5 descargas) \\
+\textbf{Cumplimiento del requerimiento} & 62.5\% & 87.5\% & +25~puntos porcentuales \\
+\textbf{Déficit vs.~requerimiento} & $-$37.5\% & $-$12.5\% & +25~puntos porcentuales \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Análisis de resultados:}
+
+El \textbf{Caso A (54$\rightarrow$57°C)} representa una condición conservadora que asume pérdidas térmicas de aproximadamente 3°C durante el almacenamiento. Con un flujo máximo de 5.1~ton/h, el sistema permite completar 5 descargas por día (120~toneladas), evidenciando un déficit del 37.5\% respecto al requerimiento operativo de 5 descargas diarias (192~toneladas).
+
+El \textbf{Caso B (55$\rightarrow$57°C)} corresponde a una estrategia de mantenimiento térmico proactivo. Al mantener la glucosa almacenada a mínimo 55°C, el flujo máximo aumenta a 7.5~ton/h, permitiendo completar 5 descargas por día (168~toneladas). El déficit se reduce a solo 12.5\% (una descarga), considerado aceptable operativamente.
+
+\textbf{Conclusión operativa:} El área de 13~m$^2$ es insuficiente para el requerimiento completo de 5 descargas diarias en ambos casos. Sin embargo, manteniendo la glucosa a mínimo 55°C (Caso~B), se alcanza una capacidad de 5 descargas/día, considerada operativamente viable con un pequeño déficit del 12.5\%. Se recomienda optimizar el aislamiento térmico del tanque con el fin de mantener la glucosa almacenada a temperaturas $\geq$ 55°C, condición necesaria para garantizar una operación viable con el área disponible.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/figures/escenario4_comparativa_capacidad.png}
+\caption{Análisis comparativo de capacidad operativa con área 13~m$^2$ --- Caso A (54°C) vs. Caso B (55°C). Panel superior: flujo máximo y tiempo por descarga. Panel central: descargas por día y capacidad diaria. Panel inferior: diagrama de proceso temporal para 24 horas de operación.}
+\label{fig:resumen_esc4_capacidad}
+\end{figure}
+
+\paragraph{Escenario 5: Ciclo Industrial desde Frío (25°C)}
+
+El Escenario~5 modela el ciclo completo de despacho partiendo de 25°C para completar 5 descargas de 24~toneladas cada una (192~toneladas totales). El ciclo incluye un recalentamiento inicial prolongado seguido de descargas consecutivas.
+
+\begin{table}[H]
+\centering
+\caption{Escenario~5: Detalle del ciclo de 5 descargas desde 25°C ($T_w$ = 75°C, $T_{desc}$ = 57°C).}
+\label{tab:resumen_esc5_ciclo}
+\setcounter{itemcount}{0}
+\small
+\begin{tabularx}{\textwidth}{@{}Ncccccc@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{Desc.}} & \textbf{$\Delta t_{recal}$ [h]} & \textbf{$T_{ini}$ [°C]} & \textbf{$T_{fin}$ [°C]} & \textbf{$m_{ini}$ [ton]} & \textbf{$m_{fin}$ [ton]} & \textbf{Observación} \\
+\midrule
+1 & 25.5 & 25.0 & 57.1 & 192.0 & 168.0 & Recalentamiento inicial crítico \\
+2 & 0 & 57.1 & 57.3 & 168.0 & 144.0 & Sin tiempo de espera \\
+3 & 0 & 57.3 & 57.4 & 144.0 & 120.0 & Descarga consecutiva \\
+4 & 0 & 57.4 & 57.6 & 120.0 & 96.0 & Descarga consecutiva \\
+5 & 0 & 57.6 & 57.9 & 96.0 & 72.0 & Descarga consecutiva \\
+6 & 0 & 57.9 & 58.2 & 72.0 & 48.0 & Descarga consecutiva \\
+7 & 0 & 58.2 & 58.8 & 48.0 & 24.0 & Descarga consecutiva \\
+8 & 0 & 58.8 & 60.0 & 24.0 & 0.5 & Límite operativo alcanzado \\
+\midrule
+\multicolumn{2}{l}{\textbf{Tiempo total del ciclo}} & \multicolumn{3}{c}{\textbf{37.5 horas}} & \multicolumn{2}{c}{(25.5~h recalentamiento + 12~h descargas)} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Resultado crítico:} Solo la primera descarga requiere un tiempo de recalentamiento significativo (25.5~horas para calentar 192~toneladas desde 25°C hasta 57°C). Esta duración es consecuencia directa de la viscosidad de la glucosa a 25°C ($\sim$212,000~cP), que limita severamente la convección natural. A partir de la segunda descarga, la temperatura de la glucosa se mantiene por encima de 57°C, lo que permite ejecutar las 5 descargas restantes de forma consecutiva sin tiempos de espera adicionales.
+
+La temperatura de la glucosa se incrementa gradualmente desde 57.0°C en la primera descarga hasta alcanzar 60.0°C en la última descarga, que constituye el límite operativo recomendado. Este comportamiento resulta de la disminución de la masa en el tanque (mejora la relación área/masa) mientras el flujo de calor se mantiene constante.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/figures/escenario4_ciclo_T.png}
+\caption{Dinámica del ciclo de despacho desde frío (Escenario~5): Evolución de la temperatura (panel superior) y masa residual (panel inferior) durante las 5 descargas partiendo de 25°C. Las bandas sombreadas indican las fases de descarga de 1.5~h cada una.}
+\label{fig:resumen_esc5_ciclo}
+\end{figure}
+
+\subsubsection*{I.6 Comparativa de Configuraciones de Chaqueta}
+
+Se evaluó cuantitativamente el impacto de reducir el área de transferencia de la configuración actual (chaqueta dimple, 28~m$^2$) a la media caña del fondo construido (13~m$^2$). El análisis considera dos condiciones de operación de mantenimiento: (a) la condición realista de 54°C a 57°C, que incorpora pérdidas térmicas estimadas de ~3°C por la gran área superficial del tanque (aislamiento degradado tras 20 años de operación), y (b) la condición ideal de 55°C a 57°C, que asume un aislamiento térmico optimizado. Dado que el coeficiente $U$ es invariante entre configuraciones (la resistencia de la glucosa concentra el 98\% del total), la capacidad de calentamiento escala directamente con el área disponible.
+
+\begin{table}[H]
+\centering
+\caption{Comparativa de configuraciones: Chaqueta dimple vs. media caña ($T_w$ = 75°C, $v_w$ = 2.5~m/s).}
+\label{tab:resumen_comparativa_chaquetas}
+\setcounter{itemcount}{0}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}lccccc@{}}
+\toprule
+\textbf{Modo} & \textbf{Chaqueta} & \textbf{$A$ [m$^2$]} & \textbf{25$\rightarrow$57°C} & \textbf{54$\rightarrow$57°C} & \textbf{Flujo max*} \\
+\midrule
+Batch [h] & Dimple & 28 & 170.7~h & 22.3~h & -- \\
+Batch [h] & Media caña & 13 & 367.5~h & 48.0~h & -- \\
+\midrule
+Continuo 25°C & Dimple & 28 & -- & -- & 1.47~ton/h \\
+Continuo 25°C & Media caña & 13 & -- & -- & 0.69~ton/h \\
+Continuo 54°C$^{(a)}$ & Dimple & 28 & -- & -- & 8.2~ton/h \\
+Continuo 54°C$^{(a)}$ & Media caña & 13 & -- & -- & 3.8~ton/h \\
+\bottomrule
+\multicolumn{6}{l}{\footnotesize *Flujo máximo continuo alcanzando 57°C a la salida.} \\
+\multicolumn{6}{l}{\footnotesize $^{(a)}$ Condición realista con pérdidas térmicas (~3°C) por área superficial del tanque (aislamiento degradado, 20 años operación).}
+\end{tabularx}
+\end{table}
+
+El cociente de tiempos entre configuraciones es $t_{prop}/t_{actual} = 2.153$, prácticamente idéntico al ratio de áreas $A_{actual}/A_{prop} = 28/13 = 2.154$. Esta proporcionalidad confirma que la reducción del 54\% en el área conlleva una reducción equivalente en la capacidad de calentamiento.
+
+\textbf{Implicación de diseño:} Para el calentamiento desde frío (25°C), ambas configuraciones resultan insuficientes para flujos industriales superiores a 1.5~ton/h. Para operación de mantenimiento en condiciones realistas (54°C a 57°C, considerando pérdidas por aislamiento degradado), la media caña del fondo construido (13~m$^2$) soporta hasta 3.8~ton/h. La condición ideal con aislamiento optimizado (55°C a 57°C) permitiría hasta 7.5~ton/h, equivalente a 5 descargas diarias.
+
+\subsubsection*{I.6.1 Ampliación Opcional: Media Caña en Cuerpo Cilíndrico}
+
+La configuración base del fondo de reemplazo (13~m$^2$ en fondo toriesférico) puede complementarse opcionalmente con media caña instalada en el cuerpo cilíndrico del tanque. Esta ampliación incrementaría el área de transferencia total sin modificar el fondo actualmente en construcción.
+
+El área lateral del cilindro (diámetro 5.264~m, altura 9.670~m) asciende a 160~m$^2$ teóricos, permitiendo incorporar entre 40 y 80~m$^2$ adicionales de superficie de transferencia, dependiendo de la extensión vertical seleccionada (virolas inferiores al 25\% o 50\% de la altura). El área total combinada resultaría de 53 a 93~m$^2$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/figures/recomendacionmc.jpg}
+\caption{Vista conceptual de la configuración ampliada con media caña en virolas inferiores del cuerpo cilíndrico, manteniendo los 13~m$^2$ existentes en el fondo toriesférico.}
+\label{fig:resumen_ampliacion_mc}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/figures/recomendacionmc1.jpg}
+\caption{Detalle de la distribución espacial del área de transferencia adicional en la sección cilíndrica del tanque.}
+\label{fig:resumen_ampliacion_mc_detalle}
+\end{figure}
+
+La viabilidad de esta ampliación se sustenta en el análisis de severidad corrosiva diferencial entre componentes. La Tabla~\ref{tab:resumen_corrosion_diferencial} consolida los parámetros de degradación por zona.
+
+\begin{table}[H]
+\centering
+\caption{Análisis de corrosión diferencial: Fondo toriesférico vs. cuerpo cilíndrico.}
+\label{tab:resumen_corrosion_diferencial}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}Xcccc@{}}
+\toprule
+\textbf{Zona} & \textbf{Temperatura máx.} & \textbf{Mecanismo} & \textbf{Tasa [mm/año]} & \textbf{Vida útil} \\
+\midrule
+Fondo toriesférico (interfaz chaqueta) & 75°C & Corrosión-fatiga térmica & 0.12 & 7.5 años \\
+Cuerpo cilíndrico (virolas inferiores) & 60°C & Corrosión general & 0.0625 & 16 años \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La interfaz fondo-chaqueta opera a 75°C, condición que acelera la corrosión-fatiga por la sinergia entre temperatura elevada, acidez del medio (pH 4.5--5.5) y ciclicidad térmica (2,920 ciclos/año). En contraste, el cuerpo cilíndrico presenta temperaturas máximas de 60°C durante operación normal, con gradientes térmicos reducidos que mitigan el mecanismo de corrosión-fatiga. La tasa de corrosión estimada para el cilindro proyecta una vida útil de aproximadamente 16 años, superior a la del fondo.
+
+\textbf{Conclusión de viabilidad:} La instalación de media caña en el cuerpo cilíndrico constituye una alternativa técnicamente viable, dado que la menor severidad térmica (60°C vs. 75°C) reduce el riesgo de degradación acelerada. Esta opción permite incrementar la capacidad de transferencia de calor sin intervenir el fondo toriesférico en construcción.
+
+\subsubsection*{I.7 Conclusiones y Recomendaciones Térmicas}
+
+\paragraph{Conclusiones Técnicas del Análisis Térmico}
+
+La Tabla~\ref{tab:resumen_conclusiones_termicas} consolida las conclusiones fundamentales derivadas del análisis de transferencia de calor.
+
+\begin{table}[H]
+\centering
+\caption{Conclusiones del análisis térmico consolidadas por categoría técnica.}
+\label{tab:resumen_conclusiones_termicas}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Categoría Técnica} & \textbf{Conclusión y Evidencia} \\
+\midrule
+\textbf{Mecanismo Limitante} & La convección natural de la glucosa representa el 97.7\%--98.8\% de la resistencia térmica total debido a su elevada viscosidad ($>$212,000~cP a 25°C, 2,870~cP a 57°C). El coeficiente del lado del agua es 300--600 veces mayor que el de la glucosa. \\
+\midrule
+\textbf{Rango de Operación de $U$} & El coeficiente global $U$ se sitúa en el rango 18--36~W/m$^2$°C para el rango operativo 25--57°C. El orden de magnitud del número de Prandtl ($\mathrm{Pr} \sim 10^4$) refleja la dominancia de la difusión viscosa sobre la térmica, estableciendo la convección natural como mecanismo limitante del proceso, con independencia de la geometría de la chaqueta. \\
+\midrule
+\textbf{Optimización Térmica} & El uso de agua a 75°C reduce el tiempo de preparación logística en un 46\% frente a la operación a 65°C. La instalación de aislamiento de 2'' lana mineral es crítica para minimizar pérdidas térmicas y mantener la glucosa a temperatura de despacho. \\
+\midrule
+\textbf{Eficiencia de Aislamiento} & El aislamiento de lana mineral de 2'' (50.8~mm) reduce las pérdidas al ambiente en un 91\%, garantizando una temperatura superficial segura de 30.8°C (vs.~74.8°C sin aislamiento). \\
+\midrule
+\textbf{Validación CFD} & La simulación en COMSOL Multiphysics 6.4 validó el modelo analítico con una concordancia del 95\% ($U_{CFD}$ = 38 vs.~$U_{cal}$ = 36.2~W/m$^2$°C), confirmando la precisión de las estimaciones transitorias. \\
+\midrule
+\textbf{Capacidad Operativa} & Con área 13~m$^2$, en condición realista (54°C$\rightarrow$57°C, considerando pérdidas por aislamiento degradado tras 20 años), se alcanzan 5 descargas diarias (120~ton/día, 62.5\% del requerimiento). Con aislamiento térmico optimizado (55°C$\rightarrow$57°C), se alcanzan 5 descargas (168~ton/día, 87.5\%). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Recomendaciones de Operación y Diseño Térmico}
+
+La Tabla~\ref{tab:resumen_recomendaciones_termicas} presenta las recomendaciones priorizadas para la gestión térmica del sistema.
+
+\begin{table}[H]
+\centering
+\caption{Recomendaciones técnicas priorizadas para el sistema de calentamiento.}
+\label{tab:resumen_recomendaciones_termicas}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}lcX@{}}
+\toprule
+\textbf{Recomendación} & \textbf{Prioridad} & \textbf{Justificación Técnica e Impacto Esperado} \\
+\midrule
+Estandarizar agua de calentamiento a 75°C & Alta & Reducción del 46\% en tiempos de preparación. Sin modificaciones en bomba ni agitación. Costo-efectividad máxima. \\
+\midrule
+Instalar aislamiento 2'' (50.8~mm) lana mineral & Alta & Reducción del 91\% en pérdidas térmicas. Temperatura superficial segura (30.8°C). Punto de equilibrio óptimo costo-beneficio. \\
+\midrule
+Mantener glucosa almacenada $\geq$ 55°C & Alta & Incremento de capacidad de 5 a 5 descargas/día (+40\%). Reduce déficit operativo de 37.5\% a 12.5\%. \\
+\midrule
+Implementar lazo de control a 60°C & Media & Prevención de sobrecalentamiento. El sistema tiende a superar 60°C en descargas tardías del ciclo. Corte automático recomendado. \\
+\midrule
+Instrumentación multipunto & Media & Monitoreo de temperatura real del producto en el fondo. La temperatura local puede diferir del promedio del volumen. \\
+\midrule
+Reconfigurar a flujo paralelo múltiple & Media & Reconfigurar de serie a tres circuitos paralelos con 46.2~m$^3$/h cada uno (v=2.0~m/s, total 138.6~m$^3$/h). Elimina el gradiente de temperatura observado en CFD (Figuras~4--5), distribuyendo flujo caliente homogéneamente y mejorando la utilización del área de transferencia. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+% =============================================================================
+% SECCIÓN II: ANÁLISIS ESTRUCTURAL E INTEGRIDAD MECÁNICA
+% =============================================================================
+\subsection*{II. Análisis Estructural e Integridad Mecánica}
+
+\subsubsection*{II.1 Marco Normativo y Criterios de Diseño}
+
+El análisis estructural del tanque de almacenamiento de glucosa Tag 53A-90A-0056 se fundamenta en normativas internacionales aplicables a tanques de almacenamiento de líquidos. La Tabla~\ref{tab:resumen_normativas} consolida el marco regulatorio y los criterios de diseño adoptados.
+
+\begin{table}[H]
+\centering
+\caption{Marco normativo aplicable al análisis estructural del tanque.}
+\label{tab:resumen_normativas}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}Xcc@{}}
+\toprule
+\textbf{Norma / Estándar} & \textbf{Aplicación} & \textbf{Factor de Seguridad Requerido} \\
+\midrule
+API 650 (13ª Edición) & Espesores del cuerpo cilíndrico (método One-Foot) & $FS \geq 2.0$ (esfuerzo admisible) \\
+ASME VIII Div.~1 UG-32(e) & Espesor del fondo toriesférico a presión & $FS \geq 1.5$ (membrana + flexión) \\
+ASME Section II Part D & Propiedades mecánicas del SS316L a temperatura & $S$ = 115~MPa a 75°C \\
+NSR-10 (Colombia) Zona Intermedia & Cargas sísmicas para Cali ($A_a$ = 0.25) & $C_s$ = 0.391 (coef. sísmico) \\
+API 650 Apéndice E & Análisis sísmico de tanques de almacenamiento & Distribución impulsiva/convectiva \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+El material de construcción es acero inoxidable SS316L según ASTM A240, con las siguientes propiedades mecánicas a temperatura de operación (75°C): límite elástico $F_y$ = 147~MPa, resistencia última $F_u$ = 470~MPa, esfuerzo admisible $S$ = 115~MPa (ASME Section II Part D, Table 2A).
+
+\subsubsection*{II.2 Análisis de Espesores y Cumplimiento Normativo}
+
+\paragraph{Cuerpo Cilíndrico (API 650 One-Foot Method)}
+
+El espesor requerido para cada virola se calculó mediante el método One-Foot de API 650. La Tabla~\ref{tab:resumen_espesores_cuerpo} presenta los resultados consolidados para el llenado operativo seguro del 80\%.
+
+\begin{table}[H]
+\centering
+\caption{Espesores requeridos para el cuerpo cilíndrico según API 650 (condición operativa segura al 80\%).}
+\label{tab:resumen_espesores_cuerpo}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NcccccX@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{Item}} & \textbf{Virola} & \textbf{Elevación [mm]} & \textbf{$t_{req}$ [mm]} & \textbf{$t_{exist}$ [mm]} & \textbf{Margen [mm]} & \textbf{Estado} \\
+\midrule
+& 1 (inferior) & 0 & 5.01 & 6.0 & +0.99 & \textcolor{green!70!black}{Cumple} \\
+& 2 & 2,500 & 4.76 & 6.0 & +1.24 & \textcolor{green!70!black}{Cumple} \\
+& 3 & 5,000 & 4.76 & 6.0 & +1.24 & \textcolor{green!70!black}{Cumple} \\
+& 4 (superior) & 7,500 & 4.76 & 6.0 & +1.24 & \textcolor{green!70!black}{Cumple} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+El cuerpo cilíndrico cumple integralmente con API 650. La virola inferior (sometida a la mayor presión hidrostática) presenta un margen de 0.99~mm (16.5\% sobre el requerido), garantizando una vida útil remanente proyectada de aproximadamente 16~años bajo la tasa de corrosión histórica de 0.0625~mm/año.
+
+\paragraph{Fondo Toriesférico (ASME VIII UG-32(e))}
+
+El fondo toriesférico se analizó según ASME VIII Div.~1 UG-32(e) para la condición de llenado operativo seguro al 80\% y prueba al 100\%. La Tabla~\ref{tab:resumen_espesores_fondo} resume los resultados críticos.
+
+\begin{table}[H]
+\centering
+\caption{Espesores requeridos para el fondo toriesférico según ASME VIII (SS316L) para condiciones de operación segura al 80\% y prueba al 100\%.}
+\label{tab:resumen_espesores_fondo}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}NccccccX@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{Item}} & \textbf{Condición} & \textbf{$H$ [m]} & \textbf{$P$ [MPa]} & \textbf{$t_{req}$ [mm]} & \textbf{Margen [mm]} & \textbf{Estado} \\
+\midrule
+& Operación segura (80\%) & 8.71 & 0.122 & 7.85 & +1.15 & \textcolor{green!70!black}{Cumple ($FS \geq 1.3$)} \\
+& Prueba hidrostática (100\%) & 10.94 & 0.153 & 9.16 & $-$0.16 & \textcolor{red}{\textbf{No cumple ($FS = 0.71$)}} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Hallazgo crítico estructural:} El análisis de elementos finitos (FEA) identificó un factor de seguridad mínimo de 0.71 en el nudillo fondo-cilindro al 100\% de llenado, confirmando un sobreesfuerzo local. Según los resultados del FEA, la condición segura de operación se alcanza al 80\% de llenado, donde el factor de seguridad en el nudillo es $FS \approx 1.3$. Por tanto, se establece un \textbf{límite operativo mandatorio}: el nivel de llenado no debe exceder el 80\% durante la operación normal para garantizar la integridad estructural.
+
+La Figura~\ref{fig:resumen_fea_presion} ilustra la distribución de la carga hidrostática sobre el tanque lleno de glucosa. El gradiente cromático de azul en la superficie libre (presión nula) a rojo en la base del fondo toriesférico (presión máxima de 0.153~MPa) reproduce la variación lineal de presión con la profundidad. Esta distribución impone la mayor demanda estructural sobre el fondo toriesférico y la virola inferior, que son precisamente los componentes críticos identificados en el análisis analítico.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{../../results/figures/fea1.png}
+\caption{Distribución de la carga hidrostática variable sobre el tanque lleno de glucosa. La escala cromática varía de azul en la superficie libre (presión nula) a rojo en la base del fondo toriesférico (presión máxima), reflejando la variación lineal de presión con la profundidad.}
+\label{fig:resumen_fea_presion}
+\end{figure}
+
+\subsubsection*{II.3 Cargas Externas y Estabilidad}
+
+El análisis de cargas externas considera viento (120~km/h) y sismo (NSR-10, zona intermedia, Cali). La Tabla~\ref{tab:resumen_cargas_externas} consolida las cargas de diseño.
+
+\begin{table}[H]
+\centering
+\caption{Cargas externas de diseño sobre el tanque de almacenamiento.}
+\label{tab:resumen_cargas_externas}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}Xccc@{}}
+\toprule
+\textbf{Parámetro de Carga} & \textbf{Valor} & \textbf{Unidad} & \textbf{Norma / Criterio} \\
+\midrule
+Velocidad de viento de diseño & 120 & km/h & API 650 / NSR-10 \\
+Presión de viento ($P_{viento}$) & 0.352 & kPa & API 650 (C$_f$ = 0.6) \\
+Fuerza de viento sobre el tanque & 20.3 & kN & $F_v = P_v \times A_{proy}$ \\
+Momento de volcamiento por viento & 111.2 & kN$\cdot$m & $M_v = F_v \times H/2$ \\
+\midrule
+Aceleración sísmica pico ($A_a$) & 0.25 & g & NSR-10 Zona Intermedia \\
+Coeficiente sísmico ($C_s$) & 0.391 & -- & $C_s = 2.5 A_a F_a I / R$ \\
+Peso total operativo ($W$) & 2,541 & kN & Tanque + contenido 80\% \\
+Fuerza sísmica horizontal & 993.5 & kN & $F_s = C_s \times W$ \\
+Momento sísmico en la base & 5,434 & kN$\cdot$m & $M_s = F_s \times H_{cg}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Dominancia sísmica:} La fuerza sísmica de diseño (993.5~kN) es 49 veces mayor que la fuerza de viento (20.3~kN), confirmando que el sismo constituye la carga lateral dominante para el diseño estructural en Cali. El momento sísmico en la base (5,434~kN$\cdot$m) debe ser resistido por los anclajes y la cimentación del tanque.
+
+\subsubsection*{II.4 Ciclo de Vida y Corrosión-Fatiga}
+
+La proyección de vida útil del fondo toriesférico se fundamenta en análisis de espesores realizados en campo sobre equipos similares en servicio. La Tabla~\ref{tab:resumen_espesores_campo} presenta los datos de referencia.
+
+\begin{table}[H]
+\centering
+\caption{Resultados de mediciones de espesores en campo -- sustento de la tasa de corrosión.}
+\label{tab:resumen_espesores_campo}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}Xccccc@{}}
+\toprule
+\textbf{Estudio / Equipo} & \textbf{Fecha} & \textbf{Esp. Nom. [mm]} & \textbf{Esp. Min [mm]} & \textbf{Pérdida [mm]} & \textbf{Tasa [mm/año]} \\
+\midrule
+IMESP-042-2024 (Tanque Glucosa 4) & Oct 2024 & 6.35 & 4.48 & 1.87 & \textbf{0.12} \\
+MT-ME-003 (Tanque Dextrosa 4) & Jun 2025 & 6.35 & 3.72 (anillo) & 2.63 & \textbf{0.12} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La tasa de corrosión de \textbf{0.12~mm/año} integra los efectos sinérgicos de: (a) temperatura de operación elevada (75°C), (b) acidez del medio (pH 4.5--5.5), y (c) alta ciclicidad mecánica (8 ciclos/día $\equiv$ 2,920 ciclos/año). Este valor supera la tasa típica de literatura para SS316L ($<$0.05~mm/año) debido al fenómeno de corrosión-fatiga.
+
+\begin{table}[H]
+\centering
+\caption{Proyección de vida útil del fondo toriesférico nuevo (tasa 0.12~mm/año).}
+\label{tab:resumen_vida_util}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}XccX@{}}
+\toprule
+\textbf{Criterio de Vida Útil} & \textbf{Espesor Límite [mm]} & \textbf{Tiempo [años]} & \textbf{Observación} \\
+\midrule
+10\% de espesor nominal (0.9~mm) & 8.1 & 7.5 & \textbf{Criterio recomendado (diseño)} \\
+Límite API 650 (2.5~mm mínimo) & 2.5 & 17.2 & Límite normativo estructural \\
+Margen de seguridad agotado & 6.64 (req 80\%) & 27.3 & Incumplimiento ASME \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Conclusión de vida útil:} Bajo el criterio del 10\% de margen de diseño (pérdida máxima 0.9~mm), el fondo toriesférico nuevo presenta una vida útil proyectada de \textbf{7.5 años}. La severidad térmica del fondo (75°C en interfaz con chaqueta, gradientes térmicos pronunciados, 2,920 ciclos/año) acelera el mecanismo de corrosión-fatiga. En contraste, el cuerpo cilíndrico opera a temperaturas máximas de 60°C con menores fluctuaciones térmicas, resultando en una tasa de corrosión estimada de 0.0625~mm/año y una vida útil remanente de aproximadamente 16 años.
+
+\subsubsection*{II.5 Validación FEA (ANSYS Mechanical)}
+
+La simulación de elementos finitos (FEA) en ANSYS Mechanical evaluó la distribución de esfuerzos bajo carga combinada: hidrostática (llenado 100\%) más térmica (fondo a 75°C, cuerpo a temperatura ambiente). Los resultados confirman y extienden las conclusiones del análisis analítico.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{../../results/figures/fea3.png}
+\caption{Distribución del factor de seguridad sobre el fondo toriesférico y la chaqueta de media caña bajo carga combinada (hidrostática al 100\% + térmica 75°C). Las zonas en rojo indican factores de seguridad inferiores a la unidad ($FS_{min} \approx$ 0.71) en el nudillo fondo-cilindro y anclajes de la chaqueta.}
+\label{fig:resumen_fea_fs}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Zonas críticas identificadas por análisis FEA con factor de seguridad reducido.}
+\label{tab:resumen_zonas_criticas_fea}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}XccX@{}}
+\toprule
+\textbf{Zona Geométrica} & \textbf{FS Mínimo} & \textbf{Esfuerzo Máx [MPa]} & \textbf{Interpretación Crítica} \\
+\midrule
+Nudillo fondo-cilindro (transición) & \textcolor{red}{\textbf{0.71}} & 162 & Sobreesfuerzo local por discontinuidad geométrica. Requiere refuerzo. \\
+Anclajes de chaqueta de media caña & 0.75--0.85 & 135--155 & Concentración en soldaduras de filete. Incluir en programa END. \\
+Centro del fondo toriesférico & 2.1--2.5 & 55--65 & Distribución uniforme. Sin riesgo estructural. \\
+Cuerpo cilíndrico (virolas) & $>$2.5 & $<$45 & Esfuerzos bajo control normativo. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Hallazgo FEA crítico:} El factor de seguridad mínimo de 0.71 en el nudillo confirma el sobreesfuerzo local bajo condición de llenado al 100\%, coherente con el resultado analítico de incumplimiento del espesor requerido (9.16~mm $>$ 9.0~mm existente). La deformación máxima de 4.1~mm en el centro del fondo es aceptable pero debe considerarse en el diseño de conexiones de tubería.
+
+\subsubsection*{II.6 Conclusiones y Recomendaciones Estructurales}
+
+\paragraph{Conclusiones Técnicas del Análisis Estructural}
+
+\begin{table}[H]
+\centering
+\caption{Conclusiones del análisis estructural consolidadas por componente.}
+\label{tab:resumen_conclusiones_estructurales}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Componente / Aspecto} & \textbf{Conclusión Técnica} \\
+\midrule
+\textbf{Cuerpo Cilíndrico} & Cumple integralmente con API 650. Virola inferior: margen 0.99~mm. Vida útil proyectada $\sim$16 años bajo corrosión 0.0625~mm/año. \\
+\midrule
+\textbf{Fondo Toriesférico} & Vida útil proyectada \textbf{7.5 años} bajo criterio 10\% margen y tasa corrosión-fatiga 0.12~mm/año (campo). Incumple ASME VIII al 100\% llenado. \\
+\midrule
+\textbf{Límite Operativo} & Volumen máximo operativo de seguridad: \textbf{178.2~m$^3$ (80\%)}. Según FEA, operar al 80\% garantiza $FS \geq 1.3$ en el nudillo; al 100\% el FS cae a 0.71. \\
+\midrule
+\textbf{Carga Dominante} & Sísmica: fuerza 993.5~kN (49$\times$ viento). Momento basal 5,434~kN$\cdot$m. Controla diseño de anclajes. \\
+\midrule
+\textbf{Integridad FEA} & Validación de métodos analíticos. El FEA identificó que al 80\% de llenado el factor de seguridad en el nudillo es $FS \approx 1.3$ (condición operativa segura), mientras que al 100\% el FS cae a 0.71 (sobreesfuerzo local). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Recomendaciones de Integridad Mecánica}
+
+\begin{table}[H]
+\centering
+\caption{Recomendaciones de integridad estructural priorizadas.}
+\label{tab:resumen_recomendaciones_estructurales}
+\setcounter{itemcount}{0}
+\begin{tabularx}{\textwidth}{@{}lcX@{}}
+\toprule
+\textbf{Recomendación} & \textbf{Prioridad} & \textbf{Justificación Técnica} \\
+\midrule
+Implementar bloqueo operativo al 80\% de llenado & Alta & El análisis FEA confirma que al 100\% el FS cae a 0.71, mientras que al 80\% se garantiza $FS \geq 1.3$. Sistema de alarma + corte obligatorio. \\
+\midrule
+Programa inspección PAUT bianual (fondo) & Alta & Vida útil proyectada 7.5 años por corrosión-fatiga. Detección temprana de grietas y reducción de espesor. \\
+\midrule
+Refuerzo estructural en nudillo y anclajes & Media & Implementar anillos de rigidización o pads en zonas con FS $<$ 1.5. Restaurar márgenes ASME VIII. \\
+\midrule
+Protocolo inspección post-sísmica ($M>$5.0) & Media & Verificar anclajes y cimentación tras evento sísmico. Fuerza sísmica 49$\times$ superior a viento. \\
+\midrule
+Monitoreo de deformación en conexiones & Baja & Deflexión máxima 4.1~mm en centro del fondo. Garantizar flexibilidad en tuberías conectadas. \\
+\midrule
+Evaluar ampliación con media caña en cuerpo cilíndrico & Baja & La menor severidad térmica del cilindro (60°C vs. 75°C en fondo) reduce la tasa de corrosión-fatiga y proyecta una vida útil de 16 años para esta alternativa. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\vspace{1em}
+\noindent\rule{\textwidth}{0.5pt}
+
+\textbf{Síntesis Ejecutiva Global:} El tanque de almacenamiento de glucosa Tag 53A-90A-0056 con el sistema de media caña del fondo construido (13~m$^2$ en fondo toriesférico) opera en condiciones realistas (54°C$\rightarrow$57°C, considerando pérdidas térmicas por aislamiento degradado tras 20 años de servicio) con una capacidad de 5 descargas diarias (120~ton/día, 62.5\% del requerimiento de 5 descargas). La condición de 5 descargas diarias (168~ton/día, 87.5\% del requerimiento) requiere mantener la glucosa almacenada a $\geq$55°C mediante optimización del aislamiento térmico. Como alternativa técnica, la instalación opcional de media caña en el cuerpo cilíndrico (40--80~m$^2$ adicionales) es viable dada la menor severidad corrosiva de esta zona (60°C máximo vs. 75°C en fondo), que proyecta una vida útil de 16 años. El cumplimiento estructural demanda el estricto límite de llenado al 80\% (volumen máximo 178.2~m$^3$) con factor de seguridad $FS \geq 1.3$ según FEA, y un programa de inspección acelerado (bianual) para el fondo toriesférico con vida útil proyectada de 7.5 años.
+
+\newpage

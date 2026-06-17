@@ -1,4 +1,4 @@
-# Dependencias del Proyecto P2611 - Análisis de Tanque de Glucosa
+# Dependencias del Proyecto W2605 - Análisis de Tanque de Glucosa
 # Python 3.12+ compatible
 
 # Núcleo de cálculo científico (REQUERIDO)

@@ -1,5 +1,5 @@
 """
-Inicialización de la aplicación Flask - Proyecto P2611
+Inicialización de la aplicación Flask - Proyecto W2605
 """
 from flask import Flask
 from flask_cors import CORS

@@ -15,7 +15,7 @@ def exportar_csv():
     
     try:
         serie = data.get('serie_temporal', [])
-        filename = data.get('filename', 'datos_p2611.csv')
+        filename = data.get('filename', 'datos_w2605.csv')
         
         if not serie:
             return jsonify({'error': 'No hay datos para exportar'}), 400
@@ -51,7 +51,7 @@ def exportar_excel():
         
         serie = data.get('serie_temporal', [])
         descargas = data.get('descargas', [])
-        filename = data.get('filename', 'datos_p2611.xlsx')
+        filename = data.get('filename', 'datos_w2605.xlsx')
         
         if not serie:
             return jsonify({'error': 'No hay datos para exportar'}), 400
@@ -116,9 +116,9 @@ def exportar_reporte_json():
     try:
         # Construir reporte completo
         reporte = {
-            'proyecto': 'P2611 - Balance de Materia y Energía',
+            'proyecto': 'W2605 - Balance de Materia y Energía',
             'cliente': 'INGREDION S.A.',
-            'empresa': 'DML S.A.S.',
+            'empresa': 'DMV S.A.S.',
             'version': '1.0.0',
             'datos': data
         }
@@ -131,7 +131,7 @@ def exportar_reporte_json():
             output,
             mimetype='application/json',
             as_attachment=True,
-            download_name='reporte_p2611.json'
+            download_name='reporte_w2605.json'
         )
         
     except Exception as e:

@@ -1,5 +1,5 @@
 """
-Módulo de simulación de escenarios de calentamiento — Proyecto P2611
+Módculo de simulación de escenarios de calentamiento — Proyecto W2605
 =====================================================================
 Resuelve el balance de energía transitorio para los 3 escenarios.
 
@@ -29,15 +29,34 @@ from geometria_tanque import (
 from coeficiente_U import coeficiente_U
 
 
-# Configuración de gráficas estilo publicación
+# =============================================================================
+# CONFIGURACION DE GRAFICAS ESTILO PUBLICACION
+# =============================================================================
+
+COLOR_GLUCOSA = '#2E5AAC'
+COLOR_AGUA = '#C44E28'
+COLOR_DESCARGA = '#3A7D44'
+COLOR_BANDA_DESCARGA = '#F4A261'
+COLOR_REJILLA = '#E5E5E5'
+COLOR_TEXTO = '#333333'
+
 plt.rcParams.update({
     'font.family': 'serif',
     'font.size': 11,
+    'axes.titlesize': 13,
     'axes.labelsize': 12,
     'legend.fontsize': 10,
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.02,
+    'axes.edgecolor': COLOR_TEXTO,
+    'axes.labelcolor': COLOR_TEXTO,
+    'xtick.color': COLOR_TEXTO,
+    'ytick.color': COLOR_TEXTO,
+    'text.color': COLOR_TEXTO,
 })
 
 
@@ -147,13 +166,13 @@ def tiempo_para_alcanzar(t_h, T_g, T_objetivo):
 
 # =============================================================================
 # ESCENARIO 1: Balance de un tercero — 24 m³, 30.9 m³/h, 20→60°C, T_agua=65°C
-# Incluye descarga de 24 ton en 1.5 h al alcanzar 60°C
+# Incluye descarga de 24 ton en 2.0 h al alcanzar 60°C
 # =============================================================================
 
-def simular_descarga_esc1(T_g0, m_g0, T_agua_in, v_agua, t_descarga_h=1.5,
+def simular_descarga_esc1(T_g0, m_g0, T_agua_in, v_agua, t_descarga_h=2.0,
                           masa_descarga_kg=24000.0, dt_s=30.0):
     """
-    Simula la descarga de 24 ton de glucosa en 1.5 h por boquilla de 8".
+    Simula la descarga de 24 ton de glucosa en 2.0 h por boquilla de 8".
     El calentamiento continúa durante la descarga.
 
     Parámetros
@@ -203,7 +222,7 @@ def escenario_1(figures_dir='../results/figures'):
     """Ejecuta el Escenario 1 y genera gráficas.
 
     T_agua = 65°C (confirmado por el usuario).
-    Al alcanzar 60°C se inicia descarga de 24 ton en 1.5 h.
+    Al alcanzar 60°C se inicia descarga de 24 ton en 2.0 h.
     """
     print("\n" + "=" * 75)
     print("ESCENARIO 1: Balance de un tercero")
@@ -235,16 +254,16 @@ def escenario_1(figures_dir='../results/figures'):
     # Velocidad de descarga de glucosa por boquilla 8"
     rho_60 = rho_glucosa(60.0)
     masa_24m3 = 24.0 * rho_glucosa(20.0)
-    v_descarga_8in = (24000.0 / (1.5 * 3600.0)) / (rho_60 * A_PIPE_8IN)
+    v_descarga_8in = (24000.0 / (2.0 * 3600.0)) / (rho_60 * A_PIPE_8IN)
     print(f"\nMasa de glucosa (24 m3 a 20°C): {masa_24m3/1000:.1f} ton")
     print(f"Velocidad descarga en boquilla 8\": {v_descarga_8in:.3f} m/s")
 
-    # --- FASE 2: Descarga de 24 ton en 1.5 h al alcanzar 60°C ---
-    print("\n--- Descarga de 24 ton en 1.5 h ---")
+    # --- FASE 2: Descarga de 24 ton en 2.0 h al alcanzar 60°C ---
+    print("\n--- Descarga de 24 ton en 2.0 h ---")
     m_inicio_desc = masa_24m3  # toda la masa
     t_desc, T_desc, m_desc = simular_descarga_esc1(
         T_g0=60.0, m_g0=m_inicio_desc, T_agua_in=T_agua_in, v_agua=v_mc,
-        t_descarga_h=1.5, masa_descarga_kg=24000.0
+        t_descarga_h=2.0, masa_descarga_kg=24000.0
     )
     print(f"T glucosa al inicio de descarga: 60.0 °C")
     print(f"T glucosa al final de descarga: {T_desc[-1]:.2f} °C")
@@ -276,33 +295,35 @@ def escenario_1(figures_dir='../results/figures'):
     t_full = np.concatenate([t_cal, t_desc_abs])
     T_full = np.concatenate([T_cal, T_desc])
 
-    ax1.plot(t_cal, T_cal, 'b-', linewidth=2, label='Calentamiento')
-    ax1.plot(t_desc_abs, T_desc, 'r-', linewidth=2.5, label='Descarga (24 ton, 1.5 h)')
-    ax1.axhline(y=60, color='gray', linestyle='--', alpha=0.5, label='T descarga = 60 °C')
-    ax1.axhline(y=T_agua_in, color='orange', linestyle=':', alpha=0.5,
-                label=f'T agua = {T_agua_in:.0f} °C')
+    ax1.plot(t_cal, T_cal, color=COLOR_GLUCOSA, linewidth=2, label='Calentamiento')
+    ax1.plot(t_desc_abs, T_desc, color=COLOR_AGUA, linewidth=2.5,
+             label='Descarga (24 ton, 2.0 h)')
+    ax1.axhline(y=60, color=COLOR_DESCARGA, linestyle='--', alpha=0.8,
+                linewidth=1.5, label='T descarga = 60 °C')
+    ax1.axhline(y=T_agua_in, color=COLOR_AGUA, linestyle=':', alpha=0.6,
+                linewidth=1.2, label=f'T agua = {T_agua_in:.0f} °C')
     if t_60:
-        ax1.axvline(x=t_60, color='gray', linestyle=':', alpha=0.4)
+        ax1.axvline(x=t_60, color=COLOR_TEXTO, linestyle=':', alpha=0.5)
         ax1.annotate(f'{t_60:.1f} h', xy=(t_60, 60), fontsize=9,
-                     xytext=(t_60+2, 55), arrowprops=dict(arrowstyle='->', color='gray'))
+                     xytext=(t_60+2, 55), arrowprops=dict(arrowstyle='->', color=COLOR_TEXTO))
     # Sombrear zona de descarga
-    ax1.axvspan(t_cal[-1], t_desc_abs[-1], alpha=0.15, color='red',
+    ax1.axvspan(t_cal[-1], t_desc_abs[-1], alpha=0.25, color=COLOR_BANDA_DESCARGA,
                 label='Fase de descarga')
     ax1.set_ylabel('Temperatura [°C]')
     ax1.set_title('Escenario 1: Calentamiento + descarga de 24 m$^3$ de glucosa '
                   f'(Q$_{{agua}}$ = 30.9 m$^3$/h, T$_w$ = {T_agua_in:.0f} °C)')
-    ax1.legend(loc='upper left', fontsize=9)
-    ax1.grid(True, alpha=0.3)
+    ax1.legend(loc='upper left', framealpha=0.95)
+    ax1.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
 
     # Panel inferior: masa
     m_cal = np.ones_like(t_cal) * masa_24m3
-    ax2.plot(t_cal, m_cal / 1000, 'b-', linewidth=2, label='Calentamiento')
-    ax2.plot(t_desc_abs, m_desc / 1000, 'r-', linewidth=2.5, label='Descarga')
-    ax2.axvspan(t_cal[-1], t_desc_abs[-1], alpha=0.15, color='red')
+    ax2.plot(t_cal, m_cal / 1000, color=COLOR_GLUCOSA, linewidth=2, label='Calentamiento')
+    ax2.plot(t_desc_abs, m_desc / 1000, color=COLOR_AGUA, linewidth=2.5, label='Descarga')
+    ax2.axvspan(t_cal[-1], t_desc_abs[-1], alpha=0.25, color=COLOR_BANDA_DESCARGA)
     ax2.set_xlabel('Tiempo [h]')
     ax2.set_ylabel('Masa de glucosa [ton]')
-    ax2.legend(loc='upper right', fontsize=9)
-    ax2.grid(True, alpha=0.3)
+    ax2.legend(loc='upper right', framealpha=0.95)
+    ax2.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
 
     plt.tight_layout()
     plt.savefig(f'{figures_dir}/escenario1_T_vs_tiempo.pdf')
@@ -354,18 +375,20 @@ def escenario_2(figures_dir='../results/figures'):
 
     # Gráfica
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(t_h, T_g, 'b-', linewidth=2, label='Glucosa Globe 1130')
-    ax.axhline(y=60, color='r', linestyle='--', alpha=0.7, label='T descarga = 60 °C')
-    ax.axhline(y=65, color='orange', linestyle=':', alpha=0.5, label='T agua = 65 °C')
+    ax.plot(t_h, T_g, color=COLOR_GLUCOSA, linewidth=2, label='Glucosa Globe 42 DE')
+    ax.axhline(y=60, color=COLOR_DESCARGA, linestyle='--', alpha=0.8,
+               linewidth=1.5, label='T descarga = 60 °C')
+    ax.axhline(y=65, color=COLOR_AGUA, linestyle=':', alpha=0.6,
+               linewidth=1.2, label='T agua = 65 °C')
     if t_60:
-        ax.axvline(x=t_60, color='gray', linestyle=':', alpha=0.5)
+        ax.axvline(x=t_60, color=COLOR_TEXTO, linestyle=':', alpha=0.5)
         ax.annotate(f'{t_60:.1f} h', xy=(t_60, 60), fontsize=10,
-                    xytext=(t_60+2, 55), arrowprops=dict(arrowstyle='->', color='gray'))
+                    xytext=(t_60+2, 55), arrowprops=dict(arrowstyle='->', color=COLOR_TEXTO))
     ax.set_xlabel('Tiempo [h]')
     ax.set_ylabel('Temperatura [°C]')
     ax.set_title('Escenario 2: Tanque al 80%, agua a 65 °C, v = 2.5 m/s')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    ax.legend(loc='upper left', framealpha=0.95)
+    ax.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     plt.savefig(f'{figures_dir}/escenario2_T_vs_tiempo.pdf')
     plt.savefig(f'{figures_dir}/escenario2_T_vs_tiempo.png')
     plt.close()
@@ -407,18 +430,20 @@ def escenario_3(figures_dir='../results/figures'):
 
     # Gráfica
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(t_h, T_g, 'b-', linewidth=2, label='Glucosa Globe 1130')
-    ax.axhline(y=57, color='r', linestyle='--', alpha=0.7, label='T descarga = 57 °C')
-    ax.axhline(y=75, color='orange', linestyle=':', alpha=0.5, label='T agua = 75 °C')
+    ax.plot(t_h, T_g, color=COLOR_GLUCOSA, linewidth=2, label='Glucosa Globe 42 DE')
+    ax.axhline(y=57, color=COLOR_DESCARGA, linestyle='--', alpha=0.8,
+               linewidth=1.5, label='T descarga = 57 °C')
+    ax.axhline(y=75, color=COLOR_AGUA, linestyle=':', alpha=0.6,
+               linewidth=1.2, label='T agua = 75 °C')
     if t_57:
-        ax.axvline(x=t_57, color='gray', linestyle=':', alpha=0.5)
+        ax.axvline(x=t_57, color=COLOR_TEXTO, linestyle=':', alpha=0.5)
         ax.annotate(f'{t_57:.1f} h', xy=(t_57, 57), fontsize=10,
-                    xytext=(t_57+2, 52), arrowprops=dict(arrowstyle='->', color='gray'))
+                    xytext=(t_57+2, 52), arrowprops=dict(arrowstyle='->', color=COLOR_TEXTO))
     ax.set_xlabel('Tiempo [h]')
     ax.set_ylabel('Temperatura [°C]')
     ax.set_title('Escenario 3: Tanque al 80%, agua a 75 °C, v = 2.5 m/s')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    ax.legend(loc='upper left', framealpha=0.95)
+    ax.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     plt.savefig(f'{figures_dir}/escenario3_T_vs_tiempo.pdf')
     plt.savefig(f'{figures_dir}/escenario3_T_vs_tiempo.png')
     plt.close()
@@ -433,14 +458,15 @@ def escenario_3(figures_dir='../results/figures'):
 def grafica_comparativa(t2, Tg2, t3, Tg3, figures_dir='../results/figures'):
     """Gráfica comparativa Escenario 2 vs 3."""
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(t2, Tg2, 'b-', linewidth=2, label='Escenario 2: agua a 65 °C')
-    ax.plot(t3, Tg3, 'r-', linewidth=2, label='Escenario 3: agua a 75 °C')
-    ax.axhline(y=60, color='gray', linestyle='--', alpha=0.7, label='T descarga = 60 °C')
+    ax.plot(t2, Tg2, color=COLOR_GLUCOSA, linewidth=2, label='Escenario 2: agua a 65 °C')
+    ax.plot(t3, Tg3, color=COLOR_AGUA, linewidth=2, label='Escenario 3: agua a 75 °C')
+    ax.axhline(y=60, color=COLOR_DESCARGA, linestyle='--', alpha=0.8,
+               linewidth=1.5, label='T descarga = 60 °C')
     ax.set_xlabel('Tiempo [h]')
     ax.set_ylabel('Temperatura de la glucosa [°C]')
     ax.set_title('Comparación de escenarios de calentamiento (tanque al 80%, v = 2.5 m/s)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    ax.legend(loc='upper left', framealpha=0.95)
+    ax.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     plt.savefig(f'{figures_dir}/comparacion_escenarios_2_3.pdf')
     plt.savefig(f'{figures_dir}/comparacion_escenarios_2_3.png')
     plt.close()

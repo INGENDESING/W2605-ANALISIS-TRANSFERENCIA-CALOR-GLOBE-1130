@@ -1,5 +1,5 @@
 """
-Tests básicos para la API - Proyecto P2611
+Tests básicos para la API - Proyecto W2605
 """
 import sys
 from pathlib import Path
@@ -74,7 +74,7 @@ class TestSimulacion(unittest.TestCase):
         payload = {
             'temp_inicial': 57,
             'temp_agua': 65,
-            'num_descargas': 8,
+            'num_descargas': 5,
             'masa_por_descarga_ton': 24,
             'tiempo_descarga_h': 1.5,
             'nivel_inicial_pct': 80

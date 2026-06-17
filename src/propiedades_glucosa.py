@@ -1,5 +1,5 @@
 """
-Módulo de propiedades termofísicas — Proyecto P2611
+Módulo de propiedades termofísicas — Proyecto W2605
 ====================================================
 Propiedades de la glucosa Globe 42 DE (Ingredion 011420) y del agua
 en función de la temperatura.
@@ -283,7 +283,7 @@ K_SS316L = 16.3  # Conductividad térmica del SS316L [W/(m·°C)] a ~100°C
 
 if __name__ == "__main__":
     print("=" * 70)
-    print("PROPIEDADES TERMOFISICAS - Proyecto P2611")
+    print("PROPIEDADES TERMOFISICAS - Proyecto W2605")
     print("=" * 70)
 
     temps = [20, 30, 40, 50, 60, 70, 80]

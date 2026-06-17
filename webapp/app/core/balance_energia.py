@@ -1,6 +1,6 @@
 """
 Módulo de balance de energía - Cálculos de transferencia de calor
-Integra los módulos existentes del proyecto P2611
+Integra los módulos existentes del proyecto W2605
 """
 import sys
 from pathlib import Path
@@ -256,7 +256,14 @@ def simular_calentamiento_y_ciclo(T_inicial, T_objetivo_inicio_descarga,
                                    num_descargas, masa_por_descarga_kg,
                                    tiempo_descarga_h, periodo_ciclo_h,
                                    temp_minima_aceptable=55.0,
-                                   dt_seg=30):
+                                   dt_seg=30,
+                                   max_descargas=5):
+    """
+    Simulacion completa: calentamiento inicial + ciclo de descargas.
+
+    El numero de descargas se limita a max_descargas (5 descargas/dia por
+    requerimiento operativo del proyecto W2605).
+    """
     """
     Simulación completa: calentamiento inicial + ciclo de descargas.
 
@@ -302,7 +309,7 @@ def simular_calentamiento_y_ciclo(T_inicial, T_objetivo_inicio_descarga,
     t_cursor = 0.0  # segundos
 
     # ── FASE 1: Calentamiento inicial ─────────────────────────────────────────
-    t_max_cal = 36 * 3600  # máximo 36 h para calentamiento
+    t_max_cal = min(int(tiempo_maximo_h * 3600), 36 * 3600)  # respetar límite global
     t_eval_f1 = np.arange(0, t_max_cal + 1, dt_seg)
 
     sol_f1 = solve_ivp(
@@ -346,6 +353,7 @@ def simular_calentamiento_y_ciclo(T_inicial, T_objetivo_inicio_descarga,
     m_actual = masa_inicial
 
     # ── FASE 2: Ciclo de descargas ────────────────────────────────────────────
+    num_descargas = min(int(num_descargas), int(max_descargas))
     for i in range(num_descargas):
         # — Descarga —
         t0 = 0.0
@@ -451,7 +459,8 @@ def simular_ciclo_automatico(T_inicial, T_objetivo_inicio_descarga,
                               tiempo_descarga_h, periodo_ciclo_h,
                               temp_minima_aceptable=55.0,
                               tiempo_maximo_h=24.0,
-                              dt_seg=30):
+                              dt_seg=30,
+                              max_descargas=5):
     """
     Simulación automática: calentamiento inicial + ciclo de descargas
     hasta que se violen restricciones.
@@ -489,7 +498,7 @@ def simular_ciclo_automatico(T_inicial, T_objetivo_inicio_descarga,
     t_cursor = 0.0
 
     # ── FASE 1: Calentamiento inicial ─────────────────────────────────────────
-    t_max_cal = 36 * 3600
+    t_max_cal = min(int(tiempo_maximo_h * 3600), 36 * 3600)  # respetar límite global
     t_eval_f1 = np.arange(0, t_max_cal + 1, dt_seg)
 
     def _ode_sin_descarga(t, y):
@@ -545,6 +554,11 @@ def simular_ciclo_automatico(T_inicial, T_objetivo_inicio_descarga,
     motivo_corte = 'completado'
 
     while True:
+        # Verificar limite maximo de descargas (5 descargas/dia)
+        if i_descarga >= max_descargas:
+            motivo_corte = 'maximo_descargas'
+            break
+
         # Verificar restricción de tiempo
         if t_cursor / 3600 >= tiempo_maximo_h:
             motivo_corte = 'tiempo_maximo'

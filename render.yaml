@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: p2611-flask-api
+    name: w2605-flask-api
     runtime: python
     buildCommand: "pip install -r webapp/requirements.txt"
     startCommand: "cd webapp && gunicorn -w 4 -b 0.0.0.0:$PORT wsgi:app"

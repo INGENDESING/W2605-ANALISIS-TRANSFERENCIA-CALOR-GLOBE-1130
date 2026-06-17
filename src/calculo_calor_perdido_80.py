@@ -1,6 +1,6 @@
 """
 Calculo de calor perdido - Tanque al 80% lleno
-Proyecto P2611 - Analisis Termico del Tanque de Glucosa
+Proyecto W2605 - Analisis Termico del Tanque de Glucosa
 
 El usuario reporta que el tanque aislado al 80% lleno pierde 3°C por el 
 area cilindrica y conica (fondo toriesferico).
@@ -342,7 +342,7 @@ def calcular_perdida_temporal_5mm(v_viento, tiempo_horas=1.0, T_glucosa=None, T_
 def main():
     print("=" * 78)
     print("CALCULO DE CALOR PERDIDO - TANQUE AL 80% LLENO")
-    print("Proyecto P2611 - Analisis Termico del Tanque de Glucosa")
+    print("Proyecto W2605 - Analisis Termico del Tanque de Glucosa")
     print("=" * 78)
     
     # -------------------------------------------------------------------------

@@ -2,30 +2,30 @@
 \newcommand{\empresaheader}{%
 	\renewcommand{\arraystretch}{0.80} % Comprime la altura de las filas
 	\noindent
-	\begin{tabularx}{\textwidth}{| >{\centering\arraybackslash}p{2.5cm} | >{\centering\arraybackslash}p{2.5cm} | >{\centering\arraybackslash}X | p{2cm} | p{3cm} |}
-		\hline
+	\begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}X p{2cm} p{3cm}@{}}
+		\toprule
 		% Fila 1
 		\multirow{5}{*}{\includegraphics[width=2.3cm,height=2.5cm,keepaspectratio]{logos/logo1.png}} & 
 		\multirow{5}{*}{\includegraphics[width=2.3cm,height=2.5cm,keepaspectratio]{logos/logo2.png}} & 
-		\multirow{2}{\linewidth}{\centering \scriptsize DISEÑO DE INGENIERÍA} & 
-		\scriptsize \textbf{CÓDIGO:} & \scriptsize \documentcode \\ \cline{4-5}
+		\multirow{2}{\linewidth}{\centering \scriptsize DISE\~NO DE INGENIER\'IA} & 
+		\scriptsize \textbf{C\'DIGO:} & \scriptsize \documentcode \\ \cmidrule(l){4-5}
 		
 		% Fila 2
-		& & & \scriptsize \textbf{REVISIÓN:} & \scriptsize \documentrevision \\ \cline{3-5}
+		& & & \scriptsize \textbf{REVISI\'ON:} & \scriptsize \documentrevision \\ \cmidrule(l){3-5}
 		
 		% Fila 3
 		& & \multirow{2}{\linewidth}{\centering \scriptsize \documenttype} & 
-		\scriptsize \textbf{FECHA:} & \scriptsize \documentdate \\ \cline{4-5}
+		\scriptsize \textbf{FECHA:} & \scriptsize \documentdate \\ \cmidrule(l){4-5}
 		
 		% Fila 4
-		& & & \scriptsize \textbf{ELABORÓ:} & \scriptsize \elaboratedby \\ \cline{3-5}
+		& & & \scriptsize \textbf{ELABOR\'O:} & \scriptsize \elaboratedby \\ \cmidrule(l){3-5}
 		
 		% Fila 5
 		& & \multirow{2}{\linewidth}{\centering \scriptsize \doctitleshort} &
-		\scriptsize \textbf{REVISÓ:} & \scriptsize \reviewedby \\ \cline{1-2} \cline{4-5}
+		\scriptsize \textbf{REVIS\'O:} & \scriptsize \reviewedby \\ \cmidrule(l){1-2} \cmidrule(l){4-5}
 		
 		% Fila 6
-		\textbf{\scriptsize PROYECTO:} & \scriptsize \targetcompany & & \scriptsize \textbf{APROBÓ:} & \scriptsize \approvedby \\ \hline
+		\textbf{\scriptsize PROYECTO:} & \scriptsize \targetcompany & & \scriptsize \textbf{APROB\'O:} & \scriptsize \approvedby \\ \bottomrule
 	\end{tabularx}%
 }
 
@@ -36,11 +36,11 @@
 	\fancyfoot[C]{%
 		\fontsize{9}{11}\selectfont\color{gray}%
 		 Cali - Colombia \\
-		E-mail: administrativo@dmlsas.com}
+		E-mail: [correo@empresa.com]}
 	\fancyfoot[R]{%
 		\fontsize{6}{8}\selectfont%
 		CI-ESP-001\_R0 \\%
-		Página \thepage\ de \pageref{LastPage}}
+		P\'agina \thepage\ de \pageref{LastPage}}
 	\renewcommand{\headrulewidth}{0pt} % Sin línea
 	\renewcommand{\footrulewidth}{2pt} % Línea gruesa negra en pie
 }

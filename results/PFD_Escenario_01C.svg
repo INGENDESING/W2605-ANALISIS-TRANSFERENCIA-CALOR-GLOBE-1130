@@ -5,11 +5,8 @@
    viewBox="0 0 1600 1100"
    version="1.1"
    id="svg164"
-   sodipodi:docname="PFD_Escenario_01C.svg"
+   sodipodi:docname="PFD_Escenario_01A.svg"
    inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
-   inkscape:export-filename="PFD_Escenario_01c.pdf"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -34,9 +31,9 @@
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g107" />
+     inkscape:current-layer="svg164" />
   <title
-     id="title1">PFD Escenario 01A - Proyecto P2611</title>
+     id="title1">PFD Escenario 01A - Proyecto W2605</title>
   <desc
      id="desc1">Diagrama de Flujo de Proceso - Sistema de Almacenamiento de Glucosa con chaqueta de calentamiento</desc>
   <!-- ====== DEFS ====== -->
@@ -396,7 +393,7 @@
        font-size="11"
        fill="#B3D4FC"
        text-anchor="middle"
-       id="text30">Proyecto P2611  |  DML Ingenieros Consultores SAS</text>
+       id="text30">Proyecto W2605  |  DMV Ingenieros Consultores SAS</text>
   </g>
   <text
      x="800"
@@ -1544,7 +1541,7 @@
        font-size="8px"
        fill="#558b2f"
        text-anchor="middle"
-       id="text107">→ Ver Tabla 4.0</text>
+       id="text107">→ Ver Tabla 1.0</text>
   </g>
   <!-- ================================================================ -->
   <!--                  CAJAS DE DATOS DE CORRIENTES                    -->
@@ -1622,7 +1619,7 @@
        x="0"
        y="0"
        width="235"
-       height="75"
+       height="83"
        rx="8"
        fill="#FFEBEE"
        stroke="#C62828"
@@ -1647,14 +1644,22 @@
        x="117"
        y="16"
        font-family="'Segoe UI', Tahoma, sans-serif"
-       font-size="11"
+       font-size="10"
        font-weight="700"
        fill="white"
        text-anchor="middle"
-       id="text114">CORRIENTE 2 — Agua Entrada</text>
+       id="text114">CORRIENTES 2A/2B — Agua Entrada</text>
     <text
        x="117"
-       y="42"
+       y="34"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9"
+       fill="#212121"
+       text-anchor="middle"
+       id="text113">Entrada centro (45 %) + entrada periferia (55 %)</text>
+    <text
+       x="117"
+       y="50"
        font-family="'Segoe UI', Tahoma, sans-serif"
        font-size="11"
        fill="#B71C1C"
@@ -1663,7 +1668,7 @@
        id="text115">57.700 kg/h  |  75,0 °C</text>
     <text
        x="117"
-       y="58"
+       y="66"
        font-family="'Segoe UI', Tahoma, sans-serif"
        font-size="9"
        fill="#212121"
@@ -1671,7 +1676,7 @@
        id="text116">17.719,7 MJ/h  ·  57,7 m³/h</text>
     <text
        x="117"
-       y="70"
+       y="78"
        font-family="'Segoe UI', Tahoma, sans-serif"
        font-size="9"
        fill="#616161"
@@ -1686,7 +1691,7 @@
        x="0"
        y="0"
        width="235"
-       height="75"
+       height="83"
        rx="8"
        fill="#ffebee"
        stroke="#c62828"
@@ -1711,14 +1716,22 @@
        x="117"
        y="16"
        font-family="'Segoe UI', Tahoma, sans-serif"
-       font-size="11px"
+       font-size="10px"
        font-weight="700"
        fill="#ffffff"
        text-anchor="middle"
-       id="text119">CORRIENTE 3 — Agua Salida</text>
+       id="text119">CORRIENTE 3 — Agua Salida (mezcla)</text>
     <text
        x="117"
-       y="42"
+       y="34"
+       font-family="'Segoe UI', Tahoma, sans-serif"
+       font-size="9px"
+       fill="#212121"
+       text-anchor="middle"
+       id="text118">Salida común al 45 % del área de transferencia</text>
+    <text
+       x="117"
+       y="50"
        font-family="'Segoe UI', Tahoma, sans-serif"
        font-size="11px"
        fill="#c62828"
@@ -1727,7 +1740,7 @@
        id="text120">57.700 kg/h  |  74,9 °C</text>
     <text
        x="117"
-       y="58"
+       y="66"
        font-family="'Segoe UI', Tahoma, sans-serif"
        font-size="9px"
        fill="#212121"
@@ -1735,7 +1748,7 @@
        id="text121">17.694,2 MJ/h</text>
     <text
        x="117"
-       y="70"
+       y="78"
        font-family="'Segoe UI', Tahoma, sans-serif"
        font-size="9px"
        fill="#616161"
@@ -2308,14 +2321,14 @@
        font-size="9"
        fill="#37474F"
        font-weight="600"
-       id="text162">Rev. 02  ·  Abril 2026  ·  DML Ingenieros Consultores SAS</text>
+       id="text162">Rev. 02  ·  Abril 2026  ·  DMV Ingenieros Consultores SAS</text>
     <text
        x="20"
        y="34"
        font-family="'Segoe UI', Tahoma, sans-serif"
        font-size="8"
        fill="#607D8B"
-       id="text163">Elaboró: J. Arboleda G.  ·  Proyecto P2611  ·  Cliente: Confidencial</text>
+       id="text163">Elaboró: J. Arboleda G.  ·  Proyecto W2605  ·  Cliente: Confidencial</text>
     <text
        x="20"
        y="46"
@@ -2330,7 +2343,7 @@
     <rdf:RDF>
       <cc:Work
          rdf:about="">
-        <dc:title>PFD Escenario 01A - Proyecto P2611</dc:title>
+        <dc:title>PFD Escenario 01A - Proyecto W2605</dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

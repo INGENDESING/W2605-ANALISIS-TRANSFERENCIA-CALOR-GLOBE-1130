@@ -1,0 +1,203 @@
+% =============================================================================
+% RESUMEN EJECUTIVO GERENCIAL - PROYECTO W2605
+% Análisis Térmico del Sistema de Calentamiento del Fondo del Tanque de Glucosa
+% Ingredion S.A. - Planta Cali, Colombia
+% DMV SAS
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ===================== DATOS Y CONFIGURACIÓN CORPORATIVA =====================
+\input{config/datos_proyecto_002.tex}
+\input{config/preamble.tex}
+\input{config/header_estilo_tercero.tex}
+
+% ===================== PAQUETES ADICIONALES PARA FIGURAS =====================
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
+
+% ===================== COLORES PERSONALIZADOS =====================
+\definecolor{dmvblue}{RGB}{0,51,102}
+\definecolor{heatred}{RGB}{204,51,0}
+\definecolor{coolblue}{RGB}{0,102,153}
+\definecolor{lightgray}{RGB}{245,245,245}
+
+\begin{document}
+
+% ===================== PORTADA =====================
+\input{sections/00_portada.tex}
+% \input{sections/00_hojafirmas.tex}  % Eliminada a solicitud del usuario
+
+% =============================================================================
+% 1. PROPÓSITO DEL RESUMEN EJECUTIVO
+% =============================================================================
+\section{Propósito del resumen ejecutivo}
+
+El presente documento condensa los resultados del análisis térmico del sistema de calentamiento del fondo del tanque de almacenamiento de glucosa \textbf{Tag 53A-90A-0056}, ubicado en la planta de Ingredion S.A. en Cali, Colombia. El estudio fue desarrollado por \textbf{DMV SAS} con el fin de evaluar si el sistema de media caña del fondo mantiene la glucosa dentro del rango de despacho de 57~$^\circ$C a 60~$^\circ$C bajo el nuevo ciclo operativo de cinco descargas diarias hacia carrotanques de 24~ton. El documento está dirigido a la toma de decisiones gerenciales y presenta los hallazgos técnicos relevantes, la recomendación directa, el impacto operativo esperado y los próximos pasos de implementación.
+
+% =============================================================================
+% 2. CONTEXTO OPERATIVO
+% =============================================================================
+\section{Contexto operativo}
+
+El ciclo de operación oficial del tanque contempla cinco descargas por día hacia carrotanques de 24~ton, con una duración de 2~h por descarga y un flujo de extracción de 12~ton/h. El intervalo entre inicios de descarga es de 4,8~h, lo que deja 2,8~h para calentamiento continuo entre descargas. En consecuencia, no existe tiempo muerto en el ciclo y el flujo medio equivalente de glucosa es de 5.000~kg/h. La glucosa ingresa al equipo entre 55~$^\circ$C y 60~$^\circ$C y debe despacharse entre 57~$^\circ$C y 60~$^\circ$C. La Tabla~\ref{tab:ciclo_operativo} resume los parámetros del ciclo.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Parámetros del ciclo operativo oficial del tanque Tag 53A-90A-0056.}
+\label{tab:ciclo_operativo}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\midrule
+Descargas por día & 5 & descargas/día \\
+Capacidad del carrotanque & 24 & ton \\
+Producción diaria & 120 & ton/día \\
+Duración de cada descarga & 2 & h \\
+Flujo de descarga & 12 & ton/h \\
+Intervalo entre inicios de descarga & 4,8 & h \\
+Tiempo de calentamiento entre descargas & 2,8 & h \\
+Flujo medio de glucosa & 5.000 & kg/h \\
+Temperatura de suministro de glucosa & 55 -- 60 & $^\circ$C \\
+Temperatura objetivo de despacho & 57 -- 60 & $^\circ$C \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+% 3. HALLAZGOS CLAVE
+% =============================================================================
+\section{Hallazgos clave}
+
+El análisis térmico arroja cinco hallazgos relevantes para la gestión del activo. El primero es que el sistema de media caña rectangular en espiral cuenta con un área de transferencia de calor de 13~m$^2$, configurada con doble entrada de agua caliente (45~\% en la zona central y 55~\% en la zona periférica) y una salida común de agua fría ubicada al 45~\% del área. El segundo hallazgo indica que la resistencia térmica del lado de la glucosa concentra aproximadamente el 98~\% del total, de modo que el coeficiente global de transferencia $U$ alcanza aproximadamente 31~W/(m$^2\cdot{}^\circ$C) en condiciones representativas; la convección natural del jarabe viscoso es, por tanto, el mecanismo limitante del proceso.
+
+El tercer hallazgo muestra que las pérdidas térmicas sin aislamiento alcanzan 175,4~MJ/h, valor que supera el calor útil disponible en la chaqueta. El cuarto hallazgo establece que, con un aislamiento de 50,8~mm de lana mineral, las pérdidas se reducen a 14,7~MJ/h, lo que representa una reducción del 91,6~\%. El quinto hallazgo señala que el escenario optimizado con agua a 75~$^\circ$C y caudal de 57,7~m$^3$/h reduce el tiempo de calentamiento desde 25~$^\circ$C hasta 57~$^\circ$C a aproximadamente 415~h, frente a los 773~h requeridos con agua a 65~$^\circ$C y 30,9~m$^3$/h. La Tabla~\ref{tab:hallazgos} sintetiza estos indicadores.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Síntesis de hallazgos técnicos del análisis térmico.}
+\label{tab:hallazgos}
+\begin{tabular}{@{}p{3.2cm}p{3.8cm}p{3.0cm}p{3.2cm}@{}}
+\toprule
+\textbf{Hallazgo} & \textbf{Indicador} & \textbf{Valor} & \textbf{Implicación gerencial} \\
+\midrule
+Configuración de la chaqueta & Área de transferencia de calor & 13~m$^2$ & Base de diseño actual \\
+Resistencia térmica & Fracción del lado glucosa & $\sim$98~\% & La glucosa limita la transferencia \\
+Pérdidas sin aislamiento & Pérdidas térmicas totales & 175,4~MJ/h & Superan ampliamente el aporte de la chaqueta \\
+Reducción de pérdidas & Pérdidas con aislamiento de 50,8~mm & 14,7~MJ/h & Reducción del 91,6~\% \\
+Recuperación desde frío & Tiempo de calentamiento 25 -- 57~$^\circ$C con agua a 75~$^\circ$C & $\sim$415~h & 46~\% menor que con agua a 65~$^\circ$C \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+% 4. DIAGRAMA CONCEPTUAL DEL SISTEMA
+% =============================================================================
+\section{Diagrama conceptual del sistema}
+
+La Figura~\ref{fig:pfd_conceptual} presenta un esquema simplificado del sistema de calentamiento y descarga. La glucosa ingresa al tanque entre 55~$^\circ$C y 60~$^\circ$C, el fondo dispone de media caña de calentamiento con agua caliente, y la glucosa se despacha hacia el carrotanque entre 57~$^\circ$C y 60~$^\circ$C. El tiempo no utilizado en descarga se destina a calentamiento continuo.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.85, transform shape,
+    font=\scriptsize,
+    arrow_gluc/.style={thick, -Stealth, color=green!50!black},
+    arrow_agua/.style={thick, -Stealth, dashed, color=red!70!black}
+]
+
+% Tanque
+\begin{scope}[shift={(3,4.5)}]
+    \draw[gray!50, thick, dashed, rounded corners=6pt] (-2.2,-2.5) rectangle (2.2,2.5);
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,-1.5) rectangle (2,1.5);
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,-1.5) arc (180:360:2 and 0.5);
+    \draw[fill=yellow!10, thick, draw=orange!70!black] (-2,1.5) arc (180:0:2 and 0.5);
+    \draw[thick, draw=orange!70!black] (-2,1.5) -- (2,1.5);
+    \draw[cyan!70!black, thick] (-1.8,0.3) -- (1.8,0.3);
+    \node[font=\bfseries, color=orange!70!black] at (0,0.8) {T-101};
+    \node[font=\tiny] at (0,-0.2) {Tanque de glucosa};
+\end{scope}
+
+% Chaqueta
+\begin{scope}[shift={(3,1.2)}]
+    \draw[fill=cyan!15, thick, draw=blue!50!black, rounded corners=2pt] (-1.4,0) rectangle (1.4,1);
+    \foreach \y in {0.15,0.35,0.55,0.75} {
+        \draw[blue!50!black, thick] (-1.2,\y) -- (1.2,\y);
+    }
+    \node[font=\tiny\bfseries, color=blue!50!black] at (0,1.3) {E-201};
+\end{scope}
+
+% Bomba
+\begin{scope}[shift={(9,4.5)}]
+    \draw[fill=purple!15, thick, draw=purple!50!black] (0,0) circle (0.7);
+    \draw[fill=white, thick, draw=purple!50!black] (-0.35,-0.25) -- (0.35,0) -- (-0.35,0.25) -- cycle;
+    \node[font=\tiny\bfseries, color=purple!50!black, above] at (0,0.8) {P-101};
+\end{scope}
+
+% Carrotanque
+\begin{scope}[shift={(15,4.5)}]
+    \draw[fill=yellow!40, thick, draw=yellow!60!black] (-2,-0.5) rectangle (0,0.5);
+    \draw[fill=cyan!20, thick, draw=cyan!50!black] (-1.6,0) rectangle (-0.6,0.35);
+    \draw[fill=gray!35, thick, draw=gray!60!black] (0.3,-0.6) rectangle (2.7,0.6);
+    \draw[gray!50, thick] (0.8,-0.6) -- (0.8,0.6);
+    \draw[gray!50, thick] (1.6,-0.6) -- (1.6,0.6);
+    \draw[gray!50, thick] (2.2,-0.6) -- (2.2,0.6);
+    \foreach \x in {-1.2, -0.4, 1.0, 2.0} {
+        \draw[fill=black!60, thick] (\x,-0.7) circle (0.12);
+    }
+    \node[font=\tiny\bfseries, above] at (0.4,0.8) {Carro tanque};
+\end{scope}
+
+% Líneas de proceso
+\draw[arrow_gluc] (0,6.5) -- (1,6.5) -- (1,6) -- (3,6);
+\draw[arrow_gluc] (5,5) -- (8.3,4.5);
+\draw[arrow_gluc] (9.7,4.5) -- (13,4.5);
+
+\draw[arrow_agua] (0,0.5) -- (1.6,0.5) -- (1.6,1.2);
+\draw[arrow_agua] (4.4,1.2) -- (4.4,0.5) -- (6,0.5);
+
+% Cajas de datos
+\node[fill=green!10, draw=green!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (0,7.8) {
+    \textbf{Entrada de glucosa}\\5.000~kg/h | 55 -- 60~$^\circ$C
+};
+
+\node[fill=red!10, draw=red!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (0,-0.8) {
+    \textbf{Agua caliente}\\57,7~m$^3$/h | 75~$^\circ$C
+};
+
+\node[fill=red!10, draw=red!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (6,-0.8) {
+    \textbf{Agua de retorno}\\57,7~m$^3$/h | $\sim$74~$^\circ$C
+};
+
+\node[fill=green!10, draw=green!50!black, thick, rounded corners=3pt, inner sep=4pt, align=center, font=\tiny] at (15,7.8) {
+    \textbf{Salida a carrotanque}\\12~ton/h | 57 -- 60~$^\circ$C
+};
+
+\end{tikzpicture}
+\caption{Diagrama conceptual del sistema de calentamiento y descarga del tanque Tag 53A-90A-0056.}
+\label{fig:pfd_conceptual}
+\end{figure}
+
+% =============================================================================
+% 5. RECOMENDACIÓN DIRECTA
+% =============================================================================
+\section{Recomendación directa}
+
+Se recomienda operar el sistema con agua de calentamiento a 75~$^\circ$C e implementar un aislamiento térmico de 50,8~mm de lana mineral sobre el fondo y el cuerpo cilíndrico del tanque. Esta combinación reduce las pérdidas térmicas en un 91,6~\%, acorta los tiempos de recuperación de temperatura entre descargas y proporciona la estabilidad necesaria para mantener la glucosa de salida entre 57~$^\circ$C y 60~$^\circ$C durante el ciclo de cinco descargas diarias.
+
+% =============================================================================
+% 6. IMPACTO OPERATIVO
+% =============================================================================
+\section{Impacto operativo}
+
+La intervención propuesta asegura la capacidad contractual de 120~ton/día distribuidas en cinco descargas de 24~ton, eliminando tiempos muertos mediante calentamiento continuo entre descargas. La reducción de pérdidas térmicas con el aislamiento de 50,8~mm disminuye la demanda energética del sistema de agua caliente y estabiliza la temperatura de salida, minimizando el riesgo de rechazo de cargas por temperatura inferior a 57~$^\circ$C. El recálculo con el área real expuesta (~150~m$^2$) indica que el tanque pierde aproximadamente 3~$^\circ$C cada 4,5~días a 60~$^\circ$C. Adicionalmente, el uso de agua a 75~$^\circ$C reduce en un 46~\% el tiempo de recuperación desde condiciones frías respecto al caso base con agua a 65~$^\circ$C, lo cual mejora la disponibilidad del equipo ante paradas no programadas.
+
+% =============================================================================
+% 7. PRÓXIMOS PASOS
+% =============================================================================
+\section{Próximos pasos}
+
+Los pasos siguientes son la definición del programa de instalación del aislamiento térmico, la instrumentación de un lazo de control de temperatura del agua de calentamiento para mantener la glucosa de salida entre 57~$^\circ$C y 60~$^\circ$C, el establecimiento del procedimiento operativo de calentamiento continuo entre descargas y la programación del mantenimiento periódico del aislamiento para preservar sus propiedades térmicas durante la vida útil del equipo. La ejecución de estas acciones en el orden indicado permite materializar los beneficios del análisis sin afectar la operación actual del tanque.
+
+\end{document}

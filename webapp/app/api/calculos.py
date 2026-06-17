@@ -308,10 +308,10 @@ def api_transitorio_completo():
         T_agua = float(data.get('T_agua', 65))
         area = float(data.get('area_m2', _A_CONTACTO))
         nivel_pct = float(data.get('nivel_inicial_pct', 80))
-        num_descargas = int(data.get('num_descargas', 8))
+        num_descargas = int(data.get('num_descargas', 5))
         masa_ton = float(data.get('masa_por_descarga_ton', 24))
         t_desc_h = float(data.get('tiempo_descarga_h', 1.5))
-        periodo_h = float(data.get('periodo_ciclo_h', 3.0))
+        periodo_h = float(data.get('periodo_ciclo_h', 4.8))
         temp_min_ac = float(data.get('temp_minima_aceptable', 55))
         _Amc = 0.0455 * 0.141
         if 'velocidad_m_s' in data:
@@ -348,7 +348,7 @@ def api_ciclo_automatico():
         nivel_pct = float(data.get('nivel_inicial_pct', 80))
         masa_ton = float(data.get('masa_por_descarga_ton', 24))
         t_desc_h = float(data.get('tiempo_descarga_h', 1.5))
-        periodo_h = float(data.get('periodo_ciclo_h', 3.0))
+        periodo_h = float(data.get('periodo_ciclo_h', 4.8))
         temp_min_ac = float(data.get('temp_minima_aceptable', 55))
         tiempo_max_h = float(data.get('tiempo_maximo_h', 24.0))
         _Amc = 0.0455 * 0.141
@@ -389,10 +389,10 @@ def api_sensibilidad():
         T_obj_f = float(p.get('T_objetivo', 57))
         nivel_f = float(p.get('nivel_pct', 80))
         area_f = float(p.get('area_m2', _A_CONTACTO))
-        nd_f = int(p.get('num_descargas', 8))
+        nd_f = int(p.get('num_descargas', 5))
         masa_f = float(p.get('masa_por_descarga_ton', 24))
         td_f = float(p.get('tiempo_descarga_h', 1.5))
-        per_f = float(p.get('periodo_ciclo_h', 3.0))
+        per_f = float(p.get('periodo_ciclo_h', 4.8))
         from geometria_tanque import volumen_total
         V_tot = volumen_total()
         resultados = []

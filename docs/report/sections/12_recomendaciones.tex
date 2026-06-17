@@ -1,52 +1,52 @@
 \section{Recomendaciones}
 
-Con base en los resultados transitorios y anal\'iticos, se consolidan las siguientes recomendaciones de car\'acter normativo y metodol\'ogico (ver Tabla~\ref{tab:recomendaciones_resumen}), dirigidas a la gesti\'on de operaciones, el mantenimiento de integridad y las pr\'acticas de despacho log\'istico del tanque de almacenamiento de glucosa Tag 53A-90A-0056.
+Con base en los resultados transitorios y anal\'iticos, se consolidan las siguientes recomendaciones de car\'acter operativo y metodol\'ogico, dirigidas a la gesti\'on de operaciones, el mantenimiento t\'ermico y las pr\'acticas de despacho log\'istico del tanque de almacenamiento de glucosa Tag 53A-90A-0056. La Tabla~\ref{tab:recomendaciones_resumen} presenta el consolidado de directrices.
 
 {\small
 \setlength{\LTpre}{6pt}
 \setlength{\LTpost}{6pt}
 \begin{longtable}{@{}p{2.2cm}p{13.3cm}@{}}
-	\caption{Consolidado de directrices y recomendaciones estrat\'egicas.}
-	\label{tab:recomendaciones_resumen} \\
-	\toprule
-	\textbf{\'Area de Gesti\'on} & \textbf{Acci\'on Recomendada y Justificaci\'on} \\
-	\midrule
-	\endfirsthead
-	\multicolumn{2}{l}{\small\itshape\tablename~\thetable{} -- continuaci\'on de la p\'agina anterior} \\
-	\toprule
-	\textbf{\'Area de Gesti\'on} & \textbf{Acci\'on Recomendada y Justificaci\'on} \\
-	\midrule
-	\endhead
-	\midrule
-	\multicolumn{2}{r}{\small\itshape Contin\'ua en la siguiente p\'agina} \\
-	\endfoot
-	\bottomrule
-	\endlastfoot
-	% --- Termodinámica ---
-	\textbf{Termo\-din\'amica}
-	& \textbf{Incremento de temperatura del agua de calentamiento a 75\,°C}: Constituye la medida de optimizaci\'on m\'as costo-efectiva, logrando una reducci\'on del 46\,\% en los tiempos de calentamiento frente a la operaci\'on a 65\,°C, sin requerir modificaciones en la bomba de recirculaci\'on ni agitaci\'on mec\'anica del producto. \\
-	& \textbf{Instalaci\'on del Aislamiento T\'ermico Recomendado}: Instalar lana mineral de 50.8~mm (2'') sobre la chaqueta de media ca\~na y su tuber\'ia de servicio, seg\'un el espesor calculado en este estudio. Una vez instalado, programar inspecciones peri\'odicas mediante termograf\'ia infrarroja para detectar p\'erdidas localizadas por humedecimiento, da\~no mec\'anico o desprendimiento del recubrimiento exterior. \\
-	& \textbf{Reconfiguraci\'on a flujo paralelo (multi-ramal)}: Redise\~nar el circuito de la chaqueta de media ca\~na de su configuraci\'on actual en serie (recorrido \'unico) a una configuraci\'on en paralelo con m\'ultiples entradas y salidas de agua. Este redise\~no mitiga la ca\'ida progresiva de temperatura del agua a lo largo de la espiral y garantiza un gradiente t\'ermico $\Delta T$ m\'as uniforme sobre toda la superficie de contacto, mejorando la eficiencia global del intercambio de calor. \\
-	& \textbf{Evaluaci\'on de la configuraci\'on de chaqueta y precalentamiento en l\'inea}: El an\'alisis comparativo cuantifica que la reducci\'on del 54\,\% en el \'area de la chaqueta (de 28~m\textsuperscript{2} en la configuraci\'on dimple actual a 13~m\textsuperscript{2} en la media ca\~na del fondo de reemplazo) conlleva una reducci\'on equivalente en la capacidad de calentamiento (factor 2.15$\times$). Para el arranque en fr\'io desde 25\,\textdegree{}C, ninguna de las dos configuraciones es viable a flujos industriales sin agitaci\'on mec\'anica; para la operaci\'on de mantenimiento desde 55\,\textdegree{}C, la chaqueta del fondo de reemplazo soporta hasta 7.5~ton/h frente a m\'as de 16~ton/h de la chaqueta actual. Dado que el fondo de reemplazo incluye la media ca\~na (13~m\textsuperscript{2}), complementar con precalentamiento en l\'inea para el arranque en fr\'io e iniciar descargas \'{u}nicamente cuando la glucosa alcance los 55\,\textdegree{}C (Escenario~4). \\
-	\midrule
-	% --- Logística ---
-	\textbf{Log\'istica}
-	& \textbf{Pauta Anticipada de Lotes (192 Toneladas)}: Precalentar resguardando al menos 5.0h de anticipaci\'on pre-entrega log\'istica para suprimir riesgos de solidificaci\'on o estresamiento por viscosidad m\'axima de producto interno. \\
-	& \textbf{Programaci\'on de descargas consecutivas}: Agendar las entregas a carrotanque en ventanas contiguas de 1.5~horas; evitar tiempos muertos prolongados entre descargas, aprovechando el incremento t\'ermico continuo de aproximadamente 0.9\,°C que experimenta el producto una vez superados los 57\,°C de temperatura operativa. \\
-	& \textbf{Monitoreo de temperatura en tiempo real}: Implementar instrumentaci\'on con termopar multipunto para verificar que la temperatura del producto no exceda el l\'imite de 60\,°C durante descargas tard\'ias consecutivas. Establecer alarma y corte autom\'atico del sistema de calentamiento al alcanzar dicho umbral. \\
-	\midrule
-	% --- Integridad API ---
-	\textbf{Integridad API}
-	& \textbf{Bloqueo operativo al 90\,\% de llenado}: Implementar un sistema de bloqueo mec\'anico con alarma sonora y visual en la cota correspondiente al 90\,\% del nivel l\'iquido. El an\'alisis ASME~VIII demuestra que al 100\,\% de llenado el fondo toriesf\'erico no cumple el espesor m\'inimo requerido ($t_{req} = 9.16$~mm $> t_{nom} = 9.0$~mm), por lo que la operaci\'on por encima del 90\,\% constituye un riesgo estructural activo. \\
-	& \textbf{Programa de inspecci\'on acelerado (frecuencia bianual)}: Debido al fen\'omeno de corrosi\'on-fatiga en el nuevo fondo (vida \'util proyectada de \textbf{7.5~a\~nos}, basada en una tasa de corrosi\'on de 0.12~mm/a\~no medida en campo), se debe implementar un programa de monitoreo mediante Ultrasonido de Arreglo de Fases (PAUT) y Mapeo de Corrosi\'on con frecuencia no mayor a 2~a\~nos. El enfoque principal debe ser la detecci\'on temprana de reducci\'on de espesor y grietas por fatiga en la zona del nudillo y puntos de anclaje de la chaqueta. \\
-	& \textbf{Protocolo de inspecci\'on post-s\'ismica}: Implementar un protocolo de inspecci\'on visual y dimensional posterior a eventos s\'ismicos con magnitud $M > 5.0$, priorizando la verificaci\'on de anclajes y cimentaci\'on dado que la fuerza s\'ismica de dise\~no (993.5~kN) supera en 49 veces la carga de viento. \\
-	\midrule
-	% --- Integridad FEA ---
-	\textbf{Integridad FEA}
-	& \textbf{Refuerzo Estructural Proactivo en Zonas Cr\'iticas}: Basado en el mapeo de esfuerzos por FEA (ANSYS), se requiere la intervenci\'on estructural de los sectores donde el Factor de Seguridad (FS) sea inferior a 1.5. Es imperativo priorizar el nudillo fondo-cilindro y los anclajes de la chaqueta, donde se detectaron valores cr\'iticos de \textbf{FS $\approx$ 0.71} al 100\,\% de llenado y \textbf{$FS \approx 1.3$} al 80\% de llenado (condición operativa segura). Se recomienda la implementación de un bloqueo operativo al 80\% de llenado (178.2~m$^3$) y, opcionalmente, la implementaci\'on de anillos de rigidizaci\'on perimetrales o placas de refuerzo (pads) con el fin de restaurar los m\'argenes normativos de ASME~VIII Div.~1. El dise\~no detallado de este refuerzo debe desarrollarse en una fase posterior mediante un modelo FEA actualizado que valide la efectividad de las geometr\'ias de refuerzo consideradas. \\
+\caption{Consolidado de directrices y recomendaciones estrat\'egicas.}
+\label{tab:recomendaciones_resumen} \\
+\toprule
+\textbf{\'Area de Gesti\'on} & \textbf{Acci\'on Recomendada y Justificaci\'on} \\
+\midrule
+\endfirsthead
+\multicolumn{2}{l}{\small\itshape\tablename~\thetable{} -- continuaci\'on de la p\'agina anterior} \\
+\toprule
+\textbf{\'Area de Gesti\'on} & \textbf{Acci\'on Recomendada y Justificaci\'on} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{\small\itshape Contin\'ua en la siguiente p\'agina} \\
+\endfoot
+\bottomrule
+\endlastfoot
+% --- Termodinámica ---
+\textbf{Termodin\'amica}
+& \textbf{Operar el agua de calentamiento a 75~\textdegree C}: Constituye la medida de optimizaci\'on m\'as costo-efectiva, logrando una reducci\'on del 46~\% en los tiempos de calentamiento frente a la operaci\'on a 65~\textdegree C, sin requerir modificaciones en la bomba de recirculaci\'on ni agitaci\'on mec\'anica del producto. \\
+& \textbf{Instalar aislamiento t\'ermico de 50,8~mm (2~pulgadas)}: Instalar lana mineral de 50,8~mm sobre la chaqueta de media ca\~na y su tuber\'ia de servicio, seg\'un el espesor calculado en este estudio. Una vez instalado, programar inspecciones peri\'odicas mediante termograf\'ia infrarroja para detectar p\'erdidas localizadas por humedecimiento, da\~no mec\'anico o desprendimiento del recubrimiento exterior. \\
+& \textbf{Evaluar la reconfiguraci\'on a flujo paralelo (multi-ramal)}: Redise\~nar el circuito de la chaqueta de media ca\~na de su configuraci\'on actual en serie a una configuraci\'on en paralelo con m\'ultiples entradas y salidas de agua. Este redise\~no mitiga la ca\'ida progresiva de temperatura del agua a lo largo de la espiral y garantiza un gradiente t\'ermico m\'as uniforme sobre toda la superficie de contacto, mejorando la eficiencia global del intercambio de calor. \\
+& \textbf{Mantener el suministro de glucosa a temperatura no inferior a 55~\textdegree C}: El an\'alisis del Escenario~4 demuestra que con alimentaci\'on a 55~\textdegree C el sistema puede sostener el flujo medio requerido de 5,0~ton/h con un margen c\'omodo. Con alimentaci\'on a 54~\textdegree C el margen se reduce al l\'imite operativo, por lo que se recomienda operar preferiblemente con alimentaci\'on a 57~\textdegree C. \\
+\midrule
+% --- Logística ---
+\textbf{Log\'istica}
+& \textbf{Programar las cinco descargas diarias con intervalos regulares de 4,8~h}: Distribuir uniformemente las descargas a lo largo de las 24~horas para aprovechar los 2,8~h de calentamiento continuo entre descargas y evitar acumulaci\'on de p\'erdidas t\'ermicas. \\
+& \textbf{Evitar arranques desde fr\'io del tanque completo}: El tiempo de calentamiento desde 25~\textdegree C hasta 57~\textdegree C es de 415,2~h con agua a 75~\textdegree C, lo cual no es compatible con un ciclo diario. La operaci\'on debe basarse en el mantenimiento de un inventario caliente entre ciclos consecutivos. \\
+& \textbf{Coordinar la producci\'on de glucosa con la programaci\'on de descargas}: Asegurar que la glucosa de alimentaci\'on llegue al tanque dentro del rango de 55--60~\textdegree C, de modo que el sistema de calentamiento act\'ue como mantenimiento t\'ermico en lugar de como calentador principal desde fr\'io. \\
+\midrule
+% --- Instrumentación ---
+\textbf{Instrumentaci\'on y Control}
+& \textbf{Instrumentar un lazo de control de temperatura del agua de calentamiento}: Mantener la temperatura del agua de servicio en 75~\textdegree C con una banda muerta de $\pm$2~\textdegree C, y activar un corte autom\'atico si la temperatura del producto alcanza 60~\textdegree C para evitar degradaci\'on t\'ermica. \\
+& \textbf{Instalar termopares multipunto en el tanque}: Verificar la temperatura del producto en al menos tres niveles (fondo, medio y superior) para detectar estratificaci\'on t\'ermica y garantizar que la glucosa despachada cumple con el rango de 57--60~\textdegree C. \\
+& \textbf{Registrar caudales y temperaturas de entrada y salida}: Implementar un historiador de datos que permita correlacionar el consumo de energ\'ia t\'ermica con el n\'umero de descargas realizadas y detectar degradaci\'on del aislamiento o incrustaciones en la chaqueta. \\
+\midrule
+% --- Mantenimiento ---
+\textbf{Mantenimiento}
+& \textbf{Programar inspecci\'on peri\'odica del aislamiento}: Revisar anualmente el estado del recubrimiento exterior, buscando signos de humedad, corrosi\'on bajo aislamiento o da\~no mec\'anico. Reemplazar o reparar sectores degradados para mantener la reducci\'on de p\'erdidas cercana al 91,6~\%. \\
+& \textbf{Mantener la limpieza de la chaqueta y las l\'ineas de agua}: Realizar limpiezas qu\'imicas controladas seg\'un sea necesario para evitar incrustaciones que reduzcan el coeficiente convectivo del lado del agua. Aunque este coeficiente representa solo el 0,3~\% de la resistencia total, su degradaci\'on afecta el balance energ\'etico global. \\
+& \textbf{Capacitar al personal operativo sobre los l\'imites t\'ermicos del sistema}: Enfatizar que el sistema est\'a dise\~nado para mantenimiento t\'ermico y no para calentamiento r\'apido desde fr\'io, y que el cumplimiento del ciclo de cinco descargas diarias depende cr\'iticamente de la temperatura de alimentaci\'on y del aislamiento. \\
 \end{longtable}
 }
 
-Las acciones enumeradas en la Tabla~\ref{tab:recomendaciones_resumen} constituyen un programa integral de gesti\'on de activos orientado a prolongar la vida \'util operativa del tanque de almacenamiento de glucosa Tag 53A-90A-0056, asegurando el cumplimiento de los est\'andares normativos API~650 y ASME~VIII Div.~1 durante toda la vida \'util proyectada del activo.
-
-\newpage
+Las acciones enumeradas en la Tabla~\ref{tab:recomendaciones_resumen} constituyen un programa integral de gesti\'on t\'ermica orientado a sostener el ciclo operativo oficial de 120~toneladas diarias de glucosa despachadas en cinco carrotanques, asegurando la eficiencia energ\'etica y la calidad del producto durante toda la vida \'util operativa del sistema de calentamiento.

@@ -1,5 +1,5 @@
 """
-Generador de PFDs vectoriales (SVG) para los escenarios del Proyecto P2611.
+Generador de PFDs vectoriales (SVG) para los escenarios del Proyecto W2605.
 Parte del SVG base PFD_Escenario_01A.svg corregido y genera 01B, 01C y 02A.
 Usa reemplazos robustos por ID para tolerar formato multilinea del SVG.
 """

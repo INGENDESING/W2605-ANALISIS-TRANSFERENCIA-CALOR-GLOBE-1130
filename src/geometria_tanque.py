@@ -1,5 +1,5 @@
 """
-Módulo de geometría del tanque de almacenamiento de glucosa — Proyecto P2611
+Módulo de geometría del tanque de almacenamiento de glucosa — Proyecto W2605
 =============================================================================
 Cálculo de volúmenes, áreas y parámetros geométricos del tanque cilíndrico
 con fondo toriesférico y chaqueta de media caña rectangular en espiral.
@@ -32,7 +32,10 @@ H_PERFIL = 0.0455         # Altura interna del perfil rectangular [m] (45.5 mm)
 W_PERFIL = 0.141          # Ancho interno del perfil rectangular [m] (141 mm)
 t_PERFIL = 0.0045         # Espesor de lámina del perfil [m] (4.5 mm)
 PASO_ESPIRAL = 0.196      # Paso de la espiral [m] (196 mm)
-A_CONTACTO = 13.0         # Área de contacto con el tanque [m²]
+A_CONTACTO = 13.0         # Área de contacto total con el tanque [m²]
+A_CONTACTO_TRAMO_45 = 0.45 * A_CONTACTO   # Tramo centro → 45 % [m²]
+A_CONTACTO_TRAMO_55 = 0.55 * A_CONTACTO   # Tramo periferia → 45 % [m²]
+L_ESPIRAL_TOTAL = 13.0 / 0.141            # Longitud total aproximada [m]
 AISLAMIENTO_ESPESOR = 0.0508  # Espesor de aislamiento de lana mineral [m] (2")
 
 # Conexiones
@@ -270,7 +273,7 @@ def masa_glucosa(volumen, rho=RHO_GLUCOSA_REF):
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("GEOMETRÍA DEL TANQUE DE GLUCOSA — Proyecto P2611")
+    print("GEOMETRÍA DEL TANQUE DE GLUCOSA — Proyecto W2605")
     print("=" * 65)
 
     print(f"\n--- Cuerpo cilíndrico (existente) ---")

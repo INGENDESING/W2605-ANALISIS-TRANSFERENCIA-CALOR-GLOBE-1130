@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Simulador de Ciclo — P2611{% endblock %}
+{% block title %}Simulador de Ciclo — W2605{% endblock %}
 
 {% block content %}
 <!-- Cabecera -->
 <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
     <div>
-        <h4 class="mb-0" style="color:var(--color-dml);font-weight:700;">
+        <h4 class="mb-0" style="color:var(--color-dmv);font-weight:700;">
             <i class="bi bi-graph-up-arrow me-2" style="color:var(--color-ingredion);"></i>Simulador de Ciclo Completo
         </h4>
         <small class="text-muted">Calentamiento inicial + ciclo de descargas (24h)</small>
@@ -131,14 +131,14 @@
             <div class="col-md-2">
                 <div class="kpi-card-new text-center">
                     <div class="text-muted small mb-1">Tiempo Calentamiento</div>
-                    <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resTiempoCal">—</div>
+                    <div class="fs-3 fw-bold" style="color:var(--color-dmv);" id="resTiempoCal">—</div>
                     <div class="text-muted small">horas</div>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="kpi-card-new text-center">
                     <div class="text-muted small mb-1">Masa Total Descargada</div>
-                    <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resMasaTotal">—</div>
+                    <div class="fs-3 fw-bold" style="color:var(--color-dmv);" id="resMasaTotal">—</div>
                     <div class="text-muted small">toneladas</div>
                 </div>
             </div>
@@ -152,14 +152,14 @@
             <div class="col-md-2">
                 <div class="kpi-card-new text-center">
                     <div class="text-muted small mb-1">Descargas Exitosas</div>
-                    <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resDescargasOk">—</div>
+                    <div class="fs-3 fw-bold" style="color:var(--color-dmv);" id="resDescargasOk">—</div>
                     <div class="text-muted small">de <span id="resTotalDesc">—</span></div>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="kpi-card-new text-center">
                     <div class="text-muted small mb-1">T Final del Ciclo</div>
-                    <div class="fs-3 fw-bold" style="color:var(--color-dml);" id="resTFinal">—</div>
+                    <div class="fs-3 fw-bold" style="color:var(--color-dmv);" id="resTFinal">—</div>
                     <div class="text-muted small">°C</div>
                 </div>
             </div>
@@ -264,14 +264,14 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color:var(--color-dml);">Instrucciones de Uso y Escenarios del Estudio</h5>
+                <h5 class="modal-title" style="color:var(--color-dmv);">Instrucciones de Uso y Escenarios del Estudio</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-muted" style="font-size: 0.9rem;">
                 <h6>¿Cómo usar el simulador?</h6>
                 <p>Ingrese los parámetros deseados en el panel izquierdo y haga clic en <strong>Simular</strong> para estimar el comportamiento térmico del tanque. El simulador calculará automáticamente las transferencias de calor, el desgaste de masa por descarga y si la temperatura residual de la glucosa permite completar los viajes de manera satisfactoria sin caer por debajo de la temperatura aceptable.</p>
                 <hr>
-                <h6>Escenarios del Estudio (P2611)</h6>
+                <h6>Escenarios del Estudio (W2605)</h6>
                 <p>Si desea replicar en el simulador los escenarios puntuales analizados en el informe de auditoría, utilice los siguientes parámetros base (Flujo de agua a 57.7 m³/h o Velocidad a 2.5 m/s):</p>
                 <ul>
                     <li><strong>Escenario 2:</strong> Temperatura de chaqueta (agua) a 65°C, con T objetivo de 57°C para descargas.</li>

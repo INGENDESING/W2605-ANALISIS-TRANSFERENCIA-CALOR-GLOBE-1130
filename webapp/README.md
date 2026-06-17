@@ -1,4 +1,4 @@
-# P2611 WebApp - Balance de Materia y Energía
+# W2605 WebApp - Balance de Materia y Energía
 
 Aplicación web para el análisis de transferencia de calor y balance de materia en el sistema de calentamiento de glucosa Globe 42 DE.
 
@@ -130,4 +130,4 @@ Para agregar nuevas funcionalidades:
 
 ## Licencia
 
-Proyecto propiedad de DML S.A.S. para INGREDION S.A.
+Proyecto propiedad de DMV S.A.S. para INGREDION S.A.

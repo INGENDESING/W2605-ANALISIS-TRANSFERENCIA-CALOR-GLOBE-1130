@@ -66,7 +66,7 @@ for esc in escenarios:
     tn = esc['title_num']
     sfx = esc['suffix']
     
-    svg = svg.replace('PFD Escenario 01A - Proyecto P2611', f'PFD Escenario {tn} - Proyecto P2611')
+    svg = svg.replace('PFD Escenario 01A - Proyecto W2605', f'PFD Escenario {tn} - Proyecto W2605')
     svg = svg.replace('Diagrama de Flujo de Proceso - Escenario 01A con tres velocidades de viento',
                       f'Diagrama de Flujo de Proceso - Escenario {tn} con tres velocidades de viento')
     svg = svg.replace('PFD_Escenario_01A.svg', f'PFD_Escenario_{sfx}.svg')

@@ -1,5 +1,5 @@
 /**
- * Calculadora Paramétrica - P2611
+ * Calculadora Paramétrica - W2605
  * Cálculo instantáneo con debounce, gráficas Plotly
  */
 
