@@ -1,9 +1,9 @@
 # Contexto del proyecto: W2605 — Fondo de tanque de glucosa
 
 ## Estado actual
-- Última tarea completada: Integración de la sección 15 en W2605PRINF001 (análisis de factibilidad térmica del ciclo de descargas a 12 m³/h con chaqueta de 14 m² y agua a 75 °C), recompilación del informe (71 páginas), ejecución de tests y sincronización con GitHub.
+- Última tarea completada: Integración de la sección 15 en W2605PRINF001 y adición de un resumen de la sesión en W2605PRINF002 (resumen ejecutivo), incluyendo tabla de resultados del ciclo a 12 m³/h; recompilación de ambos informes (W2605PRINF001: 71 páginas; W2605PRINF002: 5 páginas) y sincronización con GitHub.
 - Próxima tarea pendiente: Ninguna crítica pendiente; proyecto listo para entrega final.
-- Fecha de última actualización: 2026-06-17T15:58:00-05:00.
+- Fecha de última actualización: 2026-06-17T16:07:00-05:00.
 
 ## Bases de diseño congeladas
 - Capacidad operativa: máximo 5 descargas/día, 24 ton/descarga, 120 ton/día.
@@ -29,11 +29,12 @@
 - (2026-06-17) Se completó auditoría crítica del informe de tercero GTTP-1004 Rev.5 en `auditoria1.md` y `InformeTercero/auditoria.md`.
 - (2026-06-17) Se añadió la sección 9 al informe técnico con el caso de estudio de calentamiento de 24 ton de glucosa desde 40 °C hasta 60 °C con área de 14 m², para agua de calentamiento a 65 °C y 75 °C.
 - (2026-06-17) Se añadió la sección 15 al informe técnico con el análisis de factibilidad térmica del ciclo de 5 descargas diarias a 12 m³/h con chaqueta de 14 m² y agua a 75 °C; resultado: T_min = 58,55 °C (cumple ≥ 57 °C).
+- (2026-06-17) Se añadió al resumen ejecutivo W2605PRINF002 una sección de factibilidad térmica del ciclo a 12 m³/h con tabla resumen y referencia a la Sección 15 del informe técnico.
 - (2026-06-17) Se corrigió la justificación de párrafos en ambos informes; la causa raíz era un `\centering` suelto en `sections/00_portada.tex` que persistía para todo el documento.
 
 ## Archivos clave y su propósito
 - `docs/report/W2605PRINF001.tex` — Informe técnico principal (71 páginas).
-- `docs/report/W2605PRINF002.tex` — Resumen ejecutivo gerencial (4 páginas).
+- `docs/report/W2605PRINF002.tex` — Resumen ejecutivo gerencial (5 páginas).
 - `docs/report/sections/14_calentamiento_24ton.tex` — Sección de caso de estudio: calentamiento de 24 ton con área 14 m².
 - `docs/report/sections/15_analisis_ciclo_12m3h.tex` — Sección de análisis del ciclo de descargas a 12 m³/h con chaqueta 14 m² y agua 75 °C.
 - `src/calentamiento_24ton_40_60.py` — Script de simulación del caso de estudio 24 ton.

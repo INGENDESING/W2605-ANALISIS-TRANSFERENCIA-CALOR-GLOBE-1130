@@ -92,7 +92,37 @@ Recuperación desde frío & Tiempo de calentamiento 25 -- 57~$^\circ$C con agua 
 \end{table}
 
 % =============================================================================
-% 4. DIAGRAMA CONCEPTUAL DEL SISTEMA
+% 4. FACTIBILIDAD TÉRMICA DEL CICLO A 12 m³/h
+% =============================================================================
+\section{Factibilidad térmica del ciclo a 12~m\textsuperscript{3}/h}
+
+Se evaluó la factibilidad térmica de mantener cinco descargas diarias de 24~ton cuando el flujo de descarga se incrementa a 12~m\textsuperscript{3}/h, lo que reduce la duración de cada descarga a 1,42~h y deja 3,38~h para calentamiento continuo entre inicios de descarga. El análisis consideró una chaqueta de media caña de 14~m$^2$, agua de calentamiento a 75~$^\circ$C, velocidad del agua de 2,5~m/s, configuración de doble entrada y una masa inicial equivalente al 80~\% del volumen operativo a 60~$^\circ$C. La Tabla~\ref{tab:resumen_ciclo_12m3h} resume los resultados obtenidos; el detalle metodológico y las curvas transitorias se presentan en la Sección~15 del informe técnico W2605PRINF001.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Resultados del análisis del ciclo de descargas a 12~m\textsuperscript{3}/h con chaqueta de 14~m$^2$ y agua a 75~$^\circ$C.}
+\label{tab:resumen_ciclo_12m3h}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Indicador} & \textbf{Valor} \\
+\midrule
+Descargas por día & 5 \\
+Masa por descarga & 24~ton \\
+Flujo de descarga & 12~m$^3$/h \\
+Duración de descarga & 1,42~h \\
+Tiempo de calentamiento entre descargas & 3,38~h \\
+Temperatura mínima alcanzada & 58,55~$^\circ$C \\
+Temperatura final del tanque (24~h) & 58,65~$^\circ$C \\
+Cumplimiento límite de despacho ($T \geq 57$~$^\circ$C) & Sí \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El análisis demuestra que el ciclo es técnicamente factible, ya que la temperatura mínima alcanzada (58,55~$^\circ$C) supera el límite inferior de despacho de 57~$^\circ$C. No obstante, el margen respecto al objetivo de 60~$^\circ$C es reducido, pues durante 1,42~h de cada descarga ingresa glucosa a 55~$^\circ$C mientras la chaqueta debe compensar simultáneamente las pérdidas al ambiente. En consecuencia, la operación a 12~m$^3$/h requiere garantizar un nivel inicial mínimo del 80~\%, agua a 75~$^\circ$C disponible de forma continua y aislamiento térmico de 50,8~mm de lana mineral; si se exige estrictamente 60~$^\circ$C al final de cada descarga, sería necesario incrementar el área de transferencia, reducir el flujo de descarga o elevar la temperatura del agua de calentamiento.
+
+% =============================================================================
+% 5. DIAGRAMA CONCEPTUAL DEL SISTEMA
 % =============================================================================
 \section{Diagrama conceptual del sistema}
 
@@ -180,21 +210,21 @@ La Figura~\ref{fig:pfd_conceptual} presenta un esquema simplificado del sistema 
 \end{figure}
 
 % =============================================================================
-% 5. RECOMENDACIÓN DIRECTA
+% 6. RECOMENDACIÓN DIRECTA
 % =============================================================================
 \section{Recomendación directa}
 
 Se recomienda operar el sistema con agua de calentamiento a 75~$^\circ$C e implementar un aislamiento térmico de 50,8~mm de lana mineral sobre el fondo y el cuerpo cilíndrico del tanque. Esta combinación reduce las pérdidas térmicas en un 91,6~\%, acorta los tiempos de recuperación de temperatura entre descargas y proporciona la estabilidad necesaria para mantener la glucosa de salida entre 57~$^\circ$C y 60~$^\circ$C durante el ciclo de cinco descargas diarias.
 
 % =============================================================================
-% 6. IMPACTO OPERATIVO
+% 7. IMPACTO OPERATIVO
 % =============================================================================
 \section{Impacto operativo}
 
 La intervención propuesta asegura la capacidad contractual de 120~ton/día distribuidas en cinco descargas de 24~ton, eliminando tiempos muertos mediante calentamiento continuo entre descargas. La reducción de pérdidas térmicas con el aislamiento de 50,8~mm disminuye la demanda energética del sistema de agua caliente y estabiliza la temperatura de salida, minimizando el riesgo de rechazo de cargas por temperatura inferior a 57~$^\circ$C. El recálculo con el área real expuesta (~150~m$^2$) indica que el tanque pierde aproximadamente 3~$^\circ$C cada 4,5~días a 60~$^\circ$C. Adicionalmente, el uso de agua a 75~$^\circ$C reduce en un 46~\% el tiempo de recuperación desde condiciones frías respecto al caso base con agua a 65~$^\circ$C, lo cual mejora la disponibilidad del equipo ante paradas no programadas.
 
 % =============================================================================
-% 7. PRÓXIMOS PASOS
+% 8. PRÓXIMOS PASOS
 % =============================================================================
 \section{Próximos pasos}
 
