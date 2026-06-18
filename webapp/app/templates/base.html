@@ -24,12 +24,15 @@
 <!-- ── Sidebar ─────────────────────────────────────────────────────────────── -->
 <aside class="app-sidebar" id="appSidebar">
     <div class="sidebar-brand">
-        <div class="d-flex align-items-center justify-content-center gap-2 logos-box">
-            <img src="{{ url_for('static', filename='img/logo_dmv.png') }}" alt="DMV" style="max-height: 28px; width: auto; filter: brightness(1.15);">
-            <div class="vr mx-1" style="color: rgba(255,255,255,0.15);"></div>
-            <img src="{{ url_for('static', filename='img/logo_ingredion.png') }}" alt="INGREDION" style="max-height: 28px; width: auto; filter: brightness(1.15);">
+        <div class="text-center mb-3">
+            <img src="{{ url_for('static', filename='img/logo_dmv.png') }}" alt="DMV" class="sidebar-logo-dmv">
         </div>
-        <div class="d-flex align-items-center gap-2 mb-1">
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+            <img src="{{ url_for('static', filename='img/logo_ingredion.png') }}" alt="INGREDION" style="max-height: 26px; width: auto; filter: brightness(1.15);">
+            <div class="vr mx-1" style="color: rgba(255,255,255,0.15); height: 20px;"></div>
+            <span class="brand-client" style="font-size: 0.75rem;">Cliente</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
             <i class="bi bi-thermometer-half text-neon-orange fs-5"></i>
             <span class="brand-name">W2605</span>
         </div>
