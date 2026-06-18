@@ -147,11 +147,11 @@ a:hover {
 }
 
 .app-sidebar .sidebar-brand .sidebar-logo-dmv {
-    max-width: 85%;
-    max-height: 90px;
+    max-width: 95%;
+    max-height: 130px;
     width: auto;
     height: auto;
-    filter: brightness(1.15) drop-shadow(0 0 8px rgba(57, 255, 20, 0.25));
+    filter: brightness(1.15) drop-shadow(0 0 10px rgba(57, 255, 20, 0.3));
     transition: transform 0.25s ease;
 }
 
@@ -1541,11 +1541,11 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 /* Logo DMV grande en hero */
 .hero-logo-dmv {
-    max-width: 85%;
-    max-height: 220px;
+    max-width: 95%;
+    max-height: 320px;
     width: auto;
     height: auto;
-    filter: brightness(1.2) drop-shadow(0 0 20px rgba(57, 255, 20, 0.35));
+    filter: brightness(1.2) drop-shadow(0 0 28px rgba(57, 255, 20, 0.4));
     animation: hero-logo-float 4s ease-in-out infinite;
 }
 
