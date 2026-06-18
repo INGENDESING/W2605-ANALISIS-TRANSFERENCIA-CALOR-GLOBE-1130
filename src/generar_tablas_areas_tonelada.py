@@ -12,6 +12,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from calcular_areas import calcular_area_necesaria
+from geometria_tanque import A_CONTACTO
 
 
 def generar_tabla_25_57():
@@ -59,7 +60,7 @@ def generar_tabla_54_57():
     T_out = 57.0
     T_agua = 75.0
     v_agua = 2.5
-    A_propuesta = 13.0  # m2
+    A_propuesta = A_CONTACTO  # m2
     
     latex = []
     latex.append(r"\begin{table}[H]")
@@ -70,7 +71,7 @@ def generar_tabla_54_57():
     latex.append(r"    \small")
     latex.append(r"    \begin{tabularx}{\textwidth}{@{}Ncccccc@{}}")
     latex.append(r"        \toprule")
-    latex.append(r"        \multicolumn{1}{c}{\textbf{It.}} & $\dot{m}$ [ton/h] & $\dot{m}$ [kg/s] & $\dot{Q}$ [kW] & $\Delta T_{lm}$ [°C] & $A_{req}$ [m\textsuperscript{2}] & Cumple ($A_{prop}=13$\,m\textsuperscript{2}) \\")
+    latex.append(r"        \multicolumn{1}{c}{\textbf{It.}} & $\dot{m}$ [ton/h] & $\dot{m}$ [kg/s] & $\dot{Q}$ [kW] & $\Delta T_{lm}$ [°C] & $A_{req}$ [m\textsuperscript{2}] & Cumple ($A_{prop}=14$\,m\textsuperscript{2}) \\")
     latex.append(r"        \midrule")
     
     for ton_h in range(1, 17):

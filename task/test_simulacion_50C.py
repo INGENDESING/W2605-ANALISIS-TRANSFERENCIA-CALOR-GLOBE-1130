@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 sys.path.insert(0, str(Path(__file__).parent.parent / 'webapp'))
 
 from app.core.balance_energia import simular_ciclo_automatico
-from geometria_tanque import volumen_total
+from geometria_tanque import volumen_total, A_CONTACTO
 
 vol_ini = volumen_total() * 0.80
 MASA_DESCARGA = 24000.0
@@ -26,7 +26,7 @@ r = simular_ciclo_automatico(
     T_objetivo_inicio_descarga=57,
     T_agua=67,
     v_agua=2.5,
-    area=13.0,
+    area=A_CONTACTO,
     volumen_inicial_m3=vol_ini,
     masa_por_descarga_kg=MASA_DESCARGA,
     tiempo_descarga_h=TIEMPO_DESCARGA,
@@ -58,7 +58,7 @@ r2 = simular_ciclo_automatico(
     T_objetivo_inicio_descarga=57,
     T_agua=75,
     v_agua=2.5,
-    area=13.0,
+    area=A_CONTACTO,
     volumen_inicial_m3=vol_ini,
     masa_por_descarga_kg=MASA_DESCARGA,
     tiempo_descarga_h=TIEMPO_DESCARGA,

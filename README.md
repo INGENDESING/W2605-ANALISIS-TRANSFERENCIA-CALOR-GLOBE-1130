@@ -6,7 +6,7 @@ Estudio de transferencia de calor del fondo toriesférico del tanque de almacena
 
 **Empresa ejecutora:** DMV SAS  
 **Cliente:** Ingredion S.A., Planta Cali  
-**Fluido:** Glucosa Globe 42 DE (~80,6 °Brix)  
+**Fluido:** Glucosa Globe 1130 (~80,6 °Brix)  
 **Material del fondo:** Acero inoxidable SS316L
 
 ---
@@ -122,16 +122,16 @@ Abrir el navegador en `http://localhost:5000` (o el puerto indicado en la consol
 |---|---|
 | `/` | Página de inicio con resumen del proyecto. |
 | `/dashboard` | Dashboard de KPIs con resultados del ciclo a 12 m³/h, pérdidas térmicas y capacidad operativa. |
-| `/calculadora` | Calculadora interactiva de transferencia de calor (área base 13 m²). |
+| `/calculadora` | Calculadora interactiva de transferencia de calor (área base 14 m²). |
 | `/simulador` | Simulador del ciclo de descargas. |
 | `/factibilidad` | Resultado del ciclo de 5 descargas diarias a 12 m³/h: área de chaqueta 14 m², agua a 75 °C, temperatura mínima alcanzada y verificación contra el límite de 57 °C. |
 | `/perdidas-aislamiento` | Pérdidas térmicas con el área real expuesta y comparativa de espesores de aislamiento. |
-| `/escenarios` | Resumen de escenarios del proyecto. |
+| `/escenarios` | Resumen de los cinco escenarios térmicos de operación del proyecto. |
 | `/sensibilidad` | Análisis de sensibilidad de parámetros. |
 | `/propiedades` | Propiedades termofísicas de la glucosa. |
 | `/about` | Información del proyecto, normas y metodología. |
 
-La calculadora (`/calculadora`) y el simulador base emplean el área histórica de **13 m²**. La página `/factibilidad` y el dashboard emplean el área de diseño del caso a 12 m³/h, **14 m²**, para el ciclo de descargas. Ambos valores se presentan de forma explícita para mantener la trazabilidad entre el modelo original y el caso de estudio.
+La calculadora (`/calculadora`), el simulador base, el dashboard y la página `/factibilidad` emplean el área de diseño unificada de **14 m²**. El valor histórico de 13 m² se conserva únicamente en archivos archivados de `reciclaje/` para trazabilidad.
 
 ### API del proyecto
 
@@ -144,7 +144,7 @@ Los siguientes endpoints exponen los análisis técnicos en formato JSON:
 | `GET` | `/api/proyecto/aislamiento/espesores` | Tabla comparativa de espesores de aislamiento. |
 | `GET` | `/api/proyecto/aislamiento/sensibilidad` | Sensibilidad del espesor de aislamiento a 60 °C. |
 | `GET` | `/api/proyecto/calentamiento-24ton` | Tiempo de calentamiento de 24 ton desde 40 °C hasta 60 °C. |
-| `GET` | `/api/proyecto/capacidad-operativa` | Capacidad operativa diaria con área 13 m². |
+| `GET` | `/api/proyecto/capacidad-operativa` | Capacidad operativa diaria con área 14 m². |
 
 ### Figuras e informes
 
@@ -171,7 +171,7 @@ La interfaz utiliza un tema oscuro **cyberpunk** con acentos neón:
 | Temperatura objetivo de la glucosa | 60 °C |
 | Ciclo operativo | 5 descargas/día, 24 ton/descarga, 2,0 h de descarga, período 4,8 h |
 | Flujo medio de glucosa | 5 000 kg/h |
-| Área de transferencia de la chaqueta | 13 m² (base); 14 m² (caso de estudio 24 ton) |
+| Área de transferencia de la chaqueta | 14 m² |
 | Coeficiente global con aislamiento (U) | ~0,38 W/(m²·°C) |
 | Pérdidas térmicas con aislamiento a 60 °C | 14,7 MJ/h |
 | Pérdidas térmicas sin aislamiento a 60 °C | 175,4 MJ/h |
@@ -196,6 +196,6 @@ Este proyecto es propiedad de DMV SAS y está destinado exclusivamente a uso int
 
 ## Estado del proyecto
 
-Entrega final en preparación. Sincronización con el repositorio remoto completada. Pendiente: definición del logo corporativo correcto de DMV SAS para el membrete de los informes.
+Entrega final en preparación. Sincronización con el repositorio remoto completada. Se eliminó del informe, la webapp y los scripts la comparativa con la chaqueta dimple de 28 m²; el material obsoleto se archivó en `reciclaje/09_comparativa_dimple_obsoleta/`.
 
 Última actualización: 17 de junio de 2026.

@@ -2,7 +2,7 @@
 Modulo de simulacion del ciclo de descargas a carrotanque — Proyecto W2605
 ==========================================================================
 Simula la operacion ciclica de 5 descargas de 24 toneladas de glucosa
-Globe 42 DE a carrotanques en un periodo de 24 horas, para los Escenarios
+Globe 1130 a carrotanques en un periodo de 24 horas, para los Escenarios
 2 (agua a 65 C) y 3 (agua a 75 C).
 
 Modelo fisico:
@@ -16,7 +16,7 @@ Modelo fisico:
 
 Donde:
   dot_m_out = 24,000 kg / (2.0 * 3600 s) = 3.333 kg/s durante descarga
-  A = 13.0 m2 (area de contacto media cana con tanque)
+  A = 14.0 m2 (area de contacto media cana con tanque)
   U = f(T_g) — coeficiente global dependiente de temperatura
 
 La masa decreciente reduce la inercia termica, acelerando el
@@ -85,7 +85,7 @@ T_DESCARGA = 2.0              # Duracion de cada descarga [h]
 T_CICLO = 4.8                 # Periodo entre descargas [h] (24 h / 5 descargas)
 T_TOTAL = 24.0                # Duracion total de la simulacion [h]
 V_AGUA = 2.5                  # Velocidad del agua en la media cana [m/s]
-A = A_CONTACTO                # Area de transferencia [m2] = 13.0
+A = A_CONTACTO                # Area de transferencia [m2] = 14.0
 
 # Flujo masico de descarga [kg/s]
 DOT_M_OUT = MASA_POR_DESCARGA / (T_DESCARGA * 3600.0)

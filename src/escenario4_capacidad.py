@@ -7,7 +7,7 @@ Comparativa de capacidad con diferentes temperaturas de entrada:
 
 Parametros:
   T agua:        75°C
-  Area:          13 m² (media cana del fondo construido)
+  Area:          14 m² (media cana del fondo construido)
   Masa descarga: 24 ton
   Requerimiento: 5 descargas / 24 h = 120 ton/dia
 
@@ -52,7 +52,7 @@ plt.rcParams.update({
 
 T_AGUA = 75.0            # °C
 V_AGUA = 2.5             # m/s
-A = 13.0                 # m² (area propuesta)
+A = A_CONTACTO           # m² (fuente de verdad en geometria_tanque.py)
 MASA_DESCARGA = 24000.0  # kg (24 ton)
 
 # =============================================================================
@@ -120,7 +120,7 @@ def main():
     os.makedirs(FIGURES_DIR, exist_ok=True)
     print("=" * 70)
     print("ESCENARIO 4: CAPACIDAD OPERATIVA DIARIA")
-    print("Comparativa 54°C vs 55°C (Area 13 m²)")
+    print("Comparativa 54°C vs 55°C (Area 14 m²)")
     print("=" * 70)
 
     caso_54 = calcular_capacidad(54.0, 57.0, "CASO A - CONSERVADOR")
@@ -260,7 +260,7 @@ def main():
     ax5.text(12, 0.3, 'Cada rectángulo representa el llenado de un carrotanque de 24 toneladas', 
              ha='center', fontsize=9, style='italic')
 
-    plt.suptitle('Escenario 4: Análisis de Capacidad Operativa con Área 13 m²', 
+    plt.suptitle('Escenario 4: Análisis de Capacidad Operativa con Área 14 m²', 
                  fontsize=14, fontweight='bold', y=0.98)
 
     os.makedirs(FIGURES_DIR, exist_ok=True)
@@ -276,7 +276,7 @@ def main():
     print("RESUMEN COMPARATIVO - ESCENARIO 4")
     print("=" * 70)
     print("""
-    COMPARATIVA DE CASOS (Area 13 m2, Agua 75C):
+    COMPARATIVA DE CASOS (Area 14 m2, Agua 75C):
 
     +---------------------+------------------+------------------+----------+
     | Parametro           | Caso A (54->57C) | Caso B (55->57C) | Mejora   |

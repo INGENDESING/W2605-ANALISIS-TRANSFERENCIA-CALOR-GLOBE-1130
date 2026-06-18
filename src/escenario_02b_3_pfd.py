@@ -11,7 +11,7 @@ Este script calcula la temperatura de salida de glucosa considerando:
 Parametros del Escenario 02B-3:
 - Agua de servicio: 75°C
 - Caudal de agua: 57,700 kg/h (57.7 m3/h) - v=2.5 m/s
-- Area de transferencia: 13 m2
+- Area de transferencia: 14 m2
 - Glucosa entrando: 54°C
 - Caudal glucosa: 8,000 kg/h
 - Aislamiento: 5 mm
@@ -39,7 +39,7 @@ from calculo_calor_perdido_80 import (
 
 T_AGUA_IN = 75.0           # Temperatura de entrada del agua [°C] - AUMENTADO a 75°C
 Q_AGUA_M3H = 57.7          # Caudal de agua [m3/h] - v=2.5 m/s
-A_CHAQUETA = 13.0          # Area de transferencia de la chaqueta [m2]
+A_CHAQUETA = A_CONTACTO    # Area de transferencia de la chaqueta [m2]
 T_GLUCOSA_IN = 54.0        # Temperatura de entrada de glucosa [°C]
 M_GLUCOSA_KGH = 8000.0     # Caudal masico de glucosa [kg/h]
 ESPESOR_AISLAMIENTO = 0.005  # 5 mm [m]

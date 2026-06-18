@@ -8,7 +8,7 @@
 
 \section{Balance de Materia y Energ\'{i}a del Sistema de Almacenamiento}
 
-El an\'alisis del balance de materia y energ\'ia constituye el fundamento termodin\'amico para la caracterizaci\'on del sistema de almacenamiento y calentamiento de glucosa Globe~42~DE. Esta secci\'on presenta la cuantificaci\'on sistem\'atica de las corrientes de masa y energ\'ia que interact\'uan en el tanque, incluyendo un desarrollo detallado de las p\'erdidas t\'ermicas al ambiente y su impacto en la operaci\'on continua.
+El an\'alisis del balance de materia y energ\'ia constituye el fundamento termodin\'amico para la caracterizaci\'on del sistema de almacenamiento y calentamiento de glucosa Globe 1130. Esta secci\'on presenta la cuantificaci\'on sistem\'atica de las corrientes de masa y energ\'ia que interact\'uan en el tanque, incluyendo un desarrollo detallado de las p\'erdidas t\'ermicas al ambiente y su impacto en la operaci\'on continua.
 
 \subsection{Definici\'on del Sistema y Condiciones Operativas}
 
@@ -52,7 +52,7 @@ La Tabla~\ref{tab:condiciones_operativas_balance} resume las condiciones operati
 
 El balance de materia se aplica definiendo como volumen de control el interior del tanque. En el r\'egimen estacionario representativo se consideran las corrientes de entrada y salida de glucosa, as\'i como la corriente de agua caliente que circula por la chaqueta de media ca\~na en recirculaci\'on cerrada.
 
-La glucosa Globe~42~DE ingresa al tanque desde la planta de producci\'on y es almacenada temporalmente antes de su despacho. Para el flujo medio de 5{.}000~kg/h se establece un modelo de flujo continuo equivalente donde la masa que ingresa es igual a la que sale:
+La glucosa Globe 1130 ingresa al tanque desde la planta de producci\'on y es almacenada temporalmente antes de su despacho. Para el flujo medio de 5{.}000~kg/h se establece un modelo de flujo continuo equivalente donde la masa que ingresa es igual a la que sale:
 
 \begin{equation}
 \dot{m}_{glucosa, entrada} = \dot{m}_{glucosa, salida} = 5{.}000~\text{kg/h}
@@ -84,7 +84,7 @@ La Tabla~\ref{tab:balance_materia} presenta el resumen del balance de materia pa
 & Glucosa salida & 5{.}000 & 3,5 & 60,0 & Hacia carrotanques \\
 \midrule
 & Agua entrada chaqueta & 56{.}258 & 57,7 & 75,0 & Servicio de calentamiento \\
-& Agua salida chaqueta & 56{.}258 & 57,7 & 74,7 & Retorno a caldera \\
+& Agua salida chaqueta & 56{.}258 & 57,7 & 74,9 & Retorno a caldera \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -93,7 +93,7 @@ La Tabla~\ref{tab:balance_materia} presenta el resumen del balance de materia pa
 
 El an\'alisis del balance de energ\'ia se fundamenta en la Primera Ley de la Termodin\'amica aplicada al volumen de control del tanque de glucosa. El sistema intercambia energ\'ia en forma de calor con el ambiente a trav\'es de la superficie exterior del equipo, recibe calor desde el agua caliente de la chaqueta y transporta entalp\'ia asociada a las corrientes de entrada y salida de glucosa.
 
-La entalp\'ia espec\'ifica de cada corriente de glucosa se calcula mediante la expresi\'on $h = C_p \times T$, donde $C_p$ representa el calor espec\'ifico promedio evaluado a la temperatura de la corriente. Para la glucosa Globe~42~DE a 80,6~\textdegree Brix, el calor espec\'ifico se determina mediante la correlaci\'on de Choi y Okos para soluciones de carbohidratos:
+La entalp\'ia espec\'ifica de cada corriente de glucosa se calcula mediante la expresi\'on $h = C_p \times T$, donde $C_p$ representa el calor espec\'ifico promedio evaluado a la temperatura de la corriente. Para la glucosa Globe 1130 a 80,6~\textdegree Brix, el calor espec\'ifico se determina mediante la correlaci\'on de Choi y Okos para soluciones de carbohidratos:
 
 \begin{equation}
 C_{p,glucosa}(T) = 2008 + 2{.}15 \times T \quad [\text{J/(kg} \cdot \text{\textdegree C)}]
@@ -121,11 +121,13 @@ El calor transferido desde el agua caliente hacia la glucosa a trav\'es del \'ar
 \label{eq:calor_chaqueta}
 \end{equation}
 
-Para el Escenario~3, con $U = 36,2~\text{W/(m}^{2}\cdot\text{\textdegree C)}$, $A = 13~\text{m}^{2}$ y una diferencia media logar\'itmica de aproximadamente 18~\textdegree C, el calor disponible en la chaqueta es:
+Para el Escenario~3, con $U = 36,2~\text{W/(m}^{2}\cdot\text{\textdegree C)}$, $A = 14~\text{m}^{2}$ y agua de entrada a 75~\textdegree C, el calor disponible en la chaqueta resulta:
 
 \begin{equation}
-\boxed{\dot{Q}_{chaqueta} \approx 30~\text{MJ/h}}
+\boxed{\dot{Q}_{chaqueta} \approx 27,3~\text{MJ/h}}
 \end{equation}
+
+La diferencia media logar\'{i}tica de 14,9~\textdegree C se obtiene al considerar la temperatura de salida del agua ($\approx 74,9$~\textdegree C), calculada a partir del balance energ\'{e}tico entre el caudal de servicio ($57,7~\text{m}^{3}/\text{h}$) y el calor transferido. A 57~\textdegree C, el aporte t\'ermico asciende a aproximadamente 32,7~MJ/h debido al mayor gradiente disponible.
 
 \subsubsection{P\'erdidas T\'ermicas al Ambiente}
 
@@ -200,14 +202,14 @@ El balance energ\'etico global del sistema se expresa mediante la ecuaci\'on:
 Sustituyendo los valores calculados para el flujo medio de 5{.}000~kg/h, con entrada y salida de glucosa a 60~\textdegree C:
 
 \begin{align}
-\text{Lado izquierdo:} & \quad 641{,}1 + 30{,}0 = 671{,}1~\text{MJ/h} \\
+\text{Lado izquierdo:} & \quad 641{,}1 + 27{,}3 = 668{,}4~\text{MJ/h} \\
 \text{Lado derecho:} & \quad 641{,}1 + 14{,}7 = 655{,}8~\text{MJ/h}
 \end{align}
 
 El balance neto del sistema resulta:
 
 \begin{equation}
-\boxed{\Delta \dot{Q}_{neto} = \dot{Q}_{chaqueta} - \dot{Q}_{perdidas} - \Delta \dot{H}_{glucosa} = 30{,}0 - 14{,}7 - 0 = 15{,}3~\text{MJ/h}}
+\boxed{\Delta \dot{Q}_{neto} = \dot{Q}_{chaqueta} - \dot{Q}_{perdidas} - \Delta \dot{H}_{glucosa} = 27{,}3 - 14{,}7 - 0 = 12{,}6~\text{MJ/h}}
 \end{equation}
 
 El signo positivo indica que el aporte de calor de la chaqueta excede las p\'erdidas t\'ermicas al ambiente, lo cual confirma que el sistema dispone de margen t\'ermico para mantener la temperatura de despacho a 60~\textdegree C. La variaci\'on dentro del rango operativo 57--60~\textdegree C se absorbe mediante la capacidad t\'ermica de la masa almacenada.
@@ -226,10 +228,10 @@ La Tabla~\ref{tab:balance_energia} resume el balance energ\'etico global del sis
 & Entalp\'ia glucosa entrada & 641,1 & MJ/h & $T = 60~\text{\textdegree C}$, $\dot{m} = 5{.}000$~kg/h \\
 & Entalp\'ia glucosa salida & 641,1 & MJ/h & $T = 60~\text{\textdegree C}$, $\dot{m} = 5{.}000$~kg/h \\
 \midrule
-& Calor transferido (chaqueta) & 30,0 & MJ/h & $U = 36,2$~W/m$^{2}\cdot$\textdegree C, $A = 13$~m$^{2}$ \\
+& Calor transferido (chaqueta) & 27,3 & MJ/h & $U = 36,2$~W/m$^{2}\cdot$\textdegree C, $A = 14$~m$^{2}$, $T_w = 75$~\textdegree C \\
 & P\'erdidas t\'ermicas & 14,7 & MJ/h & Con aislamiento de 50,8~mm, $T = 60~\text{\textdegree C}$ \\
 \midrule
-& \textbf{Balance neto} & \textbf{15,3} & \textbf{MJ/h} & \textbf{Margen t\'ermico disponible} \\
+& \textbf{Balance neto} & \textbf{12,6} & \textbf{MJ/h} & \textbf{Margen t\'ermico disponible} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -277,15 +279,15 @@ El espesor del aislamiento t\'ermico constituye la resistencia dominante en el s
 
 El an\'alisis de sensibilidad confirma que el espesor de dise\~no de 2~pulgadas (50,8~mm) constituye un punto de equilibrio adecuado entre eficiencia energ\'etica e inversi\'on. Espesores superiores a 2~pulgadas ofrecen mejoras marginales menores al 5~\% adicional de reducci\'on de p\'erdidas, mientras que espesores inferiores incrementan significativamente las p\'erdidas y reducen el tiempo de enfriamiento.
 
-\subsection{Diagrama de Flujo con Balance}
+\subsection{Diagrama de Bloques del Sistema}
 
-El diagrama de flujo de proceso con balance de masa y energ\'ia constituye una representaci\'on visual del sistema de almacenamiento y calentamiento de glucosa. La Figura~\ref{fig:pfd_balance} presenta el diagrama que integra el tanque de almacenamiento, la bomba de transferencia y el intercambiador de calor en configuraci\'on de chaqueta de media ca\~na, con las corrientes de proceso y sus respectivos flujos, temperaturas y entalp\'ias.
+El diagrama de bloques constituye una representaci\'on funcional del sistema de almacenamiento y calentamiento de glucosa. La Figura~\ref{fig:diagrama_bloques} presenta los principales elementos del proceso (tanque de almacenamiento, bomba de transferencia y carro tanque de despacho), el servicio de agua caliente de la chaqueta de media ca\~na y las p\'erdidas t\'ermicas al ambiente, con las corrientes de proceso y los flujos de energ\'ia relevantes.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{../../results/diagrama_proceso_W2605_v2.png}
-\caption{Diagrama de flujo de proceso del sistema de almacenamiento de glucosa con balance de materia y energ\'ia. Se indican las corrientes de glucosa (entrada y salida), agua de calentamiento (entrada y salida), transferencia de calor en la chaqueta ($\dot{Q} = 30$~MJ/h) y p\'erdidas t\'ermicas al ambiente ($\dot{Q}_{perdidas} = 14,7$~MJ/h).}
-\label{fig:pfd_balance}
+\includegraphics[width=0.95\textwidth]{../../results/figures/diagrama_bloques_global.pdf}
+\caption{Diagrama de bloques del sistema de almacenamiento y carga de glucosa. Se indican las corrientes de glucosa (entrada y salida), agua de calentamiento (entrada y retorno), transferencia de calor en la chaqueta ($\dot{Q}_{\mathrm{chaqueta}} \approx 27,3$~MJ/h a 60~\textdegree C) y p\'erdidas t\'ermicas al ambiente ($\dot{Q}_{\text{pérdidas}} \approx 14,7$~MJ/h). La chaqueta de media ca\~na dispone de un \'area de transferencia de calor de 14~m$^2$.}
+\label{fig:diagrama_bloques}
 \end{figure}
 
 \subsection{An\'alisis de Eficiencia T\'ermica del Sistema}
@@ -300,9 +302,9 @@ La eficiencia t\'ermica del sistema de calentamiento se define como la relaci\'o
 Sustituyendo los valores del balance energ\'etico:
 
 \begin{equation}
-\boxed{\eta_{calentamiento} = \frac{30,0}{30,0 + 14,7} \times 100 = 67,2~\text{\%}}
+\boxed{\eta_{calentamiento} = \frac{27,3}{27,3 + 14,7} \times 100 = 65,0~\text{\%}}
 \end{equation}
 
 La instalaci\'on del aislamiento t\'ermico de 2~pulgadas reduce las p\'erdidas en un 91,6~\% respecto al caso sin aislamiento (175,4~MJ/h sin aislamiento versus 14,7~MJ/h con aislamiento a 60~\textdegree C), garantiza temperaturas superficiales inferiores a 60~\textdegree C y permite mantener la temperatura de despacho con un margen t\'ermico positivo. El ahorro energ\'etico anual estimado, al comparar con el caso sin aislamiento y operaci\'on continua, es de aproximadamente 391~MWh.
 
-El balance neto positivo de 15,3~MJ/h indica que, en r\'egimen de flujo medio a 60~\textdegree C, el aporte de la chaqueta supera las p\'erdidas t\'ermicas. Durante las pausas entre descargas, el sistema compensa las p\'erdidas y estabiliza la temperatura del producto. Durante las descargas, el flujo real es 12.000~kg/h y la capacidad de elevaci\'on t\'ermica disponible se reduce; por ello, el cumplimiento del rango de despacho de 57--60~\textdegree C requiere que la glucosa de alimentaci\'on ingrese al tanque dentro del rango 57--60~\textdegree C y que el agua de calentamiento se mantenga a 75~\textdegree C.
+El balance neto positivo de 12,6~MJ/h indica que, en r\'egimen de flujo medio a 60~\textdegree C, el aporte de la chaqueta supera las p\'erdidas t\'ermicas. Durante las pausas entre descargas, el sistema compensa las p\'erdidas y estabiliza la temperatura del producto. Durante las descargas, el flujo real es 12.000~kg/h y la capacidad de elevaci\'on t\'ermica disponible se reduce; por ello, el an\'alisis de ciclo de cinco descargas diarias verific\'o el cumplimiento del l\'imite inferior de 57~\textdegree C con glucosa de alimentaci\'on a 55~\textdegree C, operando como caso conservador. Para acercar la temperatura de despacho al objetivo de 60~\textdegree C al final de cada descarga, se recomienda mantener la glucosa de alimentaci\'on en el rango 57--60~\textdegree C y el agua de calentamiento a 75~\textdegree C.

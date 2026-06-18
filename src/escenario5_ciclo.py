@@ -2,7 +2,7 @@
 Modulo de simulacion del Escenario 5 — Proyecto W2605
 ======================================================
 Ciclo industrial de despacho: tanque cargado al 80 % de volumen operativo
-con glucosa Globe 42 DE partiendo de 25 °C, 5 descargas de 24 toneladas
+con glucosa Globe 1130 partiendo de 25 °C, 5 descargas de 24 toneladas
 a carrotanque (descargas parciales).
 
 Parametros del Escenario 5:
@@ -84,7 +84,7 @@ T_DESCARGA = 57.0              # Temperatura minima para descarga [C]
 MASA_POR_DESCARGA = 24000.0    # Masa por carrotanque [kg]
 T_DESCARGA_DURACION = 2.0      # Duracion de cada descarga [h]
 N_DESCARGAS = 5                # Numero total de descargas
-A = A_CONTACTO                 # Area de transferencia [m2] = 13.0
+A = A_CONTACTO                 # Area de transferencia [m2] = 14.0
 
 # Masa inicial: 80 % del volumen operativo del tanque a T_GLUCOSA_INICIAL
 V_80 = volumen_total() * 0.80

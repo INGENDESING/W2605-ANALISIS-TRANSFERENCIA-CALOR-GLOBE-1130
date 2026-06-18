@@ -47,6 +47,13 @@ venv.bak/
 # Directorios temporales de verificación
 tmp_check/
 
+# Capturas temporales de verificación de compilación LaTeX
+docs/report/*_check*.png
+docs/report/*_p10*.png
+
+# Imagen de datos de prueba no vinculada a entregables
+datosingredion.png
+
 # OS generated files
 .DS_Store
 .DS_Store?
@@ -66,6 +73,8 @@ Thumbs.db
 *.pdf
 !data/datasheets/*.pdf
 !docs/report/logos/*.pdf
+!docs/report/W2605PRINF001.pdf
+!docs/report/W2605PRINF002.pdf
 results/figures/generated/*
 
 # Temporary files

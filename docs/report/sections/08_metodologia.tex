@@ -48,7 +48,7 @@ m_{g} \cdot C_{p,g} \cdot \frac{dT_g}{dt} = U \cdot A \cdot \Delta T_{lm}
 \label{eq:balance_transitorio}
 \end{equation}
 
-donde $m_g$ es la masa de glucosa en el tanque, $C_{p,g}$ es el calor espec\'ifico de la glucosa, $T_g$ es la temperatura media de la glucosa, $A$ es el \'area de contacto de la media ca\~na (13~m\textsuperscript{2}) y $\Delta T_{lm}$ es la diferencia de temperatura media logar\'itmica entre el agua de calentamiento y la glucosa:
+donde $m_g$ es la masa de glucosa en el tanque, $C_{p,g}$ es el calor espec\'ifico de la glucosa, $T_g$ es la temperatura media de la glucosa, $A$ es el \'area de contacto de la media ca\~na (14~m\textsuperscript{2}) y $\Delta T_{lm}$ es la diferencia de temperatura media logar\'itmica entre el agua de calentamiento y la glucosa:
 
 \begin{equation}
 \Delta T_{lm} = \frac{(T_{w,in} - T_g) - (T_{w,out} - T_g)}{\ln\left(\frac{T_{w,in} - T_g}{T_{w,out} - T_g}\right)}
@@ -118,22 +118,6 @@ El flujo medio del ciclo resulta:
 
 El ciclo se simula resolviendo las ecuaciones de balance transitorio con las condiciones de flujo variable: durante la descarga se impone $\dot{m}_{out} = 12{.}000$~kg/h y entre descargas $\dot{m}_{out} = 0$.
 
-\subsection{Comparativa de Configuraciones de Chaqueta}
-\label{sec:comp_chaquetas}
-
-El estudio contempla la comparaci\'on cuantitativa entre la configuraci\'on de chaqueta actualmente instalada en el fondo toriesf\'erico y la configuraci\'on del fondo de reemplazo. La chaqueta actual corresponde a un dise\~no tipo \textit{dimple} con un \'area efectiva de transferencia de $A_{actual} = 28$~m\textsuperscript{2} distribuida en tres circuitos de agua en paralelo, mientras que la chaqueta del fondo de reemplazo es una espiral de media ca\~na rectangular de paso \'unico con $A_{reemp} = 13$~m\textsuperscript{2}. Ambas operan con las mismas condiciones de servicio: $T_w = 75$~\textdegree C y $v = 2,5$~m/s.
-
-El coeficiente global de transferencia de calor $U$ es pr\'acticamente invariante entre ambas configuraciones, porque la resistencia del lado de la glucosa concentra entre el 97,7~\% y el 98,8~\% de la resistencia t\'ermica total del sistema. En consecuencia, la \'unica diferencia operacional cuantificable entre las dos configuraciones es el \'area de contacto $A$.
-
-La comparativa se desarrolla en dos modos de operaci\'on. En el modo \textit{batch}, con la glucosa est\'atica en el tanque al 80~\% de su capacidad, se integra la ecuaci\'on de balance transitorio con $A$ como par\'ametro, determinando los tiempos de calentamiento desde 25~\textdegree C y desde 55~\textdegree C hasta 57~\textdegree C para cada configuraci\'on. En el modo continuo, para flujos de glucosa de 1 a 16~ton/h, se resuelve la ecuaci\'on diferencial espacial:
-
-\begin{equation}
-\dot{m} \cdot C_{p,g}(T) \cdot \frac{dT}{dA} = U(T) \cdot (T_w - T)
-\label{eq:ode_espacial}
-\end{equation}
-
-donde la variable independiente es la coordenada de \'area $A$, integrada desde cero hasta el \'area disponible de la chaqueta para obtener la temperatura de salida $T_{out}$. El flujo m\'aximo continuo que permite alcanzar $T_{out} = 57$~\textdegree C se determina mediante b\'usqueda num\'erica sobre la ecuaci\'on impl\'icita $T_{out}(\dot{m}) = 57$~\textdegree C.
-
 \subsection{Espesor de Aislamiento T\'ermico}
 
 El espesor \'optimo de aislamiento de lana mineral se determina mediante un modelo de resistencias t\'ermicas en serie desde el agua caliente en la media ca\~na hasta el aire ambiente. La p\'erdida de calor por unidad de \'area se calcula como:
@@ -147,4 +131,49 @@ donde $R_{conv,i} = 1/h_i$ es la resistencia de convecci\'on interna, $R_{perfil
 
 \subsection{Validaci\'on Mediante Simulaci\'on CFD}
 
-La simulaci\'on de din\'amica de fluidos computacional (CFD) se realiz\'o en COMSOL Multiphysics~6.4 para complementar los c\'alculos anal\'iticos. El modelo resuelve las ecuaciones de Navier-Stokes acopladas con la ecuaci\'on de energ\'ia en r\'egimen transitorio, incluyendo el flujo de agua en la media ca\~na, la conducci\'on a trav\'es de la pared de SS316L y la convecci\'on natural de la glucosa en el fondo toriesf\'erico. El objetivo de la simulaci\'on fue obtener un valor promedio del coeficiente global de transferencia de calor $U$ bajo condiciones representativas del Escenario~3, con el fin de compararlo con el modelo anal\'itico y validar la metodolog\'ia empleada.
+La simulaci\'on de din\'amica de fluidos computacional (CFD) se realiz\'o en COMSOL Multiphysics~6.4 para complementar los c\'alculos anal\'iticos. El objetivo fue obtener un valor representativo del coeficiente global de transferencia de calor $U$ bajo las condiciones del Escenario~3 y compararlo con el modelo anal\'itico implementado en Python. El dominio num\'erico incluye el volumen de agua caliente dentro de la chaqueta de media ca\~na en espiral, la l\'amina de acero inoxidable SS316L del fondo toriesf\'erico, y una regi\'on del volumen de glucosa Globe~1130 adyacente a la pared calentada. La geometr\'ia reproduce la configuraci\'on final de doble entrada y doble salida de agua caliente documentada en los planos mec\'anicos.
+
+El modelo resuelve de forma acoplada las ecuaciones de conservaci\'on de masa, momento y energ\'ia. Para el flujo de agua en la media ca\~na, la ecuaci\'on de continuidad en r\'egimen estacionario e incompresible es:
+
+\begin{equation}
+\nabla \cdot \vec{v} = 0
+\label{eq:continuidad_cfd}
+\end{equation}
+
+donde $\vec{v}$ es el vector velocidad del fluido. La ecuaci\'on de Navier-Stokes para la conservaci\'on del momento se expresa como:
+
+\begin{equation}
+\rho \left( \vec{v} \cdot \nabla \right) \vec{v} = -\nabla p + \nabla \cdot \left[ \mu \left( \nabla \vec{v} + (\nabla \vec{v})^T \right) \right]
+\label{eq:navier_stokes_cfd}
+\end{equation}
+
+donde $\rho$ es la densidad del agua, $p$ es la presi\'on y $\mu$ es la viscosidad din\'amica. El t\'ermino convectivo se considera estacionario dado que el tiempo de residencia del agua en la chaqueta es varios \'ordes de magnitud menor que la constante de tiempo t\'ermica del tanque; la validaci\'on del coeficiente $U$ se realiza por tanto en condici\'on pseudo-estacionaria de flujo.
+
+La ecuaci\'on de conservaci\'on de la energ\'a en el dominio fluido, despreciando el trabajo de disipaci\'on viscosa y la compresibilidad, es:
+
+\begin{equation}
+\rho C_p \left( \vec{v} \cdot \nabla T \right) = \nabla \cdot (k \nabla T)
+\label{eq:energia_fluido_cfd}
+\end{equation}
+
+donde $C_p$ es el calor espec\'ifico, $T$ es la temperatura y $k$ es la conductividad t\'ermica del agua. Para la regi\'on s\'olida del fondo toriesf\'erico, la ecuaci\'on de conducci\'on de calor es:
+
+\begin{equation}
+\nabla \cdot (k_s \nabla T_s) = 0
+\label{eq:conduccion_solido_cfd}
+\end{equation}
+
+donde $k_s$ y $T_s$ corresponden a la conductividad t\'ermica y la temperatura del acero SS316L, respectivamente.
+
+En el dominio de glucosa se resuelve la ecuaci\'on de energ\'ia con el t\'ermino convectivo debido a la convecci\'on natural inducida por diferencias de densidad:
+
+\begin{equation}
+\rho_g C_{p,g} \left( \vec{v}_g \cdot \nabla T_g \right) = \nabla \cdot (k_g \nabla T_g)
+\label{eq:energia_glucosa_cfd}
+\end{equation}
+
+donde el campo de velocidades $\vec{v}_g$ satisface la ecuaci\'on de momentum acoplada con el t\'ermino de flotaci\'on de Boussinesq, $\rho_g \vec{g} \beta (T_g - T_{ref})$, siendo $\beta$ el coeficiente de expansi\'on t\'ermica y $T_{ref}$ la temperatura de referencia del fluido en reposo. El movimiento natural permanece en r\'egimen laminar debido a la elevada viscosidad del jarabe, de modo que no se requiere un modelo de turbulencia adicional en la regi\'on de producto.
+
+Las condiciones de contorno impuestas al dominio son las siguientes. En las dos entradas de la chaqueta se prescribe el caudal m\'asico total de dise\~no dividido entre las dos ramas de acuerdo con la distribuci\'on de \'areas, una temperatura de entrada de 75~\textdegree C y un perfil de velocidad desarrollado. En las dos salidas se impone presi\'on atmosf\'erica como condici\'on de salida libre. En la interfaz agua--acero y acero--glucosa se aplica continuidad de flujo de calor y temperatura. Las superficies externas del dominio de glucosa se tratan como paredes adiab\'aticas para aislar el fen\'omeno de transferencia desde la chaqueta, mientras que la cara exterior del fondo se considera aislada t\'ermicamente, equivalente al caso con aislamiento t\'ermico de dise\~no. La malla se construye con elementos prism\'aticos y tetra\'edricos refinados en la interfaz s\'olido--fluido, especialmente en la pel\'icula de glucosa pr\'oxima a la pared, donde se concentra la resistencia t\'ermica dominante.
+
+El acoplamiento fluido-t\'ermico se resuelve de manera simult\'anea. Una vez alcanzada la convergencia, el coeficiente global promedio se obtiene a partir del flujo de calor total transferido desde el agua hacia la glucosa, el \'area de contacto de 14~m\textsuperscript{2} y la diferencia de temperatura media entre ambos fluidos. El resultado se compara directamente con el valor obtenido del modelo anal\'itico de resistencias t\'ermicas en serie.

@@ -5,6 +5,7 @@ Expone los análisis desarrollados en el informe técnico W2605PRINF001.
 from flask import Blueprint, jsonify
 
 from ..core.ciclo_12m3h import simular_ciclo_12m3h
+from ..core.ciclo_escenario5 import simular_ciclo_escenario5
 from ..core.perdidas_aislamiento import (
     resumen_perdidas_termicas,
     tabla_espesores_aislamiento,
@@ -14,6 +15,8 @@ from ..core.escenarios_extras import (
     calentamiento_24ton,
     capacidad_operativa_diaria,
 )
+from ..core.arranque_niveles import calentamiento_arranque_niveles
+from ..core.ciclo_12m3h import simular_ciclo_parametrico
 
 api_proyecto_bp = Blueprint('api_proyecto', __name__)
 
@@ -26,6 +29,19 @@ def api_ciclo_12m3h():
     """
     try:
         resultado = simular_ciclo_12m3h()
+        return jsonify({'success': True, 'data': resultado})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@api_proyecto_bp.route('/proyecto/ciclo-escenario5', methods=['GET'])
+def api_ciclo_escenario5():
+    """
+    Resultados del Escenario 5: ciclo industrial de despacho desde 25 °C,
+    5 descargas de 24 ton, agua a 75 °C, control termostático a 60 °C.
+    """
+    try:
+        resultado = simular_ciclo_escenario5()
         return jsonify({'success': True, 'data': resultado})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
@@ -82,10 +98,34 @@ def api_calentamiento_24ton():
 @api_proyecto_bp.route('/proyecto/capacidad-operativa', methods=['GET'])
 def api_capacidad_operativa():
     """
-    Capacidad operativa diaria con área de 13 m² y agua a 75 °C.
+    Capacidad operativa diaria con área de 14 m² y agua a 75 °C.
     """
     try:
         resultado = capacidad_operativa_diaria()
+        return jsonify({'success': True, 'data': resultado})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@api_proyecto_bp.route('/proyecto/arranque-niveles', methods=['GET'])
+def api_arranque_niveles():
+    """
+    Calentamiento batch del 50 % y 80 % del tanque con pérdidas térmicas.
+    """
+    try:
+        resultado = calentamiento_arranque_niveles()
+        return jsonify({'success': True, 'data': resultado})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@api_proyecto_bp.route('/proyecto/ciclo-parametrico', methods=['GET'])
+def api_ciclo_parametrico():
+    """
+    Ciclo oficial de descargas para combinaciones de nivel inicial y T_agua.
+    """
+    try:
+        resultado = simular_ciclo_parametrico()
         return jsonify({'success': True, 'data': resultado})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500

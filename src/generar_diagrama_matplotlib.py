@@ -11,6 +11,7 @@ import os
 sys.path.append(os.path.dirname(__file__))
 
 from propiedades_glucosa import rho_glucosa, Cp_glucosa, mu_glucosa
+from geometria_tanque import A_CONTACTO
 
 # =============================================================================
 # PARAMETROS DEL PROCESO
@@ -28,7 +29,7 @@ RHO_AGUA = 980.0            # kg/m3 @ 65°C
 CP_AGUA = 4.184             # kJ/(kg·°C)
 
 # Chaqueta
-AREA_CHAQUETA = 13.0        # m2
+AREA_CHAQUETA = A_CONTACTO  # m2
 U_GLOBAL = 30.0             # W/(m2·K) - estimado para glucosa 54-57°C
 
 # Propiedades glucosa @ 55°C (promedio)
@@ -199,7 +200,7 @@ def dibujar_diagrama_pfd(corrientes, output_path='../results/diagrama_proceso_W2
                               facecolor=COLOR_INTER, edgecolor='black', linewidth=2)
     ax.add_patch(chaqueta)
     ax.text(6.25, 4.85, 'E-201', fontsize=11, fontweight='bold', ha='center')
-    ax.text(6.25, 4.5, 'Chaqueta\nA=13 m2', fontsize=9, ha='center')
+    ax.text(6.25, 4.5, 'Chaqueta\nA=14 m2', fontsize=9, ha='center')
     
     # 4. Bomba P-101 (circulo)
     bomba = Circle((11.5, 7.5), 0.8, facecolor=COLOR_BOMBA, edgecolor='black', linewidth=2.5)
@@ -341,14 +342,14 @@ Entalpia: {corrientes['h_agua_sal']/1000000:.2f} GJ/h'''
     # Titulo principal
     ax.text(10, 13.5, 'PROYECTO W2605 - DIAGRAMA DE FLUJO DE PROCESO (PFD)',
             fontsize=16, fontweight='bold', ha='center')
-    ax.text(10, 13.0, 'Sistema de Almacenamiento y Carga de Glucosa Globe 42 DE',
+    ax.text(10, 13.0, 'Sistema de Almacenamiento y Carga de Glucosa Globe 1130',
             fontsize=12, ha='center', style='italic')
     
     # Informacion del sistema
     info_sistema = f'''CONFIGURACION DEL SISTEMA:
 • Tanque: Fondo Torisferico ASME F&D + Tapa Eliptica API 650
 • Aislamiento: Lana Mineral
-• Chaqueta: Media cana rectangular, Area = 13 m²
+• Chaqueta: Media cana rectangular, Area = 14 m²
 • Condicion Minima para Carga: Temperatura >= {T_MIN_CARGA:.0f}°C'''
     
     ax.text(10, 0.8, info_sistema, fontsize=9, ha='center', va='top',
@@ -389,7 +390,7 @@ def guardar_tabla_escenarios(escenarios, corrientes_base):
 ### Condiciones de Operacion Base
 - **Flujo de glucosa:** 8,000 kg/h
 - **Perdidas termicas del tanque:** 3 C (equivalente a 51,144 kJ/h)
-- **Chaqueta de calentamiento:** Area = 13 m2, Agua @ 65 C, 30.9 m3/h
+- **Chaqueta de calentamiento:** Area = 14 m2, Agua @ 65 C, 30.9 m3/h
 - **Coeficiente global U:** ~30 W/(m2.K)
 - **Capacidad de transferencia chaqueta:** ~10,700 kJ/h
 - **Temperatura minima para carga:** 57 C
@@ -445,7 +446,7 @@ Con las condiciones actuales:
 Para poder cargar glucosa a 57C y mantener la temperatura de salida >=57C, se requiere **AL MENOS UNA** de las siguientes modificaciones:
 
 1. **Aumentar area de chaqueta:**
-   - Area requerida: ~65-70 m2 (actual: 13 m2)
+   - Area requerida: ~65-70 m2 (actual: 14 m2)
    - Incremento: 5x el area actual
 
 2. **Subir temperatura del agua:**
@@ -463,7 +464,7 @@ Para poder cargar glucosa a 57C y mantener la temperatura de salida >=57C, se re
 
 ## Propiedades de las Corrientes
 
-### Glucosa Globe 42 DE (~80.6 Brix)
+### Glucosa Globe 1130 (~80.6 Brix)
 | Propiedad | Valor @ 55C | Unidad |
 |-----------|-------------|--------|
 | Cp | {CP_GLUCOSA:.3f} | kJ/(kg.C) |

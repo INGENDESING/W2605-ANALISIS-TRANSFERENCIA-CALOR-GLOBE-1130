@@ -23,7 +23,7 @@ def api_flujo_maximo():
         "temp_salida": 60,
         "temp_agua": 65,
         "v_agua": 2.5,
-        "area_m2": 13
+        "area_m2": 14
     }
     """
     data = request.get_json()

@@ -16,12 +16,12 @@ La Tabla 1 resume los datos de entrada más relevantes reportados por el tercero
 
 | Parámetro | Informe de tercero GTTP-1004 Rev.5 | Proyecto W2605 (DMV SAS) | Observación |
 |---|---|---|---|
-| Producto | Glucosa Globe 1130 | Glucosa Globe 42 DE (ficha Ingredion 011420) | El tercero no justifica la variante Globe 1130; W2605 utiliza el producto declarado por el cliente. |
+| Producto | Glucosa Globe 1130 | Glucosa Globe 1130 (ficha Ingredion 011420) | Coinciden en la identificaci\'on del producto. |
 | Sólidos secos | 80,5–81,6 % | 79,7–81,5 % (nominal 80,6 %) | Coinciden en orden de magnitud. |
 | Temperatura objetivo | 60 °C | 57–60 °C (operación oficial 60 °C) | Coinciden en la cota superior. |
 | Material del fondo | SS316L, espesor 9 mm | SS316L, espesor 9 mm | Coinciden. |
 | Diámetro interior del fondo | 5,263 m | 5,264 m | Coinciden. |
-| Área de contacto de la chaqueta | 14,192 m² | 13,0 m² | El tercero reporta un valor ligeramente superior, probablemente por contorno externo del perfil. |
+| Área de contacto de la chaqueta | 14,192 m² | 14,0 m² | El tercero reporta un valor ligeramente superior, probablemente por contorno externo del perfil. |
 | Perfil de media caña | U150×50×4,5 mm | 141 mm × 45,5 mm × 4,5 mm | Dimensiones funcionales similares; el tercero emplea nomenclatura comercial. |
 | Caudal de agua | 20,3 m³/h | 57,7 m³/h (escenarios 2/3, v = 2,5 m/s) | El tercero opera a una velocidad de ~1,0 m/s; W2605 usa 2,5 m/s como diseño. |
 | Temperatura del agua | 65 °C | 75 °C (oficial); 65 °C (alternativo) | El tercero no evalúa 75 °C. |
@@ -131,7 +131,7 @@ La omisión del tercero es relevante porque, en ausencia de aislamiento, las pé
 
 El informe concluye que el serpentín puede calentar 34320 kg de glucosa con agua a 65 °C y 20,3 m³/h, y que el tiempo de calentamiento de 24 m³ desde 40 °C hasta 60 °C es de aproximadamente 3,82 h. Estas conclusiones descansan sobre un coeficiente global U = 783 W/m²·°C que no es consistente con la física del sistema ni con la simulación CFD independiente realizada en el proyecto W2605 (U_CFD = 38 W/m²·°C). En consecuencia, las conclusiones operativas del tercero son excesivamente optimistas y no deben utilizarse para la toma de decisiones sin una revisión técnica independiente.
 
-Por el contrario, el proyecto W2605 demuestra que el sistema de media caña de 13 m² es técnicamente capaz de sostener cinco descargas diarias de 24 toneladas, pero únicamente si se cumplen simultáneamente las siguientes condiciones: la glucosa de alimentación ingresa al tanque en el rango de 57–60 °C, el agua de calentamiento opera a 75 °C, el tanque cuenta con aislamiento térmico de 50,8 mm de lana mineral, y la operación se basa en el mantenimiento de un inventario caliente, dado que el arranque desde frío del tanque completo requiere tiempos del orden de semanas.
+Por el contrario, el proyecto W2605 demuestra que el sistema de media caña de 14 m² es técnicamente capaz de sostener cinco descargas diarias de 24 toneladas, pero únicamente si se cumplen simultáneamente las siguientes condiciones: la glucosa de alimentación ingresa al tanque en el rango de 57–60 °C, el agua de calentamiento opera a 75 °C, el tanque cuenta con aislamiento térmico de 50,8 mm de lana mineral, y la operación se basa en el mantenimiento de un inventario caliente, dado que el arranque desde frío del tanque completo requiere tiempos del orden de semanas.
 
 ## 9. Hallazgos críticos
 
@@ -171,7 +171,7 @@ La Tabla 6 presenta las recomendaciones derivadas de la auditoría.
 
 DMV SAS. Proyecto W2605 — Análisis térmico del fondo del tanque de glucosa Tag 53A-90A-0056. Documentos W2605PRINF001 y W2605PRINF002, junio 2026.
 
-Ingredion. Ficha técnica Globe 42 DE Corn Syrup/Glucose 011420, 2017.
+Ingredion. Ficha técnica Globe 1130 Corn Syrup/Glucose 011420, 2017.
 
 Incropera, F. P., DeWitt, D. P., Bergman, T. L., & Lavine, A. S. Fundamentals of Heat and Mass Transfer, 7th ed. John Wiley & Sons, 2011.
 

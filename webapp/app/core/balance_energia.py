@@ -39,7 +39,7 @@ def calcular_transferencia_calor(flujo_agua_m3h, temp_agua_entrada,
     volumen_glucosa_m3 : float
         Volumen de glucosa en m³
     area_contacto : float, optional
-        Área de contacto en m² (default: 13.0)
+        Área de contacto en m² (default: A_CONTACTO = 14.0)
     
     Returns
     -------

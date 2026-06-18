@@ -1,0 +1,5 @@
+Caso,Chaqueta,Area_m2,Flujo_max_ton_h
+Tin=25°C,actual,28.0,1.47
+Tin=25°C,propuesta,13.0,0.69
+Tin=55°C,actual,28.0,16.23
+Tin=55°C,propuesta,13.0,7.54

@@ -32,10 +32,10 @@ H_PERFIL = 0.0455         # Altura interna del perfil rectangular [m] (45.5 mm)
 W_PERFIL = 0.141          # Ancho interno del perfil rectangular [m] (141 mm)
 t_PERFIL = 0.0045         # Espesor de lámina del perfil [m] (4.5 mm)
 PASO_ESPIRAL = 0.196      # Paso de la espiral [m] (196 mm)
-A_CONTACTO = 13.0         # Área de contacto total con el tanque [m²]
+A_CONTACTO = 14.0         # Área de contacto total con el tanque [m²]
 A_CONTACTO_TRAMO_45 = 0.45 * A_CONTACTO   # Tramo centro → 45 % [m²]
-A_CONTACTO_TRAMO_55 = 0.55 * A_CONTACTO   # Tramo periferia → 45 % [m²]
-L_ESPIRAL_TOTAL = 13.0 / 0.141            # Longitud total aproximada [m]
+A_CONTACTO_TRAMO_55 = 0.55 * A_CONTACTO   # Tramo periferia → 55 % [m²]
+L_ESPIRAL_TOTAL = A_CONTACTO / 0.141      # Longitud total aproximada [m]
 AISLAMIENTO_ESPESOR = 0.0508  # Espesor de aislamiento de lana mineral [m] (2")
 
 # Conexiones

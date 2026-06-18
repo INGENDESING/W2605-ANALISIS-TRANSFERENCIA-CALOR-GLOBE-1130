@@ -1,5 +1,5 @@
 """
-Módulo de cálculos con área fija (13 m²)
+Módulo de cálculos con área fija (14 m²)
 Simulación de ciclo de descargas a carrotanque
 """
 import sys
@@ -14,7 +14,7 @@ from coeficiente_U import coeficiente_U
 from geometria_tanque import A_CONTACTO, volumen_total
 
 # Constantes del sistema
-A_FIJA = 13.0  # m²
+A_FIJA = A_CONTACTO  # m² (fuente de verdad en geometria_tanque.py)
 V_AGUA_DEFAULT = 2.5  # m/s
 MASA_POR_DESCARGA_DEFAULT = 24000.0  # kg (24 ton)
 TIEMPO_DESCARGA_DEFAULT = 1.5  # horas
@@ -35,7 +35,7 @@ def calcular_flujo_maximo(temp_entrada, temp_salida, temp_agua, v_agua=V_AGUA_DE
     v_agua : float
         Velocidad del agua en m/s
     area : float, optional
-        Área de transferencia (default: 13 m²)
+        Área de transferencia (default: 14 m²)
     
     Returns
     -------

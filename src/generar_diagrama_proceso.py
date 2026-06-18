@@ -11,6 +11,7 @@ import subprocess
 sys.path.append(os.path.dirname(__file__))
 
 from propiedades_glucosa import rho_glucosa, Cp_glucosa, mu_glucosa
+from geometria_tanque import A_CONTACTO
 
 # =============================================================================
 # PARAMETROS DEL PROCESO
@@ -28,7 +29,7 @@ RHO_AGUA = 980.0            # kg/m3 @ 65°C
 CP_AGUA = 4.184             # kJ/(kg·°C)
 
 # Chaqueta
-AREA_CHAQUETA = 13.0        # m2
+AREA_CHAQUETA = A_CONTACTO  # m2
 U_GLOBAL = 30.0             # W/(m2·K) - estimado para glucosa 54-57°C
 
 # Propiedades glucosa @ 55°C (promedio)
@@ -171,7 +172,7 @@ def generar_dot(corrientes):
           fillcolor="#FFB6C1", shape=cylinder, width=2.0, height=1.5];
     
     // Chaqueta E-201
-    E201 [label="E-201\\nChaqueta Calentamiento\\nA = 13 m2", 
+    E201 [label="E-201\\nChaqueta Calentamiento\\nA = 14 m2", 
           fillcolor="#87CEEB", shape=box, width=1.3];
     
     // Bomba P-101
@@ -266,10 +267,10 @@ def generar_dot(corrientes):
     
     label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="4" BGCOLOR="#f8f8f8">
         <TR><TD COLSPAN="2"><B>PROYECTO W2605 - DIAGRAMA DE FLUJO DE PROCESO</B></TD></TR>
-        <TR><TD COLSPAN="2">Sistema de Almacenamiento y Carga de Glucosa Globe 42 DE</TD></TR>
+        <TR><TD COLSPAN="2">Sistema de Almacenamiento y Carga de Glucosa Globe 1130</TD></TR>
         <TR><TD>Tanque:</TD><TD>Fondo Torisferico ASME F&D + Tapa Eliptica API 650</TD></TR>
         <TR><TD>Aislamiento:</TD><TD>Lana Mineral (especificado sin espesor)</TD></TR>
-        <TR><TD>Chaqueta:</TD><TD>Media cana rectangular, Area = 13 m2</TD></TR>
+        <TR><TD>Chaqueta:</TD><TD>Media cana rectangular, Area = 14 m2</TD></TR>
         <TR><TD>Condicion Minima Carga:</TD><TD>Temperatura >= {T_MIN_CARGA:.0f}°C</TD></TR>
     </TABLE>>;
     labelloc=b;
@@ -298,7 +299,7 @@ def guardar_tabla_escenarios(escenarios, corrientes_base):
 ### Condiciones de Operacion Base
 - **Flujo de glucosa:** 8,000 kg/h
 - **Perdidas termicas del tanque:** 3°C (equivalente a 51,144 kJ/h)
-- **Chaqueta de calentamiento:** Area = 13 m², Agua @ 65°C, 30.9 m³/h
+- **Chaqueta de calentamiento:** Area = 14 m², Agua @ 65°C, 30.9 m³/h
 - **Coeficiente global U:** ~30 W/(m²·K)
 - **Capacidad de transferencia chaqueta:** ~13,200 kJ/h
 - **Temperatura minima para carga:** 57°C
@@ -354,7 +355,7 @@ Con las condiciones actuales:
 Para poder cargar glucosa a 57°C y mantener la temperatura de salida ≥57°C, se requiere **AL MENOS UNA** de las siguientes modificaciones:
 
 1. **Aumentar area de chaqueta:**
-   - Area requerida: ~50-55 m² (actual: 13 m²)
+   - Area requerida: ~50-55 m² (actual: 14 m²)
    - Incremento: 4x el area actual
 
 2. **Subir temperatura del agua:**
@@ -372,7 +373,7 @@ Para poder cargar glucosa a 57°C y mantener la temperatura de salida ≥57°C, 
 
 ## Propiedades de las Corrientes
 
-### Glucosa Globe 42 DE (~80.6 Brix)
+### Glucosa Globe 1130 (~80.6 Brix)
 | Propiedad | Valor @ 55°C | Unidad |
 |-----------|--------------|--------|
 | Cp | {CP_GLUCOSA:.3f} | kJ/(kg·°C) |

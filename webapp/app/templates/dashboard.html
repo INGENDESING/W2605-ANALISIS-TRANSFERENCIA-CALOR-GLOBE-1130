@@ -8,26 +8,26 @@
         <h4 class="mb-0">
             <i class="bi bi-speedometer2 text-neon-orange me-2"></i>Dashboard de KPIs
         </h4>
-        <small class="text-muted">Métricas clave calculadas dinámicamente por escenario</small>
+        <small class="text-muted">Ciclo Escenario 5 — Operación industrial de despacho</small>
     </div>
     <button class="btn btn-sm btn-primary" id="btnRecalcular">
-        <i class="bi bi-arrow-clockwise me-1"></i>Recalcular Todo
+        <i class="bi bi-arrow-clockwise me-1"></i>Recalcular Escenario 5
     </button>
 </div>
 
 <!-- KPIs del proyecto -->
-<div class="row g-3 mb-4 fade-in">
+<div class="row g-3 mb-4 fade-in" id="kpiContainer">
     <div class="col-xl-3 col-md-6">
         <div class="card card-accent-green h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="text-dim small mb-1">T mínima ciclo 12 m³/h</div>
-                        <div class="fs-3 fw-bold text-neon-green mono">{{ ciclo.metricas.T_min_C }} °C</div>
+                        <div class="text-dim small mb-1">T mínima ciclo</div>
+                        <div class="fs-3 fw-bold text-neon-green mono" id="kpiTMin">—</div>
                     </div>
-                    <i class="bi bi-check-circle-fill text-neon-green fs-2"></i>
+                    <i class="bi bi-thermometer-low text-neon-green fs-2"></i>
                 </div>
-                <div class="small text-muted mt-2">Ciclo factible (≥ 57 °C)</div>
+                <div class="small text-muted mt-2">Escenario 5 (arranque 25 °C)</div>
             </div>
         </div>
     </div>
@@ -36,26 +36,26 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="text-dim small mb-1">Área real expuesta</div>
-                        <div class="fs-3 fw-bold text-neon-blue mono">{{ perdidas.areas_m2.A_total|format_number(1) }} m²</div>
+                        <div class="text-dim small mb-1">Tiempo total del ciclo</div>
+                        <div class="fs-3 fw-bold text-neon-blue mono" id="kpiTiempoTotal">—</div>
                     </div>
-                    <i class="bi bi-shield-plus text-neon-blue fs-2"></i>
+                    <i class="bi bi-clock-history text-neon-blue fs-2"></i>
                 </div>
-                <div class="small text-muted mt-2">Al 80 % de llenado</div>
+                <div class="small text-muted mt-2">5 descargas de 24 ton</div>
             </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card card-accent-blue h-100">
+        <div class="card card-accent-cyan h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="text-dim small mb-1">Reducción de pérdidas</div>
-                        <div class="fs-3 fw-bold text-neon-cyan mono">{{ perdidas.resultados[1].reduccion_porc }} %</div>
+                        <div class="text-dim small mb-1">Descargas factibles</div>
+                        <div class="fs-3 fw-bold text-neon-cyan mono" id="kpiDescargasOK">—</div>
                     </div>
-                    <i class="bi bi-arrow-down-circle-fill text-neon-cyan fs-2"></i>
+                    <i class="bi bi-check-circle-fill text-neon-cyan fs-2"></i>
                 </div>
-                <div class="small text-muted mt-2">Con aislamiento 50,8 mm</div>
+                <div class="small text-muted mt-2">Con T ≥ 57 °C al inicio</div>
             </div>
         </div>
     </div>
@@ -64,121 +64,68 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="text-dim small mb-1">Capacidad diaria</div>
-                        <div class="fs-3 fw-bold text-neon-orange mono">{{ capacidad.casos.mejorado_T55_a_T57.capacidad_dia_ton }} ton</div>
+                        <div class="text-dim small mb-1">Masa total descargada</div>
+                        <div class="fs-3 fw-bold text-neon-orange mono" id="kpiMasaTotal">—</div>
                     </div>
                     <i class="bi bi-truck text-neon-orange fs-2"></i>
                 </div>
-                <div class="small text-muted mt-2">Escenario 4 (55 °C → 57 °C)</div>
+                <div class="small text-muted mt-2">Acumulada en el ciclo</div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Selector de escenario -->
+<!-- Panel informativo del Escenario 5 -->
 <div class="card mb-4 fade-in">
     <div class="card-body py-3">
         <div class="d-flex align-items-center flex-wrap gap-3">
             <span class="fw-semibold text-dim small text-uppercase">Escenario activo</span>
-            <div class="scenario-tabs btn-group" role="group">
-                <input type="radio" class="btn-check" name="escenario" id="esc1" value="1" autocomplete="off">
-                <label class="btn btn-outline-light btn-sm" for="esc1">Escenario 1</label>
-                <input type="radio" class="btn-check" name="escenario" id="esc2" value="2" autocomplete="off" checked>
-                <label class="btn btn-outline-light btn-sm" for="esc2">Escenario 2</label>
-                <input type="radio" class="btn-check" name="escenario" id="esc3" value="3" autocomplete="off">
-                <label class="btn btn-outline-light btn-sm" for="esc3">Escenario 3</label>
-                <input type="radio" class="btn-check" name="escenario" id="escPersonalizado" value="custom" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="escPersonalizado">Personalizado</label>
-            </div>
-            <span id="spinnerEscenario" class="spinner-border spinner-border-sm text-neon-green d-none" role="status"></span>
+            <span class="badge bg-neon-purple text-dark" id="badgeEscenario">Escenario 5</span>
+            <span class="text-muted small" id="textoEscenario">
+                Ciclo industrial desde 25 °C: 5 descargas de 24 ton, agua a 75 °C, control termostático a 60 °C.
+            </span>
+            <span id="spinnerEscenario" class="spinner-border spinner-border-sm text-neon-green d-none ms-auto" role="status"></span>
         </div>
     </div>
 </div>
 
-<!-- 8 KPI Cards -->
-<div class="row g-3 mb-4 fade-in" id="kpiContainer">
-    {% set kpis = [
-        ('kpiU',        'Coeficiente U',         'W/m²·°C',  'bi-arrows-collapse',   'U global calculado por Sieder-Tate + Churchill-Chu'),
-        ('kpiQ',        'Potencia Térmica',       'kW',        'bi-lightning-charge',   'Q = U·A·ΔT a temperatura actual'),
-        ('kpiTiempo',   'Tiempo Calentamiento',   'h',         'bi-clock-history',      'Tiempo ODE desde T_ini hasta T_objetivo'),
-        ('kpiCapacidad','Capacidad Diaria',        'ton/día',   'bi-truck',              'Masa descargada en 24 h según ciclo simulado'),
-        ('kpiTFinal',   'T Glucosa Final',        '°C',        'bi-thermometer-high',   'Temperatura al final del ciclo de 24 h'),
-        ('kpiMasaDesc', 'Masa Descargada',        'ton',       'bi-box-seam',           'Masa total despachada en el ciclo'),
-        ('kpiEfic',     'Eficiencia Térmica',     '%',         'bi-bar-chart-steps',    'Q_útil / Q_máximo posible'),
-        ('kpiRe',       'Reynolds Agua',          '—',         'bi-water',              'Re = ρ·v·Dh/μ en media caña (Dh=69 mm)'),
-    ] %}
-    {% for kid, label, unit, icon, tooltip in kpis %}
-    <div class="col-xl-3 col-md-6">
-        <div class="kpi-card-new h-100" id="{{ kid }}Card" data-bs-toggle="tooltip" title="{{ tooltip }}">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="kpi-label mb-1">{{ label }}</div>
-                    <div class="kpi-value" id="{{ kid }}Val">—</div>
-                    <div class="kpi-unit">{{ unit }}</div>
-                </div>
-                <i class="bi {{ icon }} kpi-icon"></i>
-            </div>
-            <div class="kpi-trend mt-2 text-dim" id="{{ kid }}Trend"></div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
-
-<!-- Fila principal: SVG tanque + gráfica T vs t -->
+<!-- Fase de descargas y recalentamiento -->
 <div class="row g-4 mb-4 fade-in">
-    <!-- SVG tanque -->
-    <div class="col-lg-4">
-        <div class="tank-svg-wrapper h-100">
-            <div class="fw-semibold text-dim small mb-2">Estado del Tanque</div>
-            <svg id="svgTanque" viewBox="0 0 220 340" width="100%" style="max-height:320px;">
-                <!-- Fondo toriesférico -->
-                <ellipse cx="110" cy="295" rx="85" ry="28" fill="rgba(255,255,255,0.10)" stroke="rgba(0,150,255,0.35)" stroke-width="2"/>
-                <!-- Cuerpo cilíndrico -->
-                <rect x="25" y="70" width="170" height="225" fill="rgba(255,255,255,0.06)" stroke="rgba(0,150,255,0.35)" stroke-width="2"/>
-                <!-- Nivel de glucosa (animado) -->
-                <clipPath id="clipCilindro">
-                    <rect x="25" y="70" width="170" height="225"/>
-                </clipPath>
-                <rect id="nivelRect" x="26" y="200" width="168" height="95"
-                      fill="rgba(57,255,20,0.55)" opacity="0.9" clip-path="url(#clipCilindro)"
-                      style="transition: y 0.6s ease, height 0.6s ease, fill 0.6s ease;"/>
-                <!-- Fondo toriesférico relleno -->
-                <ellipse id="nivelFondo" cx="110" cy="295" rx="84" ry="27"
-                         fill="rgba(57,255,20,0.55)" opacity="0.9"
-                         style="transition: fill 0.6s ease;"/>
-                <!-- Chaqueta espiral (decorativa) -->
-                <path d="M 30 290 Q 50 275 70 290 Q 90 305 110 290 Q 130 275 150 290 Q 170 305 190 290"
-                      fill="none" stroke="var(--neon-orange)" stroke-width="3" opacity="0.7"/>
-                <path d="M 30 278 Q 50 263 70 278 Q 90 293 110 278 Q 130 263 150 278 Q 170 293 190 278"
-                      fill="none" stroke="var(--neon-orange)" stroke-width="2.5" opacity="0.5"/>
-                <!-- Boquilla salida 8" -->
-                <rect x="90" y="315" width="40" height="14" rx="3" fill="rgba(255,255,255,0.2)" stroke="rgba(0,150,255,0.4)" stroke-width="1"/>
-                <text x="110" y="336" text-anchor="middle" font-size="8" fill="var(--text-muted)">DN 8"</text>
-                <!-- Texto superpuesto -->
-                <text id="svgNivelPct" x="110" y="160" text-anchor="middle" font-size="13"
-                      font-weight="bold" fill="var(--neon-green)">—%</text>
-                <text id="svgTemp" x="110" y="178" text-anchor="middle" font-size="11" fill="var(--text-main)">— °C</text>
-                <text id="svgMasa" x="110" y="194" text-anchor="middle" font-size="10" fill="var(--text-muted)">— ton</text>
-                <!-- Marco -->
-                <rect x="24" y="69" width="172" height="227" fill="none" stroke="rgba(0,150,255,0.45)" stroke-width="2"/>
-            </svg>
-        </div>
-    </div>
-
-    <!-- Gráfica T vs t -->
-    <div class="col-lg-8">
+    <div class="col-lg-6">
         <div class="card h-100">
             <div class="card-body">
-                <div class="fw-semibold text-dim small mb-2">Temperatura vs Tiempo</div>
-                <div id="graficaTvsT" style="height:290px;"></div>
+                <div class="fw-semibold text-dim small mb-2">
+                    <i class="bi bi-droplet-fill text-neon-orange me-1"></i>
+                    Temperatura durante descargas (con flujo)
+                </div>
+                <div id="graficaDescargas" style="height:320px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="fw-semibold text-dim small mb-2">
+                    <i class="bi bi-fire text-neon-blue me-1"></i>
+                    Temperatura durante recalentamiento (sin flujo)
+                </div>
+                <div id="graficaRecalentamiento" style="height:320px;"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Fila: Gantt + U vs t -->
-<div class="row g-4 fade-in">
+<!-- Vista de contexto + Gantt -->
+<div class="row g-4 mb-4 fade-in">
     <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <div class="fw-semibold text-dim small mb-2">Temperatura vs Tiempo — Vista completa</div>
+                <div id="graficaTvsT" style="height:260px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
         <div class="card">
             <div class="card-body">
                 <div class="fw-semibold text-dim small mb-2">Diagrama de Gantt — Ciclo de Operación</div>
@@ -186,11 +133,96 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-5">
-        <div class="card">
-            <div class="card-body">
-                <div class="fw-semibold text-dim small mb-2">Evolución del Coeficiente U</div>
-                <div id="graficaU" style="height:260px;"></div>
+</div>
+
+<!-- Alternativas de diseño y medidas operativas -->
+<div class="card mb-4 fade-in">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Alternativas de diseño y medidas operativas</h5>
+    </div>
+    <div class="card-body">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <h6 class="text-neon-blue mb-3">Alternativas de diseño</h6>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="card h-100 border-start border-4 border-neon-blue">
+                            <div class="card-body">
+                                <div class="small text-dim">Aumentar área de chaqueta</div>
+                                <div class="fw-bold">~65–70 m²</div>
+                                <div class="small text-muted">5× el área actual de 14 m²</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100 border-start border-4 border-neon-orange">
+                            <div class="card-body">
+                                <div class="small text-dim">Elevar temperatura del agua</div>
+                                <div class="fw-bold">~80 °C</div>
+                                <div class="small text-muted">+15 °C respecto a 65 °C base</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100 border-start border-4 border-neon-green">
+                            <div class="card-body">
+                                <div class="small text-dim">Mejorar aislamiento térmico</div>
+                                <div class="fw-bold">50,8 mm lana mineral</div>
+                                <div class="small text-muted">Reduce pérdidas a ~0,5 °C equivalente</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100 border-start border-4 border-neon-purple">
+                            <div class="card-body">
+                                <div class="small text-dim">Combinación de medidas</div>
+                                <div class="fw-bold">75 °C + 25 m² + aislamiento</div>
+                                <div class="small text-muted">Menor impacto individual</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h6 class="text-neon-cyan mb-3">Medidas operativas</h6>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="card h-100 border-start border-4 border-neon-cyan">
+                            <div class="card-body">
+                                <div class="small text-dim">Precalentar el tanque</div>
+                                <div class="fw-bold">≥ 60 °C antes del primer despacho</div>
+                                <div class="small text-muted">Elimina el largo recalentamiento inicial</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100 border-start border-4 border-neon-pink">
+                            <div class="card-body">
+                                <div class="small text-dim">No iniciar descarga bajo 57 °C</div>
+                                <div class="fw-bold">Umbral mínimo de despacho</div>
+                                <div class="small text-muted">Garantiza calidad del producto</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100 border-start border-4 border-neon-yellow">
+                            <div class="card-body">
+                                <div class="small text-dim">Mantener nivel alto</div>
+                                <div class="fw-bold">≥ 80 % de capacidad</div>
+                                <div class="small text-muted">Mayor inercia térmica</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100 border-start border-4 border-neon-green">
+                            <div class="card-body">
+                                <div class="small text-dim">Controlar flujo de descarga</div>
+                                <div class="fw-bold">≤ 12 ton/h (3,33 kg/s)</div>
+                                <div class="small text-muted">Menor extracción de energía</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

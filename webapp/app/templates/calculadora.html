@@ -3,15 +3,15 @@
 
 {% block content %}
 <!-- Cabecera -->
-<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+<div class="pb-page-header fade-in">
     <div>
-        <h4 class="mb-0" style="color:var(--color-dmv);font-weight:700;">
-            <i class="bi bi-calculator me-2" style="color:var(--color-ingredion);"></i>Calculadora Paramétrica
+        <h4 class="pb-page-title">
+            <i class="bi bi-calculator text-neon-blue me-2"></i>Calculadora Paramétrica
         </h4>
-        <small class="text-muted">Cálculos instantáneos con actualización en tiempo real</small>
+        <div class="pb-page-subtitle">Cálculos instantáneos con actualización en tiempo real</div>
     </div>
     <div class="d-flex gap-2">
-        <button class="btn btn-sm btn-outline-primary" id="btnCargarEscenario">
+        <button class="btn btn-sm btn-outline-light" id="btnCargarEscenario">
             <i class="bi bi-lightning me-1"></i>Cargar Escenario
         </button>
         <button class="btn btn-sm btn-primary" id="btnSimTransitorio">
@@ -20,150 +20,141 @@
     </div>
 </div>
 
-<div class="row g-4">
+<div class="row g-4 fade-in">
     <!-- Panel izquierdo: Parámetros de entrada -->
     <div class="col-lg-4">
         <!-- Condiciones del Agua -->
-        <div class="card border-0 shadow-sm mb-3">
-            <div class="card-header bg-white py-2">
-                <div class="fw-semibold text-muted small">
-                    <i class="bi bi-droplet me-1" style="color:var(--color-calentamiento);"></i>CONDICIONES DEL AGUA CALIENTE
+        <div class="pb-card mb-3">
+            <div class="pb-card-header">
+                <div class="pb-card-title">
+                    <i class="bi bi-droplet text-neon-blue"></i>Condiciones del Agua Caliente
                 </div>
             </div>
-            <div class="card-body">
-                <!-- Modo: Flujo o Velocidad -->
-                <div class="mb-3">
+            <div class="pb-card-body">
+                <div class="pb-control-group mb-3">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="modoFlujo" id="modoFlujo" value="flujo" checked>
-                        <label class="form-check-label small" for="modoFlujo">Flujo [m³/h]</label>
+                        <label class="form-check-label" for="modoFlujo">Flujo [m³/h]</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="modoFlujo" id="modoVelocidad" value="velocidad">
-                        <label class="form-check-label small" for="modoVelocidad">Velocidad [m/s]</label>
+                        <label class="form-check-label" for="modoVelocidad">Velocidad [m/s]</label>
                     </div>
                 </div>
 
-                <!-- Flujo de agua -->
-                <div class="mb-3" id="grupoFlujo">
-                    <label class="form-label small text-muted">Flujo de agua [m³/h]</label>
-                    <div class="slider-row">
+                <div class="pb-control-group" id="grupoFlujo">
+                    <label class="pb-control-label">Flujo de agua [m³/h]</label>
+                    <div class="pb-slider-row">
                         <input type="range" class="form-range" id="sliderFlujo" min="5" max="60" step="0.5" value="30.9">
-                        <input type="number" class="form-control form-control-sm slider-val" id="inputFlujo" value="30.9" step="0.1">
+                        <input type="number" class="form-control slider-val pb-input" id="inputFlujo" value="30.9" step="0.1">
                     </div>
-                    <div class="form-text" style="font-size:0.7rem;">Equivalente a <span id="velEquiv">1.34</span> m/s en media caña</div>
+                    <div class="pb-control-hint">Equivalente a <span id="velEquiv">1.34</span> m/s en media caña</div>
                 </div>
 
-                <!-- Velocidad de agua (oculto inicialmente) -->
-                <div class="mb-3 d-none" id="grupoVelocidad">
-                    <label class="form-label small text-muted">Velocidad [m/s]</label>
-                    <div class="slider-row">
+                <div class="pb-control-group d-none" id="grupoVelocidad">
+                    <label class="pb-control-label">Velocidad [m/s]</label>
+                    <div class="pb-slider-row">
                         <input type="range" class="form-range" id="sliderVelocidad" min="0.5" max="4.0" step="0.1" value="2.5">
-                        <input type="number" class="form-control form-control-sm slider-val" id="inputVelocidad" value="2.5" step="0.1">
+                        <input type="number" class="form-control slider-val pb-input" id="inputVelocidad" value="2.5" step="0.1">
                     </div>
-                    <div class="form-text" style="font-size:0.7rem;">Geometría media caña física | Equivalente a <span id="fluVolEquiv">57.7</span> m³/h | <span id="fluMasEquiv">56430</span> kg/h</div>
+                    <div class="pb-control-hint">Geometría media caña física | Equivalente a <span id="fluVolEquiv">57.7</span> m³/h | <span id="fluMasEquiv">56430</span> kg/h</div>
                 </div>
 
-                <!-- Temperatura agua -->
-                <div class="mb-3">
-                    <label class="form-label small text-muted">Temperatura agua [°C]</label>
-                    <div class="slider-row">
+                <div class="pb-control-group">
+                    <label class="pb-control-label">Temperatura agua [°C]</label>
+                    <div class="pb-slider-row">
                         <input type="range" class="form-range" id="sliderTAgua" min="50" max="90" step="1" value="65">
-                        <input type="number" class="form-control form-control-sm slider-val" id="inputTAgua" value="65">
+                        <input type="number" class="form-control slider-val pb-input" id="inputTAgua" value="65">
                     </div>
                 </div>
 
-                <!-- T salida estimada (solo lectura) -->
-                <div class="mb-0">
-                    <label class="form-label small text-muted">T agua salida estimada</label>
-                    <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" id="TAguaSalida" readonly value="—">
-                        <span class="input-group-text">°C</span>
+                <div class="pb-control-group mb-0">
+                    <label class="pb-control-label">T agua salida estimada</label>
+                    <div class="pb-input-group">
+                        <input type="text" class="form-control pb-input" id="TAguaSalida" readonly value="—">
+                        <span class="pb-input-group-addon">°C</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Condiciones Glucosa -->
-        <div class="card border-0 shadow-sm mb-3">
-            <div class="card-header bg-white py-2">
-                <div class="fw-semibold text-muted small">
-                    <i class="bi bi-thermometer-half me-1" style="color:var(--color-ingredion);"></i>CONDICIONES GLUCOSA
+        <div class="pb-card mb-3">
+            <div class="pb-card-header">
+                <div class="pb-card-title">
+                    <i class="bi bi-thermometer-half text-neon-orange"></i>Condiciones Glucosa
                 </div>
             </div>
-            <div class="card-body">
-                <!-- T inicial -->
-                <div class="mb-3">
-                    <label class="form-label small text-muted">Temperatura inicial [°C]</label>
-                    <div class="slider-row">
+            <div class="pb-card-body">
+                <div class="pb-control-group">
+                    <label class="pb-control-label">Temperatura inicial [°C]</label>
+                    <div class="pb-slider-row">
                         <input type="range" class="form-range" id="sliderTInicial" min="10" max="55" step="1" value="20">
-                        <input type="number" class="form-control form-control-sm slider-val" id="inputTInicial" value="20">
+                        <input type="number" class="form-control slider-val pb-input" id="inputTInicial" value="20">
                     </div>
                 </div>
 
-                <!-- T objetivo -->
-                <div class="mb-3">
-                    <label class="form-label small text-muted">Temperatura objetivo [°C]</label>
-                    <div class="slider-row">
+                <div class="pb-control-group">
+                    <label class="pb-control-label">Temperatura objetivo [°C]</label>
+                    <div class="pb-slider-row">
                         <input type="range" class="form-range" id="sliderTObjetivo" min="40" max="70" step="1" value="57">
-                        <input type="number" class="form-control form-control-sm slider-val" id="inputTObjetivo" value="57">
+                        <input type="number" class="form-control slider-val pb-input" id="inputTObjetivo" value="57">
                     </div>
                 </div>
 
-                <!-- Nivel inicial -->
-                <div class="mb-3">
-                    <label class="form-label small text-muted">Nivel inicial [%]</label>
-                    <div class="slider-row">
+                <div class="pb-control-group">
+                    <label class="pb-control-label">Nivel inicial [%]</label>
+                    <div class="pb-slider-row">
                         <input type="range" class="form-range" id="sliderNivel" min="20" max="100" step="5" value="80">
-                        <input type="number" class="form-control form-control-sm slider-val" id="inputNivel" value="80">
+                        <input type="number" class="form-control slider-val pb-input" id="inputNivel" value="80">
                     </div>
-                    <div class="form-text" style="font-size:0.7rem;">
+                    <div class="pb-control-hint">
                         Volumen: <span id="volDisplay">79.6</span> m³ | Masa: <span id="masaDisplay">113.8</span> ton
                     </div>
                 </div>
 
-                <!-- Brix -->
-                <div class="mb-0">
-                    <label class="form-label small text-muted">Brix (referencia)</label>
-                    <input type="text" class="form-control form-control-sm" value="85 Brix" readonly disabled>
+                <div class="pb-control-group mb-0">
+                    <label class="pb-control-label">Brix (referencia)</label>
+                    <input type="text" class="form-control pb-input" value="85 Brix" readonly disabled>
                 </div>
             </div>
         </div>
 
         <!-- Geometría -->
-        <div class="card border-0 shadow-sm mb-3">
-            <div class="card-header bg-white py-2">
-                <div class="fw-semibold text-muted small">
-                    <i class="bi bi-grid-3x3 me-1"></i>GEOMETRÍA TRANSFERENCIA
+        <div class="pb-card mb-3">
+            <div class="pb-card-header">
+                <div class="pb-card-title">
+                    <i class="bi bi-grid-3x3 text-neon-cyan"></i>Geometría Transferencia
                 </div>
             </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label class="form-label small text-muted">Área de contacto [m²]</label>
-                    <input type="number" class="form-control form-control-sm" id="inputArea" value="13.0" step="0.5" min="5" max="50">
-                </div>
-                <div class="mb-0 text-muted" style="font-size:0.75rem;">
-                    <div>Sección media caña: 45.5 × 141 mm</div>
-                    <div>Diámetro hidráulico Dh = 69 mm</div>
-                    <div>Paso espiral: 196 mm</div>
+            <div class="pb-card-body">
+                <div class="pb-control-group mb-0">
+                    <label class="pb-control-label">Área de contacto [m²]</label>
+                    <input type="number" class="form-control pb-input" id="inputArea" value="14.0" step="0.5" min="5" max="50">
+                    <div class="pb-control-hint mt-2">
+                        <div>Sección media caña: 45.5 × 141 mm</div>
+                        <div>Diámetro hidráulico Dh = 69 mm</div>
+                        <div>Paso espiral: 196 mm</div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Fouling -->
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white py-2">
-                <div class="fw-semibold text-muted small">
-                    <i class="bi bi-layers me-1"></i>RESISTENCIAS FOULING
+        <div class="pb-card">
+            <div class="pb-card-header">
+                <div class="pb-card-title">
+                    <i class="bi bi-layers text-neon-purple"></i>Resistencias Fouling
                 </div>
             </div>
-            <div class="card-body">
-                <div class="mb-2">
-                    <label class="form-label small text-muted">R_f agua [m²·K/W]</label>
-                    <input type="number" class="form-control form-control-sm" id="inputRfAgua" value="0.000176" step="0.00001">
+            <div class="pb-card-body">
+                <div class="pb-control-group">
+                    <label class="pb-control-label">R_f agua [m²·K/W]</label>
+                    <input type="number" class="form-control pb-input" id="inputRfAgua" value="0.000176" step="0.00001">
                 </div>
-                <div class="mb-0">
-                    <label class="form-label small text-muted">R_f glucosa [m²·K/W]</label>
-                    <input type="number" class="form-control form-control-sm" id="inputRfGlucosa" value="0.00035" step="0.00001">
+                <div class="pb-control-group mb-0">
+                    <label class="pb-control-label">R_f glucosa [m²·K/W]</label>
+                    <input type="number" class="form-control pb-input" id="inputRfGlucosa" value="0.00035" step="0.00001">
                 </div>
             </div>
         </div>
@@ -172,52 +163,43 @@
     <!-- Panel derecho: Resultados -->
     <div class="col-lg-8">
         <!-- Resultados instantáneos -->
-        <div class="card border-0 shadow-sm mb-3">
-            <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
-                <div class="fw-semibold text-muted small">
-                    <i class="bi bi-lightning me-1" style="color:var(--color-ingredion);"></i>RESULTADOS INSTANTÁNEOS
+        <div class="pb-card mb-3">
+            <div class="pb-card-header" style="justify-content: space-between;">
+                <div class="pb-card-title">
+                    <i class="bi bi-lightning text-neon-green"></i>Resultados Instantáneos
                 </div>
-                <span class="badge bg-success" id="badgeRegimen">Calculando...</span>
+                <span class="pb-badge pb-badge-success" id="badgeRegimen">Calculando...</span>
             </div>
-            <div class="card-body">
-                <div class="row g-3">
-                    <!-- Coeficiente U -->
-                    <div class="col-md-3">
-                        <div class="text-center p-2 bg-light rounded">
-                            <div class="text-muted small">U global</div>
-                            <div class="fs-3 fw-bold" style="color:var(--color-dmv);" id="resU">—</div>
-                            <div class="text-muted small">W/m²·°C</div>
-                        </div>
+            <div class="pb-card-body">
+                <div class="pb-kpi-row" style="margin-bottom: 1rem;">
+                    <div class="pb-kpi-card">
+                        <i class="bi bi-thermometer-low pb-kpi-icon text-neon-blue"></i>
+                        <div class="pb-kpi-label">U global</div>
+                        <div class="pb-kpi-value" id="resU">—</div>
+                        <div class="pb-kpi-unit">W/m²·°C</div>
                     </div>
-                    <!-- Potencia -->
-                    <div class="col-md-3">
-                        <div class="text-center p-2 bg-light rounded">
-                            <div class="text-muted small">Potencia Q</div>
-                            <div class="fs-3 fw-bold" style="color:var(--color-dmv);" id="resQ">—</div>
-                            <div class="text-muted small">kW</div>
-                        </div>
+                    <div class="pb-kpi-card">
+                        <i class="bi bi-lightning-charge pb-kpi-icon text-neon-orange"></i>
+                        <div class="pb-kpi-label">Potencia Q</div>
+                        <div class="pb-kpi-value" id="resQ">—</div>
+                        <div class="pb-kpi-unit">kW</div>
                     </div>
-                    <!-- LMTD -->
-                    <div class="col-md-3">
-                        <div class="text-center p-2 bg-light rounded">
-                            <div class="text-muted small">LMTD</div>
-                            <div class="fs-3 fw-bold" style="color:var(--color-dmv);" id="resLMTD">—</div>
-                            <div class="text-muted small">°C</div>
-                        </div>
+                    <div class="pb-kpi-card">
+                        <i class="bi bi-arrow-left-right pb-kpi-icon text-neon-cyan"></i>
+                        <div class="pb-kpi-label">LMTD</div>
+                        <div class="pb-kpi-value" id="resLMTD">—</div>
+                        <div class="pb-kpi-unit">°C</div>
                     </div>
-                    <!-- Reynolds -->
-                    <div class="col-md-3">
-                        <div class="text-center p-2 bg-light rounded">
-                            <div class="text-muted small">Re agua</div>
-                            <div class="fs-3 fw-bold" style="color:var(--color-dmv);" id="resRe">—</div>
-                            <div class="text-muted small" id="resRegimen">—</div>
-                        </div>
+                    <div class="pb-kpi-card">
+                        <i class="bi bi-water pb-kpi-icon text-neon-green"></i>
+                        <div class="pb-kpi-label">Re agua</div>
+                        <div class="pb-kpi-value" id="resRe">—</div>
+                        <div class="pb-kpi-unit" id="resRegimen">—</div>
                     </div>
                 </div>
 
-                <!-- Tabla detallada -->
-                <div class="table-responsive mt-3">
-                    <table class="table table-sm table-borderless mb-0" style="font-size:0.85rem;">
+                <div class="table-responsive">
+                    <table class="table table-sm table-borderless pb-table-dark mb-0">
                         <tbody>
                             <tr>
                                 <td class="text-muted" style="width:25%;">h<sub>i</sub> (agua):</td>
@@ -249,25 +231,25 @@
             </div>
         </div>
 
-        <!-- Distribución de resistencias -->
+        <!-- Distribución de resistencias y propiedades -->
         <div class="row g-3 mb-3">
             <div class="col-md-6">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white py-2">
-                        <div class="fw-semibold text-muted small">Distribución de Resistencias</div>
+                <div class="pb-card h-100">
+                    <div class="pb-card-header">
+                        <div class="pb-card-title">Distribución de Resistencias</div>
                     </div>
-                    <div class="card-body">
-                        <div id="graficaDonut" style="height:220px;"></div>
+                    <div class="pb-card-body">
+                        <div id="graficaDonut" class="pb-chart-sm"></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white py-2">
-                        <div class="fw-semibold text-muted small">Propiedades Glucosa</div>
+                <div class="pb-card h-100">
+                    <div class="pb-card-header">
+                        <div class="pb-card-title">Propiedades Glucosa</div>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-sm mb-0" style="font-size:0.8rem;">
+                    <div class="pb-card-body">
+                        <table class="table table-sm pb-table-dark mb-0">
                             <tr><td class="text-muted">ρ (densidad):</td><td class="fw-semibold" id="propRho">—</td><td>kg/m³</td></tr>
                             <tr><td class="text-muted">μ (viscosidad):</td><td class="fw-semibold" id="propMu">—</td><td>cP</td></tr>
                             <tr><td class="text-muted">Cp:</td><td class="fw-semibold" id="propCp">—</td><td>J/kg·K</td></tr>
@@ -280,26 +262,25 @@
         </div>
 
         <!-- Curva transitoria -->
-        <div class="card border-0 shadow-sm mb-3">
-            <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
-                <div class="fw-semibold text-muted small">
-                    <i class="bi bi-graph-up me-1"></i>SIMULACIÓN TRANSITORIA (ODE)
+        <div class="pb-card mb-3">
+            <div class="pb-card-header" style="justify-content: space-between;">
+                <div class="pb-card-title">
+                    <i class="bi bi-graph-up text-neon-cyan"></i>Simulación Transitoria (ODE)
                 </div>
-                <button class="btn btn-sm btn-outline-primary" id="btnCalcularTransitorio">
+                <button class="btn btn-sm btn-outline-light" id="btnCalcularTransitorio">
                     <i class="bi bi-play me-1"></i>Calcular
                 </button>
             </div>
-            <div class="card-body">
-                <div id="graficaTransitorio" style="height:280px;">
-                    <div class="text-center text-muted py-5">
+            <div class="pb-card-body">
+                <div id="graficaTransitorio" class="pb-chart">
+                    <div class="pb-chart-loading">
                         <i class="bi bi-graph-up fs-1 opacity-25"></i>
                         <p class="mt-2 small">Presione "Calcular" para ver la curva de calentamiento</p>
                     </div>
                 </div>
-                <!-- Tabla de hitos -->
                 <div class="table-responsive mt-3" id="tablaHitosContainer" style="display:none;">
-                    <table class="table table-sm table-striped" style="font-size:0.8rem;">
-                        <thead class="table-light">
+                    <table class="table table-sm pb-table-dark mb-0">
+                        <thead>
                             <tr>
                                 <th>Hito</th>
                                 <th>Temperatura</th>
@@ -313,25 +294,23 @@
         </div>
 
         <!-- Curva viscosidad -->
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white py-2">
-                <div class="fw-semibold text-muted small">
-                    <i class="bi bi-bezier2 me-1"></i>VISCOSIDAD vs TEMPERATURA
+        <div class="pb-card">
+            <div class="pb-card-header">
+                <div class="pb-card-title">
+                    <i class="bi bi-bezier2 text-neon-purple"></i>Viscosidad vs Temperatura
                 </div>
             </div>
-            <div class="card-body">
-                <div id="graficaViscosidad" style="height:200px;"></div>
+            <div class="pb-card-body">
+                <div id="graficaViscosidad" class="pb-chart-sm"></div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Spinner overlay -->
-<div id="spinnerOverlay" class="position-fixed top-0 start-0 w-100 h-100 bg-white d-none" style="z-index:9999;opacity:0.9;">
-    <div class="d-flex flex-column justify-content-center align-items-center h-100">
-        <div class="spinner-border text-primary mb-3" role="status"></div>
-        <p class="text-muted" id="spinnerText">Calculando...</p>
-    </div>
+<div id="spinnerOverlay" class="pb-spinner-overlay d-none">
+    <div class="spinner-border" role="status"></div>
+    <p class="mt-3" id="spinnerText">Calculando...</p>
 </div>
 {% endblock %}
 

@@ -1,8 +1,7 @@
-\newcommand{\degC}{\ensuremath{{}^\circ\mathrm{C}}}
-\section{Caso de estudio: calentamiento de 24 toneladas de glucosa desde 40~\degC hasta 60~\degC con 14~m\textsuperscript{2} de área de transferencia}
+\section{Caso de estudio: calentamiento de 24 toneladas de glucosa desde 40~\textdegree C hasta 60~\textdegree C con 14~m\textsuperscript{2} de área de transferencia}
 \label{sec:calentamiento_24ton}
 
-El presente caso de estudio evalúa el tiempo requerido para calentar 24~ton de jarabe de glucosa Globe~42~DE desde 40~\degC hasta 60~\degC, empleando un sistema de media caña con área de transferencia de 14~m\textsuperscript{2}. La masa seleccionada corresponde a una descarga típica de carrotanque y permite analizar el comportamiento transitorio del sistema cuando opera como unidad de calentamiento independiente. Se evalúan dos temperaturas de agua de calentamiento: 65~\degC y 75~\degC, manteniendo la velocidad del agua en la media caña en 2,5~m/s.
+El presente caso de estudio evalúa el tiempo requerido para calentar 24~ton de jarabe de glucosa Globe 1130 desde 40~\textdegree C hasta 60~\textdegree C, empleando un sistema de media caña con área de transferencia de 14~m\textsuperscript{2}. La masa seleccionada corresponde a una descarga típica de carrotanque y permite analizar el comportamiento transitorio del sistema cuando opera como unidad de calentamiento independiente. Se evalúan dos temperaturas de agua de calentamiento: 65~\textdegree C y 75~\textdegree C, manteniendo la velocidad del agua en la media caña en 2,5~m/s.
 
 \subsection{Planteamiento y supuestos de diseño}
 
@@ -16,7 +15,7 @@ m_g \cdot C_{p,g}(T_g) \cdot \frac{dT_g}{dt} = U(T_g) \cdot A \cdot (T_w - T_g)
 donde $m_g$ es la masa de glucosa, $C_{p,g}(T_g)$ es el calor específico dependiente de la temperatura, $U(T_g)$ es el coeficiente global de transferencia de calor, $A$ es el área de contacto de 14~m\textsuperscript{2} y $T_w$ es la temperatura del agua de calentamiento. La masa se calcula a partir de la densidad inicial:
 
 \begin{equation}
-m_g = \rho_g(40\degC) \cdot V_g = 1413,8~\text{kg/m}^3 \cdot 16,976~\text{m}^3 = 24~000~\text{kg}
+m_g = \rho_g(40\textdegree C) \cdot V_g = 1413,8~\text{kg/m}^3 \cdot 16,976~\text{m}^3 = 24~000~\text{kg}
 \label{eq:masa_24ton}
 \end{equation}
 
@@ -24,20 +23,20 @@ El coeficiente global $U$ se obtiene mediante el modelo de resistencias térmica
 
 \subsection{Propiedades termofísicas de la glucosa}
 
-Las propiedades del jarabe de glucosa Globe~42~DE varían con la temperatura en el rango de 40~\degC a 60~\degC. La densidad se ajusta linealmente a partir de los datos de la ficha técnica Ingredion~011420, la viscosidad se modela mediante la ecuación de Vogel-Fulcher-Tammann (VFT) calibrada a la misma ficha técnica, y el calor específico y la conductividad térmica se estiman mediante las correlaciones de Choi y Okos (1986). La Tabla~\ref{tab:propiedades_24ton} resume los valores al inicio y al final del calentamiento.
+Las propiedades del jarabe de glucosa Globe 1130 varían con la temperatura en el rango de 40~\textdegree C a 60~\textdegree C. La densidad se ajusta linealmente a partir de los datos de la ficha técnica Ingredion~011420, la viscosidad se modela mediante la ecuación de Vogel-Fulcher-Tammann (VFT) calibrada a la misma ficha técnica, y el calor específico y la conductividad térmica se estiman mediante las correlaciones de Choi y Okos (1986). La Tabla~\ref{tab:propiedades_24ton} resume los valores al inicio y al final del calentamiento.
 
 \begin{table}[H]
 \centering
-\caption{Propiedades termofísicas de la glucosa Globe~42~DE al inicio y al final del calentamiento.}
+\caption{Propiedades termofísicas de la glucosa Globe 1130 al inicio y al final del calentamiento.}
 \label{tab:propiedades_24ton}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Propiedad} & \textbf{Símbolo} & \textbf{Unidad} & \textbf{40~\degC} & \textbf{60~\degC} \\
+\textbf{Propiedad} & \textbf{Símbolo} & \textbf{Unidad} & \textbf{40~\textdegree C} & \textbf{60~\textdegree C} \\
 \midrule
 Densidad & $\rho_g$ & kg/m\textsuperscript{3} & 1413,8 & 1403,0 \\
-Calor específico & $C_{p,g}$ & J/(kg$\cdot$\degC) & 2112,4 & 2132,8 \\
+Calor específico & $C_{p,g}$ & J/(kg$\cdot$\textdegree C) & 2112,4 & 2132,8 \\
 Viscosidad dinámica & $\mu_g$ & Pa$\cdot$s & 13,50 & 2,06 \\
-Conductividad térmica & $k_g$ & W/(m$\cdot$\degC) & 0,3240 & 0,3431 \\
+Conductividad térmica & $k_g$ & W/(m$\cdot$\textdegree C) & 0,3240 & 0,3431 \\
 Número de Prandtl & $\text{Pr}_g$ & -- & 34~894 & 12~801 \\
 \bottomrule
 \end{tabular}
@@ -54,7 +53,7 @@ El coeficiente global se calcula en cada paso de integración mediante:
 \label{eq:U_24ton}
 \end{equation}
 
-donde $h_i$ se obtiene con la correlación de Sieder-Tate para el flujo de agua en la media caña, $e_w = 9$~mm es el espesor de la pared del fondo, $k_w = 16,3$~W/(m$\cdot$\degC) es la conductividad del SS316L y $h_o$ se calcula con la correlación de Churchill-Chu para convección natural del lado de la glucosa. La Tabla~\ref{tab:U_24ton} presenta los valores de $U$ al inicio y al final del proceso para ambas temperaturas de agua.
+donde $h_i$ se obtiene con la correlación de Sieder-Tate para el flujo de agua en la media caña, $e_w = 9$~mm es el espesor de la pared del fondo, $k_w = 16,3$~W/(m$\cdot$\textdegree C) es la conductividad del SS316L y $h_o$ se calcula con la correlación de Churchill-Chu para convección natural del lado de la glucosa. La Tabla~\ref{tab:U_24ton} presenta los valores de $U$ al inicio y al final del proceso para ambas temperaturas de agua.
 
 \begin{table}[H]
 \centering
@@ -62,7 +61,7 @@ donde $h_i$ se obtiene con la correlación de Sieder-Tate para el flujo de agua 
 \label{tab:U_24ton}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Escenario} & \textbf{$T_w$ [\degC]} & \textbf{$U$ a 40~\degC [W/(m\textsuperscript{2}$\cdot$\degC)]} & \textbf{$U$ a 60~\degC [W/(m\textsuperscript{2}$\cdot$\degC)]} & \textbf{$U$ máximo [W/(m\textsuperscript{2}$\cdot$\degC)]} \\
+\textbf{Escenario} & \textbf{$T_w$ [\textdegree C]} & \textbf{$U$ a 40~\textdegree C [W/(m\textsuperscript{2}$\cdot$\textdegree C)]} & \textbf{$U$ a 60~\textdegree C [W/(m\textsuperscript{2}$\cdot$\textdegree C)]} & \textbf{$U$ máximo [W/(m\textsuperscript{2}$\cdot$\textdegree C)]} \\
 \midrule
 A & 65 & 26,0 & 20,4 & 28,0 \\
 B & 75 & 31,1 & 23,8 & 36,2 \\
@@ -70,7 +69,7 @@ B & 75 & 31,1 & 23,8 & 36,2 \\
 \end{tabular}
 \end{table}
 
-El coeficiente global presenta un máximo intermedio porque, al aumentar la temperatura de la glucosa, la viscosidad disminuye y favorece la convección natural, pero simultáneamente se reduce la diferencia de temperatura con el agua y la temperatura de película, lo que disminuye el número de Rayleigh. Para el Escenario~B, el valor máximo de $U$ es aproximadamente 36,2~W/(m\textsuperscript{2}$\cdot$\degC) y se alcanza cerca de los 20~h de operación.
+El coeficiente global presenta un máximo intermedio porque, al aumentar la temperatura de la glucosa, la viscosidad disminuye y favorece la convección natural, pero simultáneamente se reduce la diferencia de temperatura con el agua y la temperatura de película, lo que disminuye el número de Rayleigh. Para el Escenario~B, el valor máximo de $U$ es aproximadamente 36,2~W/(m\textsuperscript{2}$\cdot$\textdegree C) y se alcanza cerca de los 20~h de operación.
 
 \subsection{Resultados de la simulación numérica}
 
@@ -82,28 +81,28 @@ La ecuación~\eqref{eq:balance_24ton} se integró numéricamente mediante el mé
 \label{tab:resultados_24ton}
 \begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Parámetro} & \textbf{Escenario A (65~\degC)} & \textbf{Escenario B (75~\degC)} & \textbf{Unidad} \\
+\textbf{Parámetro} & \textbf{Escenario A (65~\textdegree C)} & \textbf{Escenario B (75~\textdegree C)} & \textbf{Unidad} \\
 \midrule
-Tiempo para alcanzar 60~\degC & 60,3 & 24,6 & h \\
+Tiempo para alcanzar 60~\textdegree C & 60,3 & 24,6 & h \\
 Energía total transferida & 1017,2 & 1020,0 & MJ \\
 Flujo de calor máximo & 9,11 & 15,24 & kW \\
 Flujo de calor promedio & 4,69 & 11,56 & kW \\
-$U$ inicial & 26,0 & 31,1 & W/(m\textsuperscript{2}$\cdot$\degC) \\
-$U$ final & 20,4 & 23,8 & W/(m\textsuperscript{2}$\cdot$\degC) \\
+$U$ inicial & 26,0 & 31,1 & W/(m\textsuperscript{2}$\cdot$\textdegree C) \\
+$U$ final & 20,4 & 23,8 & W/(m\textsuperscript{2}$\cdot$\textdegree C) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-La energía total requerida para calentar la masa desde 40~\degC hasta 60~\degC es aproximadamente 1020~MJ, valor que depende principalmente de la masa y del calor específico promedio. La diferencia entre escenarios se explica porque, a mayor temperatura del agua, el coeficiente global $U$ es mayor debido a la menor viscosidad de la película de glucosa en contacto con la pared más caliente.
+La energía total requerida para calentar la masa desde 40~\textdegree C hasta 60~\textdegree C es aproximadamente 1020~MJ, valor que depende principalmente de la masa y del calor específico promedio. La diferencia entre escenarios se explica porque, a mayor temperatura del agua, el coeficiente global $U$ es mayor debido a la menor viscosidad de la película de glucosa en contacto con la pared más caliente.
 
 \subsection{Curvas de calentamiento y flujo de calor}
 
-La Figura~\ref{fig:calentamiento_24ton_T_vs_t} presenta la evolución de la temperatura de la glucosa en función del tiempo para ambos escenarios. La curva correspondiente al agua a 75~\degC alcanza 60~\degC en 24,6~h, mientras que con agua a 65~\degC el tiempo se extiende hasta 60,3~h.
+La Figura~\ref{fig:calentamiento_24ton_T_vs_t} presenta la evolución de la temperatura de la glucosa en función del tiempo para ambos escenarios. La curva correspondiente al agua a 75~\textdegree C alcanza 60~\textdegree C en 24,6~h, mientras que con agua a 65~\textdegree C el tiempo se extiende hasta 60,3~h.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{../../results/figures/calentamiento_24ton_T_vs_t.pdf}
-\caption{Curva de calentamiento de 24~ton de glucosa Globe~42~DE desde 40~\degC hasta 60~\degC, con área de transferencia de 14~m\textsuperscript{2} y velocidad de agua de 2,5~m/s.}
+\caption{Curva de calentamiento de 24~ton de glucosa Globe 1130 desde 40~\textdegree C hasta 60~\textdegree C, con área de transferencia de 14~m\textsuperscript{2} y velocidad de agua de 2,5~m/s.}
 \label{fig:calentamiento_24ton_T_vs_t}
 \end{figure}
 
@@ -116,7 +115,7 @@ La Figura~\ref{fig:calentamiento_24ton_Q_vs_t} muestra el flujo de calor transfe
 \label{fig:calentamiento_24ton_Q_vs_t}
 \end{figure}
 
-La evolución del coeficiente global $U$ se presenta en la Figura~\ref{fig:calentamiento_24ton_U_vs_t}. Se observa el comportamiento no monótono descrito anteriormente, con un máximo en el Escenario~B de 36,2~W/(m\textsuperscript{2}$\cdot$\degC) alrededor de los 20~h.
+La evolución del coeficiente global $U$ se presenta en la Figura~\ref{fig:calentamiento_24ton_U_vs_t}. Se observa el comportamiento no monótono descrito anteriormente, con un máximo en el Escenario~B de 36,2~W/(m\textsuperscript{2}$\cdot$\textdegree C) alrededor de los 20~h.
 
 \begin{figure}[H]
 \centering
@@ -130,12 +129,67 @@ La variación de las propiedades termofísicas en el rango de temperatura se ilu
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{../../results/figures/calentamiento_24ton_propiedades.pdf}
-\caption{Propiedades termofísicas de la glucosa Globe~42~DE en el rango de 40~\degC a 60~\degC: densidad, calor específico, viscosidad dinámica y conductividad térmica.}
+\caption{Propiedades termofísicas de la glucosa Globe 1130 en el rango de 40~\textdegree C a 60~\textdegree C: densidad, calor específico, viscosidad dinámica y conductividad térmica.}
 \label{fig:calentamiento_24ton_propiedades}
 \end{figure}
 
 \subsection{Análisis de resultados}
 
-El aumento del área de transferencia de 13~m\textsuperscript{2} a 14~m\textsuperscript{2} reduce el tiempo de calentamiento en una proporción directa, ya que el proceso está dominado por la resistencia del lado de la glucosa. Con agua a 75~\degC, el sistema alcanza 60~\degC en aproximadamente 24,6~h, lo cual resulta operativamente viable para un ciclo de preparación de carga. Con agua a 65~\degC, el tiempo de 60,3~h supera el horizonte de una jornada operativa típica y requeriría programar el calentamiento con anticipación.
+Con el área de transferencia de 14~m\textsuperscript{2} se reduce el tiempo de calentamiento en una proporción directa, ya que el proceso está dominado por la resistencia del lado de la glucosa. Con agua a 75~\textdegree C, el sistema alcanza 60~\textdegree C en aproximadamente 24,6~h, lo cual resulta operativamente viable para un ciclo de preparación de carga. Con agua a 65~\textdegree C, el tiempo de 60,3~h supera el horizonte de una jornada operativa típica y requeriría programar el calentamiento con anticipación.
 
 El flujo de calor máximo en el Escenario~B (15,2~kW) representa aproximadamente 1,7 veces el valor del Escenario~A (9,1~kW), mientras que la energía total transferida es prácticamente la misma en ambos casos porque depende exclusivamente de la masa y del cambio de temperatura. Esto indica que la temperatura del agua de calentamiento afecta principalmente la velocidad del proceso y no el consumo energético total.
+
+\subsection{Extensión a niveles del 50~\% y 80~\% del tanque con pérdidas térmicas}
+
+El análisis anterior ignora las pérdidas térmicas porque la masa de 24~ton se considera contenida en un recipiente independiente. Para evaluar el comportamiento real del tanque Tag~53A-90A-0056, se extiende el modelo al volumen operativo completo, incluyendo pérdidas al ambiente a través del área real expuesta (149,7~m\textsuperscript{2}) con aislamiento de lana mineral de 50,8~mm. El balance de energía se expresa como:
+
+\begin{equation}
+m_g \, C_{p,g}(T_g) \, \frac{dT_g}{dt} = U(T_g) \, A \, (T_w - T_g) - Q_{perd}(T_g)
+\label{eq:balance_arranque_perdidas}
+\end{equation}
+
+donde $Q_{perd}(T_g)$ se calcula mediante el modelo de resistencias térmicas en serie descrito en la Sección~\ref{sec:metodologia_U}. El volumen total del tanque es 222,8~m\textsuperscript{3}; por tanto, el 50~\% equivale a 111,4~m\textsuperscript{3} y el 80~\% a 178,2~m\textsuperscript{3}. A 40~\textdegree C, las masas correspondientes son aproximadamente 157,5~ton y 252,0~ton.
+
+La Tabla~\ref{tab:resultados_arranque_niveles} resume el comportamiento del sistema para ambos niveles y ambas temperaturas de agua, simulando hasta 96~h.
+
+\begin{table}[H]
+\centering
+\caption{Resultados del calentamiento batch del tanque con pérdidas térmicas ($A = 14~\text{m}^2$, $v_w = 2{,}5~\text{m/s}$).}
+\label{tab:resultados_arranque_niveles}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Escenario} & \textbf{Nivel inicial} & \textbf{$T_w$ [\textdegree C]} & \textbf{$T$ a 96~h [\textdegree C]} & \textbf{Tiempo a 60~\textdegree C [h]} \\
+\midrule
+C & 80~\% & 65 & 44,27 & No alcanza en 96~h \\
+D & 80~\% & 75 & 47,81 & No alcanza en 96~h \\
+E & 50~\% & 65 & 46,31 & No alcanza en 96~h \\
+F & 50~\% & 75 & 51,50 & No alcanza en 96~h \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Ninguno de los cuatro escenarios alcanza 60~\textdegree C dentro de las 96~h simuladas. La inercia térmica de la masa de glucosa, combinada con pérdidas de aproximadamente 14,7~MJ/h a 60~\textdegree C, hace que el aporte de la chaqueta de 14~m\textsuperscript{2} sea insuficiente para elevar la temperatura del contenido total del tanque en horizontes operativos razonables. El Escenario~F (50~\%, 75~\textdegree C) muestra la mayor aproximación, alcanzando 51,50~\textdegree C a las 96~h.
+
+La Figura~\ref{fig:arranque_T_vs_t_comparativa} compara las curvas de temperatura para los seis escenarios evaluados: 24~ton sin pérdidas, 50~\% con pérdidas y 80~\% con pérdidas, para agua a 65~\textdegree C y 75~\textdegree C.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{../../results/figures/curva_arranque_T_vs_t_comparativa.pdf}
+\caption{Comparativa de curvas de calentamiento batch para 24~ton (sin pérdidas), 50~\% y 80~\% del tanque (con pérdidas térmicas reales).}
+\label{fig:arranque_T_vs_t_comparativa}
+\end{figure}
+
+La Figura~\ref{fig:arranque_por_caso} presenta las curvas individuales de temperatura y flujo de calor para cada caso, destacando el efecto del término de pérdidas sobre la asintota térmica del sistema.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{../../results/figures/curva_arranque_por_caso.pdf}
+\caption{Curvas individuales de temperatura y flujo de calor por escenario de arranque.}
+\label{fig:arranque_por_caso}
+\end{figure}
+
+\subsection{Interpretación de los resultados de arranque}
+
+El caso de 24~ton sin pérdidas representa una condición idealizada que sirve para dimensionar el área mínima necesaria para calentar una carga aislada en un tiempo aceptable. En cambio, los escenarios de 50~\% y 80~\% del tanque incluyen la realidad de las pérdidas térmicas y la gran inercia del volumen operativo. La diferencia cualitativa es clara: mientras que el sistema de 24~ton evoluciona hacia la temperatura del agua de calentamiento, el sistema real del tanque alcanza una temperatura de equilibrio mucho menor porque el aporte térmico no compensa las pérdidas cuando la diferencia de temperatura con el ambiente crece.
+
+Estos resultados indican que el arranque del tanque completo desde 40~\textdegree C hasta 60~\textdegree C con una chaqueta de 14~m\textsuperscript{2} no es viable en un horizonte de días. Para alcanzar 60~\textdegree C en todo el contenido del tanque se requeriría aumentar el área de transferencia, elevar la temperatura del agua de calentamiento o reducir las pérdidas térmicas mediante un aislamiento adicional. La estrategia operativa recomendada consiste en calentar primero un volumen reducido equivalente a una descarga (24~ton) y luego iniciar el ciclo de recarga y descarga descrito en la Sección~\ref{sec:ciclo_12m3h}.

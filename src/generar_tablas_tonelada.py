@@ -25,7 +25,7 @@ from coeficiente_U import coeficiente_U
 from geometria_tanque import A_CONTACTO, volumen_total
 
 # Constantes
-A = A_CONTACTO  # 13.0 m2
+A = A_CONTACTO  # 14.0 m2
 V_AGUA = 2.5    # m/s
 T_DESCARGA = 1.5  # h por descarga de 24 ton
 DOT_M_OUT = 24000.0 / (T_DESCARGA * 3600.0)  # kg/s

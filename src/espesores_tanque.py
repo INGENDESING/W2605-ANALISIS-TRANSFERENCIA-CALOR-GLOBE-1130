@@ -18,7 +18,7 @@ Datos del tanque:
   H cilindro:   9670 mm
   H fondo:      1266 mm
   Llenado max:  90% para diseno
-  Fluido:       Glucosa Globe 42 DE (~80.6 Brix, G = 1.42)
+  Fluido:       Glucosa Globe 1130 (~80.6 Brix, G = 1.42)
 """
 
 import numpy as np

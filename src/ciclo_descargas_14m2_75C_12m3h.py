@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """
-Simulación de ciclo de descargas a 12 m³/h — Proyecto W2605
-===========================================================
-Caso: chaqueta de 14 m², agua a 75 °C, doble entrada, velocidad 2,5 m/s.
+Simulación de ciclo de descargas — Proyecto W2605
+==================================================
+Caso: chaqueta de 14 m², agua a 65 °C / 75 °C, doble entrada, velocidad 2,5 m/s.
 
 Objetivo:
   Evaluar la factibilidad de realizar 5 descargas diarias de 24 ton
-  (≈ 17,1 m³ a 55 °C) con un flujo de descarga de 12 m³/h, dejando
-  entre descargas únicamente tiempo de calentamiento.
+  (≈ 17,1 m³ a 55 °C) con un flujo de descarga de 12 ton/h (≈ 8,5 m³/h a 55 °C),
+  dejando entre descargas únicamente tiempo de calentamiento.
 
 Modelo:
-  - Tanque precalentado al 80 % de su capacidad (~250 ton) a 60 °C.
+  - Tanque precalentado al nivel inicial (% de capacidad) a 60 °C.
   - Durante descarga:
-      * Entra glucosa a 55 °C a 12 m³/h.
+      * Entra glucosa a 55 °C a 12 ton/h (≈ 8,5 m³/h).
       * Sale glucosa hacia el carrotanque a la temperatura del tanque.
       * Volumen/masa del tanque se mantiene aproximadamente constante.
       * Balance energético: chaqueta + aporte de glucosa entrante - pérdidas.
@@ -21,6 +21,13 @@ Modelo:
       * La siguiente descarga comienza a los 4,8 h desde el inicio de la
         anterior (ciclo de 5 descargas/día) o cuando se recupera 60 °C,
         lo que ocurra primero.
+
+Escenarios evaluados:
+  - Nivel inicial 80 %, agua 75 °C (caso oficial).
+  - Nivel inicial 80 %, agua 65 °C.
+  - Nivel inicial 50 %, agua 75 °C.
+  - Nivel inicial 50 %, agua 65 °C.
+  - Arranque desde 40 °C con agua 75 °C hasta primera descarga a 57 °C.
 
 Referencias:
   - Incropera et al., Fundamentals of Heat and Mass Transfer, 7th ed.
@@ -36,7 +43,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+from matplotlib.patches import FancyBboxPatch
+import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -85,34 +93,31 @@ plt.rcParams.update({
 
 A_TRANSFERENCIA = 14.0      # m² (chaqueta según requerimiento)
 V_AGUA = 2.5                # m/s
-T_AGUA = 75.0               # °C
 T_ENTRADA_GLUCOSA = 55.0    # °C (glucosa de alimentación)
-Q_VOL_DESCARGA = 12.0       # m³/h
+M_DOT_DESCARGA = 12000.0 / 3600.0  # kg/s (12 ton/h)
 MASA_POR_DESCARGA = 24000.0 # kg (24 ton)
 N_DESCARGAS = 5
 T_TOTAL = 24.0              # h
-NIVEL_INICIAL = 0.80
-T_INICIAL = 60.0            # °C
 T_OBJETIVO = 60.0           # °C
 T_MIN_DESPACHO = 57.0       # °C
 T_MAX_CONTROL = 60.0        # °C (termostato máximo)
 T_AMBIENTE = 26.5           # °C
 
-# Volumen y masa iniciales
-V_TANQUE_80 = volumen_total() * NIVEL_INICIAL
-RHO_INICIAL = rho_glucosa(T_INICIAL)
-MASA_INICIAL = V_TANQUE_80 * RHO_INICIAL  # kg
-
-# Duración de cada descarga
+# Volumen por descarga
 VOLUMEN_DESCARGA = MASA_POR_DESCARGA / rho_glucosa(T_ENTRADA_GLUCOSA)  # m³
+Q_VOL_DESCARGA = M_DOT_DESCARGA / rho_glucosa(T_ENTRADA_GLUCOSA) * 3600.0  # m³/h
 T_DESCARGA = VOLUMEN_DESCARGA / Q_VOL_DESCARGA  # h
 
 # Flujo másico de entrada durante descarga (kg/s)
-M_DOT_IN = rho_glucosa(T_ENTRADA_GLUCOSA) * (Q_VOL_DESCARGA / 3600.0)
+M_DOT_IN = M_DOT_DESCARGA
 
 # Período entre inicios de descarga si se distribuyen 5 en 24 h
 T_CICLO = T_TOTAL / N_DESCARGAS  # h
 
+
+# =============================================================================
+# FUNCIONES DEL MODELO
+# =============================================================================
 
 def perdidas_termicas(T_g):
     """Pérdidas térmicas [W] en función de T_g [°C]."""
@@ -120,7 +125,15 @@ def perdidas_termicas(T_g):
     return res['Q_W']
 
 
-def ode_descarga(t, y):
+def parametros_iniciales(nivel_inicial, T_inicial):
+    """Calcula masa y volumen iniciales del tanque."""
+    V_tanque = volumen_total() * nivel_inicial
+    rho_inicial = rho_glucosa(T_inicial)
+    masa_inicial = V_tanque * rho_inicial
+    return V_tanque, masa_inicial
+
+
+def ode_descarga(t, y, T_agua):
     """ODE durante descarga: entra glucosa fría, sale glucosa caliente."""
     T_g = y[0]
     m_g = y[1]
@@ -132,8 +145,8 @@ def ode_descarga(t, y):
 
     # Aporte de la chaqueta (termostato: apaga si ya se alcanzó 60 °C)
     if T_g < T_MAX_CONTROL:
-        U_val, _, _, _ = coeficiente_U(V_AGUA, T_AGUA, T_g)
-        Q_chaq = U_val * A_TRANSFERENCIA * (T_AGUA - T_g)
+        U_val, _, _, _ = coeficiente_U(V_AGUA, T_agua, T_g)
+        Q_chaq = U_val * A_TRANSFERENCIA * (T_agua - T_g)
     else:
         Q_chaq = 0.0
 
@@ -150,7 +163,7 @@ def ode_descarga(t, y):
     return [dT_dt, dm_dt]
 
 
-def ode_calentamiento(t, y):
+def ode_calentamiento(t, y, T_agua):
     """ODE entre descargas: calentamiento puro."""
     T_g = y[0]
     m_g = y[1]
@@ -159,9 +172,9 @@ def ode_calentamiento(t, y):
         return [0.0, 0.0]
 
     Cp_g = Cp_glucosa(T_g)
-    U_val, _, _, _ = coeficiente_U(V_AGUA, T_AGUA, T_g)
+    U_val, _, _, _ = coeficiente_U(V_AGUA, T_agua, T_g)
 
-    Q_chaq = U_val * A_TRANSFERENCIA * (T_AGUA - T_g)
+    Q_chaq = U_val * A_TRANSFERENCIA * (T_agua - T_g)
     Q_perd = perdidas_termicas(T_g)
 
     dT_dt = (Q_chaq - Q_perd) / (m_g * Cp_g)
@@ -169,13 +182,40 @@ def ode_calentamiento(t, y):
     return [dT_dt, dm_dt]
 
 
-def simular_ciclo():
-    """Simula el ciclo completo de 24 h."""
+def simular_ciclo(T_agua, nivel_inicial, T_inicial, tiempo_max_h=None, n_descargas=None):
+    """
+    Simula el ciclo completo de 24 h.
+
+    Parámetros
+    ----------
+    T_agua : float — temperatura del agua de calentamiento [°C]
+    nivel_inicial : float — nivel inicial del tanque (0–1)
+    T_inicial : float — temperatura inicial de la glucosa [°C]
+    tiempo_max_h : float — tiempo máximo de simulación [h]; si None, 24 h
+    n_descargas : int — número de descargas a simular; si None, 5
+
+    Retorna
+    -------
+    t_eventos : array — tiempo acumulado [h]
+    estados : array — [T_g, m_g]
+    fases : list — 'calentamiento' o 'descarga'
+    ganancia_tiempos_muertos : list — energía neta por intervalo [MJ]
+    """
+    if tiempo_max_h is None:
+        tiempo_max_h = T_TOTAL
+    if n_descargas is None:
+        n_descargas = N_DESCARGAS
+
+    t_ciclo = tiempo_max_h / n_descargas
+
+    _, MASA_INICIAL = parametros_iniciales(nivel_inicial, T_inicial)
+
     t_eventos = []
     estados = []
-    fases = []  # 'calentamiento' o 'descarga'
+    fases = []
+    ganancia_tiempos_muertos = []
 
-    y0 = [T_INICIAL, MASA_INICIAL]
+    y0 = [T_inicial, MASA_INICIAL]
     t_actual = 0.0
 
     # Registrar punto inicial
@@ -183,10 +223,13 @@ def simular_ciclo():
     estados.append(y0.copy())
     fases.append('calentamiento')
 
-    for i in range(N_DESCARGAS):
+    for i in range(n_descargas):
         # --- Fase de descarga ---
         t_fin_descarga = t_actual + T_DESCARGA
-        sol = solve_ivp(ode_descarga, [t_actual * 3600, t_fin_descarga * 3600], y0,
+        if t_fin_descarga > tiempo_max_h:
+            t_fin_descarga = tiempo_max_h
+        sol = solve_ivp(lambda t, y: ode_descarga(t, y, T_agua),
+                        [t_actual * 3600, t_fin_descarga * 3600], y0,
                         method='RK45', max_step=60, rtol=1e-6, atol=1e-9)
         t_eventos.extend(list(sol.t / 3600.0))
         estados.extend([[T, m] for T, m in zip(sol.y[0], sol.y[1])])
@@ -195,9 +238,12 @@ def simular_ciclo():
         y0 = [sol.y[0][-1], sol.y[1][-1]]
         t_actual = t_fin_descarga
 
+        if t_actual >= tiempo_max_h:
+            break
+
         # --- Fase de calentamiento hasta el siguiente ciclo o hasta 60 °C ---
         t_inicio_calentamiento = t_actual
-        t_max_calentamiento = (i + 1) * T_CICLO  # inicio de siguiente descarga
+        t_max_calentamiento = (i + 1) * t_ciclo
         duracion_max = max(0.0, t_max_calentamiento - t_inicio_calentamiento)
 
         # Si ya estamos en 60 °C, mantener hasta el siguiente evento
@@ -206,12 +252,31 @@ def simular_ciclo():
             estados.extend([y0.copy(), y0.copy()])
             fases.extend(['calentamiento', 'calentamiento'])
             t_actual = t_max_calentamiento
+            ganancia_tiempos_muertos.append(0.0)
             continue
 
         t_fin_cal = t_inicio_calentamiento + duracion_max
-        sol_cal = solve_ivp(ode_calentamiento,
+        if t_fin_cal > tiempo_max_h:
+            t_fin_cal = tiempo_max_h
+
+        sol_cal = solve_ivp(lambda t, y: ode_calentamiento(t, y, T_agua),
                             [t_inicio_calentamiento * 3600, t_fin_cal * 3600],
                             y0, method='RK45', max_step=60, rtol=1e-6, atol=1e-9)
+
+        # Calcular ganancia térmica neta en este tiempo muerto
+        Q_chaq_arr = []
+        Q_perd_arr = []
+        for T in sol_cal.y[0]:
+            if T < T_MAX_CONTROL:
+                U_val, _, _, _ = coeficiente_U(V_AGUA, T_agua, T)
+                Q_chaq_arr.append(U_val * A_TRANSFERENCIA * (T_agua - T))
+            else:
+                Q_chaq_arr.append(0.0)
+            Q_perd_arr.append(perdidas_termicas(T))
+        dt_arr = np.gradient(sol_cal.t)
+        ganancia_MJ = np.sum((np.array(Q_chaq_arr) - np.array(Q_perd_arr)) * dt_arr) / 1e6
+        ganancia_tiempos_muertos.append(ganancia_MJ)
+
         t_eventos.extend(list(sol_cal.t / 3600.0))
         estados.extend([[T, m] for T, m in zip(sol_cal.y[0], sol_cal.y[1])])
         fases.extend(['calentamiento'] * len(sol_cal.t))
@@ -219,28 +284,25 @@ def simular_ciclo():
         y0 = [sol_cal.y[0][-1], sol_cal.y[1][-1]]
         t_actual = t_fin_cal
 
-    return np.array(t_eventos), np.array(estados), fases
+        if t_actual >= tiempo_max_h:
+            break
+
+    return np.array(t_eventos), np.array(estados), fases, ganancia_tiempos_muertos
 
 
-def resumen_ciclo(t, estados):
+def resumen_ciclo(t, estados, t_ciclo=None):
     """Genera tabla de resultados por descarga."""
+    if t_ciclo is None:
+        t_ciclo = T_CICLO
+
     T = estados[:, 0]
-    m = estados[:, 1]
 
-    # Encontrar temperaturas al inicio y fin de cada descarga
     resultados = []
-    inicios_descarga = [0]
-    for i in range(1, len(t)):
-        if i == 1:  # primera descarga inicia en t=0
-            continue
-        # Detectar inicio de descarga: transición de calentamiento a descarga
-        # Simplificación: los inicios están en t = i*T_CICLO para i=0..4
-        pass
-
-    # Usar tiempos de inicio programados
     for i in range(N_DESCARGAS):
-        t_ini = i * T_CICLO
+        t_ini = i * t_ciclo
         t_fin = t_ini + T_DESCARGA
+        if t_ini > t[-1]:
+            break
         idx_ini = np.argmin(np.abs(t - t_ini))
         idx_fin = np.argmin(np.abs(t - t_fin))
         T_ini = T[idx_ini]
@@ -266,11 +328,12 @@ RESULTS_DIR = os.path.join(os.path.dirname(__file__), '..', 'results')
 FIGURES_DIR = os.path.join(RESULTS_DIR, 'figures')
 
 
-def graficar_ciclo(t, estados, fases):
+def graficar_ciclo(t, estados, fases, T_agua, nivel_inicial, nombre_base):
     """Gráfica de temperatura y nivel vs tiempo."""
     T = estados[:, 0]
     m = estados[:, 1]
-    nivel = m / (RHO_INICIAL * volumen_total()) * 100.0
+    _, MASA_INICIAL = parametros_iniciales(nivel_inicial, T[0] if len(T) > 0 else 60.0)
+    nivel = m / (MASA_INICIAL / nivel_inicial * volumen_total()) * 100.0
 
     fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True,
                              gridspec_kw={'height_ratios': [2, 1]})
@@ -286,13 +349,16 @@ def graficar_ciclo(t, estados, fases):
     for i in range(N_DESCARGAS):
         t_ini = i * T_CICLO
         t_fin = t_ini + T_DESCARGA
+        if t_ini > t[-1]:
+            break
         ax1.axvspan(t_ini, t_fin, color=COLOR_DESCARGA, alpha=0.15)
-        ax1.text((t_ini + t_fin) / 2, 61.5, f'D{i+1}',
-                 ha='center', va='bottom', fontsize=9, color=COLOR_DESCARGA,
-                 fontweight='bold')
+        if t_fin <= t[-1]:
+            ax1.text((t_ini + t_fin) / 2, 61.5, f'D{i+1}',
+                     ha='center', va='bottom', fontsize=9, color=COLOR_DESCARGA,
+                     fontweight='bold')
 
     ax1.set_ylabel('Temperatura [°C]')
-    ax1.set_title('Ciclo de descargas a 12 m³/h: chaqueta 14 m², agua 75 °C')
+    ax1.set_title(f'Ciclo de descargas: {nivel_inicial*100:.0f} %, agua {T_agua:.0f} °C, 12 ton/h')
     ax1.legend(loc='lower left', framealpha=0.95)
     ax1.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     ax1.set_ylim(54, 63)
@@ -302,121 +368,22 @@ def graficar_ciclo(t, estados, fases):
     for i in range(N_DESCARGAS):
         t_ini = i * T_CICLO
         t_fin = t_ini + T_DESCARGA
+        if t_ini > t[-1]:
+            break
         ax2.axvspan(t_ini, t_fin, color=COLOR_DESCARGA, alpha=0.15)
     ax2.set_xlabel('Tiempo [h]')
     ax2.set_ylabel('Nivel [%]')
     ax2.legend(loc='lower left', framealpha=0.95)
     ax2.grid(True, linestyle='-', alpha=0.6, color=COLOR_REJILLA)
-    ax2.set_ylim(75, 85)
+    ax2.set_ylim(nivel_inicial * 100 - 10, nivel_inicial * 100 + 5)
 
     fig.tight_layout()
-    fig.savefig(os.path.join(FIGURES_DIR, 'ciclo_12m3h_T_vs_t.png'))
-    fig.savefig(os.path.join(FIGURES_DIR, 'ciclo_12m3h_T_vs_t.pdf'))
+    fig.savefig(os.path.join(FIGURES_DIR, f'{nombre_base}_T_vs_t.png'))
+    fig.savefig(os.path.join(FIGURES_DIR, f'{nombre_base}_T_vs_t.pdf'))
     plt.close(fig)
 
 
-def diagrama_bloques_descarga():
-    """Diagrama de bloques estilizado de la fase de descarga."""
-    fig, ax = plt.subplots(figsize=(12, 6))
-    ax.set_xlim(0, 12)
-    ax.set_ylim(0, 8)
-    ax.axis('off')
-
-    # Bloque del tanque
-    tank = FancyBboxPatch((4.5, 2.5), 3.0, 3.0, boxstyle="round,pad=0.05,rounding_size=0.2",
-                          facecolor=COLOR_BLOQUE, edgecolor=COLOR_BORDE, linewidth=2)
-    ax.add_patch(tank)
-    ax.text(6.0, 4.75, 'TANQUE DE\nGLUCOSA', ha='center', va='center',
-            fontsize=12, fontweight='bold', color=COLOR_TEXTO)
-    ax.text(6.0, 3.85, f'T ≈ 57–60 °C\nV ≈ {V_TANQUE_80:.1f} m³',
-            ha='center', va='center', fontsize=9, color=COLOR_TEXTO)
-
-    # Chaqueta (arriba)
-    jacket = FancyBboxPatch((4.8, 6.0), 2.4, 0.9, boxstyle="round,pad=0.03,rounding_size=0.1",
-                            facecolor='#FFF3E0', edgecolor=COLOR_AGUA, linewidth=2)
-    ax.add_patch(jacket)
-    ax.text(6.0, 6.45, 'CHAQ. MEDIA CAÑA', ha='center', va='center',
-            fontsize=9, fontweight='bold', color=COLOR_AGUA)
-
-    # Flechas agua
-    ax.annotate('', xy=(5.2, 6.0), xytext=(5.2, 7.5),
-                arrowprops=dict(arrowstyle='->', color=COLOR_AGUA, lw=2))
-    ax.text(4.2, 7.1, 'Agua 75 °C\n2,5 m/s', ha='center', va='center',
-            fontsize=9, color=COLOR_AGUA)
-    ax.annotate('', xy=(6.8, 7.5), xytext=(6.8, 6.0),
-                arrowprops=dict(arrowstyle='->', color=COLOR_AGUA, lw=2))
-    ax.text(7.8, 7.1, 'Agua de retorno\n~74 °C', ha='center', va='center',
-            fontsize=9, color=COLOR_AGUA)
-
-    # Entrada de glucosa fría
-    ax.annotate('', xy=(4.5, 3.5), xytext=(1.0, 3.5),
-                arrowprops=dict(arrowstyle='->', color=COLOR_GLUCOSA, lw=2))
-    ax.text(2.6, 4.2, 'Glucosa de alimentación\n55 °C, 12 m³/h',
-            ha='center', va='center', fontsize=9, color=COLOR_GLUCOSA)
-
-    # Salida hacia carrotanque
-    ax.annotate('', xy=(11.0, 4.0), xytext=(7.5, 4.0),
-                arrowprops=dict(arrowstyle='->', color=COLOR_DESCARGA, lw=2))
-    ax.text(9.6, 4.7, 'Hacia carrotanque\n~57–60 °C, 12 m³/h',
-            ha='center', va='center', fontsize=9, color=COLOR_DESCARGA)
-
-    # Pérdidas
-    ax.annotate('', xy=(6.0, 2.5), xytext=(6.0, 1.0),
-                arrowprops=dict(arrowstyle='->', color=COLOR_BANDA, lw=1.5,
-                                linestyle='--'))
-    ax.text(6.6, 1.5, 'Pérdidas al ambiente\n~14,7 MJ/h',
-            ha='left', va='center', fontsize=9, color=COLOR_BANDA)
-
-    ax.set_title('Fase de descarga: balance de masa y energía', fontsize=14, pad=20)
-    fig.savefig(os.path.join(FIGURES_DIR, 'diagrama_bloques_descarga.png'))
-    fig.savefig(os.path.join(FIGURES_DIR, 'diagrama_bloques_descarga.pdf'))
-    plt.close(fig)
-
-
-def diagrama_bloques_calentamiento():
-    """Diagrama de bloques estilizado de la fase de calentamiento."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 8)
-    ax.axis('off')
-
-    # Tanque
-    tank = FancyBboxPatch((3.5, 2.5), 3.0, 3.0, boxstyle="round,pad=0.05,rounding_size=0.2",
-                          facecolor=COLOR_BLOQUE, edgecolor=COLOR_BORDE, linewidth=2)
-    ax.add_patch(tank)
-    ax.text(5.0, 4.75, 'TANQUE DE\nGLUCOSA', ha='center', va='center',
-            fontsize=12, fontweight='bold', color=COLOR_TEXTO)
-    ax.text(5.0, 3.85, 'T < 60 °C\nSin flujo de entrada/salida',
-            ha='center', va='center', fontsize=9, color=COLOR_TEXTO)
-
-    # Chaqueta
-    jacket = FancyBboxPatch((3.8, 6.0), 2.4, 0.9, boxstyle="round,pad=0.03,rounding_size=0.1",
-                            facecolor='#FFF3E0', edgecolor=COLOR_AGUA, linewidth=2)
-    ax.add_patch(jacket)
-    ax.text(5.0, 6.45, 'CHAQ. MEDIA CAÑA', ha='center', va='center',
-            fontsize=9, fontweight='bold', color=COLOR_AGUA)
-
-    ax.annotate('', xy=(4.2, 6.0), xytext=(4.2, 7.5),
-                arrowprops=dict(arrowstyle='->', color=COLOR_AGUA, lw=2))
-    ax.text(3.2, 7.1, 'Agua 75 °C', ha='center', va='center',
-            fontsize=9, color=COLOR_AGUA)
-    ax.annotate('', xy=(5.8, 7.5), xytext=(5.8, 6.0),
-                arrowprops=dict(arrowstyle='->', color=COLOR_AGUA, lw=2))
-    ax.text(6.8, 7.1, 'Agua retorno', ha='center', va='center',
-            fontsize=9, color=COLOR_AGUA)
-
-    ax.annotate('', xy=(5.0, 2.5), xytext=(5.0, 1.0),
-                arrowprops=dict(arrowstyle='->', color=COLOR_BANDA, lw=1.5, linestyle='--'))
-    ax.text(5.6, 1.5, 'Pérdidas al ambiente', ha='left', va='center',
-            fontsize=9, color=COLOR_BANDA)
-
-    ax.set_title('Fase de calentamiento: recuperación de temperatura', fontsize=14, pad=20)
-    fig.savefig(os.path.join(FIGURES_DIR, 'diagrama_bloques_calentamiento.png'))
-    fig.savefig(os.path.join(FIGURES_DIR, 'diagrama_bloques_calentamiento.pdf'))
-    plt.close(fig)
-
-
-def grafico_barras_resultados(resumen):
+def grafico_barras_resultados(resumen, nombre_base):
     """Gráfico de barras con temperatura final por descarga."""
     descargas = [r['descarga'] for r in resumen]
     T_fin = [r['T_fin_C'] for r in resumen]
@@ -441,9 +408,51 @@ def grafico_barras_resultados(resumen):
     ax.legend(loc='lower left', framealpha=0.95)
     ax.grid(True, axis='y', linestyle='-', alpha=0.6, color=COLOR_REJILLA)
     fig.tight_layout()
-    fig.savefig(os.path.join(FIGURES_DIR, 'ciclo_12m3h_barras_Tfin.png'))
-    fig.savefig(os.path.join(FIGURES_DIR, 'ciclo_12m3h_barras_Tfin.pdf'))
+    fig.savefig(os.path.join(FIGURES_DIR, f'{nombre_base}_barras_Tfin.png'))
+    fig.savefig(os.path.join(FIGURES_DIR, f'{nombre_base}_barras_Tfin.pdf'))
     plt.close(fig)
+
+
+def graficar_ganancia_tiempos_muertos(ganancias, nombre_base):
+    """Gráfico de barras de ganancia térmica neta por tiempo muerto."""
+    fig, ax = plt.subplots(figsize=(10, 5))
+    intervalos = [f'TM{i+1}' for i in range(len(ganancias))]
+    colores = [COLOR_DESCARGA if g > 0 else COLOR_BANDA for g in ganancias]
+    bars = ax.bar(intervalos, ganancias, color=colores, edgecolor=COLOR_TEXTO, linewidth=1.2)
+
+    for bar, g in zip(bars, ganancias):
+        ax.text(bar.get_x() + bar.get_width()/2, g + (0.5 if g > 0 else -1.5),
+                f'{g:.1f} MJ', ha='center', va='bottom' if g > 0 else 'top',
+                fontsize=10, color=COLOR_TEXTO, fontweight='bold')
+
+    ax.axhline(0, color=COLOR_TEXTO, linewidth=0.8)
+    ax.set_xlabel('Intervalo entre descargas')
+    ax.set_ylabel('Ganancia térmica neta [MJ]')
+    ax.set_title('Energía neta aprovechada en tiempos muertos (chaqueta − pérdidas)')
+    ax.grid(True, axis='y', linestyle='-', alpha=0.6, color=COLOR_REJILLA)
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIGURES_DIR, f'{nombre_base}_ganancia_tiempos_muertos.png'))
+    fig.savefig(os.path.join(FIGURES_DIR, f'{nombre_base}_ganancia_tiempos_muertos.pdf'))
+    plt.close(fig)
+
+
+def exportar_resumen_csv(resumen, ganancias, T_agua, nivel_inicial, nombre_base):
+    """Exporta tabla resumen del ciclo a CSV."""
+    filas = []
+    for r, g in zip(resumen, ganancias + [None]):
+        filas.append({
+            'descarga': r['descarga'],
+            't_ini_h': r['t_ini_h'],
+            't_fin_h': r['t_fin_h'],
+            'T_ini_C': r['T_ini_C'],
+            'T_fin_C': r['T_fin_C'],
+            'cumple_min': r['cumple_min'],
+            'ganancia_tiempo_muerto_MJ': g,
+        })
+    df = pd.DataFrame(filas)
+    path = os.path.join(RESULTS_DIR, f'{nombre_base}_resumen.csv')
+    df.to_csv(path, index=False)
+    return path
 
 
 # =============================================================================
@@ -452,38 +461,64 @@ def grafico_barras_resultados(resumen):
 
 if __name__ == '__main__':
     os.makedirs(FIGURES_DIR, exist_ok=True)
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+
     print("=" * 80)
-    print("CICLO DE DESCARGAS A 12 m³/h — Chaqueta 14 m², agua 75 °C")
+    print("CICLO DE DESCARGAS — Chaqueta 14 m², 12 ton/h, con pérdidas térmicas")
     print("=" * 80)
-    print(f"Masa inicial:       {MASA_INICIAL/1000:.1f} ton")
-    print(f"Volumen inicial:    {V_TANQUE_80:.2f} m³")
     print(f"Volumen por descarga: {VOLUMEN_DESCARGA:.2f} m³")
-    print(f"Duración descarga:  {T_DESCARGA:.3f} h ({T_DESCARGA*60:.1f} min)")
-    print(f"Período de ciclo:   {T_CICLO:.2f} h")
+    print(f"Duración descarga:    {T_DESCARGA:.3f} h ({T_DESCARGA*60:.1f} min)")
+    print(f"Período de ciclo:     {T_CICLO:.2f} h")
     print(f"Tiempo de calentamiento disponible: {T_CICLO - T_DESCARGA:.2f} h")
     print()
 
-    t, estados, fases = simular_ciclo()
-    resumen = resumen_ciclo(t, estados)
+    escenarios = [
+        {'T_agua': 75.0, 'nivel_inicial': 0.80, 'T_inicial': 60.0, 'nombre': 'ciclo_80pct_75C'},
+        {'T_agua': 65.0, 'nivel_inicial': 0.80, 'T_inicial': 60.0, 'nombre': 'ciclo_80pct_65C'},
+        {'T_agua': 75.0, 'nivel_inicial': 0.50, 'T_inicial': 60.0, 'nombre': 'ciclo_50pct_75C'},
+        {'T_agua': 65.0, 'nivel_inicial': 0.50, 'T_inicial': 60.0, 'nombre': 'ciclo_50pct_65C'},
+    ]
 
-    print("RESULTADOS POR DESCARGA:")
-    print(f"{'Desc':>5} {'t_ini[h]':>10} {'t_fin[h]':>10} {'T_ini[°C]':>12} {'T_fin[°C]':>12} {'Cumple':>8}")
-    for r in resumen:
-        print(f"{r['descarga']:>5} {r['t_ini_h']:>10.2f} {r['t_fin_h']:>10.2f} "
-              f"{r['T_ini_C']:>12.2f} {r['T_fin_C']:>12.2f} "
-              f"{'Sí' if r['cumple_min'] else 'No':>8}")
+    resultados_totales = {}
 
-    T_final = estados[-1, 0]
-    T_min_ciclo = np.min(estados[:, 0])
-    print()
-    print(f"Temperatura mínima alcanzada en el ciclo: {T_min_ciclo:.2f} °C")
-    print(f"Temperatura final del tanque (24 h):      {T_final:.2f} °C")
-    print(f"Factibilidad (T_min >= {T_MIN_DESPACHO:.0f} degC): {'SI' if T_min_ciclo >= T_MIN_DESPACHO else 'NO'}")
+    for esc in escenarios:
+        T_agua = esc['T_agua']
+        nivel = esc['nivel_inicial']
+        T_ini = esc['T_inicial']
+        nombre = esc['nombre']
 
-    print()
-    print("Generando gráficas...")
-    graficar_ciclo(t, estados, fases)
-    diagrama_bloques_descarga()
-    diagrama_bloques_calentamiento()
-    grafico_barras_resultados(resumen)
-    print(f"Figuras guardadas en: {FIGURES_DIR}")
+        print(f"\n--- Escenario: {nombre} ---")
+        V0, M0 = parametros_iniciales(nivel, T_ini)
+        print(f"Masa inicial: {M0/1000:.1f} ton | Nivel: {nivel*100:.0f} % | T inicial: {T_ini:.0f} °C | T agua: {T_agua:.0f} °C")
+
+        t, estados, fases, ganancias = simular_ciclo(T_agua, nivel, T_ini)
+        resumen = resumen_ciclo(t, estados, t_ciclo=T_TOTAL / N_DESCARGAS)
+
+        print(f"\n{'Desc':>5} {'t_ini[h]':>10} {'t_fin[h]':>10} {'T_ini[C]':>12} {'T_fin[C]':>12} {'Cumple':>8} {'Ganancia[MJ]':>14}")
+        for r, g in zip(resumen, ganancias + [None]):
+            g_str = f'{g:.1f}' if g is not None else '—'
+            print(f"{r['descarga']:>5} {r['t_ini_h']:>10.2f} {r['t_fin_h']:>10.2f} "
+                  f"{r['T_ini_C']:>12.2f} {r['T_fin_C']:>12.2f} "
+                  f"{'Sí' if r['cumple_min'] else 'No':>8} {g_str:>14}")
+
+        T_final = estados[-1, 0]
+        T_min_ciclo = np.min(estados[:, 0])
+        print(f"\nT mínima del ciclo: {T_min_ciclo:.2f} °C")
+        print(f"T final del tanque: {T_final:.2f} °C")
+        print(f"Factibilidad (T_min >= {T_MIN_DESPACHO:.0f} °C): {'SÍ' if T_min_ciclo >= T_MIN_DESPACHO else 'NO'}")
+
+        graficar_ciclo(t, estados, fases, T_agua, nivel, nombre)
+        grafico_barras_resultados(resumen, nombre)
+        if any(g != 0.0 for g in ganancias):
+            graficar_ganancia_tiempos_muertos(ganancias, nombre)
+        csv_path = exportar_resumen_csv(resumen, ganancias, T_agua, nivel, nombre)
+        print(f"CSV guardado: {csv_path}")
+
+        resultados_totales[nombre] = {
+            't': t, 'estados': estados, 'fases': fases,
+            'resumen': resumen, 'ganancias': ganancias,
+        }
+
+    print("\n" + "=" * 80)
+    print("Simulaciones de ciclos completadas. Figuras guardadas en:", FIGURES_DIR)
+    print("=" * 80)

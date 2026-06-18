@@ -14,12 +14,12 @@ Los c\'alculos de transferencia de calor presentados en este informe se implemen
 		\toprule
 		\textbf{M\'odulo} & \textbf{Descripci\'on} \\
 		\midrule
-		\texttt{propiedades\_glucosa.py} & Propiedades termof\'isicas de la glucosa Globe~42~DE (densidad, viscosidad, $C_p$, $k$) y del agua en funci\'on de la temperatura. \\
+		\texttt{propiedades\_glucosa.py} & Propiedades termof\'isicas de la glucosa Globe 1130 (densidad, viscosidad, $C_p$, $k$) y del agua en funci\'on de la temperatura. \\
 		\texttt{geometria\_tanque.py} & Geometr\'ia del tanque: vol\'umenes (cilindro + fondo toriesf\'erico), di\'ametro hidr\'aulico de la media ca\~na, velocidades de flujo. \\
 		\texttt{coeficiente\_U.py} & C\'alculo del coeficiente global $U$: correlaciones de Sieder-Tate ($h_i$), Churchill-Chu ($h_o$) y modelo de resistencias en serie. \\
 		\texttt{escenarios.py} & Simulaci\'on transitoria del calentamiento (RK45) para los Escenarios~1, 2 y 3. Incluye descarga de 24~ton en el Escenario~1. Generaci\'on de gr\'aficas. \\
 		\texttt{ciclo\_descargas.py} & Simulaci\'on del ciclo de cinco descargas a carrotanque (24~h) para los Escenarios~2 y 3. Diagramas de Gantt y tablas por descarga. \\
-		\texttt{escenario4\_ciclo.py} & Escenario~4: ciclo industrial de despacho (120~ton, 55\textdegree C, cinco descargas de 24~ton a 57\textdegree C). C\'alculo de tiempos de recalentamiento. \\
+		\texttt{ciclo\_descargas\_14m2\_75C\_12m3h.py} & Ciclo oficial de despacho (120~ton/d\'ia, cinco descargas de 24~ton a 12~ton/h, glucosa de alimentaci\'on a 55~\textdegree C, temperatura m\'inima de despacho 57~\textdegree C). Simulaci\'on transitoria del ciclo de 24~h. \\
 		\texttt{aislamiento.py} & Dimensionamiento del aislamiento t\'ermico de lana mineral: p\'erdidas de calor y temperatura superficial vs.\ espesor. \\
 		\bottomrule
 	\end{tabularx}
@@ -27,14 +27,14 @@ Los c\'alculos de transferencia de calor presentados en este informe se implemen
 
 El c\'odigo fuente completo est\'a disponible en el repositorio del proyecto y puede ser ejecutado de forma independiente para reproducir todos los resultados de este informe.
 
-\section{Propiedades de la Glucosa Globe~42~DE}
+\section{Propiedades de la Glucosa Globe 1130}
 \label{appendix:propiedades}
 
-Las propiedades termof\'isicas de la glucosa Globe~42~DE se obtuvieron de las fuentes y correlaciones que se resumen en la Tabla~\ref{tab:propiedades_glucosa}.
+Las propiedades termof\'isicas de la glucosa Globe 1130 se obtuvieron de las fuentes y correlaciones que se resumen en la Tabla~\ref{tab:propiedades_glucosa}.
 
 \begin{table}[H]
 	\centering
-	\caption{Correlaciones de propiedades termof\'isicas de la glucosa Globe~42~DE.}
+	\caption{Correlaciones de propiedades termof\'isicas de la glucosa Globe 1130.}
 	\label{tab:propiedades_glucosa}
 	\begin{tabularx}{\textwidth}{@{}lX@{}}
 		\toprule
@@ -61,7 +61,7 @@ Los planos de referencia del tanque (fondo toriesf\'erico y chaqueta de media ca
 		\toprule
 		\textbf{Plano} & \textbf{Descripci\'on} \\
 		\midrule
-		\texttt{REV0DMI17160102} & Plano mec\'anico del fondo toriesf\'erico con dimensiones generales y detalle de la chaqueta de media ca\~na. \\
+		\texttt{REV2DMI17160102} & Plano mec\'anico del fondo toriesf\'erico con dimensiones generales y detalle de la chaqueta de media ca\~na. \\
 		\texttt{Data/planos/espiral.png} & Detalle de la media ca\~na en espiral con paso y perfil rectangular. \\
 		\bottomrule
 	\end{tabularx}

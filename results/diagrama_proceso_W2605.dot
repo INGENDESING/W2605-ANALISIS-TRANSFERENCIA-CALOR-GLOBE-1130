@@ -1,0 +1,134 @@
+digraph PFD_W2605 {
+    // Configuracion general
+    graph [fontname="Arial", fontsize=12, rankdir=LR, bgcolor=white, 
+           margin="20,20", nodesep=0.6, ranksep=1.2];
+    node [fontname="Arial", fontsize=9, shape=box, style="filled,rounded",
+          fillcolor="#f0f0f0", margin="0.15,0.08"];
+    edge [fontname="Arial", fontsize=8, arrowhead=vee, arrowsize=0.8];
+    
+    // ============================================
+    // NODOS DEL PROCESO
+    // ============================================
+    
+    // Entrada de glucosa
+    E101 [label="E-101\nEntrada Glucosa", fillcolor="#90EE90", shape=box, width=1.5];
+    
+    // Tanque T-101 (grupo con componentes)
+    T101 [label="T-101\nTanque Almacenamiento\nFondo Torisferico + Tapa Eliptica\nAislamiento Termico", 
+          fillcolor="#FFB6C1", shape=cylinder, width=2.0, height=1.5];
+    
+    // Chaqueta E-201
+    E201 [label="E-201\nChaqueta Calentamiento\nA = 14 m2", 
+          fillcolor="#87CEEB", shape=box, width=1.3];
+    
+    // Bomba P-101
+    P101 [label="P-101\nBomba\nCentrifuga", 
+          fillcolor="#DDA0DD", shape=ellipse, width=1.0];
+    
+    // Salida a carrotanque
+    E102 [label="E-102\nEstacion Carga\nCarrotanque", 
+          fillcolor="#F0E68C", shape=box, width=1.5];
+    
+    // ============================================
+    // CORRIENTES PRINCIPALES
+    // ============================================
+    
+    // Corriente 1: Glucosa entrada
+    E101 -> T101 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
+        <TR><TD COLSPAN="2"><B>1: Glucosa Entrada</B></TD></TR>
+        <TR><TD>Flujo:</TD><TD>8000 kg/h</TD></TR>
+        <TR><TD>Temperatura:</TD><TD>57.0C</TD></TR>
+        <TR><TD>Entalpia:</TD><TD>971.7 MJ/h</TD></TR>
+        <TR><TD>Cp:</TD><TD>2.131 kJ/kgC</TD></TR>
+        <TR><TD>Densidad:</TD><TD>1405 kg/m3</TD></TR>
+        <TR><TD>Viscosidad:</TD><TD>3500 cP</TD></TR>
+    </TABLE>>, color=darkgreen, penwidth=2, minlen=2];
+    
+    // Corriente 4: Glucosa salida del tanque
+    T101 -> P101 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
+        <TR><TD COLSPAN="2"><B>4: Glucosa Salida</B></TD></TR>
+        <TR><TD>Flujo:</TD><TD>8000 kg/h</TD></TR>
+        <TR><TD>Temperatura:</TD><TD>54.7C</TD></TR>
+        <TR><TD>Entalpia:</TD><TD>932.1 MJ/h</TD></TR>
+        <TR><TD>Cp:</TD><TD>2.131 kJ/kgC</TD></TR>
+        <TR><TD>Densidad:</TD><TD>1405 kg/m3</TD></TR>
+        <TR><TD>Viscosidad:</TD><TD>3500 cP</TD></TR>
+    </TABLE>>, color=darkgreen, penwidth=2, minlen=2];
+    
+    // Corriente 5: A carga
+    P101 -> E102 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
+        <TR><TD COLSPAN="2"><B>5: A Carrotanque</B></TD></TR>
+        <TR><TD>Flujo:</TD><TD>8000 kg/h</TD></TR>
+        <TR><TD>Temperatura:</TD><TD>54.7C</TD></TR>
+        <TR><TD>Entalpia:</TD><TD>932.1 MJ/h</TD></TR>
+    </TABLE>>, color=darkgreen, penwidth=2, minlen=2];
+    
+    // ============================================
+    // SERVICIOS - AGUA DE CALENTAMIENTO
+    // ============================================
+    
+    // Agua entrada (lado izquierdo)
+    AguaEnt [label="", shape=none, width=0, height=0];
+    AguaEnt -> E201 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
+        <TR><TD COLSPAN="2"><B>2: Agua Entrada</B></TD></TR>
+        <TR><TD>Flujo:</TD><TD>30.9 m3/h</TD></TR>
+        <TR><TD>Flujo:</TD><TD>30282 kg/h</TD></TR>
+        <TR><TD>Temperatura:</TD><TD>65.0C</TD></TR>
+        <TR><TD>Entalpia:</TD><TD>8235.5 MJ/h</TD></TR>
+        <TR><TD>Cp:</TD><TD>4.184 kJ/kgC</TD></TR>
+        <TR><TD>Densidad:</TD><TD>980 kg/m3</TD></TR>
+    </TABLE>>, color=blue, penwidth=1.5, style=dashed, constraint=false];
+    
+    // Agua salida
+    E201 -> AguaSal [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
+        <TR><TD COLSPAN="2"><B>3: Agua Salida</B></TD></TR>
+        <TR><TD>Flujo:</TD><TD>30282 kg/h</TD></TR>
+        <TR><TD>Temperatura:</TD><TD>64.9C</TD></TR>
+        <TR><TD>Entalpia:</TD><TD>8224.0 MJ/h</TD></TR>
+    </TABLE>>, color=blue, penwidth=1.5, style=dashed];
+    
+    AguaSal [label="", shape=none, width=0, height=0];
+    
+    // Conexion chaqueta a tanque (representa intercambio)
+    E201 -> T101 [style=invis, constraint=false];
+    
+    // ============================================
+    // FLUJOS DE ENERGIA
+    // ============================================
+    
+    // Perdidas termicas (flecha roja discontinua hacia arriba)
+    Perdidas [label="Q Perdidas = 51.1 MJ/h\n(3C perdidos)", 
+              shape=none, fillcolor=none, fontcolor=red];
+    T101 -> Perdidas [style=dotted, color=red, penwidth=2, arrowhead=none, 
+                      constraint=false, minlen=1];
+    
+    // Calor de chaqueta (etiqueta cerca del tanque)
+    QChaqueta [label="Q Chaqueta = 11.5 MJ/h\n(U = 30 W/m2K, A = 14 m2)", 
+               shape=none, fillcolor=none, fontcolor=blue];
+    E201 -> QChaqueta [style=invis, constraint=false];
+    
+    // ============================================
+    // LEYENDA Y ANOTACIONES
+    // ============================================
+    
+    label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="4" BGCOLOR="#f8f8f8">
+        <TR><TD COLSPAN="2"><B>PROYECTO W2605 - DIAGRAMA DE FLUJO DE PROCESO</B></TD></TR>
+        <TR><TD COLSPAN="2">Sistema de Almacenamiento y Carga de Glucosa Globe 1130</TD></TR>
+        <TR><TD>Tanque:</TD><TD>Fondo Torisferico ASME F&D + Tapa Eliptica API 650</TD></TR>
+        <TR><TD>Aislamiento:</TD><TD>Lana Mineral (especificado sin espesor)</TD></TR>
+        <TR><TD>Chaqueta:</TD><TD>Media cana rectangular, Area = 14 m2</TD></TR>
+        <TR><TD>Condicion Minima Carga:</TD><TD>Temperatura >= 57C</TD></TR>
+    </TABLE>>;
+    labelloc=b;
+    labeljust=center;
+    
+    // Subgraph para agrupar servicios
+    subgraph cluster_servicios {
+        label="Servicio: Agua Caliente 65C";
+        style=dashed;
+        color=blue;
+        AguaEnt;
+        E201;
+        AguaSal;
+    }
+}

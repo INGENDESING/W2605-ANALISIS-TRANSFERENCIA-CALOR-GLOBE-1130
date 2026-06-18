@@ -33,7 +33,7 @@ class TestAPI(unittest.TestCase):
             'temp_glucosa_inicial': 20,
             'temp_glucosa_objetivo': 60,
             'volumen_glucosa_m3': 24,
-            'area_contacto_m2': 13
+            'area_contacto_m2': 14
         }
         response = self.client.post('/api/calcular/transferencia-calor',
                                     data=json.dumps(payload),
@@ -182,6 +182,45 @@ class TestVistas(unittest.TestCase):
         """Test que solo se permiten archivos PDF"""
         response = self.client.get('/informes/W2605PRINF001.tex')
         self.assertEqual(response.status_code, 404)
+
+    def test_vista_documentos(self):
+        """Test renderizado de /documentos con tabla de transmittal"""
+        response = self.client.get('/documentos')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Tabla de Transmittal'.encode('utf-8'), response.data)
+        self.assertIn('W2605PRINF001'.encode('utf-8'), response.data)
+
+    def test_serve_codigo_src(self):
+        """Test descarga de archivo Python de src/"""
+        response = self.client.get('/codigo/src/coeficiente_U.py')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, 'text/x-python; charset=utf-8')
+        self.assertIn('attachment', response.headers.get('Content-Disposition', ''))
+
+    def test_serve_codigo_core(self):
+        """Test descarga de archivo Python de webapp/app/core/"""
+        response = self.client.get('/codigo/webapp/app/core/ciclo_12m3h.py')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, 'text/x-python; charset=utf-8')
+        self.assertIn('attachment', response.headers.get('Content-Disposition', ''))
+
+    def test_serve_codigo_no_py_rejected(self):
+        """Test que solo se permiten archivos Python"""
+        response = self.client.get('/codigo/src/coeficiente_U.txt')
+        self.assertEqual(response.status_code, 404)
+
+    def test_serve_codigo_path_traversal_rejected(self):
+        """Test que no se permite path traversal en descargas de código"""
+        response = self.client.get('/codigo/src/../app/routes.py')
+        self.assertEqual(response.status_code, 404)
+
+    def test_descargar_codigo_fuente(self):
+        """Test descarga del ZIP de código fuente"""
+        response = self.client.get('/descargar-codigo-fuente')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, 'application/zip')
+        self.assertIn('attachment', response.headers.get('Content-Disposition', ''))
+        self.assertIn('W2605_Codigo_Fuente'.encode('utf-8'), response.headers.get('Content-Disposition', '').encode('utf-8'))
 
 
 if __name__ == '__main__':

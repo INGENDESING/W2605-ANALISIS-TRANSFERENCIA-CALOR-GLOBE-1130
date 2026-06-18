@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Arranque por Niveles — W2605{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4 fade-in">
+    <div>
+        <h4 class="mb-0">
+            <i class="bi bi-thermometer-sun text-neon-orange me-2"></i>
+            Arranque del tanque con pérdidas térmicas
+        </h4>
+        <small class="text-muted">50 % y 80 % del volumen operativo, 40 °C → 60 °C, 96 h</small>
+    </div>
+</div>
+
+<div class="alert alert-warning mb-4 fade-in" role="alert">
+    <h5 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Resultado clave</h5>
+    <p class="mb-0">
+        Ninguno de los escenarios con pérdidas térmicas alcanza 60 °C en 96 h. La inercia térmica del contenido total
+        del tanque supera el aporte de la chaqueta de 14 m². El caso más favorable es el 50 % del tanque con agua a
+        75 °C, que llega a 51,50 °C al final del periodo simulado.
+    </p>
+</div>
+
+{% for nombre, esc in escenarios.items() %}
+<div class="card mb-4 fade-in">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-droplet-fill me-2"></i>Caso: {{ nombre }} — {{ esc.masa_kg|format_number(0) }} kg</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover align-middle" style="max-width:900px;">
+                <thead>
+                    <tr>
+                        <th>T<sub>agua</sub> [°C]</th>
+                        <th>T<sub>final</sub> [°C]</th>
+                        <th>Tiempo a 60 °C [h]</th>
+                        <th>Q<sub>máx</sub> [kW]</th>
+                        <th>Energía neta [MJ]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for etiqueta, res in esc.resultados.items() %}
+                    <tr>
+                        <td class="mono">{{ res.T_agua_C }}</td>
+                        <td class="mono">{{ res.T_final_C|format_number(2) }}</td>
+                        <td class="mono">{{ res.tiempo_a_60_C_h|default('No alcanza', true) }}</td>
+                        <td class="mono">{{ res.Q_max_kW|format_number(2) }}</td>
+                        <td class="mono">{{ res.energia_neta_MJ|format_number(2) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<div class="card mb-4 fade-in">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-image me-2"></i>Figuras de referencia</h5>
+    </div>
+    <div class="card-body text-center">
+        <img src="/figures/curva_arranque_T_vs_t_comparativa.png" alt="Comparativa de arranque" class="img-fluid rounded mb-3">
+        <img src="/figures/curva_arranque_por_caso.png" alt="Curvas por caso" class="img-fluid rounded">
+    </div>
+</div>
+{% endblock %}

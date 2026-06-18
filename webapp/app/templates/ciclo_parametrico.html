@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Ciclo Paramétrico — W2605{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4 fade-in">
+    <div>
+        <h4 class="mb-0">
+            <i class="bi bi-layers-fill text-neon-blue me-2"></i>
+            Análisis paramétrico del ciclo oficial
+        </h4>
+        <small class="text-muted">5 descargas/día a 12 ton/h con área de 14 m²</small>
+    </div>
+</div>
+
+<div class="card mb-4 fade-in">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-table me-2"></i>Comparación de escenarios</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover align-middle" style="max-width:900px;">
+                <thead>
+                    <tr>
+                        <th>Escenario</th>
+                        <th>Nivel inicial</th>
+                        <th>T<sub>agua</sub> [°C]</th>
+                        <th>T<sub>mín</sub> [°C]</th>
+                        <th>T<sub>final</sub> [°C]</th>
+                        <th>Factible (≥ 57 °C)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nombre, esc in escenarios.items() %}
+                    <tr>
+                        <td class="fw-semibold">{{ nombre }}</td>
+                        <td class="mono">{{ esc.configuracion.nivel_inicial_porc|format_number(0) }} %</td>
+                        <td class="mono">{{ esc.configuracion.T_agua_C }}</td>
+                        <td class="mono">{{ esc.metricas.T_min_C }}</td>
+                        <td class="mono">{{ esc.metricas.T_final_C }}</td>
+                        <td>
+                            {% if esc.metricas.factible %}
+                            <span class="badge bg-success">Sí</span>
+                            {% else %}
+                            <span class="badge bg-danger">No</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4 fade-in">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-graph-up me-2"></i>Perfiles de temperatura</h5>
+    </div>
+    <div class="card-body">
+        <div class="row g-3">
+            {% for nombre in ['80pct_75C', '80pct_65C', '50pct_75C', '50pct_65C'] %}
+            <div class="col-md-6">
+                <div class="card h-100 bg-dark border-secondary">
+                    <div class="card-body text-center">
+                        <h6 class="card-title text-neon-cyan">{{ nombre }}</h6>
+                        <img src="/figures/ciclo_{{ nombre }}_T_vs_t.png" alt="Ciclo {{ nombre }}" class="img-fluid rounded">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

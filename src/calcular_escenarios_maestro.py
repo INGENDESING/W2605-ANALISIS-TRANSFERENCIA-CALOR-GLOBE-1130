@@ -174,17 +174,17 @@ def calcular_escenario(config):
 def main():
     ESCENARIOS = [
         # 01A
-        {'codigo': '01a_1', 'T_agua': 65.0, 'Q_agua': 30.9, 'A_chaqueta': 13.0, 'T_gluc': 60.0, 'V_agua': 1.338},
-        {'codigo': '01a_2', 'T_agua': 65.0, 'Q_agua': 30.9, 'A_chaqueta': 13.0, 'T_gluc': 57.0, 'V_agua': 1.338},
-        {'codigo': '01a_3', 'T_agua': 65.0, 'Q_agua': 30.9, 'A_chaqueta': 13.0, 'T_gluc': 54.0, 'V_agua': 1.338},
+        {'codigo': '01a_1', 'T_agua': 65.0, 'Q_agua': 30.9, 'A_chaqueta': A_CONTACTO, 'T_gluc': 60.0, 'V_agua': 1.338},
+        {'codigo': '01a_2', 'T_agua': 65.0, 'Q_agua': 30.9, 'A_chaqueta': A_CONTACTO, 'T_gluc': 57.0, 'V_agua': 1.338},
+        {'codigo': '01a_3', 'T_agua': 65.0, 'Q_agua': 30.9, 'A_chaqueta': A_CONTACTO, 'T_gluc': 54.0, 'V_agua': 1.338},
         # 01B
-        {'codigo': '01b_1', 'T_agua': 65.0, 'Q_agua': 57.7, 'A_chaqueta': 13.0, 'T_gluc': 60.0, 'V_agua': 2.5},
-        {'codigo': '01b_2', 'T_agua': 65.0, 'Q_agua': 57.7, 'A_chaqueta': 13.0, 'T_gluc': 57.0, 'V_agua': 2.5},
-        {'codigo': '01b_3', 'T_agua': 65.0, 'Q_agua': 57.7, 'A_chaqueta': 13.0, 'T_gluc': 54.0, 'V_agua': 2.5},
+        {'codigo': '01b_1', 'T_agua': 65.0, 'Q_agua': 57.7, 'A_chaqueta': A_CONTACTO, 'T_gluc': 60.0, 'V_agua': 2.5},
+        {'codigo': '01b_2', 'T_agua': 65.0, 'Q_agua': 57.7, 'A_chaqueta': A_CONTACTO, 'T_gluc': 57.0, 'V_agua': 2.5},
+        {'codigo': '01b_3', 'T_agua': 65.0, 'Q_agua': 57.7, 'A_chaqueta': A_CONTACTO, 'T_gluc': 54.0, 'V_agua': 2.5},
         # 01C
-        {'codigo': '01c_1', 'T_agua': 75.0, 'Q_agua': 57.7, 'A_chaqueta': 13.0, 'T_gluc': 60.0, 'V_agua': 2.5},
-        {'codigo': '01c_2', 'T_agua': 75.0, 'Q_agua': 57.7, 'A_chaqueta': 13.0, 'T_gluc': 57.0, 'V_agua': 2.5},
-        {'codigo': '01c_3', 'T_agua': 75.0, 'Q_agua': 57.7, 'A_chaqueta': 13.0, 'T_gluc': 54.0, 'V_agua': 2.5},
+        {'codigo': '01c_1', 'T_agua': 75.0, 'Q_agua': 57.7, 'A_chaqueta': A_CONTACTO, 'T_gluc': 60.0, 'V_agua': 2.5},
+        {'codigo': '01c_2', 'T_agua': 75.0, 'Q_agua': 57.7, 'A_chaqueta': A_CONTACTO, 'T_gluc': 57.0, 'V_agua': 2.5},
+        {'codigo': '01c_3', 'T_agua': 75.0, 'Q_agua': 57.7, 'A_chaqueta': A_CONTACTO, 'T_gluc': 54.0, 'V_agua': 2.5},
         # 02A
         {'codigo': '02a_1', 'T_agua': 75.0, 'Q_agua': 57.7, 'A_chaqueta': 28.0, 'T_gluc': 60.0, 'V_agua': 2.5},
         {'codigo': '02a_2', 'T_agua': 75.0, 'Q_agua': 57.7, 'A_chaqueta': 28.0, 'T_gluc': 57.0, 'V_agua': 2.5},

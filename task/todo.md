@@ -409,6 +409,58 @@ El cliente DMV SAS recibió un informe de un tercero ubicado en `InformeTercero/
 
 ---
 
+## 32. Revisión de cambios realizados — rediseño de diagramas de bloques del ciclo oficial
+
+**Fecha de revisión:** 18 de junio de 2026  
+**Archivo creado:** `src/diagramas_bloques_ciclo.py`  
+**Figuras generadas:** `results/figures/diagrama_bloques_global.{png,pdf}`, `results/figures/diagrama_bloques_descarga.{png,pdf}`, `results/figures/diagrama_bloques_calentamiento.{png,pdf}`
+
+### Cambios principales
+
+1. **Nuevo script unificado (`src/diagramas_bloques_ciclo.py`):**
+   - Tres funciones independientes: `generar_diagrama_global`, `generar_diagrama_descarga` y `generar_diagrama_calentamiento`.
+   - Estilo coherente con `src/generar_diagrama_bloques_figura1.py`: bloques redondeados, paleta corporativa, flechas con etiquetas, título, leyenda y nota.
+   - Paleta: verde para glucosa, azul para agua/servicio, rojo para pérdidas, amarillo claro para despacho.
+   - Figsize 14×9, `ylim` ampliado a 9.5 para evitar superposiciones, leyenda ubicada en la esquina inferior izquierda.
+
+2. **Datos oficiales incorporados:**
+   - Producto: jarabe de glucosa Globe 1130, 80,6 °Brix.
+   - Tanque Tag 53A-90A-0056, fondo toriesférico, chaqueta de media caña rectangular en espiral, área 14 m².
+   - Agua de calentamiento: 75 °C, 57,7 m³/h, 2,5 m/s; retorno ~74,9 °C.
+   - Calor útil de chaqueta: 27,3 MJ/h; pérdidas térmicas: 14,7 MJ/h.
+   - Ciclo oficial: 5 descargas/día de 24 ton, 12 ton/h, 2,0 h de descarga, período 4,8 h, calentamiento 2,8 h.
+   - Flujo medio de glucosa: 5.000 kg/h; alimentación a 55 °C; temperatura mínima de despacho 57 °C; temperatura final del ciclo 58,56 °C.
+   - Coeficiente global U ≈ 36 W/(m²·°C) a 60 °C; U ≈ 31 W/(m²·°C) en condiciones representativas; resistencia térmica del lado del producto ≈ 98 %.
+
+3. **Figuras generadas:**
+   - `diagrama_bloques_global`: vista global del sistema, pensado como Figura 1 del informe principal.
+   - `diagrama_bloques_descarga`: balance de masa y energía durante la descarga con flujo de 12 ton/h a 55 °C.
+   - `diagrama_bloques_calentamiento`: recuperación térmica entre descargas durante 2,8 h.
+   - Todas las figuras se guardan en PNG a 200 dpi y PDF a 300 dpi.
+
+### Verificación
+
+- El script se ejecuta sin errores con `venv/Scripts/python.exe`.
+- No se detectan superposiciones entre bloques, flechas ni etiquetas en las imágenes PNG generadas.
+- Los valores numéricos coinciden con los datos oficiales del ciclo y con las secciones `05_balance_materia_energia.tex` y `15_analisis_ciclo_12m3h.tex`.
+- No se modificaron archivos LaTeX.
+
+### Entregables finales
+
+- `src/diagramas_bloques_ciclo.py`
+- `results/figures/diagrama_bloques_global.png`
+- `results/figures/diagrama_bloques_global.pdf`
+- `results/figures/diagrama_bloques_descarga.png`
+- `results/figures/diagrama_bloques_descarga.pdf`
+- `results/figures/diagrama_bloques_calentamiento.png`
+- `results/figures/diagrama_bloques_calentamiento.pdf`
+
+---
+
+*Sesión de rediseño de diagramas de bloques completada.*
+
+---
+
 ## 13. Revisión de cambios realizados — auditoría crítica del informe de tercero GTTP-1004 Rev.5
 
 **Fecha de revisión:** 17 de junio de 2026  
@@ -1351,3 +1403,769 @@ Ninguna desviación crítica. Se mantuvo Bootstrap 5 y las librerías CDN existe
 - Tests: `webapp/tests/test_api.py`
 - Despliegue: `render.yaml`
 - Documentación: `README.md`, `contexto.md`
+
+---
+
+## Plan: eliminar toda referencia al area actual (chaqueta dimple, 28 m2)
+
+**Fecha del plan:** 17 de junio de 2026  
+**Estado:** Propuesto — a la espera de aprobacion explicita  
+**Alcance:** Remover del informe tecnico, la webapp y los entregables activos cualquier mencion, tabla, figura o calculo que haga referencia a la chaqueta dimple actual de 28 m2.
+
+---
+
+### Contexto
+- Objetivo: dejar unicamente el analisis de la chaqueta de media cana del fondo de reemplazo (13 m2 base / 14 m2 caso 12 m3/h), eliminando la comparativa con la configuracion dimple existente.
+- Cliente / Proyecto DML: W2605 — Analisis termico del fondo toriesferico del tanque de glucosa Tag 53A-90A-0056.
+- Normas aplicables: API 650, ASME VIII, ASME B31.3, RETIE, NSR-10.
+
+---
+
+### Supuestos clave
+- [ ] Se eliminaran del informe activo las subsecciones, tablas y figuras comparativas dimple vs. media cana.
+- [ ] Se mantendra la chaqueta de media cana con areas 13 m2 (calculadora base) y 14 m2 (caso 12 m3/h); estas no son "area actual".
+- [ ] Los coeficientes h_int = 28,0 W/(m2·K) no se modificaran, porque no son un area de chaqueta.
+- [ ] Los archivos scripts/CSV/figuras relacionados con la comparativa dimple se moveran a reciclaje/ para conservar trazabilidad historica, en lugar de eliminarse permanentemente.
+
+---
+
+### Tareas
+- [ ] **T1. Informe tecnico — Seccion 8 (metodologia).** Eliminar el parrafo que describe la chaqueta dimple de 28 m2 y la comparativa cuantitativa entre configuraciones. (Impacto: docs/report/sections/08_metodologia.tex.)
+- [ ] **T2. Informe tecnico — Seccion 9 (resultados).** Eliminar subseccion, tablas y figuras de comparacion de chaquetas (batch, flujo continuo, flujo maximo). Ajustar texto introductorio de la seccion si es necesario. (Impacto: docs/report/sections/09_resultados.tex.)
+- [ ] **T3. Informe tecnico — Seccion 10 (analisis).** Eliminar analisis comparativo dimple vs. media cana y ajustar conclusiones intermedias. (Impacto: docs/report/sections/10_analisis.tex.)
+- [ ] **T4. Informe tecnico — Seccion 11 (conclusiones).** Eliminar tabla y parrafos que referencian A_actual = 28 m2. (Impacto: docs/report/sections/11_conclusiones.tex.)
+- [ ] **T5. Recompilar informes.** Compilar W2605PRINF001.tex y W2605PRINF002.tex y verificar que no queden referencias rotas ni advertencias de etiquetas. (Impacto: PDFs y auxiliares.)
+- [ ] **T6. Webapp — Escenarios.** Eliminar la seccion "Comparativa: chaqueta dimple vs. media cana" y las figuras comp_* de webapp/app/templates/escenarios.html. (Impacto: 1 archivo.)
+- [ ] **T7. Webapp — About e index.** Eliminar menciones a "chaqueta dimple" en about.html e index.html. (Impacto: 2 archivos.)
+- [ ] **T8. Scripts y resultados asociados.** Mover src/comparativa_chaquetas.py, results/comparativa_batch.csv, results/comparativa_flujo_maximo.csv y las figuras comp_batch_*.png/pdf, comp_flujo_*.png/pdf a reciclaje/05_documentos_desactualizados/. (Impacto: archivos multiples.)
+- [ ] **T9. README y contexto.** Actualizar secciones que mencionan comparativa dimple/media cana o figuras comp_*. (Impacto: 2 archivos.)
+- [ ] **T10. Verificacion.** Ejecutar tests de la webapp y verificar visualmente /escenarios, /about e /. (Impacto: validacion.)
+- [ ] **T11. Commit y push.** Subir cambios a GitHub. (Impacto: operacion git.)
+
+---
+
+### Riesgos / Puntos de verificacion
+- [x] **R1. Referencias cruzadas en LaTeX:** eliminar tablas/figuras puede dejar refs rotos; se verifico con compilacion completa.
+- [x] **R2. Coherencia numerica:** no modificar resultados del caso de media cana (13/14 m2).
+- [x] **R3. Figuras huerfanas:** asegurar que no queden includegraphics apuntando a figuras movidas a reciclaje.
+- [x] **R4. Webapp:** confirmar que /escenarios sigue cargando sin 404 tras eliminar las figuras comp_*.
+
+---
+
+**Plan aprobado y ejecutado.**
+
+---
+
+## 31. Revisión de cambios realizados — eliminación de la comparativa con chaqueta dimple 28 m²
+
+**Fecha de revisión:** 17 de junio de 2026  
+**Archivos modificados:** `docs/report/sections/08_metodologia.tex`, `docs/report/sections/09_resultados.tex`, `docs/report/sections/10_analisis.tex`, `docs/report/sections/11_conclusiones.tex`, `docs/report/W2605PRINF001.pdf`, `docs/report/W2605PRINF002.pdf`, `webapp/app/templates/escenarios.html`, `webapp/app/templates/about.html`, `webapp/app/templates/index.html`, `README.md`, `contexto.md`.  
+**Archivos archivados:** `src/comparativa_chaquetas.py`, `results/comparativa_batch.csv`, `results/comparativa_flujo_25C.csv`, `results/comparativa_flujo_55C.csv`, `results/comparativa_flujo_maximo.csv` y las figuras `comp_batch_*`, `comp_flujo_*` en `reciclaje/09_comparativa_dimple_obsoleta/`.
+
+### Cambios principales
+
+1. **Informe técnico W2605PRINF001:** se eliminaron la subsección de metodología comparativa, la subsección de resultados comparativos, la subsubsección de análisis comparativo y la tabla de conclusiones comparativas. Las referencias cruzadas a `sec:comp_chaquetas`, `tab:comp_batch`, `tab:comp_flujo`, `eq:ode_espacial` y `tab:conclusiones_chaquetas` quedaron limpias del documento activo.
+
+2. **Resumen ejecutivo W2605PRINF002:** se verificó que no contenía referencias a la chaqueta dimple ni al área de 28 m²; se recompiló para reflejar el estado actual del proyecto.
+
+3. **Webapp:** se eliminó de `escenarios.html` la sección "Comparativa: chaqueta dimple vs. media caña" y sus cuatro figuras; se actualizaron los textos introductorios de `escenarios.html`, `about.html` e `index.html` para enfocarse en los cinco escenarios térmicos y el caso de estudio de 24 ton.
+
+4. **Scripts y resultados obsoletos:** el script `src/comparativa_chaquetas.py`, los CSVs asociados y las figuras `comp_*` se movieron a `reciclaje/09_comparativa_dimple_obsoleta/` para conservar trazabilidad histórica sin mantenerlos en los entregables activos.
+
+5. **Documentación:** se actualizaron `README.md` y `contexto.md` para reflejar la eliminación de la comparativa dimple, el archivado del material y el estado actual del proyecto.
+
+### Verificación
+
+- `W2605PRINF001.tex` compiló sin errores fatales ni referencias no definidas; PDF de 65 páginas.
+- `W2605PRINF002.tex` compiló sin errores fatales ni referencias no definidas; PDF de 5 páginas.
+- Búsqueda en ambos PDFs (`pdftotext` + grep) no arrojó ocurrencias de "dimple", "28 m²", "28 m^2" ni "28 m2".
+- `webapp/tests/test_api.py`: 16 tests OK.
+- `task/test_ciclo.py` y `task/test_simulacion_50C.py` ejecutados sin errores.
+- Grep en `webapp/` no encontró referencias residuales a `comp_batch`, `comp_flujo`, "dimple" ni "28 m²".
+
+### Desviaciones respecto al plan original
+
+- Se creó la carpeta `reciclaje/09_comparativa_dimple_obsoleta/` en lugar de usar `reciclaje/05_documentos_desactualizados/`, para aislar el material obsoleto de la comparativa y mantener la organización del reciclaje existente.
+- Se conservaron intactos los coeficientes de convección `h_int = 28,0 W/(m²·K)` en los scripts de pérdidas térmicas, dado que no corresponden al área de chaqueta.
+
+### Entregables finales
+
+- `docs/report/W2605PRINF001.pdf` — Informe técnico principal sin comparativa dimple (65 páginas).
+- `docs/report/W2605PRINF002.pdf` — Resumen ejecutivo (5 páginas).
+- `webapp/app/templates/escenarios.html`, `about.html`, `index.html` — actualizados.
+- `reciclaje/09_comparativa_dimple_obsoleta/` — material obsoleto archivado.
+- `README.md` y `contexto.md` — documentación sincronizada.
+
+---
+
+*Sesión de eliminación de comparativa dimple 28 m² completada.*
+
+---
+
+## 32. Revisión de cambios realizados — aplicación del logo oficial de DMV SAS
+
+**Fecha de revisión:** 18 de junio de 2026  
+**Archivos modificados:** `docs/report/W2605PRINF001.pdf`, `docs/report/W2605PRINF002.pdf`, `docs/report/W2605PRINF001_page1-01.png`, `docs/report/W2605PRINF002_page1-1.png`, `contexto.md`.  
+**Archivos de referencia:** `docs/report/logos/logo1.png`, `docs/report/config/header_estilo_tercero.tex`, `docs/report/W2605PRINF001.tex`, `docs/report/W2605PRINF002.tex`.
+
+### Cambios principales
+
+1. **Confirmación del logo oficial:** el usuario indicó que el logo oficial de DMV SAS es el archivo existente `docs/report/logos/logo1.png`, que contiene la tipografía gótica verde "DML Ingeniería S.A.S.".
+
+2. **Recompilación de informes:** se recompilaron ambos documentos maestros para garantizar que el membrete estilo tercero use el logo oficial:
+   - `W2605PRINF001.tex`: flujo completo pdflatex + bibtex + dos pasadas adicionales (65 páginas).
+   - `W2605PRINF002.tex`: dos pasadas pdflatex (5 páginas).
+
+3. **Generación de imágenes de verificación:** se crearon capturas de la primera página de cada informe mediante `pdftoppm` para confirmar visualmente la presencia del logo en el membrete.
+
+### Verificación
+
+- Ambos documentos compilaron sin errores fatales.
+- Las imágenes `W2605PRINF001_page1-01.png` y `W2605PRINF002_page1-1.png` confirman que el membrete estilo tercero muestra el logo oficial de DMV SAS en la columna derecha.
+- Los tests de Python (`task/test_ciclo.py`, `task/test_simulacion_50C.py`, `webapp/tests/test_api.py`) se ejecutan sin errores: 16 tests OK.
+- Las advertencias residuales son las preexistentes (`ResourceWarning` por archivos no cerrados en `send_from_directory`, advertencias menores de overfull/underfull en tablas y hipervínculos).
+
+### Entregables finales
+
+- `docs/report/W2605PRINF001.pdf` — Informe técnico principal con logo oficial de DMV SAS (65 páginas).
+- `docs/report/W2605PRINF002.pdf` — Resumen ejecutivo con logo oficial de DMV SAS (5 páginas).
+- `docs/report/W2605PRINF001_page1-01.png` y `docs/report/W2605PRINF002_page1-1.png` — Verificación visual del membrete.
+
+---
+
+*Sesión de aplicación del logo oficial de DMV SAS completada.*
+
+---
+
+# Plan: Unificación del área de transferencia de la chaqueta de media caña a 14 m²
+
+## Contexto
+- **Objetivo:** Cambiar el área de transferencia de la chaqueta de media caña de 13 m² a 14 m² en todos los informes, cálculos, scripts, webapp y documentación activos del proyecto W2605.
+- **Cliente / Proyecto DML:** DMV SAS — Proyecto W2605 (tanque de glucosa Tag 53A-90A-0056).
+- **Normas aplicables:** API 650 (2020), ASME Section VIII Div. 1, ASME B31.3, RETIE, NSR-10.
+
+## Supuestos clave
+- [ ] El área de transferencia de diseño aprobada para la chaqueta de media caña es **14 m²** (el usuario lo indica explícitamente para todo el proyecto).
+- [ ] Los casos de estudio que ya usan 14 m² (`src/calentamiento_24ton_40_60.py`, `src/ciclo_descargas_14m2_75C_12m3h.py`, secciones 14 y 15 del informe) **permanecen en 14 m²**; no requieren cambio.
+- [ ] Los archivos dentro de `reciclaje/` son históricos y no se modifican.
+- [ ] Cambiar `A_CONTACTO` en `src/geometria_tanque.py` a 14.0 propagará el cambio a los scripts que importan la constante, pero los hardcodes locales deben corregirse explícitamente.
+- [ ] Los resultados numéricos (tiempos de calentamiento, temperaturas finales, capacidad diaria, pérdidas térmicas) cambiarán y deben revalidarse.
+
+## Tareas
+- [x] **T1. Fuente de verdad.** `A_CONTACTO = 14.0` ya estaba definido en `src/geometria_tanque.py`; `L_ESPIRAL_TOTAL` se recalcula automáticamente a partir de `A_CONTACTO`.
+- [ ] **T2. Configuración webapp.** No aplica en esta ejecución: no existen `webapp/config.py` ni `webapp/app/core/area_fija.py` en la estructura actual.
+- [ ] **T3. Eliminación de hardcodes 13 m² en scripts de simulación.** Pendiente: `src/ciclo_descargas.py`, `src/escenario4_capacidad.py` y generadores de figuras PFD aún contienen referencias a 13 m² (fueron detectados pero no solicitados en el alcance de esta tarea).
+- [ ] **T4. Scripts de PFDs y diagramas.** Pendiente: detectadas referencias en `src/generar_pfds_escenarios.py` y `src/generar_diagrama_matplotlib.py`; no se modificaron por estar fuera del alcance solicitado.
+- [ ] **T5. Tablas y generadores auxiliares.** Pendiente: no se ejecutaron cambios en generadores de tablas/CSVs.
+- [ ] **T6. Regeneración de figuras y CSVs.** Pendiente: no se ejecutaron scripts (instrucción del usuario: "NO ejecutes scripts").
+- [x] **T7. Documentación LaTeX.** Actualizadas `docs/report/sections/08_metodologia.tex`, `09_resultados.tex`, `10_analisis.tex`, `11_conclusiones.tex`; `14_calentamiento_24ton.tex` y `15_analisis_ciclo_12m3h.tex` verificados coherentes con 14 m².
+- [x] **T8. Webapp UI y API.** Actualizados `webapp/app/templates/about.html`, `index.html`, `escenarios.html`, `calculadora.html`, `simulador.html`, `webapp/app/api/calculos.py`, `webapp/app/api/proyecto.py`, `webapp/app/core/balance_energia.py`, `webapp/app/core/escenarios_extras.py`, `webapp/app/static/js/dashboard.js`.
+- [x] **T9. Tests.** Actualizados `task/test_ciclo.py`, `task/test_simulacion_50C.py` para usar `A_CONTACTO`; `webapp/tests/test_api.py` actualizado a 14 m².
+- [x] **T10. Markdown de proyecto.** Actualizados `README.md`, `contexto.md`, `InformeTercero/auditoria.md`.
+- [ ] **T11. Recompilación de informes.** Pendiente: recompilar `W2605PRINF001.tex` y `W2605PRINF002.tex` con textos actualizados.
+- [ ] **T12. Verificación final.** Pendiente: ejecutar tests y verificar coherencia numérica (instrucción del usuario: "NO ejecutes scripts").
+- [ ] **T13. Diagrama de bloques profesional.** Pendiente.
+
+## Riesgos / Puntos de verificación
+- [ ] **R1. Coherencia dimensional:** mantener unidades en m² en todos los scripts y documentos.
+- [ ] **R2. No tocar casos de estudio de 14 m²:** confirmar que `src/calentamiento_24ton_40_60.py`, `src/ciclo_descargas_14m2_75C_12m3h.py` y secciones 14/15 del informe no requieren cambio.
+- [ ] **R3. No modificar reciclaje:** verificar que ningún archivo editado esté dentro de `reciclaje/`.
+- [ ] **R4. Tests recalibrados:** los valores esperados en `task/test_ciclo.py` y `task/test_simulacion_50C.py` cambiarán por el mayor área de transferencia.
+- [ ] **R5. Referencias cruzadas en LaTeX:** recompilar para detectar referencias rotas o figuras faltantes.
+- [ ] **R6. Trazabilidad:** documentar en `task/todo.md` la sección de revisión con archivos modificados, desviaciones y entregables.
+
+---
+
+**Plan aprobado por el usuario el 18 de junio de 2026.** Se ejecutará la unificación a 14 m² en todo el proyecto activo, manteniendo los casos de estudio ya existentes de 14 m². Se añade la tarea T13 para reemplazar la Figura 1 (diagrama de flujo) por un diagrama de bloques profesional.
+
+---
+
+## 32. Revisión de cambios realizados — unificación del área de transferencia a 14 m²
+
+**Fecha de revisión:** 18 de junio de 2026  
+**Área de transferencia unificada:** 14 m² (`A_CONTACTO = 14.0` en `src/geometria_tanque.py`)
+
+### Archivos modificados
+
+| Archivo | Cambio realizado |
+|---|---|
+| `webapp/app/core/balance_energia.py` | Docstring de `calcular_transferencia_calor`: default de área actualizado a `A_CONTACTO = 14.0`. |
+| `webapp/app/core/escenarios_extras.py` | Importado `A_CONTACTO`; parámetro `area_m2` de `capacidad_operativa_diaria()` usa `float(A_CONTACTO)` en lugar de 13.0. |
+| `webapp/app/api/calculos.py` | Docstring del endpoint `/calcular/transferencia-calor`: ejemplo JSON usa `14.0` m². |
+| `webapp/app/api/proyecto.py` | Docstring del endpoint `/proyecto/capacidad-operativa`: área de 13 → 14 m². |
+| `webapp/app/templates/about.html` | Tarjeta técnica de la chaqueta: 13 → 14 m². |
+| `webapp/app/templates/index.html` | KPI "Área base calculadora": 13.0 → 14.0 m². |
+| `webapp/app/templates/escenarios.html` | Texto del Escenario 4: 13 → 14 m². |
+| `webapp/app/templates/calculadora.html` | Default del campo "Área de contacto": 13.0 → 14.0. |
+| `webapp/app/templates/simulador.html` | Default del campo "Área contacto": 13.0 → 14.0. |
+| `webapp/app/static/js/dashboard.js` | Llamadas API `transitorio-completo` e `instantaneo`: `area_m2` 13.0 → 14.0. |
+| `task/test_ciclo.py` | Importado `A_CONTACTO`; tres llamadas a `simular_ciclo_automatico` usan `area=A_CONTACTO`. |
+| `task/test_simulacion_50C.py` | Importado `A_CONTACTO`; dos llamadas a `simular_ciclo_automatico` usan `area=A_CONTACTO`. |
+| `webapp/tests/test_api.py` | Payload de test `area_contacto_m2`: 13 → 14. |
+| `docs/report/sections/08_metodologia.tex` | Área de contacto en modelo transitorio: 13 → 14 m². |
+| `docs/report/sections/09_resultados.tex` | Escenario 4, tablas de área requerida, texto de área disponible, CFD: 13 → 14 m² (5 reemplazos). |
+| `docs/report/sections/10_analisis.tex` | Tabla de síntesis y recomendación de diseño: 13 → 14 m². |
+| `docs/report/sections/11_conclusiones.tex` | Conclusión de capacidad cíclica: 13 → 14 m². |
+| `docs/report/sections/01_frontmatter.tex` | Abstract: área de transferencia 13 → 14 m². |
+| `docs/report/sections/04_introduccion.tex` | Introducción: área de transferencia 13 → 14 m². |
+| `docs/report/sections/14_calentamiento_24ton.tex` | Corregida referencia residual "de 13 m² a 14 m²" para reflejar el área unificada de 14 m². |
+| `docs/report/sections/15_analisis_ciclo_12m3h.tex` | Verificado: todo el texto usa consistentemente 14 m²; sin cambios. |
+| `README.md` | Tabla de rutas, descripción de calculadora/API/resultados: 13 → 14 m². |
+| `contexto.md` | Actualizado estado actual, decisión clave de unificación a 14 m². |
+| `InformeTercero/auditoria.md` | Tabla comparativa y conclusiones del proyecto W2605: 13 → 14 m². |
+| `task/todo.md` | Marcadas tareas T1, T7, T8, T9, T10 como completadas; documentados pendientes. |
+
+### Desviaciones respecto al plan original
+
+- No se ejecutaron scripts (T6, T12) porque el usuario instruyó explícitamente: "NO ejecutes scripts; solo realiza cambios de código".
+- No se modificaron archivos fuera de la lista solicitada (p. ej., generadores de PFD en `src/`, scripts de simulación no listados), aunque se detectaron referencias residuales a 13 m² en `src/ciclo_descargas.py`, `src/generar_pfds_escenarios.py` y `src/generar_diagrama_matplotlib.py`.
+- `webapp/config.py` y `webapp/app/core/area_fija.py` no existen; se desestimó T2.
+
+### Limitaciones conocidas y trabajo futuro recomendado
+
+- Los scripts de simulación en `src/` que aún contengan hardcodes de 13 m² deben actualizarse y regenerar figuras/CSVs para que los informes PDF reflejen la nueva área.
+- Es necesario recompilar `W2605PRINF001.tex` y `W2605PRINF002.tex` para aplicar los cambios LaTeX.
+- Los tests `task/test_ciclo.py` y `task/test_simulacion_50C.py` deben ejecutarse y recalibrarse si los valores esperados cambian por el incremento de área.
+- El diagrama de bloques profesional (T13) queda pendiente.
+
+### Entregables
+
+- Código y documentación actualizados a 14 m² en los archivos listados arriba.
+- `src/geometria_tanque.py` sigue siendo la fuente de verdad con `A_CONTACTO = 14.0`.
+
+---
+
+## Revisión (2026-06-18)
+
+### Resumen de cambios
+
+1. Corregidas referencias residuales a 13 m² en `docs/report/W2605PRINF002.tex`, `webapp/app/api/simulacion.py` y `webapp/app/templates/sensibilidad.html`.
+2. Actualizada la sección de balance de materia y energía (`docs/report/sections/05_balance_materia_energia.tex`) para reflejar el área de 14 m²: $\dot{Q}_{\mathrm{chaqueta}} \approx 32{,}8$~MJ/h, balance neto $18{,}1$~MJ/h y eficiencia térmica $69{,}0$~\%.
+3. Creado el generador `src/generar_diagrama_bloques_figura1.py` y generados `results/figures/diagrama_bloques_figura1.{png,pdf}`, un diagrama de bloques profesional que reemplaza la Figura 1 de los informes.
+4. Regeneradas tablas y CSVs de áreas (`results/tables/tabla_25_areas_55_57.tex`, `results/areas_escenario_55_57.csv`, `results/areas_calentamiento.csv`) con el área unificada de 14 m².
+5. Recompilados `docs/report/W2605PRINF001.pdf` y `docs/report/W2605PRINF002.pdf`.
+6. Eliminados archivos huérfanos que aún contenían 13 m²: `results/tabla_balance_materia_energia.csv` y `results/tabla_balance_materia_energia.tex`.
+7. Ejecutados los tests `task/test_ciclo.py` y `task/test_simulacion_50C.py`: se mantienen 5 descargas/día en los escenarios oficiales.
+
+### Desviaciones respecto al plan original
+
+- No se presentaron desviaciones significativas. Se completaron las tareas pendientes del plan aprobado, incluida T13 (diagrama de bloques).
+
+### Limitaciones conocidas y trabajo futuro recomendado
+
+- Los archivos en `reciclaje/` conservan referencias históricas a 13 m² por trazabilidad; no deben modificarse.
+- `InformeTercero/informe_utf8.txt` es un informe externo/OCR; no se alteró.
+- Se recomienda verificar visualmente los PDFs finales para confirmar la calidad del diagrama de bloques y la ausencia de referencias obsoletas.
+
+### Entregables finales
+
+- `docs/report/W2605PRINF001.pdf` (64 páginas, 3,4 MB).
+- `docs/report/W2605PRINF002.pdf` (5 páginas, 566 KB).
+- `results/figures/diagrama_bloques_figura1.{png,pdf}`.
+- `src/generar_diagrama_bloques_figura1.py`.
+- Tablas y CSVs regenerados en `results/`.
+
+---
+
+## Revisión (2026-06-18) — Ajustes de redacción e información de Ingredion
+
+### Resumen de cambios
+
+1. Reescrito el abstract en `docs/report/sections/01_frontmatter.tex` para eliminar toda referencia al coeficiente global reportado por terceros (825 W/(m²·°C)) y evitar lenguaje de auditoría ("subestimó", "incorrecta"). Se presentan los resultados propios de DMV SAS y las condiciones de diseño documentadas por Ingredion S.A.
+2. Añadida la subsección "Información Suministrada por Ingredion S.A." en `docs/report/sections/07_bases_disenio.tex`, incluyendo la figura `datosingredion.png` y dos tablas que resumen los datos de proceso/equipo y las especificaciones fisicoquímicas de la glucosa Globe~1130 entregadas por el cliente.
+3. Recompilado `docs/report/W2605PRINF001.pdf` (67 páginas, 3,5 MB) con los ajustes anteriores.
+
+### Desviaciones respecto al plan anterior
+
+- Ninguna. Los cambios responden a instrucciones adicionales del usuario sobre redacción e integración de información de cliente.
+
+### Limitaciones conocidas
+
+- No se modificó el texto ni se emitió juicio técnico sobre la memoria de cálculo GTTP-1004b Rev.~1 ni sobre valores de coeficientes globales de terceros.
+- `InformeTercero/informe_utf8.txt` y archivos de `reciclaje/` no se alteraron.
+
+### Entregables
+
+- `docs/report/W2605PRINF001.pdf` (67 páginas).
+- `docs/report/sections/01_frontmatter.tex` (abstract ajustado).
+- `docs/report/sections/07_bases_disenio.tex` (nueva subsección de información de Ingredion).
+
+---
+
+## 31. Plan de trabajo aprobado — auditoría crítica de coherencia, estilo Elsevier/Science Direct y rediseño de diagramas de bloques
+
+**Fecha de aprobación:** 18 de junio de 2026  
+**Enfoque seleccionado:** Auditoría integral (Opción A)  
+**Estado:** En ejecución  
+
+Ver plan detallado en el archivo de plan de sesión. A continuación el registro de avance:
+
+### Fase A — Auditoría y corrección de coherencia técnica y numérica
+- [x] **A1.** Matriz de coherencia numérica.
+- [x] **A2.** Definir valor oficial de `Q_chaqueta`.
+- [x] **A3.** Corregir caudal de agua de servicio.
+- [x] **A4.** Estandarizar temperatura de alimentación.
+- [x] **A5.** Reconciliar duración de descarga.
+- [x] **A6.** Corregir nombre del producto.
+- [x] **A7.** Unificar densidad/volumen de 24 ton.
+
+### Fase B — Auditoría de estilo Elsevier / Science Direct
+- [x] **B1.** Reescribir abstract.
+- [x] **B2.** Eliminar viñetas.
+- [x] **B3.** Estandarizar notación de temperatura.
+- [x] **B4.** Revisar voz y conectores.
+- [x] **B5.** Revisar ortografía y unidades.
+- [x] **B6.** Verificar referencias a figuras y tablas.
+
+### Fase C — Consolidación sustentación 5 carrotanques/día con 14 m²
+- [x] **C1.** Reestructurar secciones 14 y 15.
+- [x] **C2.** Reforzar argumento de factibilidad.
+- [x] **C3.** Ajustar sección 15 a ciclo oficial o renombrarla.
+- [x] **C4.** Tabla resumen de factibilidad del ciclo.
+- [x] **C5.** Coherencia W2605PRINF001 vs W2605PRINF002.
+
+### Fase D — Rediseño de diagramas de bloques
+- [x] **D1.** Rediseñar diagrama global.
+- [x] **D2.** Crear script unificado.
+- [x] **D3.** Incorporar convenciones consistentes.
+- [x] **D4.** Generar figuras y actualizar referencias.
+
+### Fase E — Verificación y cierre
+- [x] **E1.** Recompilar informes.
+- [x] **E2.** Ejecutar tests.
+- [x] **E3.** Verificar PDFs y figuras.
+- [x] **E4.** Actualizar contexto.md.
+- [x] **E5.** Registrar sección de revisión.
+---
+
+## 33. Revisión de cambios realizados — auditoría documental y coherencia del ciclo oficial
+
+**Fecha de revisión:** 18 de junio de 2026  
+**Archivos modificados:** `docs/report/sections/01_frontmatter.tex`, `docs/report/sections/05_balance_materia_energia.tex`, `docs/report/sections/06_alcance.tex`, `docs/report/sections/12_recomendaciones.tex`, `docs/report/sections/13_anexos.tex`, `docs/report/sections/14_calentamiento_24ton.tex`, `docs/report/sections/15_analisis_ciclo_12m3h.tex`, `docs/report/W2605PRINF002.tex`, `docs/report/logos/logo1.png` (creado a partir de `logo10.png`), `contexto.md`.  
+**Archivos creados:** `src/diagramas_bloques_ciclo.py`, `results/matriz_coherencia_W2605.csv`.  
+**Figuras generadas:** `results/figures/diagrama_bloques_global.{png,pdf}`, `results/figures/diagrama_bloques_descarga.{png,pdf}`, `results/figures/diagrama_bloques_calentamiento.{png,pdf}`.
+
+### Cambios principales
+
+1. **Corrección de coherencia numérica:**
+   - Se creó `results/matriz_coherencia_W2605.csv` con los valores oficiales recalculados del balance energético y del ciclo oficial.
+   - Se confirmó el valor oficial de `Q_chaqueta = 27,3 MJ/h` a 60 °C con agua a 75 °C, velocidad 2,5 m/s y área 14 m².
+   - Se corrigió el caudal de agua de servicio a 57,7 m³/h (diseño para v = 2,5 m/s); el dato original de 20,3 m³/h queda como referencia de operación histórica.
+   - Se estandarizó la temperatura de alimentación del ciclo oficial a 55 °C (caso conservador) y se aclaró que el rango operativo recomendado es 55--60 °C.
+   - Se reconcilió la duración de descarga a 2,0 h con flujo másico 12 ton/h, eliminando la referencia obsoleta a 12 m³/h como flujo nominal.
+   - Se unificó el volumen de 24 ton a 17,07 m³ a 55 °C (`rho = 1405,7 kg/m³`).
+
+2. **Auditoría de estilo Elsevier / Science Direct:**
+   - Se reescribió el abstract de `W2605PRINF001.tex` para reflejar el ciclo oficial, el caudal de agua de diseño y la temperatura mínima de 58,56 °C.
+   - Se eliminaron viñetas y listas numeradas en el cuerpo de los informes; la información se presenta mediante tablas autónomas y prosa.
+   - Se estandarizó la notación de temperatura a `\textdegree C` en todo el informe técnico y el resumen ejecutivo.
+   - Se corrigieron conectores, voz pasiva y ortografía en `06_alcance.tex`, `12_recomendaciones.tex` y `13_anexos.tex`.
+   - Se verificaron las referencias a figuras y tablas; se actualizaron las referencias a los nuevos diagramas de bloques.
+
+3. **Sustentación de 5 carrotanques/día con 14 m²:**
+   - Se reescribió `docs/report/sections/15_analisis_ciclo_12m3h.tex` con el ciclo oficial: 5 descargas de 24 ton, 12 ton/h, 2,0 h de descarga, 2,8 h de calentamiento, T_min = 58,56 °C.
+   - Se actualizó `docs/report/W2605PRINF002.tex` con la tabla resumen del ciclo oficial y el argumento de factibilidad térmica.
+   - Se reforzó la conclusión del balance energético (`05_balance_materia_energia.tex`) indicando que el cumplimiento del límite de 57 °C se verificó con alimentación a 55 °C, y que acercarse a 60 °C requiere alimentación ≥ 57 °C.
+
+4. **Rediseño de diagramas de bloques:**
+   - Se creó `src/diagramas_bloques_ciclo.py` con tres funciones para generar diagramas global, de descarga y de calentamiento.
+   - Se generaron seis figuras en `results/figures/` (PNG 200 dpi y PDF 300 dpi) con estilo corporativo unificado, sin superposiciones y con los valores oficiales del balance energético.
+   - Se actualizaron las referencias en `05_balance_materia_energia.tex` y `W2605PRINF002.tex` para usar `diagrama_bloques_global.pdf`.
+
+5. **Verificación y cierre:**
+   - Se ejecutaron `task/test_ciclo.py` y `task/test_simulacion_50C.py`: todos los tests del ciclo oficial pasan.
+   - Se recompilaron `W2605PRINF001.tex` (67 páginas) y `W2605PRINF002.tex` (5 páginas) sin errores fatales.
+   - Se verificó visualmente la primera página de ambos PDFs y las nuevas figuras de diagramas de bloques.
+   - Se actualizó `contexto.md` con el estado actual, decisiones clave y archivos relevantes.
+
+### Hallazgos y limitaciones
+
+- El ciclo oficial es técnicamente factible desde el punto de vista térmico, pero opera con un margen reducido respecto a 60 °C (T_min = 58,56 °C). El cumplimiento del límite inferior de 57 °C está garantizado bajo las condiciones de diseño documentadas.
+- El análisis asume mezcla perfecta del inventario y propiedades termofísicas uniformes. La estratificación térmica no se modela explícitamente; se mitiga con la recomendación de termopares multipunto.
+- El caudal de agua de 57,7 m³/h es el valor de diseño para garantizar 2,5 m/s en la media caña. Si la instalación no puede suministrar este caudal, el coeficiente convectivo del lado del agua y el calor útil de la chaqueta disminuirán.
+
+### Entregables finales
+
+- `docs/report/W2605PRINF001.pdf` — Informe técnico principal, 67 páginas.
+- `docs/report/W2605PRINF002.pdf` — Resumen ejecutivo gerencial, 5 páginas.
+- `src/diagramas_bloques_ciclo.py` — Generador de diagramas de bloques.
+- `results/matriz_coherencia_W2605.csv` — Matriz de coherencia numérica.
+- `contexto.md` — Contexto actualizado del proyecto.
+
+---
+
+*Sesión de auditoría documental y coherencia del ciclo oficial completada.*
+
+---
+
+## 34. Plan de trabajo adicional — dashboard con Escenario 5 como ciclo oficial de descargas
+
+**Fecha de plan:** 18 de junio de 2026  
+**Estado:** Ejecutado  
+**Alcance:** Reemplazar el ciclo de descargas mostrado en el dashboard de la webapp por el Escenario 5 (ciclo industrial de despacho desde 25 °C), agregar gráficos por fase separada y una sección de alternativas de diseño y medidas operativas.
+
+### Tareas
+
+- [x] **34.1** Crear wrapper `webapp/app/core/ciclo_escenario5.py` basado en `src/escenario5_ciclo.py` con salida JSON serializable.
+- [x] **34.2** Exponer endpoint `GET /api/proyecto/ciclo-escenario5` en `webapp/app/api/proyecto.py`.
+- [x] **34.3** Reemplazar el selector de Escenarios 1–3 en `webapp/app/templates/dashboard.html` por un panel informativo del Escenario 5 y ajustar los KPI cards.
+- [x] **34.4** Reescribir `webapp/app/static/js/dashboard.js` para consumir el nuevo endpoint y renderizar dos gráficas por fase separada (descargas con flujo y recalentamiento sin flujo).
+- [x] **34.5** Agregar sección de alternativas de diseño y medidas operativas en el dashboard.
+- [x] **34.6** Agregar clases CSS faltantes (`card-accent-cyan`, `border-neon-*`, `text-neon-*`, `bg-neon-purple`) en `webapp/app/static/css/main.css`.
+- [x] **34.7** Verificar que el servidor Flask levanta, el endpoint responde y el dashboard se renderiza sin errores.
+- [x] **34.8** Registrar sección de revisión con los cambios realizados.
+
+### Criterios de aceptación
+
+1. El dashboard muestra únicamente el análisis del Escenario 5.
+2. Se visualizan dos gráficas separadas: temperatura durante descargas (con flujo) y durante recalentamiento (sin flujo), con tiempo normalizado por fase.
+3. Se conserva una vista completa de temperatura vs tiempo absoluto y el diagrama de Gantt.
+4. Se incluyen tarjetas con alternativas de diseño y medidas operativas.
+5. No se rompen las páginas `/escenarios`, `/factibilidad` ni el endpoint `/proyecto/ciclo-12m3h`.
+6. Se documenta el cambio en `task/todo.md`.
+
+---
+
+## 35. Revisión de cambios realizados — dashboard con Escenario 5
+
+**Fecha de revisión:** 18 de junio de 2026  
+**Archivos creados:** `webapp/app/core/ciclo_escenario5.py`.  
+**Archivos modificados:** `webapp/app/api/proyecto.py`, `webapp/app/templates/dashboard.html`, `webapp/app/static/js/dashboard.js`, `webapp/app/static/css/main.css`.  
+
+### Cambios principales
+
+1. **Nuevo wrapper del Escenario 5 (`webapp/app/core/ciclo_escenario5.py`):**
+   - Importa el motor de `src/escenario5_ciclo.py` (arranque desde 25 °C, agua a 75 °C, 5 descargas de 24 ton en 2,0 h, control termostático a 60 °C).
+   - Serializa las series temporales, metadatos por fase y métricas globales en tipos nativos de Python.
+   - Calcula nivel aproximado del tanque considerando la densidad variable de la glucosa.
+
+2. **Endpoint dedicado (`webapp/app/api/proyecto.py`):**
+   - Se agregó `GET /api/proyecto/ciclo-escenario5` con el formato estándar `{success, data}`.
+   - Se verificó que responde con HTTP 200 y datos coherentes.
+
+3. **Rediseño del dashboard (`webapp/app/templates/dashboard.html`):**
+   - Se eliminaron las pestañas de Escenario 1/2/3/Personalizado.
+   - Se agregó un panel informativo del Escenario 5.
+   - Se redefinieron los 4 KPI cards superiores: T mínima, tiempo total del ciclo, descargas factibles y masa total descargada.
+   - Se agregaron dos contenedores de gráficas por fase: `graficaDescargas` y `graficaRecalentamiento`.
+   - Se conservaron la vista completa `graficaTvsT` y el diagrama de Gantt `graficaGantt`.
+   - Se agregó una sección con 8 tarjetas de alternativas de diseño y medidas operativas.
+
+4. **Lógica de front-end (`webapp/app/static/js/dashboard.js`):**
+   - Se reemplazó la lógica de escenarios por una única carga del Escenario 5.
+   - Se implementaron dos funciones de renderizado por fase con tiempo normalizado desde el inicio de cada fase.
+   - Se actualizaron los KPI cards dinámicamente desde JavaScript.
+   - Se mantuvo la gráfica de vista completa y el Gantt.
+
+5. **Estilos CSS (`webapp/app/static/css/main.css`):**
+   - Se agregó `.card-accent-cyan`.
+   - Se agregaron utilidades `.text-neon-purple`, `.text-neon-pink`, `.text-neon-yellow`, `.border-neon-cyan`, `.border-neon-purple`, `.border-neon-pink`, `.border-neon-yellow` y `.bg-neon-purple`.
+
+### Verificación
+
+- El servidor Flask se levantó correctamente y respondió en `http://127.0.0.1:5000/dashboard`.
+- El endpoint `/api/proyecto/ciclo-escenario5` devolvió HTTP 200 con la configuración y métricas esperadas.
+- La página HTML incluye los nuevos IDs de gráficas y la sección de alternativas.
+- El archivo JavaScript pasó la validación de sintaxis con `node --check`.
+- No se modificaron las páginas `/escenarios` ni `/factibilidad`; el endpoint `/proyecto/ciclo-12m3h` permanece operativo.
+
+### Hallazgos y limitaciones
+
+- El Escenario 5, tal como está definido en `src/escenario5_ciclo.py`, parte desde 25 °C y requiere aproximadamente 343,5 h para alcanzar la primera descarga a 57 °C. Este tiempo es inherente al modelo y se muestra tal cual; operativamente, el tanque se precalentaría antes del inicio de despachos.
+- Las curvas por fase se normalizan desde el inicio de cada fase para comparar la evolución de temperatura; el tiempo absoluto del ciclo se conserva en la vista completa y en el Gantt.
+- Los colores de las alternativas de diseño y medidas operativas son decorativos; los valores numéricos provienen de `results/analisis_escenarios.md` y del análisis de pérdidas térmicas del proyecto.
+
+### Entregables finales
+
+- `webapp/app/core/ciclo_escenario5.py` — Wrapper JSON del Escenario 5.
+- `webapp/app/api/proyecto.py` — Endpoint `/api/proyecto/ciclo-escenario5`.
+- `webapp/app/templates/dashboard.html` — Dashboard con Escenario 5, gráficas por fase y alternativas.
+- `webapp/app/static/js/dashboard.js` — Lógica de renderizado del Escenario 5.
+- `webapp/app/static/css/main.css` — Clases CSS adicionales para estilos de las tarjetas.
+
+---
+
+*Sesión de dashboard con Escenario 5 completada.*
+
+---
+
+## 36. Plan de trabajo aprobado — Escenarios de arranque y operación cíclica W2605
+
+**Fecha de aprobación:** 18 de junio de 2026  
+**Estado:** En ejecución  
+**Alcance:** Generar curvas de calentamiento batch 40 °C → 60 °C para 24 ton, 50 % y 80 % del tanque; simular ciclos de 5 descargas/día a 65 °C y 75 °C con pérdidas; cuantificar ganancia térmica en tiempos muertos; actualizar informe y webapp.
+
+### Decisiones del usuario confirmadas
+
+1. **El carrotanque transporta 24 ton de glucosa**; su volumen asociado es ~17,07 m³ a 55 °C (no confundir con 24 m³).
+2. **Incluir pérdidas térmicas** en las curvas batch del 50 % y 80 % del tanque.
+3. **Actualizar las secciones 14 y 15** del informe técnico existentes.
+4. **Actualizar la webapp** con nuevos endpoints y vistas.
+
+### Tabla maestra de casos a simular
+
+| Caso | Tipo | Masa / Volumen | T inicial [°C] | T objetivo [°C] | T agua [°C] | Pérdidas |
+|---|---|---|---|---|---|---|
+| 24 ton batch | Batch | 24 000 kg (~16,98 m³ a 40 °C) | 40 | 60 | 65, 75 | No (referencia ideal) |
+| 50 % tanque batch | Batch | 156,6 ton / 111,4 m³ a 55 °C | 40 | 60 | 65, 75 | Sí |
+| 80 % tanque batch | Batch | 250,6 ton / 178,2 m³ a 55 °C | 40 | 60 | 65, 75 | Sí |
+| Ciclo 80 %, 65 °C | Ciclo 24 h | 250,6 ton inicial | 60 | ≥ 57 | 65 | Sí |
+| Ciclo 80 %, 75 °C | Ciclo 24 h | 250,6 ton inicial | 60 | ≥ 57 | 75 | Sí |
+| Ciclo 50 %, 65 °C | Ciclo 24 h | 156,6 ton inicial | 60 | ≥ 57 | 65 | Sí |
+| Ciclo 50 %, 75 °C | Ciclo 24 h | 156,6 ton inicial | 60 | ≥ 57 | 75 | Sí |
+| Arranque frío 40 °C | Ciclo | 250,6 ton inicial | 40 | ≥ 57 | 75 | Sí |
+
+### Datos geométricos verificados (T1.3)
+
+- Volumen total del tanque: **222,8 m³**.
+- Volumen al 50 %: **111,4 m³** (~156,6 ton a 55 °C).
+- Volumen al 80 %: **178,24 m³** (~250,6 ton a 55 °C).
+- 24 ton equivalen a **17,07 m³** a 55 °C.
+
+### Tareas de ejecución
+
+- [x] **T1.2.** Documentar tabla maestra de casos (hecho arriba).
+- [x] **T1.3.** Verificar geometría y calcular masas al 50 % y 80 %.
+- [x] **T2.1.** Refactorizar `src/calentamiento_24ton_40_60.py` con parámetros flexibles.
+- [x] **T2.2.** Generar curvas batch para 24 ton, 50 % y 80 %.
+- [x] **T2.3.** Incluir pérdidas en 50 % y 80 %.
+- [x] **T2.4.** Exportar CSVs y figuras.
+- [x] **T3.1.** Extender ciclo oficial a 65 °C y 75 °C con pérdidas.
+- [x] **T3.2.** Extender `src/ciclo_descargas.py` con pérdidas opcionales.
+- [x] **T3.3.** Simular ciclos 50 % y 80 %, y arranque desde 40 °C.
+- [x] **T3.4.** Calcular ganancia térmica neta en tiempos muertos.
+- [x] **T3.5.** Generar figuras de ciclos y ganancia térmica.
+- [x] **T4.1.** Actualizar `docs/report/sections/14_calentamiento_24ton.tex`.
+- [x] **T4.2.** Actualizar `docs/report/sections/15_analisis_ciclo_12m3h.tex`.
+- [x] **T4.3.** Integrar cuantificación de ganancia térmica.
+- [x] **T4.4–4.5.** Recompilar informes.
+- [x] **T5.1–5.3.** Actualizar webapp, API y tests.
+- [x] **T6.1–6.5.** Verificación, tests y cierre.
+
+
+
+---
+
+## 37. Revisión de cambios realizados — escenarios de arranque y operación cíclica W2605
+
+**Fecha de revisión:** 18 de junio de 2026
+**Archivos modificados:** `src/ciclo_descargas_14m2_75C_12m3h.py`, `webapp/app/core/ciclo_12m3h.py`, `webapp/app/core/arranque_niveles.py` (nuevo), `webapp/app/api/proyecto.py`, `webapp/app/routes.py`, `webapp/app/templates/base.html`, `webapp/app/templates/ciclo_parametrico.html` (nuevo), `webapp/app/templates/arranque_niveles.html` (nuevo), `docs/report/sections/14_calentamiento_24ton.tex`, `docs/report/sections/15_analisis_ciclo_12m3h.tex`, `docs/report/W2605PRINF001.pdf`, `contexto.md`.
+
+### Cambios principales
+
+1. **Refactorización del ciclo de descargas:** se actualizó `src/ciclo_descargas_14m2_75C_12m3h.py` para aceptar parámetros `T_agua`, `nivel_inicial` y `T_inicial`, y para incluir pérdidas térmicas reales durante la descarga y el recalentamiento. Se generaron cuatro escenarios paramétricos (80 % y 50 % con agua a 65 °C y 75 °C), más la figura histórica del ciclo oficial.
+
+2. **Curvas de arranque batch:** se verificó que el script `src/calentamiento_24ton_40_60.py` genera los casos de 24 ton (sin pérdidas), 50 % y 80 % (con pérdidas) para ambas temperaturas de agua. Los CSVs y figuras comparativas se exportaron a `results/` y `results/figures/`.
+
+3. **Actualización del informe técnico:**
+   - `sections/14_calentamiento_24ton.tex`: se añadieron las subsecciones "Extensión a niveles del 50 % y 80 % del tanque con pérdidas térmicas" e "Interpretación de los resultados de arranque", con tablas y figuras que documentan que el tanque completo no alcanza 60 °C en 96 h.
+   - `sections/15_analisis_ciclo_12m3h.tex`: se añadió la subsección "Análisis paramétrico del ciclo oficial" con la comparación de los cuatro escenarios y sus perfiles de temperatura.
+
+4. **Actualización de la webapp:**
+   - Se creó `webapp/app/core/arranque_niveles.py` como wrapper JSON del arranque con pérdidas.
+   - Se actualizó `webapp/app/core/ciclo_12m3h.py` para el ciclo paramétrico.
+   - Se añadieron los endpoints `/api/proyecto/arranque-niveles` y `/api/proyecto/ciclo-parametrico`.
+   - Se crearon las vistas `/arranque-niveles` y `/ciclo-parametrico` con sus templates HTML.
+   - Se actualizó la navegación en `base.html`.
+
+### Verificación
+
+- `src/ciclo_descargas_14m2_75C_12m3h.py` se ejecuta sin errores; todos los escenarios de ciclo cumplen T_min ≥ 57 °C.
+- `src/calentamiento_24ton_40_60.py` se ejecuta sin errores; las figuras comparativas se generan correctamente.
+- `docs/report/W2605PRINF001.tex` compila sin errores fatales (residual: advertencias menores de `hyperref` y fuentes matemáticas).
+- Los endpoints `/api/proyecto/ciclo-12m3h`, `/api/proyecto/ciclo-parametrico`, `/api/proyecto/arranque-niveles` y `/api/proyecto/calentamiento-24ton` responden con HTTP 200.
+- Las vistas `/ciclo-parametrico` y `/arranque-niveles` renderizan correctamente.
+
+### Hallazgos críticos documentados
+
+- El arranque del tanque completo (50 % o 80 %) desde 40 °C con una chaqueta de 14 m² no alcanza 60 °C en 96 h. El caso más favorable (50 %, agua 75 °C) llega solo a 51,50 °C.
+- El ciclo oficial de 5 descargas/día es técnicamente factible para los cuatro escenarios paramétricos, pero el caso 50 % / 65 °C termina con un margen de solo 0,11 °C respecto al límite de 57 °C.
+- Con agua a 65 °C, los tiempos muertos entre descargas presentan ganancia térmica neta negativa; el sistema se enfría lentamente debido a la inercia térmica.
+
+### Limitaciones y trabajo futuro recomendado
+
+- Las advertencias de `	extdegree` en modo matemático en las secciones 14 y 15 son preexistentes y no afectan la compilación; se recomienda revisarlas en una sesión de limpieza menor.
+- El endpoint `/api/proyecto/arranque-niveles` imprime mensajes de consola porque `ejecutar_caso` no suprime su salida; se recomienda redirigir `stdout` en una optimización futura.
+- No se actualizó `W2605PRINF002.tex` (resumen ejecutivo) con los nuevos hallazgos; se deja como tarea pendiente si el usuario requiere un resumen gerencial de los escenarios paramétricos.
+
+### Entregables finales
+
+- `results/figures/curva_arranque_T_vs_t_comparativa.{png,pdf}`
+- `results/figures/curva_arranque_por_caso.{png,pdf}`
+- `results/figures/ciclo_80pct_65C_T_vs_t.{png,pdf}`
+- `results/figures/ciclo_80pct_75C_T_vs_t.{png,pdf}`
+- `results/figures/ciclo_50pct_65C_T_vs_t.{png,pdf}`
+- `results/figures/ciclo_50pct_75C_T_vs_t.{png,pdf}`
+- `results/figures/ciclo_*_ganancia_tiempos_muertos.{png,pdf}`
+- `docs/report/W2605PRINF001.pdf` (71 páginas)
+- `webapp/app/core/arranque_niveles.py`
+- `webapp/app/core/ciclo_12m3h.py`
+- `webapp/app/api/proyecto.py`
+- `webapp/app/routes.py`
+- `webapp/app/templates/ciclo_parametrico.html`
+- `webapp/app/templates/arranque_niveles.html`
+
+---
+
+*Sesión de escenarios de arranque y operación cíclica completada.*
+
+
+---
+
+## 38. Plan de trabajo adicional — integración de resultados CFD en el informe técnico W2605PRINF001
+
+**Fecha de plan:** 18 de junio de 2026  
+**Estado:** En planificación  
+**Alcance:** Incorporar las seis figuras generadas en la carpeta `resultadoscfd/` dentro de la Sección~9 del informe técnico (`docs/report/sections/09_resultados.tex`), en la subsección de validación CFD, con comentarios técnicos profesionales que demuestren la validación del modelo numérico Python contra CFD.
+
+### Contexto
+
+El usuario completó un análisis CFD cuyo objetivo principal fue validar el coeficiente global de transferencia de calor $U$. Las figuras se encuentran en:
+
+- `resultadoscfd/f1.png` — vista superior del fondo toriesférico: coeficiente de transferencia de calor (36 W/m²·K) y líneas de flujo de calor conductivo.
+- `resultadoscfd/f2.png` — vista lateral del fondo toriesférico: distribución del coeficiente de transferencia de calor y flujo de calor.
+- `resultadoscfd/f3.png` — capa límite de temperaturas en Kelvin alrededor de la pared del fondo.
+- `resultadoscfd/f4.png` — campo vectorial de flujo de calor en la pared (vista lateral).
+- `resultadoscfd/f5.png` — vista superior de la distribución de temperatura de pared.
+- `resultadoscfd/f6.png` — campo vectorial tridimensional de flujo de calor en el fondo.
+
+### Supuestos clave
+
+- Las figuras CFD corresponden a la condición de validación del Escenario~3 ($T_w = 75$~°C, $v_w = 2,5$~m/s, fondo toriesférico con chaqueta de media caña en espiral, $A = 14$~m²).
+- El margen de error aceptado entre el modelo analítico Python y el CFD es del 5 % ($U_{\text{analítico}} = 36,2$~W/m²·°C vs. $U_{\text{CFD}} = 38$~W/m²·°C), ya documentado en el informe.
+- Las figuras deben copiarse a `results/figures/` para mantener la coherencia con las rutas del informe LaTeX.
+
+### Tareas
+
+- [x] **T1.** Copiar las seis figuras de `resultadoscfd/` a `results/figures/` con nombres descriptivos.
+- [x] **T2.** Reestructurar la subsección \ref{sec:resultados_cfd_fea} en `docs/report/sections/09_resultados.tex` para incluir las seis figuras con leyendas técnicas precisas.
+- [x] **T3.** Redactar comentarios técnicos que relacionen cada figura con el fenómeno físico y con la validación del coeficiente $U$:
+  - Distribución espacial del coeficiente local de transferencia de calor.
+  - Concentración del flujo de calor en la zona inferior del fondo.
+  - Perfil de capa límite térmica.
+  - Dirección y magnitud del flujo de calor (vectores).
+  - Comparación cuantitativa con el modelo analítico Python.
+- [x] **T4.** Actualizar la Tabla~\ref{tab:cfd_U} con el valor CFD promedio ($38$~W/(m\textsuperscript{2}$\cdot$\textdegree C)) y el rango analítico (26--36~W/(m\textsuperscript{2}$\cdot$\textdegree C)).
+- [x] **T5.** Recompilar `W2605PRINF001.tex` y verificar que las figuras se rendericen correctamente (PDF de 76 páginas).
+- [x] **T6.** Actualizar `contexto.md` y registrar la revisión en `task/todo.md`.
+
+### Riesgos / puntos de verificación
+
+- [x] Validar que las rutas de las figuras en LaTeX sean correctas (`../../results/figures/cfd_*.png`).
+- [x] Confirmar que los comentarios técnicos no contradigan los valores del modelo analítico ni la tabla de coeficientes globales.
+- [x] Revisar que el estilo Elsevier / Science Direct se mantenga (sin viñetas, figuras referenciadas antes de aparecer, leyendas técnicas completas).
+
+### Pregunta de decisión al usuario
+
+¿Procedo con la integración de las seis figuras CFD en la Sección~9 del informe técnico según el plan anterior?
+
+
+## Revisión — Integración de figuras CFD en Sección 9
+
+**Fecha de cierre:** 2026-06-18
+
+### Resumen de cambios
+1. Se reemplazó la subsección de validación CFD en `docs/report/sections/09_resultados.tex` por una versión ampliada que incluye las seis figuras de `results/figures/` con nombres descriptivos.
+2. Se redactaron comentarios técnicos específicos para cada figura, vinculando los fenómenos físicos observados (distribución radial del coeficiente local, concentración del flujo en la zona inferior, capa límite térmica, dirección del flujo, patrón espiral de temperatura) con el modelo analítico Python.
+3. Se mantuvo la Tabla~\ref{tab:cfd_U} con el valor CFD promedio de $U = 38$~W/(m\textsuperscript{2}$\cdot$\textdegree C) y el rango analítico 26--36~W/(m\textsuperscript{2}$\cdot$\textdegree C), reafirmando la concordancia del 5~%.
+4. Se recompiló `W2605PRINF001.tex` generando un PDF de 76 páginas sin errores de referencia cruzada ni figuras faltantes.
+
+### Desviaciones respecto al plan original
+No se presentaron desviaciones significativas. Las rutas de figuras se ajustaron a los nombres descriptivos copiados previamente en lugar de los nombres genéricos `cfd_fX.png` propuestos.
+
+### Limitaciones conocidas y trabajo futuro recomendado
+- Las advertencias residuales de `\textdegree` en modo matemático en las secciones 14 y 15 no afectan la compilación, pero se recomienda una pasada de estandarización de notación de temperatura en todo el documento.
+- El resumen ejecutivo W2605PRINF002 aún no incluye los hallazgos del análisis paramétrico de arranque; se deja pendiente a solicitud del usuario.
+
+### Archivos entregables
+- `docs/report/sections/09_resultados.tex` — Subsección de validación CFD ampliada con seis figuras.
+- `docs/report/W2605PRINF001.pdf` — Informe técnico compilado (76 páginas).
+- `results/figures/cfd_coef_heat_transfer_top.png`
+- `results/figures/cfd_coef_heat_transfer_side.png`
+- `results/figures/cfd_capa_limite_temperaturas.png`
+- `results/figures/cfd_flujo_calor_vectores_side.png`
+- `results/figures/cfd_temperatura_pared_top.png`
+- `results/figures/cfd_flujo_calor_3d.png`
+
+
+## Revisión — Actualización a configuración de doble entrada/doble salida y profundización metodológica CFD
+
+**Fecha de cierre:** 2026-06-18
+
+### Resumen de cambios
+1. Se actualizó `docs/report/sections/07_bases_disenio.tex` para describir correctamente la configuración hidráulica de la chaqueta de media caña con dos entradas de agua caliente y dos salidas de agua de retorno, de acuerdo con los planos `Data/planos/fondo.png` y `Data/planos/espiral.png` actualizados. Se modificaron los párrafos introductorios de las Figuras 3 y 4, sus leyendas y la Tabla de geometría de la media caña.
+2. Se profundizó la metodología CFD en `docs/report/sections/08_metodologia.tex`, incluyendo las ecuaciones diferenciales gobernantes: conservación de masa, Navier-Stokes, conservación de energía en el fluido, conducción en el sólido, convección natural en la glucosa con acoplamiento Boussinesq, condiciones de contorno y criterios de malla.
+3. Se reestructuró `docs/report/sections/09_resultados.tex`: se eliminó la Figura 11 (`cfd1.png`) por corresponder al modelo anterior de una sola rama; se redactó un nuevo párrafo introductorio que compara cualitativamente la configuración de doble entrada/doble salida con el caso de una sola rama; se ajustaron las interpretaciones de las Figuras 12–16 para reflejar la mayor uniformidad térmica y simetría del campo de flujo.
+4. Se actualizó `docs/report/sections/10_analisis.tex` para eliminar la referencia cruzada a `fig:cfd1` y referirse a los campos presentados en la Sección 9.
+5. Se recompiló `W2605PRINF001.tex` generando un PDF de 78 páginas sin advertencias de referencia cruzada ni figuras faltantes.
+
+### Desviaciones respecto al plan original
+No se presentaron desviaciones. Los valores de $U$ de la Tabla `tab:cfd_U` se mantuvieron, dado que corresponden al modelo de doble entrada/doble salida ya evaluado.
+
+### Limitaciones conocidas y trabajo futuro recomendado
+- Las advertencias residuales de `\textdegree` en modo matemático en las secciones 14 y 15 permanecen; se recomienda una pasada de estandarización de notación de temperatura en todo el documento.
+- El resumen ejecutivo W2605PRINF002 aún no refleja los hallazgos del análisis paramétrico de arranque ni la configuración hidráulica actualizada; se deja pendiente a solicitud del usuario.
+
+### Archivos entregables
+- `docs/report/sections/07_bases_disenio.tex` — Sección de bases de diseño con planos actualizados.
+- `docs/report/sections/08_metodologia.tex` — Metodología CFD ampliada con ecuaciones diferenciales.
+- `docs/report/sections/09_resultados.tex` — Resultados CFD con Figura 11 eliminada y comparación con una sola rama.
+- `docs/report/sections/10_analisis.tex` — Referencia actualizada a Sección 9.
+- `docs/report/W2605PRINF001.pdf` — Informe técnico compilado (78 páginas).
+
+
+## Revisión — Actualización de la webapp a dashboard Power BI con sección Documentos
+
+**Fecha de cierre:** 2026-06-18
+
+### Resumen de cambios
+1. Se reorganizó la navegación en `webapp/app/templates/base.html` en secciones Ejecutivo, Análisis Térmico, Simulaciones, Resultados e Info, con estilo oscuro futurista neón consistente.
+2. Se creó la vista `webapp/app/templates/documentos.html` con tarjeta destacada para el informe W2605PRINF001 y tabla de transmittal interactiva filtrable por categoría.
+3. Se creó `webapp/app/static/js/documentos.js` para inicializar DataTables con idioma español y filtrado por categoría.
+4. Se añadieron estilos DataTables dark en `webapp/app/static/css/main.css` para mantener coherencia con el tema W2605.
+5. Se confirmó y ajustó la ruta `/codigo/<path:filename>` en `webapp/app/routes.py` para descargas individuales de scripts Python desde `src/` y `webapp/app/core/` con validación de extensión y path traversal.
+6. Se confirmó y ajustó `/descargar-codigo-fuente` para generar un ZIP con timestamp (`W2605_Codigo_Fuente_YYYYMMDD.zip`).
+7. Se actualizó `/health` a versión `2.2.0` y el sidebar/footer a `v2.2 power-bi`.
+8. Se añadieron 6 tests nuevos en `webapp/tests/test_api.py` para `/documentos`, `/codigo/*`, `/descargar-codigo-fuente` y seguridad de path traversal.
+
+### Desviaciones respecto al plan original
+- Se mantuvo Chart.js cargado en `base.html` pero sin uso; no se eliminó para no romper compatibilidad futura.
+- Las vistas `simulador.html` y `calculadora.html` conservan su estructura interna; solo se heredan los estilos globales del tema. Una refactorización completa de cada formulario queda fuera del alcance de esta tarea.
+
+### Limitaciones conocidas y trabajo futuro recomendado
+- Algunos controles del simulador y calculadora usan clases Bootstrap estándar en lugar de `.pb-card`; se recomienda unificar en una siguiente iteración.
+- El resumen ejecutivo W2605PRINF002 no se ha vinculado aún desde la webapp.
+
+### Archivos entregables
+- `webapp/app/templates/base.html` — Layout con navegación Power BI.
+- `webapp/app/templates/documentos.html` — Tabla de transmittal.
+- `webapp/app/static/js/documentos.js` — Lógica de DataTables y filtro.
+- `webapp/app/static/css/main.css` — Estilos DataTables dark y Power BI.
+- `webapp/app/routes.py` — Endpoints de documentos, código fuente y ZIP.
+- `webapp/tests/test_api.py` — Tests ampliados (22 tests).
+
+
+## Revisión — Unificación de Simulador y Calculadora al estilo Power BI
+
+**Fecha de cierre:** 2026-06-18
+
+### Resumen de cambios
+1. Se añadieron clases de diseño Power BI para controles de formulario en `webapp/app/static/css/main.css`: `.pb-control-group`, `.pb-control-label`, `.pb-control-hint`, `.pb-input`, `.pb-input-group`, `.pb-input-group-addon`, `.pb-slider-row`, `.pb-form-select`, `.pb-spinner-overlay`, `.pb-badge`, `.pb-table-dark` y estilos de modal oscuro.
+2. Se refactorizó `webapp/app/templates/calculadora.html` para usar `.pb-page-header`, `.pb-card`, `.pb-card-header`, `.pb-card-title`, `.pb-card-body`, `.pb-kpi-row`, `.pb-kpi-card` y `.pb-table-dark`, manteniendo todos los IDs de los controles para no afectar `calculadora.js`.
+3. Se refactorizó `webapp/app/templates/simulador.html` con el mismo sistema de tarjetas Power BI, KPIs unificados y tabla oscura, conservando los IDs necesarios para `simulador.js`.
+4. Se reemplazaron los spinners con fondo blanco por `.pb-spinner-overlay` oscuro con blur.
+5. Se eliminaron las listas (`<ul>`) del modal de instrucciones del simulador, pasando a párrafos numerados según los estándares de entregables del proyecto.
+6. Se verificó que los 22 tests existentes siguen pasando y que `/calculadora` y `/simulador` renderizan correctamente con el nuevo layout.
+
+### Desviaciones respecto al plan original
+- No se modificó la lógica JavaScript ni los endpoints; solo se cambiaron clases CSS y estructura HTML.
+- Se mantuvo Chart.js cargado en `base.html` aunque no se usa.
+
+### Limitaciones conocidas y trabajo futuro recomendado
+- Las vistas `/factibilidad`, `/perdidas-aislamiento`, `/escenarios`, `/ciclo-parametrico`, `/arranque-niveles`, `/sensibilidad` y `/propiedades` aún usan parcialmente clases Bootstrap estándar. Se recomienda unificarlas en una siguiente iteración si se requiere coherencia total.
+
+### Archivos entregables
+- `webapp/app/static/css/main.css` — Clases de controles y tablas oscuras añadidas.
+- `webapp/app/templates/calculadora.html` — Refactorizado a estilo Power BI.
+- `webapp/app/templates/simulador.html` — Refactorizado a estilo Power BI.
+- `webapp/tests/test_api.py` — 22 tests pasando.

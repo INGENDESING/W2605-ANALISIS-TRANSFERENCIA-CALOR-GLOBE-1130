@@ -21,7 +21,7 @@ class Config:
     CORS_ORIGINS = ['http://localhost:5000', 'http://127.0.0.1:5000']
     
     # Cálculos
-    DEFAULT_AREA_CONTACTO = 13.0  # m²
+    DEFAULT_AREA_CONTACTO = 14.0  # m²
     DEFAULT_VELOCIDAD_AGUA = 2.5  # m/s
     DEFAULT_TEMP_AGUA = 65.0  # °C
     

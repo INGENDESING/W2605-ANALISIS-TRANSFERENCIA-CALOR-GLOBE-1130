@@ -1,6 +1,6 @@
 # W2605 WebApp - Balance de Materia y Energía
 
-Aplicación web para el análisis de transferencia de calor y balance de materia en el sistema de calentamiento de glucosa Globe 42 DE.
+Aplicación web para el análisis de transferencia de calor y balance de materia en el sistema de calentamiento de glucosa Globe 1130.
 
 ## Características
 
@@ -116,7 +116,7 @@ webapp/
 ## Notas
 
 - Las correlaciones termofísicas están calibradas a la ficha técnica Ingredion 011420
-- El área de contacto por defecto es 13 m² (media caña propuesta)
+- El área de contacto por defecto es 14 m² (media caña propuesta)
 - Las simulaciones utilizan el modelo de coeficiente U con resistencias en serie
 
 ## Desarrollo

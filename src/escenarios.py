@@ -375,7 +375,7 @@ def escenario_2(figures_dir='../results/figures'):
 
     # Gráfica
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(t_h, T_g, color=COLOR_GLUCOSA, linewidth=2, label='Glucosa Globe 42 DE')
+    ax.plot(t_h, T_g, color=COLOR_GLUCOSA, linewidth=2, label='Glucosa Globe 1130')
     ax.axhline(y=60, color=COLOR_DESCARGA, linestyle='--', alpha=0.8,
                linewidth=1.5, label='T descarga = 60 °C')
     ax.axhline(y=65, color=COLOR_AGUA, linestyle=':', alpha=0.6,
@@ -430,7 +430,7 @@ def escenario_3(figures_dir='../results/figures'):
 
     # Gráfica
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(t_h, T_g, color=COLOR_GLUCOSA, linewidth=2, label='Glucosa Globe 42 DE')
+    ax.plot(t_h, T_g, color=COLOR_GLUCOSA, linewidth=2, label='Glucosa Globe 1130')
     ax.axhline(y=57, color=COLOR_DESCARGA, linestyle='--', alpha=0.8,
                linewidth=1.5, label='T descarga = 57 °C')
     ax.axhline(y=75, color=COLOR_AGUA, linestyle=':', alpha=0.6,

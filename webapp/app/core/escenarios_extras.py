@@ -19,6 +19,7 @@ from calentamiento_24ton_40_60 import (
     V_AGUA,
 )
 from escenario4_capacidad import calcular_capacidad
+from geometria_tanque import A_CONTACTO
 
 
 def _to_float(value, decimals=None):
@@ -102,7 +103,7 @@ def capacidad_operativa_diaria():
     return {
         'parametros': {
             'T_agua_C': 75.0,
-            'area_m2': 13.0,
+            'area_m2': float(A_CONTACTO),
             'masa_descarga_kg': 24000.0,
             'requerimiento_descargas_dia': 5,
             'requerimiento_capacidad_dia_ton': 120,

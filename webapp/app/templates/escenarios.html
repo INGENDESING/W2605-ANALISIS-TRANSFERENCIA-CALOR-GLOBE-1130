@@ -8,9 +8,9 @@
     <div>
         <h4 class="mb-0">
             <i class="bi bi-collection text-neon-orange me-2"></i>
-            Escenarios y comparativas del proyecto
+            Escenarios del proyecto
         </h4>
-        <small class="text-muted">Resultados de los escenarios térmicos y comparativas de configuraciones de chaqueta</small>
+        <small class="text-muted">Resultados de los cinco escenarios térmicos de operación</small>
     </div>
 </div>
 
@@ -21,12 +21,11 @@
     </div>
     <div class="card-body">
         <p class="mb-0" style="color: var(--text-muted);">
-            El análisis térmico del proyecto W2605 incluye cinco escenarios de operación y una
-            comparativa entre la chaqueta dimple original y la media caña propuesta. Los Escenarios 1, 2
-            y 3 evalúan el calentamiento transitorio del tanque bajo distintas condiciones de agua y
-            volumen inicial. Los Escenarios 4 y 5 analizan la capacidad operativa diaria y el ciclo de
-            descargas. La comparativa de chaquetas cuantifica la ventaja térmica de la media caña sobre
-            la configuración dimple.
+            El análisis térmico del proyecto W2605 incluye cinco escenarios de operación.
+            Los Escenarios 1, 2 y 3 evalúan el calentamiento transitorio del tanque bajo distintas
+            condiciones de agua y volumen inicial. Los Escenarios 4 y 5 analizan la capacidad operativa
+            diaria y el ciclo de descargas, demostrando que el sistema sostiene cinco descargas diarias
+            de 24 ton con agua a 75 °C y aislamiento de 50,8 mm.
         </p>
     </div>
 </div>
@@ -93,7 +92,7 @@
     </div>
     <div class="card-body">
         <p style="color: var(--text-muted);">
-            El Escenario 4 cuantifica la capacidad operativa diaria con el área de 13 m² y agua a 75 °C
+            El Escenario 4 cuantifica la capacidad operativa diaria con el área de 14 m² y agua a 75 °C
             para dos temperaturas de entrada de glucosa (54 °C y 55 °C). El Escenario 5 modela el ciclo
             completo de descargas partiendo desde 25 °C. Ambos escenarios demuestran que el sistema
             alcanza o supera el requerimiento de cinco descargas diarias.
@@ -134,61 +133,6 @@
                         <h6 class="card-title" style="color: var(--neon-purple);">Escenario 5 — Ciclo desde 25 °C</h6>
                         <img src="{{ url_for('main.serve_figure', filename='escenario5_ciclo_T.png') }}"
                              class="img-fluid rounded" alt="Escenario 5 ciclo" style="border: 1px solid rgba(0,150,255,0.15);">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Comparativa de chaquetas -->
-<div class="card mb-4 fade-in">
-    <div class="card-header">
-        <h5 class="mb-0"><i class="bi bi-arrows-angle-expand me-2"></i>Comparativa: chaqueta dimple vs. media caña</h5>
-    </div>
-    <div class="card-body">
-        <p style="color: var(--text-muted);">
-            La comparativa evalúa el desempeño de la chaqueta dimple existente (28 m²) frente a la media
-            caña propuesta (13 m²) en dos modalidades: calentamiento por lotes y flujo continuo. Aunque
-            el área de contacto de la media caña es menor, la configuración en espiral con doble entrada
-            proporciona velocidades de agua más uniformes y mejores coeficientes de transferencia.
-        </p>
-        <div class="row g-4">
-            <div class="col-lg-6">
-                <div class="card h-100" style="border-top: 3px solid var(--neon-green);">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-neon-green">Calentamiento por lotes</h6>
-                        <img src="{{ url_for('main.serve_figure', filename='comp_batch_T_vs_t.png') }}"
-                             class="img-fluid rounded" alt="Comparativa batch T vs t" style="border: 1px solid rgba(0,150,255,0.15);">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card h-100" style="border-top: 3px solid var(--neon-orange);">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-neon-orange">Tiempo de calentamiento por lotes</h6>
-                        <img src="{{ url_for('main.serve_figure', filename='comp_batch_tiempo_bar.png') }}"
-                             class="img-fluid rounded" alt="Comparativa batch barras" style="border: 1px solid rgba(0,150,255,0.15);">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row g-4 mt-2">
-            <div class="col-lg-6">
-                <div class="card h-100" style="border-top: 3px solid var(--neon-blue);">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-neon-blue">Flujo continuo — T de salida vs. caudal</h6>
-                        <img src="{{ url_for('main.serve_figure', filename='comp_flujo_T_out_vs_mdot.png') }}"
-                             class="img-fluid rounded" alt="Comparativa flujo T out" style="border: 1px solid rgba(0,150,255,0.15);">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card h-100" style="border-top: 3px solid var(--neon-cyan);">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-neon-cyan">Flujo máximo teórico</h6>
-                        <img src="{{ url_for('main.serve_figure', filename='comp_flujo_maximo_bar.png') }}"
-                             class="img-fluid rounded" alt="Comparativa flujo máximo" style="border: 1px solid rgba(0,150,255,0.15);">
                     </div>
                 </div>
             </div>

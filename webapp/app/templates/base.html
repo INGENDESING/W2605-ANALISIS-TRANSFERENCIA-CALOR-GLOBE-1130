@@ -38,14 +38,8 @@
     </div>
 
     <nav class="mt-2">
-        <div class="nav-section-title">Principal</div>
+        <div class="nav-section-title">Ejecutivo</div>
         <ul class="nav flex-column px-1">
-            <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}"
-                   href="{{ url_for('main.index') }}">
-                    <i class="bi bi-house-door"></i> Inicio
-                </a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}"
                    href="{{ url_for('main.dashboard') }}">
@@ -54,24 +48,18 @@
             </li>
         </ul>
 
-        <div class="nav-section-title">Módulos</div>
+        <div class="nav-section-title">Análisis Térmico</div>
         <ul class="nav flex-column px-1">
-            <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'main.factibilidad' %}active{% endif %}"
-                   href="{{ url_for('main.factibilidad') }}">
-                    <i class="bi bi-check-circle-fill"></i> Factibilidad 5 descargas
-                </a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.endpoint == 'main.calculadora' %}active{% endif %}"
                    href="{{ url_for('main.calculadora') }}">
-                    <i class="bi bi-calculator"></i> Calculadora
+                    <i class="bi bi-calculator"></i> Coeficiente U
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'main.simulador' %}active{% endif %}"
-                   href="{{ url_for('main.simulador') }}">
-                    <i class="bi bi-graph-up-arrow"></i> Simulador de Ciclo
+                <a class="nav-link {% if request.endpoint == 'main.propiedades' %}active{% endif %}"
+                   href="{{ url_for('main.propiedades') }}">
+                    <i class="bi bi-table"></i> Propiedades Glucosa
                 </a>
             </li>
             <li class="nav-item">
@@ -81,21 +69,53 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'main.sensibilidad' %}active{% endif %}"
+                   href="{{ url_for('main.sensibilidad') }}">
+                    <i class="bi bi-sliders"></i> Sensibilidad
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-section-title">Simulaciones</div>
+        <ul class="nav flex-column px-1">
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'main.factibilidad' %}active{% endif %}"
+                   href="{{ url_for('main.factibilidad') }}">
+                    <i class="bi bi-check-circle-fill"></i> Factibilidad 5 descargas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'main.ciclo_parametrico' %}active{% endif %}"
+                   href="{{ url_for('main.ciclo_parametrico') }}">
+                    <i class="bi bi-layers-fill"></i> Ciclo Paramétrico
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'main.arranque_niveles' %}active{% endif %}"
+                   href="{{ url_for('main.arranque_niveles') }}">
+                    <i class="bi bi-thermometer-sun"></i> Arranque por Niveles
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'main.simulador' %}active{% endif %}"
+                   href="{{ url_for('main.simulador') }}">
+                    <i class="bi bi-graph-up-arrow"></i> Simulador de Ciclo
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-section-title">Resultados</div>
+        <ul class="nav flex-column px-1">
+            <li class="nav-item">
                 <a class="nav-link {% if request.endpoint == 'main.escenarios' %}active{% endif %}"
                    href="{{ url_for('main.escenarios') }}">
                     <i class="bi bi-collection"></i> Escenarios
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'main.sensibilidad' %}active{% endif %}"
-                   href="{{ url_for('main.sensibilidad') }}">
-                    <i class="bi bi-sliders"></i> Sensibilidad
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'main.propiedades' %}active{% endif %}"
-                   href="{{ url_for('main.propiedades') }}">
-                    <i class="bi bi-table"></i> Propiedades Glucosa
+                <a class="nav-link {% if request.endpoint == 'main.documentos' %}active{% endif %}"
+                   href="{{ url_for('main.documentos') }}">
+                    <i class="bi bi-folder-fill"></i> Documentos
                 </a>
             </li>
         </ul>
@@ -113,7 +133,7 @@
 
     <!-- Pie del sidebar -->
     <div class="mt-auto p-3 text-center" style="font-size:0.65rem;color:var(--text-dim);border-top:1px solid rgba(0,150,255,0.1);margin-top:auto;">
-        <div class="mb-1"><i class="bi bi-cpu text-neon-green"></i> v2.1 cyberpunk</div>
+        <div class="mb-1"><i class="bi bi-cpu text-neon-green"></i> v2.2 power-bi</div>
         © 2026 DMV SAS
     </div>
 </aside>

@@ -1,0 +1,47 @@
+Parámetro,Valor oficial,Unidad,Fuente / Cálculo,Observación
+Área de transferencia chaqueta (A),14.0,m²,src/geometria_tanque.py A_CONTACTO,Valor unificado en todo el proyecto
+Velocidad agua en media caña (v_w),2.5,m/s,Bases de diseño y Escenarios 2/3/4/5,Condición de diseño adoptada
+Área flujo media caña (A_c),64.15,cm²,src/geometria_tanque.py area_flujo_media_cana,141 mm × 45.5 mm
+Caudal agua a v_w = 2.5 m/s,57.74,m³/h,Cálculo: v × A_c × 3600,Caudal de diseño oficial
+Caudal agua Escenario 1 (v = 1.34 m/s),30.95,m³/h,Cálculo: 1.338 × A_c × 3600,Solo para Escenario 1
+Caudal agua dato Ingredion,20.3,m³/h,sections/07_bases_disenio.tex tabla datos_ingredion_equipo,Dato original del cliente; no usado en diseño final
+Temperatura agua de calentamiento,75,°C,Bases de diseño congeladas,Optimización respecto a 65 °C
+Temperatura objetivo glucosa,60,°C,Bases de diseño congeladas,Operación nominal
+Temperatura mínima despacho,57,°C,Bases de diseño congeladas,Límite operativo
+Temperatura ambiente,26.5,°C,sections/07_bases_disenio.tex,IDEAM 2023 promedio
+Temperatura alimentación glucosa (nominal),57–60,°C,Condiciones de diseño Ingredion,Rango recomendado para operación
+Temperatura alimentación glucosa (análisis crítico),55,°C,Sección 15 / Escenario 4 caso conservador,Caso más desfavorable analizado
+U global (T_g=60 °C; T_w=75 °C; v=2.5 m/s),36.24,W/(m²·°C),src/coeficiente_U.py coeficiente_U,Analítico con Churchill-Chu y Sieder-Tate
+U global (T_g=57 °C; T_w=75 °C; v=2.5 m/s),36.23,W/(m²·°C),src/coeficiente_U.py coeficiente_U,
+U global (T_g=55 °C; T_w=75 °C; v=2.5 m/s),36.01,W/(m²·°C),src/coeficiente_U.py coeficiente_U,
+U global CFD estado estable,38,W/(m²·°C),Sección 09_resultados.tex Tabla cfd_U,Validación con +5 % vs analítico
+Q_chaqueta (T_g=60 °C; T_w=75 °C),27.29,MJ/h,Cálculo iterativo U×A×LMTD con T_w_out=74.88 °C,Valor oficial para balance a 60 °C
+Q_chaqueta (T_g=57 °C; T_w=75 °C),32.74,MJ/h,Cálculo iterativo U×A×LMTD con T_w_out=74.86 °C,Referencia para operación límite
+Q_chaqueta (T_g=55 °C; T_w=75 °C),36.16,MJ/h,Cálculo iterativo U×A×LMTD con T_w_out=74.85 °C,
+Pérdidas térmicas con aislamiento (T_g=60 °C),14.65,MJ/h,src/perdidas_termicas_real.py,
+Pérdidas térmicas con aislamiento (T_g=57 °C),13.34,MJ/h,src/perdidas_termicas_real.py,
+Pérdidas térmicas sin aislamiento (T_g=60 °C),175.4,MJ/h,src/perdidas_termicas_real.py,
+Coeficiente global pérdidas con aislamiento,0.812,W/(m²·°C),src/perdidas_termicas_real.py,Aislamiento lana mineral 50.8 mm
+Área real expuesta al ambiente (80 % llenado),149.67,m²,src/perdidas_termicas_real.py,Fondo toriesférico + cilindro cubierto
+Balance neto a 60 °C,12.64,MJ/h,Q_chaqueta - Q_perdidas - ΔH_glucosa (ΔH=0),Margen térmico disponible
+Balance neto a 57 °C,19.40,MJ/h,Q_chaqueta - Q_perdidas - ΔH_glucosa (ΔH=0),Margen térmico en límite de despacho
+Eficiencia térmica a 60 °C,65.0,%,Q_chaqueta/(Q_chaqueta+Q_perdidas)×100,
+Eficiencia térmica a 57 °C,71.1,%,Q_chaqueta/(Q_chaqueta+Q_perdidas)×100,
+Tiempo para perder 3 °C (T_g=60 °C),4.52,días,src/perdidas_termicas_real.py,
+Tiempo para perder 3 °C (T_g=57 °C),5.06,días,src/perdidas_termicas_real.py,
+Densidad glucosa Globe 1130 (40 °C),1413.80,kg/m³,src/propiedades_glucosa.py rho_glucosa,
+Densidad glucosa Globe 1130 (55 °C),1405.70,kg/m³,src/propiedades_glucosa.py rho_glucosa,
+Densidad glucosa Globe 1130 (60 °C),1403.00,kg/m³,src/propiedades_glucosa.py rho_glucosa,
+Volumen 24 ton a 55 °C,17.073,m³,24000 / 1405.70,Usado en sección 15
+Volumen 24 ton a 60 °C,17.106,m³,24000 / 1403.00,Referencia
+Duración descarga oficial (24 ton a 12 ton/h),2.0,h,Ciclo operativo oficial,
+Duración descarga a 12 m³/h (T=55 °C),1.42,h,17.073 / 12,Análisis paramétrico sección 15
+Periodo ciclo oficial,4.8,h,24 h / 5 descargas,
+Tiempo calentamiento entre descargas,2.8,h,4.8 - 2.0,
+Flujo medio glucosa,5000,kg/h,120 ton / 24 h,
+Capacidad diaria,120,ton/día,5 × 24 ton,
+Número de descargas diarias,5,--,Requerimiento operativo,
+Masa inicial simulaciones (80 % llenado),~250000,kg,178.2 m³ × ρ_promedio,
+Espesor aislamiento diseño,50.8,mm,Lana mineral 2 pulgadas,
+Conductividad aislamiento,0.045,W/(m·°C),ASTM C547 valor conservador con humedad,
+Temperatura superficial exterior aislamiento (60 °C),28.3,°C,src/perdidas_termicas_real.py,Límite seguro contacto < 43 °C

@@ -49,11 +49,11 @@ from geometria_tanque import (
 )
 
 # Area de la chaqueta expuesta al ambiente (aproximacion)
-# La media cana cubre 13 m2 de contacto con el tanque; la superficie
+# La media cana cubre 14 m2 de contacto con el tanque; la superficie
 # exterior del perfil (3 lados) es aproximadamente:
 # Perimetro expuesto = ancho + 2*alto = 0.141 + 2*0.0455 = 0.232 m
-# Longitud total espiral ~ A_contacto / ancho = 13 / 0.141 = 92.2 m
-# Area expuesta ~ perimetro * longitud = 0.232 * 92.2 = 21.4 m2
+# Longitud total espiral ~ A_contacto / ancho = 14 / 0.141 = 99.3 m
+# Area expuesta ~ perimetro * longitud = 0.232 * 99.3 = 23.0 m2
 P_EXPUESTO = W_PERFIL + 2 * H_PERFIL  # Perimetro exterior del perfil [m]
 A_EXPUESTA = P_EXPUESTO * L_ESPIRAL   # Area expuesta al ambiente [m2]
 
@@ -236,7 +236,7 @@ def calcular_perdidas_ambiente_mantenimiento(T_glucosa, T_amb=26.5, h_ext=15.0,
     # Geometría del tanque - Área superficial total expuesta
     # Fondo toriesférico completo + parte inferior del cilindro
     # Área del fondo torisférico ~ 22 m² (aproximación conservadora)
-    # Área de chaqueta A_CONTACTO = 13 m² (contacto directo)
+    # Área de chaqueta A_CONTACTO = 14 m² (contacto directo)
     # Área adicional del cilindro inferior ~ 8 m²
     A_total_perdida = 30.0  # m² (valor conservador: fondo + cilindro inferior)
     

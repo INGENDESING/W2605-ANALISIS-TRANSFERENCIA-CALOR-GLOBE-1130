@@ -1,7 +1,7 @@
 """
 Módulo de propiedades termofísicas — Proyecto W2605
 ====================================================
-Propiedades de la glucosa Globe 42 DE (Ingredion 011420) y del agua
+Propiedades de la glucosa Globe 1130 (Ingredion 011420) y del agua
 en función de la temperatura.
 
 Las correlaciones para glucosa se basan en la ficha técnica oficial
@@ -11,7 +11,7 @@ del fabricante (Ingredion, 2017) y datos complementarios de literatura:
   - Cp y k: Choi & Okos (1986), correlaciones ASHRAE
   - Agua: IAPWS-IF97 simplificadas (Incropera, Apéndice A)
 
-Ficha técnica Ingredion Globe 42 DE 011420:
+Ficha técnica Ingredion Globe 1130 011420:
   - Dry Substance: 79.7-81.5% (nominal ~80.6%)
   - DE: 40.5-46.5
   - Densidad y viscosidad a 80, 100, 120 °F
@@ -24,7 +24,7 @@ import numpy as np
 
 
 # =============================================================================
-# PROPIEDADES DE LA GLUCOSA GLOBE 42 DE (Ingredion 011420)
+# PROPIEDADES DE LA GLUCOSA Globe 1130 (Ingredion 011420)
 # =============================================================================
 
 # Concentración de sólidos (ficha técnica: 79.7-81.5% DS)
@@ -36,7 +36,7 @@ def rho_glucosa(T):
     """
     Densidad del jarabe de glucosa en función de la temperatura.
     Correlación lineal ajustada a los 3 puntos de la ficha técnica
-    Ingredion 011420 (Globe 42 DE, 79.7-81.5% DS).
+    Ingredion 011420 (Globe 1130, 79.7-81.5% DS).
 
     Datos de la ficha técnica:
       rho(26.7°C) = 1421 kg/m³  (80°F)
@@ -60,7 +60,7 @@ def mu_glucosa(T):
     """
     Viscosidad dinámica del jarabe de glucosa vs temperatura.
     Modelo Vogel-Fulcher-Tammann (VFT) calibrado a ficha técnica
-    Ingredion 011420 (Globe 42 DE, 79.7-81.5% DS, nominal 80.6%).
+    Ingredion 011420 (Globe 1130, 79.7-81.5% DS, nominal 80.6%).
 
     Correlación VFT: ln(mu) = A + B / (T_C + C)
       A = -9.349980
@@ -288,7 +288,7 @@ if __name__ == "__main__":
 
     temps = [20, 30, 40, 50, 60, 70, 80]
 
-    print("\n--- Glucosa Globe 42 DE (Ingredion 011420, ~80.6 Brix) ---")
+    print("\n--- Glucosa Globe 1130 (Ingredion 011420, ~80.6 Brix) ---")
     print(f"{'T [°C]':>8} {'rho [kg/m3]':>12} {'mu [Pa·s]':>12} {'mu [cP]':>12} "
           f"{'Cp [J/kg°C]':>12} {'k [W/m°C]':>10} {'Pr':>10}")
     print("-" * 78)

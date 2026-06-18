@@ -7,10 +7,14 @@ Usa reemplazos robustos por ID para tolerar formato multilinea del SVG.
 import csv
 import os
 import re
+import sys
 from decimal import Decimal, ROUND_HALF_UP
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 RESULTS_DIR = os.path.join(BASE_DIR, '..', 'results')
+
+sys.path.insert(0, BASE_DIR)
+from geometria_tanque import A_CONTACTO
 
 
 def leer_csv_escenario(codigo):
@@ -66,7 +70,7 @@ def generar_pfds():
             'subescenarios': ['01a_1', '01a_2', '01a_3'],
             'T_agua': 65.0,
             'Q_agua': 30.9,
-            'area': 13,
+            'area': A_CONTACTO,
             'titulo': 'PFD ESCENARIO 01A',
             'titulo_tabla': 'BALANCE ENERGÉTICO — ESCENARIO 01A',
         },
@@ -74,7 +78,7 @@ def generar_pfds():
             'subescenarios': ['01b_1', '01b_2', '01b_3'],
             'T_agua': 65.0,
             'Q_agua': 57.7,
-            'area': 13,
+            'area': A_CONTACTO,
             'titulo': 'PFD ESCENARIO 01B',
             'titulo_tabla': 'BALANCE ENERGÉTICO — ESCENARIO 01B',
         },
@@ -82,7 +86,7 @@ def generar_pfds():
             'subescenarios': ['01c_1', '01c_2', '01c_3'],
             'T_agua': 75.0,
             'Q_agua': 57.7,
-            'area': 13,
+            'area': A_CONTACTO,
             'titulo': 'PFD ESCENARIO 01C',
             'titulo_tabla': 'BALANCE ENERGÉTICO — ESCENARIO 01C',
         },
@@ -109,7 +113,7 @@ def generar_pfds():
 
         old_subtitulo = (
             "Agua caliente 65 °C  ·  Caudal agua 30,900 kg/h  ·  "
-            "Área chaqueta 13 m²  ·  Viento 1.5 m/s  ·  Caudal glucosa 8,000 kg/h"
+            "Área chaqueta 14 m²  ·  Viento 1.5 m/s  ·  Caudal glucosa 8,000 kg/h"
         )
         new_subtitulo = (
             f"Agua caliente {cfg['T_agua']:.0f} °C  ·  Caudal agua {cfg['Q_agua']*1000:,.0f} kg/h  ·  "

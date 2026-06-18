@@ -21,13 +21,13 @@
 % Tabla de informaci\'on del proyecto
 \begin{table}[H]
 	\raggedright
+	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{@{}ll@{}}
-		\toprule
-		\rowcolor{green!15}
+		\toprule[1.5pt]
 		\textbf{Cliente:} & INGREDION SA \\
 		\textbf{C\'odigo:} & \documentcode \\
 		\textbf{Fecha:} & \today \\
-		\bottomrule
+		\bottomrule[1.5pt]
 	\end{tabular}
 \end{table}
 
@@ -36,13 +36,13 @@
 % Tabla de equipo de trabajo
 \begin{table}[H]
 	\raggedright
+	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{@{}ll@{}}
-		\toprule
-		\rowcolor{green!15}
+		\toprule[1.5pt]
 		\textbf{Ingeniero Principal:} & \firmaAprobo \\
 		\textbf{Especialista T\'cnico:} & \firmaElaboro \\
 		\textbf{Revisor T\'cnico:} & \firmaReviso \\
-		\bottomrule
+		\bottomrule[1.5pt]
 	\end{tabular}
 \end{table}
 
@@ -53,9 +53,9 @@
 	\centering
 	\caption*{\textbf{Control de Revisiones}}
 	\label{tab:control_revisiones}
+	\renewcommand{\arraystretch}{1.3}
 	\begin{tabularx}{\textwidth}{@{}llXlll@{}}
-		\toprule
-		\rowcolor{green!15}
+		\toprule[1.5pt]
 		\textbf{Rev.} & \textbf{Fecha} & \textbf{Descripci\'on} & \textbf{Elabor\'o} & \textbf{Revis\'o} & \textbf{Aprob\'o} \\
 		\midrule
 		0 & \fechaRevCero & \descRevCero & \firmaElaboro & \firmaReviso & \firmaAprobo \\
@@ -63,7 +63,7 @@
 		2 & \fechaRevDos & \descRevDos & -- & -- & -- \\
 		3 & \fechaRevTres & \descRevTres & -- & -- & -- \\
 		4 & \fechaRevCuatro & \descRevCuatro & -- & -- & -- \\
-		\bottomrule
+		\bottomrule[1.5pt]
 	\end{tabularx}
 \end{table}
 \endgroup

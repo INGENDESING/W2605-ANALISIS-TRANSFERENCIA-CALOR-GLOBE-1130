@@ -11,43 +11,30 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / 'src'))
 from ciclo_descargas_14m2_75C_12m3h import (
     simular_ciclo,
     resumen_ciclo,
+    parametros_iniciales,
     A_TRANSFERENCIA,
     V_AGUA,
-    T_AGUA,
     Q_VOL_DESCARGA,
     MASA_POR_DESCARGA,
     N_DESCARGAS,
     T_TOTAL,
-    NIVEL_INICIAL,
-    T_INICIAL,
     T_OBJETIVO,
     T_MIN_DESPACHO,
     T_DESCARGA,
     T_CICLO,
-    MASA_INICIAL,
     VOLUMEN_DESCARGA,
 )
 from geometria_tanque import volumen_total
 
 
-def simular_ciclo_12m3h():
-    """
-    Ejecuta la simulación del ciclo de 5 descargas diarias a 12 m³/h
-    con el área de transferencia de 14 m².
-
-    Retorna
-    -------
-    dict
-        Datos serializables con series temporales, resumen por descarga
-        y métricas globales del ciclo.
-    """
-    t, estados, fases = simular_ciclo()
-    resumen = resumen_ciclo(t, estados)
+def _serializar_ciclo(t, estados, fases, T_agua, nivel_inicial, T_inicial):
+    """Convierte el resultado de simular_ciclo en un dict serializable."""
+    resumen = resumen_ciclo(t, estados, t_ciclo=T_TOTAL / N_DESCARGAS)
 
     T = estados[:, 0]
     m = estados[:, 1]
-    rho_inicial = m[0] / (volumen_total() * NIVEL_INICIAL)
-    nivel = (m / (volumen_total() * rho_inicial)) * 100.0
+    _, MASA_INICIAL = parametros_iniciales(nivel_inicial, T_inicial)
+    nivel = (m / MASA_INICIAL) * nivel_inicial * 100.0
 
     T_min = float(np.min(T))
     T_final = float(T[-1])
@@ -56,14 +43,14 @@ def simular_ciclo_12m3h():
         'configuracion': {
             'area_m2': float(A_TRANSFERENCIA),
             'v_agua_m_s': float(V_AGUA),
-            'T_agua_C': float(T_AGUA),
+            'T_agua_C': float(T_agua),
             'Q_vol_descarga_m3_h': float(Q_VOL_DESCARGA),
             'masa_por_descarga_kg': float(MASA_POR_DESCARGA),
             'n_descargas': int(N_DESCARGAS),
-            'T_inicial_C': float(T_INICIAL),
+            'T_inicial_C': float(T_inicial),
             'T_objetivo_C': float(T_OBJETIVO),
             'T_min_despacho_C': float(T_MIN_DESPACHO),
-            'nivel_inicial_porc': float(NIVEL_INICIAL * 100),
+            'nivel_inicial_porc': float(nivel_inicial * 100),
             'T_descarga_h': float(T_DESCARGA),
             'T_ciclo_h': float(T_CICLO),
             'T_calentamiento_disponible_h': float(T_CICLO - T_DESCARGA),
@@ -99,4 +86,54 @@ def simular_ciclo_12m3h():
                 else 'El ciclo NO cumple el límite mínimo de despacho (57 °C).'
             ),
         },
+    }
+
+
+def simular_ciclo_12m3h():
+    """
+    Ejecuta la simulación del ciclo de 5 descargas diarias a 12 m³/h
+    con el área de transferencia de 14 m².
+
+    Retorna
+    -------
+    dict
+        Datos serializables con series temporales, resumen por descarga
+        y métricas globales del ciclo.
+    """
+    T_agua = 75.0
+    nivel_inicial = 0.80
+    T_inicial = 60.0
+    t, estados, fases, _ = simular_ciclo(T_agua, nivel_inicial, T_inicial)
+    return _serializar_ciclo(t, estados, fases, T_agua, nivel_inicial, T_inicial)
+
+
+def simular_ciclo_parametrico():
+    """
+    Ejecuta los cuatro escenarios paramétricos del ciclo oficial.
+
+    Retorna
+    -------
+    dict
+        Resultados por escenario: 80 % / 50 % con agua a 75 °C y 65 °C.
+    """
+    escenarios = {
+        '80pct_75C': {'T_agua': 75.0, 'nivel_inicial': 0.80, 'T_inicial': 60.0},
+        '80pct_65C': {'T_agua': 65.0, 'nivel_inicial': 0.80, 'T_inicial': 60.0},
+        '50pct_75C': {'T_agua': 75.0, 'nivel_inicial': 0.50, 'T_inicial': 60.0},
+        '50pct_65C': {'T_agua': 65.0, 'nivel_inicial': 0.50, 'T_inicial': 60.0},
+    }
+
+    resultados = {}
+    for nombre, params in escenarios.items():
+        t, estados, fases, _ = simular_ciclo(
+            params['T_agua'], params['nivel_inicial'], params['T_inicial']
+        )
+        resultados[nombre] = _serializar_ciclo(
+            t, estados, fases, params['T_agua'],
+            params['nivel_inicial'], params['T_inicial']
+        )
+
+    return {
+        'escenarios': resultados,
+        'nota': 'Ciclo oficial de 5 descargas/día a 12 ton/h con área de 14 m².',
     }

@@ -36,7 +36,7 @@ def api_calcular_transferencia_calor():
         "temp_glucosa_inicial": 20,
         "temp_glucosa_objetivo": 60,
         "volumen_glucosa_m3": 24,
-        "area_contacto_m2": 13.0
+        "area_contacto_m2": 14.0
     }
     """
     data = request.get_json()

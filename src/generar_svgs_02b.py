@@ -1,4 +1,8 @@
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from geometria_tanque import A_CONTACTO
 
 base_path = os.path.join(os.path.dirname(__file__), '..', 'results', 'PFD_Escenario_01A.svg')
 with open(base_path, 'r', encoding='utf-8') as f:
@@ -74,8 +78,8 @@ for esc in escenarios:
     svg = svg.replace('PFD ESCENARIO 01A - Sistema de Almacenamiento de Glucosa',
                       f'PFD ESCENARIO {tn} - Sistema de Almacenamiento de Glucosa')
     
-    old_sub = 'Agua 65°C | Caudal 30,900 kg/h | Area 13 m² | Glucosa 60°C | Caudal 8,000 kg/h'
-    new_sub = f'Agua 75°C | Caudal 57,700 kg/h | Area 13 m² | Glucosa {esc["glucosa_in_c"]}°C | Caudal 8,000 kg/h'
+    old_sub = f'Agua 65°C | Caudal 30,900 kg/h | Area {A_CONTACTO:.0f} m² | Glucosa 60°C | Caudal 8,000 kg/h'
+    new_sub = f'Agua 75°C | Caudal 57,700 kg/h | Area {A_CONTACTO:.0f} m² | Glucosa {esc["glucosa_in_c"]}°C | Caudal 8,000 kg/h'
     svg = svg.replace(old_sub, new_sub)
     
     old_c1 = '8,000 kg/h | 60.0°C | 1,024 MJ/h'

@@ -15,6 +15,7 @@ import os
 sys.path.append(os.path.dirname(__file__))
 
 from propiedades_glucosa import rho_glucosa, Cp_glucosa
+from geometria_tanque import A_CONTACTO
 
 # =============================================================================
 # PARAMETROS DEL PROCESO - ESCENARIO 3 OPTIMIZADO
@@ -28,7 +29,7 @@ Q_AGUA = 57.7               # Caudal agua optimizado [m³/h] (v=2.5 m/s)
 T_AGUA_ENT = 75.0           # Temperatura agua optimizada [°C]
 RHO_AGUA = 975.0            # Densidad agua a 75°C [kg/m³]
 CP_AGUA = 4.192             # Cp agua [kJ/kg°C]
-AREA_CHAQUETA = 13.0        # Área chaqueta [m²]
+AREA_CHAQUETA = A_CONTACTO  # Área chaqueta [m²]
 U_GLOBAL = 36.2             # Coeficiente global calculado [W/m²°C] @ 60°C
 RHO_GLUCOSA = 1405.0        # Densidad glucosa [kg/m³]
 CP_GLUCOSA = 2.131          # Cp glucosa [kJ/kg°C]
@@ -600,7 +601,7 @@ def generar_diagrama_completo():
     
     ax.text(11, 15.55, 'PROYECTO W2605 - DIAGRAMA DE FLUJO DE PROCESO (PFD)', 
             fontsize=16, fontweight='bold', ha='center', color='white', zorder=2)
-    ax.text(11, 15.0, 'Sistema de Almacenamiento y Carga de Glucosa Globe 42 DE', 
+    ax.text(11, 15.0, 'Sistema de Almacenamiento y Carga de Glucosa Globe 1130', 
             fontsize=12, ha='center', color='#1E3A5F', style='italic', zorder=2)
     
     # ============================================

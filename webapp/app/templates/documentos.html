@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Documentos — W2605{% endblock %}
+
+{% block content %}
+<!-- Cabecera -->
+<div class="pb-page-header fade-in">
+    <div>
+        <h4 class="pb-page-title">
+            <i class="bi bi-folder-fill text-neon-green me-2"></i>Documentos del Proyecto
+        </h4>
+        <div class="pb-page-subtitle">Tabla de transmittal con informes y código fuente Python</div>
+    </div>
+    <a href="{{ url_for('main.descargar_codigo_fuente') }}" class="btn btn-success">
+        <i class="bi bi-file-earmark-zip-fill me-2"></i>Descargar código fuente (ZIP)
+    </a>
+</div>
+
+<!-- Informe destacado -->
+<div class="pb-grid fade-in">
+    <div class="pb-col-12">
+        <div class="pb-card" style="border-left: 4px solid #ff2a6d;">
+            <div class="pb-card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-1 text-center d-none d-md-block">
+                        <i class="bi bi-file-earmark-pdf-fill" style="font-size: 3.5rem; color: #ff2a6d; opacity: 0.9;"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="pb-doc-code mb-2">W2605PRINF001</div>
+                        <h5 class="text-white mb-2">Informe Técnico Principal</h5>
+                        <p class="mb-0" style="color: var(--text-muted); font-size: 0.9rem;">
+                            Análisis térmico del fondo toriesférico del tanque de glucosa Tag 53A-90A-0056.
+                            Incluye metodología, resultados, validación CFD, análisis de ciclo y conclusiones.
+                        </p>
+                    </div>
+                    <div class="col-md-3 text-md-end mt-3 mt-md-0">
+                        <a href="{{ url_for('main.serve_informe', filename='W2605PRINF001.pdf') }}"
+                           class="btn btn-danger btn-lg w-100">
+                            <i class="bi bi-download me-2"></i>Descargar PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla de transmittal -->
+<div class="pb-transmittal fade-in">
+    <div class="pb-transmittal-header">
+        <div class="pb-transmittal-title">
+            <i class="bi bi-list-check text-neon-cyan me-2"></i>Tabla de Transmittal
+        </div>
+        <div class="pb-filter-group">
+            <span class="pb-filter-label">Filtrar:</span>
+            <select id="filtroCategoria" class="form-select form-select-sm" style="width: 180px;">
+                <option value="">Todas las categorías</option>
+                <option value="Informe">Informe</option>
+                <option value="Core térmico">Core térmico</option>
+                <option value="Simulación">Simulación</option>
+                <option value="Visualización">Visualización</option>
+                <option value="Webapp Core">Webapp Core</option>
+            </select>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="pb-transmittal-table" id="tablaTransmittal">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Título / Descripción</th>
+                    <th>Revisión</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Categoría</th>
+                    <th>Tamaño</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in documentos %}
+                <tr data-categoria="{{ doc.categoria }}">
+                    <td>
+                        <div class="pb-doc-code">{{ doc.codigo }}</div>
+                    </td>
+                    <td>
+                        <div class="text-white fw-semibold" style="font-size: 0.9rem;">{{ doc.titulo }}</div>
+                        <div style="color: var(--text-dim); font-size: 0.8rem;">{{ doc.descripcion }}</div>
+                    </td>
+                    <td>{{ doc.revision }}</td>
+                    <td>{{ doc.fecha }}</td>
+                    <td>
+                        {% if doc.tipo == 'PDF' %}
+                            <span class="pb-doc-type-pdf">PDF</span>
+                        {% elif doc.tipo == 'Python' %}
+                            <span class="pb-doc-type-py">Python</span>
+                        {% else %}
+                            <span class="pb-doc-type-zip">ZIP</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ doc.categoria }}</td>
+                    <td class="mono">{{ doc.tamano }}</td>
+                    <td>
+                        <a href="/{{ doc.ruta }}" class="btn btn-sm btn-outline-light" download>
+                            <i class="bi bi-download me-1"></i>Descargar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/documentos.js') }}"></script>
+{% endblock %}
