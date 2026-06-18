@@ -1,7 +1,7 @@
 # Contexto del proyecto: W2605 — Fondo de tanque de glucosa
 
 ## Estado actual
-- Última tarea completada: Push a GitHub del estado actual del proyecto y configuración de `render.yaml` para despliegue en Render (Web Service `w2605-webapp`, gunicorn 2 workers, health check `/health`).
+- Última tarea completada: Inclusión del logo DMV grande en sidebar y hero de la webapp; recompilación de W2605PRINF001.pdf y W2605PRINF002.pdf con el logo actualizado; push a GitHub y despliegue exitoso en Render.
 - Próxima tarea pendiente: Revisión final por parte del usuario y, si se solicita, actualizar W2605PRINF002 con los hallazgos paramétricos y la configuración hidráulica actualizada, o unificar las vistas restantes (factibilidad, pérdidas, escenarios, etc.) al estilo Power BI.
 - Fecha de última actualización: 2026-06-18T13:52:30-05:00.
 
@@ -63,6 +63,9 @@
 - (2026-06-18) Se implementaron los endpoints `/codigo/<path:filename>` y `/descargar-codigo-fuente` en `webapp/app/routes.py` para descargar scripts Python individuales y un ZIP del código fuente, respectivamente, con validación de extensión `.py` y protección contra path traversal.
 - (2026-06-18) Se actualizó `.gitignore` para permitir `docs/report/W2605PRINF001.pdf` y `docs/report/W2605PRINF002.pdf` (requeridos por el endpoint `/informes`) y para ignorar capturas temporales de verificación LaTeX.
 - (2026-06-18) Se hizo push del proyecto al repositorio remoto `origin/main` de GitHub y se ajustó `render.yaml` a 2 workers de Gunicorn para compatibilidad con el plan gratuito de Render.
+- (2026-06-18) Se desplegó exitosamente la webapp en Render (https://w2605-webapp.onrender.com, sujeto a URL asignada por Render).
+- (2026-06-18) Se incluyó el logo DMV (`docs/report/logos/logo1.png`) en el sidebar y en el hero de `index.html`, con estilos grandes y glow neón en `main.css`.
+- (2026-06-18) Se recompilaron `docs/report/W2605PRINF001.pdf` (78 páginas) y `docs/report/W2605PRINF002.pdf` (5 páginas) con el logo actualizado.
 - (2026-06-18) Se verificó localmente el health check de la webapp (`/health` responde `{"status":"ok","service":"W2605 WebApp","version":"2.2.0"}`).
 - (2026-06-18) Se unificaron las vistas `webapp/app/templates/calculadora.html` y `webapp/app/templates/simulador.html` al sistema de tarjetas Power BI, usando `.pb-page-header`, `.pb-card`, `.pb-kpi-row`, `.pb-kpi-card`, `.pb-control-group`, `.pb-input`, `.pb-table-dark` y `.pb-spinner-overlay`; se conservaron todos los IDs para no afectar la lógica JavaScript.
 - (2026-06-18) Se añadieron clases CSS para controles de formulario, tablas oscuras, badges, modales y spinners en `webapp/app/static/css/main.css`.
