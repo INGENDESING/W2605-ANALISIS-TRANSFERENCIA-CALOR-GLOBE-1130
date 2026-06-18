@@ -1,7 +1,7 @@
 # Contexto del proyecto: W2605 — Fondo de tanque de glucosa
 
 ## Estado actual
-- Última tarea completada: Unificación de las vistas Simulador y Calculadora al estilo de tarjetas Power BI oscuro neón; adición de clases CSS para controles, tablas y spinners oscuros.
+- Última tarea completada: Push a GitHub del estado actual del proyecto y configuración de `render.yaml` para despliegue en Render (Web Service `w2605-webapp`, gunicorn 2 workers, health check `/health`).
 - Próxima tarea pendiente: Revisión final por parte del usuario y, si se solicita, actualizar W2605PRINF002 con los hallazgos paramétricos y la configuración hidráulica actualizada, o unificar las vistas restantes (factibilidad, pérdidas, escenarios, etc.) al estilo Power BI.
 - Fecha de última actualización: 2026-06-18T13:52:30-05:00.
 
@@ -61,6 +61,9 @@
 - (2026-06-17) Se actualizó `render.yaml` con nombre de servicio `w2605-webapp`, health check `/health` y configuración de despliegue Gunicorn.
 - (2026-06-18) Se actualizó la webapp a organización tipo dashboard Power BI: se reorganizó la navegación en `webapp/app/templates/base.html`, se creó `webapp/app/templates/documentos.html` con tabla de transmittal y filtro por categoría, y se añadieron estilos DataTables dark en `main.css`.
 - (2026-06-18) Se implementaron los endpoints `/codigo/<path:filename>` y `/descargar-codigo-fuente` en `webapp/app/routes.py` para descargar scripts Python individuales y un ZIP del código fuente, respectivamente, con validación de extensión `.py` y protección contra path traversal.
+- (2026-06-18) Se actualizó `.gitignore` para permitir `docs/report/W2605PRINF001.pdf` y `docs/report/W2605PRINF002.pdf` (requeridos por el endpoint `/informes`) y para ignorar capturas temporales de verificación LaTeX.
+- (2026-06-18) Se hizo push del proyecto al repositorio remoto `origin/main` de GitHub y se ajustó `render.yaml` a 2 workers de Gunicorn para compatibilidad con el plan gratuito de Render.
+- (2026-06-18) Se verificó localmente el health check de la webapp (`/health` responde `{"status":"ok","service":"W2605 WebApp","version":"2.2.0"}`).
 - (2026-06-18) Se unificaron las vistas `webapp/app/templates/calculadora.html` y `webapp/app/templates/simulador.html` al sistema de tarjetas Power BI, usando `.pb-page-header`, `.pb-card`, `.pb-kpi-row`, `.pb-kpi-card`, `.pb-control-group`, `.pb-input`, `.pb-table-dark` y `.pb-spinner-overlay`; se conservaron todos los IDs para no afectar la lógica JavaScript.
 - (2026-06-18) Se añadieron clases CSS para controles de formulario, tablas oscuras, badges, modales y spinners en `webapp/app/static/css/main.css`.
 - (2026-06-18) Se amplió `webapp/tests/test_api.py` a 22 tests, incluyendo validación de `/documentos`, descargas de código fuente y seguridad de rutas.
